@@ -1,1497 +1,1783 @@
 /* =========================================================
-   LAYRAAZ JAVASCRIPT
-========================================================= */
-
-
-/* =========================================================
-   PAGE NAVIGATION
-========================================================= */
-
-function showPage(pageId) {
-
-    document.querySelectorAll(".page").forEach(page => {
-
-        page.classList.remove("active-page");
-
-    });
-
-
-    const selectedPage =
-        document.getElementById(pageId);
-
-
-    if (selectedPage) {
-
-        selectedPage.classList.add("active-page");
-
-    }
-
-
-    document.querySelectorAll(".nav-item").forEach(button => {
-
-        button.classList.remove("active");
-
-    });
-
-
-    const clickedButton =
-        [...document.querySelectorAll(".nav-item")]
-        .find(button =>
-            button.getAttribute("onclick") ===
-            `showPage('${pageId}')`
-        );
-
-
-    if (clickedButton) {
-
-        clickedButton.classList.add("active");
-
-    }
-
-}
-
+   LAYRAAZ
+   Main JavaScript
+   ========================================================= */
 
 /* =========================================================
-   SIDEBAR
-========================================================= */
+   1. STORAGE
+   ========================================================= */
 
-function toggleSidebar() {
+const STORAGE_KEY = "layraazData";
 
-    document
-        .getElementById("sidebar")
-        .classList.toggle("collapsed");
-
-}
-
-
-/* =========================================================
-   PROFILE
-========================================================= */
-
-const defaultProfile = {
-
+const defaultData = {
+  profile: {
     name: "Laya",
-
-    username: "",
-
-    gender: "",
-
     dob: "2002-08-28",
-
-    email: "",
-
     mbti: "INTJ",
+    hobbies: [
+      "Singer",
+      "Crochets",
+      "Travelling",
+      "Poet",
+      "Kuchipudi Dancer",
+      "Playback Singer"
+    ],
+    occupation: "Executive Assistant to Terminal Head",
+    goals: "Start an Edible Cutlery Business in 2 years",
+    favouriteColours: "Forest Green, Charcoal Black, Silver",
+    favouriteFood: "Dahi Puri",
+    favouritePlaces: "Hill Stations",
+    favouriteMusic: "Melody",
+    skinType: "Sensitive Skin",
+    bodyType: "Rectangular Body",
+    familyMembers: "4",
+    height: "5'1\"",
+    characterName: "Character",
+    characterPersonality: "Calm, intelligent, firm, caring",
+    characterImage: ""
+  },
 
-    age: "24",
+  appearance: {
+    palette: 0
+  },
 
-    height: "5'1 ft",
+  reminders: [],
 
-    occupation: "Executive Assistant to the Terminal Head",
+  todos: [],
 
-    skin: "Sensitive",
+  goals: [],
 
-    body: "Rectangular",
+  notes: [],
 
-    family: "4",
-
-    colours: "Forest Green, Charcoal Black, Silver",
-
-    food: "Dahi Puri",
-
-    places: "Hill Stations",
-
-    music: "Melody",
-
-    hobbies:
-        "Singing, Crocheting, Travelling, Poetry, Kuchipudi Dancing",
-
-    goals:
-        "Start an Edible Cutlery Business"
-
+  notifications: []
 };
 
 
-let profile =
-    JSON.parse(
-        localStorage.getItem("layraazProfile")
-    ) || defaultProfile;
+/* =========================================================
+   2. LOAD / SAVE DATA
+   ========================================================= */
 
+let data = loadData();
 
+function loadData() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
 
-function loadProfile() {
+    if (!saved) {
+      return structuredClone(defaultData);
+    }
 
-    const fields = {
+    const parsed = JSON.parse(saved);
 
-        profileName: profile.name,
-
-        profileUsername: profile.username,
-
-        profileGender: profile.gender,
-
-        profileDOB: profile.dob,
-
-        profileEmail: profile.email,
-
-        profileMBTI: profile.mbti,
-
-        profileAge: profile.age,
-
-        profileHeight: profile.height,
-
-        profileOccupation: profile.occupation,
-
-        profileSkin: profile.skin,
-
-        profileBody: profile.body,
-
-        profileFamily: profile.family,
-
-        profileColours: profile.colours,
-
-        profileFood: profile.food,
-
-        profilePlaces: profile.places,
-
-        profileMusic: profile.music,
-
-        profileHobbies: profile.hobbies,
-
-        profileGoals: profile.goals
-
+    return {
+      ...structuredClone(defaultData),
+      ...parsed,
+      profile: {
+        ...structuredClone(defaultData.profile),
+        ...(parsed.profile || {})
+      },
+      appearance: {
+        ...structuredClone(defaultData.appearance),
+        ...(parsed.appearance || {})
+      },
+      reminders: parsed.reminders || [],
+      todos: parsed.todos || [],
+      goals: parsed.goals || [],
+      notes: parsed.notes || [],
+      notifications: parsed.notifications || []
     };
 
+  } catch (error) {
+    console.error("Could not load LAYRAAZ data:", error);
+    return structuredClone(defaultData);
+  }
+}
 
-    Object.entries(fields).forEach(([id, value]) => {
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
 
-        const element =
-            document.getElementById(id);
+
+/* =========================================================
+   3. PALETTES
+   ========================================================= */
+
+const palettes = [
+  {
+    name: "Deep Forest Green",
+    background: "#1d251c",
+    main: "#111111",
+    font: "#C0C0C0"
+  },
+
+  {
+    name: "Butter Yellow",
+    background: "#F6E7A1",
+    main: "#A9D6E5",
+    font: "#6B3E26"
+  },
+
+  {
+    name: "Almond",
+    background: "#EFDECD",
+    main: "#93E9BE",
+    font: "#9B1C31"
+  },
+
+  {
+    name: "Misty Sage",
+    background: "#B7C9B0",
+    main: "#8E3B46",
+    font: "#FFF1C1"
+  },
+
+  {
+    name: "Navy",
+    background: "#14213D",
+    main: "#D4AF37",
+    font: "#D8C3A5"
+  },
+
+  {
+    name: "Champagne",
+    background: "#F7E7CE",
+    main: "#808000",
+    font: "#E8E1D1"
+  },
+
+  {
+    name: "Gunmetal",
+    background: "#2A3439",
+    main: "#E8E1D1",
+    font: "#F0EAD6"
+  },
+
+  {
+    name: "Cadet Grey",
+    background: "#91A3A9",
+    main: "#F0EAD6",
+    font: "#3D2B1F"
+  },
+
+  {
+    name: "Muted Pink",
+    background: "#D8A7B1",
+    main: "#A50034",
+    font: "#F6C9D2"
+  },
+
+  {
+    name: "Lavender Mist",
+    background: "#E6E0F8",
+    main: "#4B2E2A",
+    font: "#FFFDD0"
+  }
+];
 
 
-        if (element) {
+/* =========================================================
+   4. INITIALISE WEBSITE
+   ========================================================= */
 
-            element.value = value || "";
+document.addEventListener("DOMContentLoaded", () => {
 
-        }
+  applyPalette();
+  calculateAge();
+  loadProfileIntoForm();
+
+  renderDashboard();
+  renderReminders();
+  renderTodos();
+  renderGoals();
+  renderNotes();
+  renderNotifications();
+  renderAppearance();
+
+  setupNavigation();
+  setupSidebar();
+  setupSearch();
+  setupProfile();
+  setupReminderForm();
+  setupTodoForm();
+  setupGoalForm();
+  setupNoteForm();
+  setupAppearance();
+  setupCharacter();
+
+  startReminderChecker();
+
+  updateClock();
+
+  setInterval(updateClock, 1000);
+});
+
+
+/* =========================================================
+   5. NAVIGATION
+   ========================================================= */
+
+function setupNavigation() {
+
+  document.querySelectorAll("[data-section]").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      const sectionName = button.dataset.section;
+
+      showSection(sectionName);
 
     });
 
-
-    updateProfileDisplay();
+  });
 
 }
 
+
+function showSection(sectionName) {
+
+  document.querySelectorAll(".section").forEach(section => {
+    section.classList.remove("active");
+  });
+
+  const target = document.getElementById(sectionName);
+
+  if (target) {
+    target.classList.add("active");
+  }
+
+  document.querySelectorAll("[data-section]").forEach(button => {
+
+    button.classList.toggle(
+      "active",
+      button.dataset.section === sectionName
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   6. SIDEBAR
+   ========================================================= */
+
+function setupSidebar() {
+
+  const sidebar = document.querySelector(".sidebar");
+  const toggle = document.querySelector(".sidebar-toggle");
+
+  if (!sidebar || !toggle) return;
+
+  toggle.addEventListener("click", () => {
+
+    sidebar.classList.toggle("collapsed");
+
+  });
+
+}
+
+
+/* =========================================================
+   7. AGE CALCULATION
+   ========================================================= */
+
+function calculateAge() {
+
+  const dob = data.profile.dob;
+
+  if (!dob) return 0;
+
+  const birthDate = new Date(dob);
+  const today = new Date();
+
+  let age = today.getFullYear() - birthDate.getFullYear();
+
+  const monthDifference =
+    today.getMonth() - birthDate.getMonth();
+
+  if (
+    monthDifference < 0 ||
+    (
+      monthDifference === 0 &&
+      today.getDate() < birthDate.getDate()
+    )
+  ) {
+    age--;
+  }
+
+  const ageElements = document.querySelectorAll(".age-value");
+
+  ageElements.forEach(element => {
+    element.textContent = age;
+  });
+
+  return age;
+}
+
+
+/* =========================================================
+   8. PROFILE
+   ========================================================= */
+
+function loadProfileIntoForm() {
+
+  const profile = data.profile;
+
+  const fields = {
+    profileName: profile.name,
+    profileDOB: profile.dob,
+    profileMBTI: profile.mbti,
+    profileHobbies: profile.hobbies.join(", "),
+    profileOccupation: profile.occupation,
+    profileBusinessGoal: profile.goals,
+    profileColours: profile.favouriteColours,
+    profileFood: profile.favouriteFood,
+    profilePlaces: profile.favouritePlaces,
+    profileMusic: profile.favouriteMusic,
+    profileSkin: profile.skinType,
+    profileBody: profile.bodyType,
+    profileFamily: profile.familyMembers,
+    profileHeight: profile.height,
+    characterName: profile.characterName,
+    characterPersonality: profile.characterPersonality
+  };
+
+  Object.entries(fields).forEach(([id, value]) => {
+
+    const element = document.getElementById(id);
+
+    if (element) {
+      element.value = value;
+    }
+
+  });
+
+  calculateAge();
+
+  updateCharacterNameDisplay();
+
+  loadCharacterImage();
+}
+
+
+function setupProfile() {
+
+  const saveButton =
+    document.getElementById("saveProfile");
+
+  if (saveButton) {
+
+    saveButton.addEventListener("click", saveProfile);
+
+  }
+
+  const dobInput =
+    document.getElementById("profileDOB");
+
+  if (dobInput) {
+
+    dobInput.addEventListener("change", () => {
+
+      data.profile.dob = dobInput.value;
+
+      saveData();
+
+      calculateAge();
+
+    });
+
+  }
+
+}
 
 
 function saveProfile() {
 
-    profile = {
+  const getValue = id => {
 
-        name:
-            document.getElementById("profileName").value,
+    const element = document.getElementById(id);
 
-        username:
-            document.getElementById("profileUsername").value,
+    return element ? element.value.trim() : "";
 
-        gender:
-            document.getElementById("profileGender").value,
+  };
 
-        dob:
-            document.getElementById("profileDOB").value,
+  data.profile.name =
+    getValue("profileName") || "Laya";
 
-        email:
-            document.getElementById("profileEmail").value,
+  data.profile.dob =
+    getValue("profileDOB");
 
-        mbti:
-            document.getElementById("profileMBTI").value,
+  data.profile.mbti =
+    getValue("profileMBTI");
 
-        age:
-            document.getElementById("profileAge").value,
+  data.profile.hobbies =
+    getValue("profileHobbies")
+      .split(",")
+      .map(item => item.trim())
+      .filter(Boolean);
 
-        height:
-            document.getElementById("profileHeight").value,
+  data.profile.occupation =
+    getValue("profileOccupation");
 
-        occupation:
-            document.getElementById("profileOccupation").value,
+  data.profile.goals =
+    getValue("profileBusinessGoal");
 
-        skin:
-            document.getElementById("profileSkin").value,
+  data.profile.favouriteColours =
+    getValue("profileColours");
 
-        body:
-            document.getElementById("profileBody").value,
+  data.profile.favouriteFood =
+    getValue("profileFood");
 
-        family:
-            document.getElementById("profileFamily").value,
+  data.profile.favouritePlaces =
+    getValue("profilePlaces");
 
-        colours:
-            document.getElementById("profileColours").value,
+  data.profile.favouriteMusic =
+    getValue("profileMusic");
 
-        food:
-            document.getElementById("profileFood").value,
+  data.profile.skinType =
+    getValue("profileSkin");
 
-        places:
-            document.getElementById("profilePlaces").value,
+  data.profile.bodyType =
+    getValue("profileBody");
 
-        music:
-            document.getElementById("profileMusic").value,
+  data.profile.familyMembers =
+    getValue("profileFamily");
 
-        hobbies:
-            document.getElementById("profileHobbies").value,
+  data.profile.height =
+    getValue("profileHeight");
 
-        goals:
-            document.getElementById("profileGoals").value
+  data.profile.characterName =
+    getValue("characterName") || "Character";
 
-    };
+  data.profile.characterPersonality =
+    getValue("characterPersonality") ||
+    "Calm, intelligent, firm, caring";
 
+  saveData();
 
-    localStorage.setItem(
-        "layraazProfile",
-        JSON.stringify(profile)
-    );
+  calculateAge();
 
+  updateCharacterNameDisplay();
 
-    updateProfileDisplay();
+  renderDashboard();
 
-
-    addNotification(
-        "Profile Updated",
-        "Your profile has been updated."
-    );
-
-
-    alert("Profile saved.");
-}
-
-
-
-function updateProfileDisplay() {
-
-    setText("dashboardName", profile.name || "Laya");
-
-    setText("summaryName", profile.name || "-");
-
-    setText(
-        "summaryDOB",
-        formatDate(profile.dob) || "-"
-    );
-
-    setText(
-        "summaryOccupation",
-        profile.occupation || "-"
-    );
-
-    setText(
-        "summaryBody",
-        profile.body || "-"
-    );
-
-    setText(
-        "summarySkin",
-        profile.skin || "-"
-    );
-
-    setText(
-        "summaryMusic",
-        profile.music || "-"
-    );
-
-
-    setText(
-        "mbtiDashboard",
-        profile.mbti || "-"
-    );
-
-
-    setText(
-        "foodDashboard",
-        profile.food || "-"
-    );
+  showTemporaryMessage("Profile saved.");
 
 }
 
 
 /* =========================================================
-   REMINDERS
-========================================================= */
+   9. CHARACTER NAME
+   ========================================================= */
 
-let reminders =
-    JSON.parse(
-        localStorage.getItem("layraazReminders")
-    ) || [];
+function updateCharacterNameDisplay() {
 
+  const name =
+    data.profile.characterName || "Character";
 
+  document.querySelectorAll(".character-name").forEach(element => {
 
-function addReminder() {
+    element.textContent = name;
 
-    const text =
-        document.getElementById("reminderText")
-        .value.trim();
-
-
-    const date =
-        document.getElementById("reminderDate")
-        .value;
-
-
-    if (!text) {
-
-        alert("Please enter a reminder.");
-
-        return;
-
-    }
-
-
-    reminders.push({
-
-        id: Date.now(),
-
-        text: text,
-
-        date: date,
-
-        completed: false
-
-    });
-
-
-    localStorage.setItem(
-        "layraazReminders",
-        JSON.stringify(reminders)
-    );
-
-
-    document.getElementById("reminderText")
-        .value = "";
-
-
-    document.getElementById("reminderDate")
-        .value = "";
-
-
-    renderReminders();
+  });
 
 }
 
+
+/* =========================================================
+   10. DASHBOARD
+   ========================================================= */
+
+function renderDashboard() {
+
+  const profile = data.profile;
+
+  const mappings = {
+
+    dashboardName: profile.name,
+
+    dashboardMBTI: profile.mbti,
+
+    dashboardColours:
+      profile.favouriteColours,
+
+    dashboardFood:
+      profile.favouriteFood,
+
+    dashboardPlaces:
+      profile.favouritePlaces,
+
+    dashboardMusic:
+      profile.favouriteMusic,
+
+    dashboardSkin:
+      profile.skinType,
+
+    dashboardBody:
+      profile.bodyType,
+
+    dashboardFamily:
+      profile.familyMembers,
+
+    dashboardHeight:
+      profile.height,
+
+    dashboardOccupation:
+      profile.occupation,
+
+    dashboardBusinessGoal:
+      profile.goals,
+
+    dashboardHobbies:
+      profile.hobbies.join(", ")
+
+  };
+
+  Object.entries(mappings).forEach(([id, value]) => {
+
+    const element = document.getElementById(id);
+
+    if (element) {
+      element.textContent = value || "Not set";
+    }
+
+  });
+
+  calculateAge();
+
+}
+
+
+/* =========================================================
+   11. REMINDERS
+   ========================================================= */
+
+function setupReminderForm() {
+
+  const form =
+    document.getElementById("reminderForm");
+
+  if (!form) return;
+
+  form.addEventListener("submit", event => {
+
+    event.preventDefault();
+
+    const title =
+      document.getElementById("reminderTitle")?.value.trim();
+
+    const category =
+      document.getElementById("reminderCategory")?.value;
+
+    const due =
+      document.getElementById("reminderDateTime")?.value;
+
+    if (!title || !due) {
+
+      showTemporaryMessage(
+        "Please enter a reminder and date/time."
+      );
+
+      return;
+
+    }
+
+    const reminder = {
+
+      id: Date.now(),
+
+      title,
+
+      category:
+        category || "Personal",
+
+      due,
+
+      notified: false
+
+    };
+
+    data.reminders.push(reminder);
+
+    saveData();
+
+    renderReminders();
+
+    form.reset();
+
+    requestNotificationPermission();
+
+    showTemporaryMessage(
+      "Reminder saved."
+    );
+
+  });
+
+}
 
 
 function renderReminders() {
 
-    const container =
-        document.getElementById("reminderList");
+  const container =
+    document.getElementById("remindersList");
 
+  if (!container) return;
 
-    if (!container) return;
+  container.innerHTML = "";
 
+  if (data.reminders.length === 0) {
 
-    container.innerHTML = "";
+    container.innerHTML =
+      `<div class="empty-state">
+        No reminders yet.
+      </div>`;
 
+    return;
 
-    if (!reminders.length) {
+  }
 
-        container.innerHTML = `
-            <div class="empty-state">
-                No reminders yet.
-            </div>
-        `;
+  const sorted =
+    [...data.reminders]
+      .sort((a, b) =>
+        new Date(a.due) - new Date(b.due)
+      );
 
-        return;
+  sorted.forEach(reminder => {
 
-    }
+    const item =
+      document.createElement("div");
 
+    item.className = "reminder-item";
 
-    reminders.forEach(reminder => {
+    const dateText =
+      formatDateTime(reminder.due);
 
-        const item =
-            document.createElement("div");
+    item.innerHTML = `
 
+      <div class="reminder-content">
 
-        item.className = "list-item";
+        <h4>${escapeHTML(reminder.title)}</h4>
 
+        <span class="category-tag">
+          ${escapeHTML(reminder.category)}
+        </span>
 
-        item.innerHTML = `
+        <p>${dateText}</p>
 
-            <div>
+      </div>
 
-                <strong>
-                    ${escapeHTML(reminder.text)}
-                </strong>
+      <div class="item-actions">
 
-                ${
-                    reminder.date
-                    ?
-                    `<div class="note-date">
-                        ${formatDateTime(reminder.date)}
-                    </div>`
-                    :
-                    ""
-                }
+        <button
+          type="button"
+          class="edit-btn"
+          data-id="${reminder.id}">
+          Edit
+        </button>
 
-            </div>
+        <button
+          type="button"
+          class="delete-btn"
+          data-id="${reminder.id}">
+          Delete
+        </button>
 
+      </div>
+    `;
 
-            <button
-                onclick="deleteReminder(${reminder.id})">
+    container.appendChild(item);
 
-                ×
+  });
 
-            </button>
+  container
+    .querySelectorAll(".delete-btn")
+    .forEach(button => {
 
-        `;
+      button.addEventListener("click", () => {
 
+        deleteReminder(
+          Number(button.dataset.id)
+        );
 
-        container.appendChild(item);
+      });
+
+    });
+
+  container
+    .querySelectorAll(".edit-btn")
+    .forEach(button => {
+
+      button.addEventListener("click", () => {
+
+        editReminder(
+          Number(button.dataset.id)
+        );
+
+      });
 
     });
 
 }
-
 
 
 function deleteReminder(id) {
 
-    reminders =
-        reminders.filter(
-            reminder => reminder.id !== id
-        );
-
-
-    localStorage.setItem(
-        "layraazReminders",
-        JSON.stringify(reminders)
+  data.reminders =
+    data.reminders.filter(
+      reminder => reminder.id !== id
     );
 
+  saveData();
+
+  renderReminders();
+
+}
+
+
+function editReminder(id) {
+
+  const reminder =
+    data.reminders.find(
+      item => item.id === id
+    );
+
+  if (!reminder) return;
+
+  const title =
+    prompt(
+      "Reminder:",
+      reminder.title
+    );
+
+  if (title === null) return;
+
+  const due =
+    prompt(
+      "Date and time (YYYY-MM-DDTHH:MM):",
+      reminder.due
+    );
+
+  if (due === null) return;
+
+  reminder.title =
+    title.trim() || reminder.title;
+
+  reminder.due =
+    due;
+
+  reminder.notified =
+    false;
+
+  saveData();
+
+  renderReminders();
+
+}
+
+
+/* =========================================================
+   12. REMINDER CHECKER
+   ========================================================= */
+
+function startReminderChecker() {
+
+  checkReminders();
+
+  setInterval(
+    checkReminders,
+    15000
+  );
+
+}
+
+
+function checkReminders() {
+
+  const now =
+    Date.now();
+
+  let changed = false;
+
+  data.reminders.forEach(reminder => {
+
+    const due =
+      new Date(reminder.due).getTime();
+
+    if (
+      !reminder.notified &&
+      !isNaN(due) &&
+      now >= due
+    ) {
+
+      reminder.notified = true;
+
+      changed = true;
+
+      triggerCharacterReminder(reminder);
+
+      addNotification(
+        `Reminder: ${reminder.title}`
+      );
+
+      sendBrowserNotification(
+        data.profile.characterName || "Character",
+        reminder.title
+      );
+
+    }
+
+  });
+
+  if (changed) {
+
+    saveData();
 
     renderReminders();
 
-}
-
-
-/* =========================================================
-   TODO
-========================================================= */
-
-let todos =
-    JSON.parse(
-        localStorage.getItem("layraazTodos")
-    ) || [];
-
-
-
-function addTodo() {
-
-    const input =
-        document.getElementById("todoInput");
-
-
-    const text =
-        input.value.trim();
-
-
-    if (!text) return;
-
-
-    todos.push({
-
-        id: Date.now(),
-
-        text: text,
-
-        completed: false
-
-    });
-
-
-    localStorage.setItem(
-        "layraazTodos",
-        JSON.stringify(todos)
-    );
-
-
-    input.value = "";
-
-
-    renderTodos();
-
-}
-
-
-
-function renderTodos() {
-
-    const container =
-        document.getElementById("todoList");
-
-
-    if (!container) return;
-
-
-    container.innerHTML = "";
-
-
-    if (!todos.length) {
-
-        container.innerHTML = `
-            <div class="empty-state">
-                Your to-do list is empty.
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    todos.forEach(todo => {
-
-        const item =
-            document.createElement("div");
-
-
-        item.className = "list-item";
-
-
-        item.innerHTML = `
-
-            <label>
-
-                <input
-                    type="checkbox"
-                    ${todo.completed ? "checked" : ""}
-                    onchange="toggleTodo(${todo.id})"
-                >
-
-                <span style="
-                    margin-left:8px;
-                    ${
-                        todo.completed
-                        ?
-                        "text-decoration:line-through; opacity:0.5;"
-                        :
-                        ""
-                    }
-                ">
-
-                    ${escapeHTML(todo.text)}
-
-                </span>
-
-            </label>
-
-
-            <button
-                onclick="deleteTodo(${todo.id})">
-
-                ×
-
-            </button>
-
-        `;
-
-
-        container.appendChild(item);
-
-    });
-
-}
-
-
-
-function toggleTodo(id) {
-
-    const todo =
-        todos.find(
-            item => item.id === id
-        );
-
-
-    if (!todo) return;
-
-
-    todo.completed =
-        !todo.completed;
-
-
-    localStorage.setItem(
-        "layraazTodos",
-        JSON.stringify(todos)
-    );
-
-
-    renderTodos();
-
-}
-
-
-
-function deleteTodo(id) {
-
-    todos =
-        todos.filter(
-            todo => todo.id !== id
-        );
-
-
-    localStorage.setItem(
-        "layraazTodos",
-        JSON.stringify(todos)
-    );
-
-
-    renderTodos();
-
-}
-
-
-/* =========================================================
-   GOALS
-========================================================= */
-
-let goals =
-    JSON.parse(
-        localStorage.getItem("layraazGoals")
-    ) || [];
-
-
-
-function updateProgressLabel() {
-
-    const progress =
-        document.getElementById("goalProgress")
-        .value;
-
-
-    document.getElementById("progressValue")
-        .textContent =
-        progress + "%";
-
-}
-
-
-
-function addGoal() {
-
-    const name =
-        document.getElementById("goalName")
-        .value.trim();
-
-
-    const category =
-        document.getElementById("goalCategory")
-        .value;
-
-
-    const date =
-        document.getElementById("goalDate")
-        .value;
-
-
-    const description =
-        document.getElementById("goalDescription")
-        .value.trim();
-
-
-    const progress =
-        Number(
-            document.getElementById("goalProgress")
-            .value
-        );
-
-
-    if (!name) {
-
-        alert("Please enter a goal name.");
-
-        return;
-
-    }
-
-
-    goals.push({
-
-        id: Date.now(),
-
-        name: name,
-
-        category: category,
-
-        date: date,
-
-        description: description,
-
-        progress: progress
-
-    });
-
-
-    saveGoals();
-
-
-    document.getElementById("goalName").value = "";
-
-    document.getElementById("goalDate").value = "";
-
-    document.getElementById("goalDescription").value = "";
-
-    document.getElementById("goalProgress").value = 0;
-
-
-    updateProgressLabel();
-
-    renderGoals();
-
-
-    addNotification(
-        "New Goal",
-        `${name} has been added to your goals.`
-    );
-
-}
-
-
-
-function saveGoals() {
-
-    localStorage.setItem(
-        "layraazGoals",
-        JSON.stringify(goals)
-    );
-
-}
-
-
-
-function renderGoals() {
-
-    const container =
-        document.getElementById("goalList");
-
-
-    if (!container) return;
-
-
-    container.innerHTML = "";
-
-
-    if (!goals.length) {
-
-        container.innerHTML = `
-            <div class="empty-state">
-                You haven't created any goals yet.
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    goals.forEach(goal => {
-
-        const card =
-            document.createElement("div");
-
-
-        card.className = "goal-card";
-
-
-        card.innerHTML = `
-
-            <span class="goal-category">
-                ${escapeHTML(goal.category)}
-            </span>
-
-
-            <h3>
-                ${escapeHTML(goal.name)}
-            </h3>
-
-
-            <p class="goal-description">
-                ${
-                    escapeHTML(
-                        goal.description ||
-                        "No description added."
-                    )
-                }
-            </p>
-
-
-            ${
-                goal.date
-                ?
-                `
-                <span class="goal-date">
-                    Target:
-                    ${formatDate(goal.date)}
-                </span>
-                `
-                :
-                ""
-            }
-
-
-            <div class="goal-progress">
-
-                <div class="goal-progress-text">
-
-                    <span>Progress</span>
-
-                    <span>
-                        ${goal.progress}%
-                    </span>
-
-                </div>
-
-
-                <div class="goal-progress-bar">
-
-                    <div
-                        class="goal-progress-fill"
-                        style="width:${goal.progress}%">
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="goal-actions">
-
-                <button
-                    onclick="editGoal(${goal.id})">
-                    Edit
-                </button>
-
-
-                <button
-                    class="delete-goal"
-                    onclick="deleteGoal(${goal.id})">
-                    Delete
-                </button>
-
-            </div>
-
-        `;
-
-
-        container.appendChild(card);
-
-    });
-
-}
-
-
-
-function editGoal(id) {
-
-    const goal =
-        goals.find(
-            item => item.id === id
-        );
-
-
-    if (!goal) return;
-
-
-    document.getElementById("goalName")
-        .value = goal.name;
-
-
-    document.getElementById("goalCategory")
-        .value = goal.category;
-
-
-    document.getElementById("goalDate")
-        .value = goal.date;
-
-
-    document.getElementById("goalDescription")
-        .value = goal.description;
-
-
-    document.getElementById("goalProgress")
-        .value = goal.progress;
-
-
-    updateProgressLabel();
-
-
-    goals =
-        goals.filter(
-            item => item.id !== id
-        );
-
-
-    saveGoals();
-
-    renderGoals();
-
-    showPage("goals");
-
-}
-
-
-
-function deleteGoal(id) {
-
-    const goal =
-        goals.find(
-            item => item.id === id
-        );
-
-
-    if (!goal) return;
-
-
-    if (
-        !confirm(
-            `Delete "${goal.name}"?`
-        )
-    ) return;
-
-
-    goals =
-        goals.filter(
-            item => item.id !== id
-        );
-
-
-    saveGoals();
-
-    renderGoals();
-
-}
-
-
-/* =========================================================
-   NOTES
-========================================================= */
-
-let notes =
-    JSON.parse(
-        localStorage.getItem("layraazNotes")
-    ) || [];
-
-
-
-function addNote() {
-
-    const title =
-        document.getElementById("noteTitle")
-        .value.trim();
-
-
-    const content =
-        document.getElementById("noteContent")
-        .value.trim();
-
-
-    if (!title && !content) {
-
-        alert("Write something first.");
-
-        return;
-
-    }
-
-
-    notes.unshift({
-
-        id: Date.now(),
-
-        title: title || "Untitled Note",
-
-        content: content,
-
-        date: new Date().toISOString()
-
-    });
-
-
-    localStorage.setItem(
-        "layraazNotes",
-        JSON.stringify(notes)
-    );
-
-
-    document.getElementById("noteTitle")
-        .value = "";
-
-
-    document.getElementById("noteContent")
-        .value = "";
-
-
-    renderNotes();
-
-}
-
-
-
-function renderNotes() {
-
-    const container =
-        document.getElementById("notesList");
-
-
-    if (!container) return;
-
-
-    container.innerHTML = "";
-
-
-    if (!notes.length) {
-
-        container.innerHTML = `
-            <div class="empty-state">
-                No notes yet.
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    notes.forEach(note => {
-
-        const card =
-            document.createElement("div");
-
-
-        card.className = "note-card";
-
-
-        card.innerHTML = `
-
-            <h3>
-                ${escapeHTML(note.title)}
-            </h3>
-
-            <div class="note-date">
-                ${formatDateTime(note.date)}
-            </div>
-
-            <p>
-                ${escapeHTML(note.content)}
-            </p>
-
-            <button
-                onclick="deleteNote(${note.id})">
-                Delete
-            </button>
-
-        `;
-
-
-        container.appendChild(card);
-
-    });
-
-}
-
-
-
-function deleteNote(id) {
-
-    notes =
-        notes.filter(
-            note => note.id !== id
-        );
-
-
-    localStorage.setItem(
-        "layraazNotes",
-        JSON.stringify(notes)
-    );
-
-
-    renderNotes();
-
-}
-
-
-/* =========================================================
-   AARZOO PERSONALITY
-========================================================= */
-
-let personality =
-    JSON.parse(
-        localStorage.getItem("layraazPersonality")
-    ) || {
-
-        type: "bold",
-
-        description:
-            "Smart, confident, protective and motivating.",
-
-        relationship:
-            "Digital Companion"
-
-    };
-
-
-
-function loadPersonality() {
-
-    const type =
-        document.getElementById("personalityType");
-
-
-    const description =
-        document.getElementById(
-            "personalityDescription"
-        );
-
-
-    const relationship =
-        document.getElementById(
-            "relationshipType"
-        );
-
-
-    if (type)
-        type.value = personality.type;
-
-
-    if (description)
-        description.value =
-            personality.description;
-
-
-    if (relationship)
-        relationship.value =
-            personality.relationship;
-
-
-    updatePersonalityDisplay();
-
-}
-
-
-
-function savePersonality() {
-
-    personality = {
-
-        type:
-            document.getElementById(
-                "personalityType"
-            ).value,
-
-        description:
-            document.getElementById(
-                "personalityDescription"
-            ).value,
-
-        relationship:
-            document.getElementById(
-                "relationshipType"
-            ).value
-
-    };
-
-
-    localStorage.setItem(
-        "layraazPersonality",
-        JSON.stringify(personality)
-    );
-
-
-    updatePersonalityDisplay();
-
-}
-
-
-
-function updatePersonalityDisplay() {
-
-    const labels = {
-
-        gentle: "Gentle",
-
-        strict: "Strict",
-
-        bold: "Bold",
-
-        playful: "Playful",
-
-        professional: "Professional",
-
-        protective: "Protective",
-
-        custom: "Custom"
-
-    };
-
-
-    setText(
-        "personalityDashboard",
-        labels[personality.type] ||
-        "Custom"
-    );
-
-}
-
-
-
-function testAarzoo() {
-
-    const messages = {
-
-        gentle:
-            "Laya, take care of yourself too. One thing at a time.",
-
-        strict:
-            "Laya. Enough planning. Pick the task and finish it.",
-
-        bold:
-            "Laya, you know what you want. Now move.",
-
-        playful:
-            "Laya! Tiny reminder from your favourite digital nuisance. ♡",
-
-        professional:
-            "Laya, your next priority requires your attention.",
-
-        protective:
-            "Laya, I've got the reminder. You handle the task.",
-
-        custom:
-            personality.description ||
-            "Laya, I'm here."
-
-    };
-
-
-    showAarzoo(
-        messages[personality.type] ||
-        messages.custom,
-        "Aarzoo is testing her personality."
-    );
-
-}
-
-
-/* =========================================================
-   CHARACTER IMAGE
-========================================================= */
-
-function changeCharacter(event) {
-
-    const file =
-        event.target.files[0];
-
-
-    if (!file) return;
-
-
-    const reader =
-        new FileReader();
-
-
-    reader.onload = function(e) {
-
-        const image =
-            e.target.result;
-
-
-        document.getElementById(
-            "characterImage"
-        ).src = image;
-
-
-        document.getElementById(
-            "dashboardCharacter"
-        ).src = image;
-
-
-        document.getElementById(
-            "reminderCharacter"
-        ).src = image;
-
-
-        localStorage.setItem(
-            "layraazCharacter",
-            image
-        );
-
-    };
-
-
-    reader.readAsDataURL(file);
-
-}
-
-
-
-function loadCharacter() {
-
-    const saved =
-        localStorage.getItem(
-            "layraazCharacter"
-        );
-
-
-    if (!saved) return;
-
-
-    document.getElementById(
-        "characterImage"
-    ).src = saved;
-
-
-    document.getElementById(
-        "dashboardCharacter"
-    ).src = saved;
-
-
-    document.getElementById(
-        "reminderCharacter"
-    ).src = saved;
-
-}
-
-
-/* =========================================================
-   AARZOO REMINDER POPUP
-========================================================= */
-
-function showAarzoo(message, subMessage) {
-
-    const popup =
-        document.getElementById(
-            "aarzooReminder"
-        );
-
-
-    document.getElementById(
-        "aarzooMessage"
-    ).textContent = message;
-
-
-    document.getElementById(
-        "aarzooSubMessage"
-    ).textContent = subMessage;
-
-
-    popup.classList.add("show");
-
-}
-
-
-
-function closeReminder() {
-
-    document
-        .getElementById("aarzooReminder")
-        .classList.remove("show");
-
-}
-
-
-/* =========================================================
-   NOTIFICATIONS
-========================================================= */
-
-let notifications =
-    JSON.parse(
-        localStorage.getItem(
-            "layraazNotifications"
-        )
-    ) || [];
-
-
-
-function addNotification(title, message) {
-
-    notifications.unshift({
-
-        id: Date.now(),
-
-        title: title,
-
-        message: message,
-
-        date: new Date().toISOString()
-
-    });
-
-
-    notifications =
-        notifications.slice(0, 30);
-
-
-    localStorage.setItem(
-        "layraazNotifications",
-        JSON.stringify(notifications)
-    );
-
-
     renderNotifications();
 
+  }
+
 }
 
+
+/* =========================================================
+   13. CHARACTER REMINDER
+   ========================================================= */
+
+function triggerCharacterReminder(reminder) {
+
+  const container =
+    document.getElementById(
+      "characterReminder"
+    );
+
+  if (!container) return;
+
+  const character =
+    container.querySelector(
+      ".character-sticker"
+    );
+
+  const bubble =
+    container.querySelector(
+      ".character-bubble"
+    );
+
+  const message =
+    container.querySelector(
+      ".character-message"
+    );
+
+  const title =
+    container.querySelector(
+      ".character-reminder-title"
+    );
+
+  if (title) {
+
+    title.textContent =
+      reminder.title;
+
+  }
+
+  if (message) {
+
+    message.textContent =
+      getCharacterMessage(reminder);
+
+  }
+
+  container.classList.remove("hidden");
+
+  container.classList.remove(
+    "character-animation"
+  );
+
+  void container.offsetWidth;
+
+  container.classList.add(
+    "character-animation"
+  );
+
+  if (character) {
+
+    const movements = [
+      "character-float",
+      "character-shake",
+      "character-nod",
+      "character-bounce"
+    ];
+
+    const randomMovement =
+      movements[
+        Math.floor(
+          Math.random() * movements.length
+        )
+      ];
+
+    character.classList.remove(
+      ...movements
+    );
+
+    character.classList.add(
+      randomMovement
+    );
+
+  }
+
+  setTimeout(() => {
+
+    container.classList.add("hidden");
+
+  }, 12000);
+
+}
+
+
+function getCharacterMessage(reminder) {
+
+  const personality =
+    (
+      data.profile.characterPersonality ||
+      ""
+    ).toLowerCase();
+
+  if (
+    personality.includes("firm") ||
+    personality.includes("strict")
+  ) {
+
+    return `Your reminder is due. Handle it now: "${reminder.title}".`;
+
+  }
+
+  if (
+    personality.includes("caring") ||
+    personality.includes("gentle")
+  ) {
+
+    return `Your reminder is due. Take care of this now: "${reminder.title}".`;
+
+  }
+
+  if (
+    personality.includes("calm")
+  ) {
+
+    return `It's time for "${reminder.title}".`;
+
+  }
+
+  return `Reminder due: "${reminder.title}".`;
+
+}
+
+
+/* =========================================================
+   14. CHARACTER CLOSE BUTTON
+   ========================================================= */
+
+function setupCharacter() {
+
+  const closeButton =
+    document.getElementById(
+      "closeCharacterReminder"
+    );
+
+  if (closeButton) {
+
+    closeButton.addEventListener(
+      "click",
+      () => {
+
+        const container =
+          document.getElementById(
+            "characterReminder"
+          );
+
+        if (container) {
+
+          container.classList.add(
+            "hidden"
+          );
+
+        }
+
+      }
+    );
+
+  }
+
+  const imageInput =
+    document.getElementById(
+      "characterImageInput"
+    );
+
+  if (imageInput) {
+
+    imageInput.addEventListener(
+      "change",
+      handleCharacterImage
+    );
+
+  }
+
+  loadCharacterImage();
+
+}
+
+
+/* =========================================================
+   15. CHARACTER IMAGE UPLOAD
+   ========================================================= */
+
+function handleCharacterImage(event) {
+
+  const file =
+    event.target.files?.[0];
+
+  if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+
+    showTemporaryMessage(
+      "Please choose an image file."
+    );
+
+    return;
+
+  }
+
+  const reader =
+    new FileReader();
+
+  reader.onload = function(e) {
+
+    processCharacterImage(
+      e.target.result
+    );
+
+  };
+
+  reader.readAsDataURL(file);
+
+}
+
+
+function processCharacterImage(src) {
+
+  const image =
+    new Image();
+
+  image.onload = function() {
+
+    const maxSize = 700;
+
+    let width =
+      image.naturalWidth;
+
+    let height =
+      image.naturalHeight;
+
+    const scale =
+      Math.min(
+        1,
+        maxSize /
+        Math.max(width, height)
+      );
+
+    width =
+      Math.round(width * scale);
+
+    height =
+      Math.round(height * scale);
+
+    const canvas =
+      document.createElement("canvas");
+
+    canvas.width = width;
+    canvas.height = height;
+
+    const ctx =
+      canvas.getContext("2d");
+
+    ctx.drawImage(
+      image,
+      0,
+      0,
+      width,
+      height
+    );
+
+    removeBackground(
+      ctx,
+      width,
+      height
+    );
+
+    const cropped =
+      cropTransparentArea(
+        canvas
+      );
+
+    const finalCanvas =
+      cropped || canvas;
+
+    const dataURL =
+      finalCanvas.toDataURL(
+        "image/png"
+      );
+
+    data.profile.characterImage =
+      dataURL;
+
+    saveData();
+
+    loadCharacterImage();
+
+    showTemporaryMessage(
+      "Character image saved."
+    );
+
+  };
+
+  image.src = src;
+
+}
+
+
+/* =========================================================
+   16. BACKGROUND REMOVAL
+   ========================================================= */
+
+function removeBackground(
+  ctx,
+  width,
+  height
+) {
+
+  const imageData =
+    ctx.getImageData(
+      0,
+      0,
+      width,
+      height
+    );
+
+  const pixels =
+    imageData.data;
+
+  const visited =
+    new Uint8Array(
+      width * height
+    );
+
+  const queue = [];
+
+  const addPixel =
+    (x, y) => {
+
+      if (
+        x < 0 ||
+        y < 0 ||
+        x >= width ||
+        y >= height
+      ) {
+        return;
+      }
+
+      const index =
+        y * width + x;
+
+      if (visited[index]) return;
+
+      visited[index] = 1;
+
+      queue.push([x, y]);
+
+    };
+
+  for (let x = 0; x < width; x++) {
+
+    addPixel(x, 0);
+    addPixel(x, height - 1);
+
+  }
+
+  for (let y = 0; y < height; y++) {
+
+    addPixel(0, y);
+    addPixel(width - 1, y);
+
+  }
+
+  const tolerance = 55;
+
+  while (queue.length) {
+
+    const [x, y] =
+      queue.shift();
+
+    const index =
+      (y * width + x) * 4;
+
+    const r =
+      pixels[index];
+
+    const g =
+      pixels[index + 1];
+
+    const b =
+      pixels[index + 2];
+
+    const isBackground =
+      r < tolerance &&
+      g < tolerance &&
+      b < tolerance;
+
+    if (!isBackground) {
+      continue;
+    }
+
+    pixels[index + 3] = 0;
+
+    addPixel(x + 1, y);
+    addPixel(x - 1, y);
+    addPixel(x, y + 1);
+    addPixel(x, y - 1);
+
+  }
+
+  ctx.putImageData(
+    imageData,
+    0,
+    0
+  );
+
+}
+
+
+/* =========================================================
+   17. CROP TRANSPARENT AREA
+   ========================================================= */
+
+function cropTransparentArea(canvas) {
+
+  const ctx =
+    canvas.getContext("2d");
+
+  const width =
+    canvas.width;
+
+  const height =
+    canvas.height;
+
+  const imageData =
+    ctx.getImageData(
+      0,
+      0,
+      width,
+      height
+    );
+
+  const pixels =
+    imageData.data;
+
+  let minX = width;
+  let minY = height;
+  let maxX = -1;
+  let maxY = -1;
+
+  for (
+    let y = 0;
+    y < height;
+    y++
+  ) {
+
+    for (
+      let x = 0;
+      x < width;
+      x++
+    ) {
+
+      const alpha =
+        pixels[
+          (y * width + x) * 4 + 3
+        ];
+
+      if (alpha > 10) {
+
+        minX =
+          Math.min(minX, x);
+
+        minY =
+          Math.min(minY, y);
+
+        maxX =
+          Math.max(maxX, x);
+
+        maxY =
+          Math.max(maxY, y);
+
+      }
+
+    }
+
+  }
+
+  if (maxX === -1) {
+    return null;
+  }
+
+  const padding = 10;
+
+  minX =
+    Math.max(
+      0,
+      minX - padding
+    );
+
+  minY =
+    Math.max(
+      0,
+      minY - padding
+    );
+
+  maxX =
+    Math.min(
+      width - 1,
+      maxX + padding
+    );
+
+  maxY =
+    Math.min(
+      height - 1,
+      maxY + padding
+    );
+
+  const cropWidth =
+    maxX - minX + 1;
+
+  const cropHeight =
+    maxY - minY + 1;
+
+  const output =
+    document.createElement(
+      "canvas"
+    );
+
+  output.width =
+    cropWidth;
+
+  output.height =
+    cropHeight;
+
+  const outputCtx =
+    output.getContext("2d");
+
+  outputCtx.drawImage(
+    canvas,
+    minX,
+    minY,
+    cropWidth,
+    cropHeight,
+    0,
+    0,
+    cropWidth,
+    cropHeight
+  );
+
+  return output;
+
+}
+
+
+/* =========================================================
+   18. LOAD CHARACTER IMAGE
+   ========================================================= */
+
+function loadCharacterImage() {
+
+  const image =
+    data.profile.characterImage;
+
+  document
+    .querySelectorAll(
+      ".character-sticker"
+    )
+    .forEach(element => {
+
+      if (image) {
+
+        element.src = image;
+
+        element.style.display =
+          "block";
+
+      } else {
+
+        element.style.display =
+          "none";
+
+      }
+
+    });
+
+}
+
+
+/* =========================================================
+   19. BROWSER NOTIFICATIONS
+   ========================================================= */
+
+function requestNotificationPermission() {
+
+  if (!("Notification" in window)) {
+
+    return;
+
+  }
+
+  if (
+    Notification.permission ===
+    "default"
+  ) {
+
+    Notification.requestPermission();
+
+  }
+
+}
+
+
+function sendBrowserNotification(
+  title,
+  message
+) {
+
+  if (!("Notification" in window)) {
+    return;
+  }
+
+  if (
+    Notification.permission ===
+    "granted"
+  ) {
+
+    new Notification(
+      title,
+      {
+        body: message,
+        icon:
+          data.profile.characterImage ||
+          undefined
+      }
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   20. NOTIFICATIONS
+   ========================================================= */
+
+function addNotification(message) {
+
+  data.notifications.unshift({
+
+    id: Date.now(),
+
+    message,
+
+    date: new Date().toISOString(),
+
+    read: false
+
+  });
+
+  if (
+    data.notifications.length > 100
+  ) {
+
+    data.notifications =
+      data.notifications.slice(
+        0,
+        100
+      );
+
+  }
+
+}
 
 
 function renderNotifications() {
 
-    const container =
-        document.getElementById(
-            "notificationList"
+  const container =
+    document.getElementById(
+      "notificationsList"
+    );
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  if (
+    data.notifications.length === 0
+  ) {
+
+    container.innerHTML =
+      `<div class="empty-state">
+        No notifications yet.
+      </div>`;
+
+    return;
+
+  }
+
+  data.notifications.forEach(
+    notification => {
+
+      const item =
+        document.createElement("div");
+
+      item.className =
+        "notification-item";
+
+      item.innerHTML = `
+
+        <div>
+          <strong>
+            ${escapeHTML(
+              notification.message
+            )}
+          </strong>
+
+          <small>
+            ${formatDateTime(
+              notification.date
+            )}
+          </small>
+        </div>
+
+      `;
+
+      container.appendChild(item);
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   21. TO-DO LIST
+   ========================================================= */
+
+function setupTodoForm() {
+
+  const form =
+    document.getElementById(
+      "todoForm"
+    );
+
+  if (!form) return;
+
+  form.addEventListener(
+    "submit",
+    event => {
+
+      event.preventDefault();
+
+      const title =
+        document
+          .getElementById(
+            "todoTitle"
+          )
+          ?.value.trim();
+
+      const category =
+        document
+          .getElementById(
+            "todoCategory"
+          )
+          ?.value;
+
+      if (!title) {
+
+        showTemporaryMessage(
+          "Enter a task first."
         );
-
-
-    if (!container) return;
-
-
-    container.innerHTML = "";
-
-
-    if (!notifications.length) {
-
-        container.innerHTML = `
-            <div class="empty-state">
-                No new notifications.
-            </div>
-        `;
 
         return;
 
+      }
+
+      data.todos.push({
+
+        id: Date.now(),
+
+        title,
+
+        category:
+          category || "Personal",
+
+        completed: false,
+
+        created:
+          new Date().toISOString()
+
+      });
+
+      saveData();
+
+      renderTodos();
+
+      form.reset();
+
+    }
+  );
+
+}
+
+
+function renderTodos() {
+
+  const container =
+    document.getElementById(
+      "todoList"
+    );
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  if (data.todos.length === 0) {
+
+    container.innerHTML =
+      `<div class="empty-state">
+        No tasks yet.
+      </div>`;
+
+    return;
+
+  }
+
+  data.todos.forEach(todo => {
+
+    const item =
+      document.createElement("div");
+
+    item.className =
+      "todo-item";
+
+    if (todo.completed) {
+
+      item.classList.add(
+        "completed"
+      );
+
     }
 
+    item.innerHTML = `
 
-    notifications.forEach(notification => {
+      <label class="todo-check">
 
-        const item =
-            document.createElement("div");
+        <input
+          type="checkbox"
+          ${todo.completed ? "checked" : ""}
+          data-id="${todo.id}"
+        >
 
+        <span class="custom-checkbox"></span>
 
-        item.className = "list-item";
+      </label>
 
+      <div class="todo-content">
 
-        item.innerHTML = `
+        <span class="todo-title">
+          ${escapeHTML(todo.title)}
+        </span>
 
-            <div>
+        <span class="category-tag">
+          ${escapeHTML(todo.category)}
+        </span>
 
-                <strong>
-                    ${escapeHTML(notification.title)}
-                </strong>
+      </div>
 
-                <div>
-                    ${escapeHTML(notification.message)}
-                </div>
+      <button
+        type="button"
+        class="delete-btn"
+        data-id="${todo.id}">
+        Delete
+      </button>
 
-                <div class="note-date">
-                    ${formatDateTime(notification.date)}
-                </div>
+    `;
 
-            </div>
+    container.appendChild(item);
 
-        `;
+  });
 
+  container
+    .querySelectorAll(
+      'input[type="checkbox"]'
+    )
+    .forEach(input => {
 
-        container.appendChild(item);
+      input.addEventListener(
+        "change",
+        () => {
+
+          const id =
+            Number(input.dataset.id);
+
+          const todo =
+            data.todos.find(
+              item =>
+                item.id === id
+            );
+
+          if (!todo) return;
+
+          todo.completed =
+            input.checked;
+
+          saveData();
+
+          renderTodos();
+
+        }
+      );
+
+    });
+
+  container
+    .querySelectorAll(".delete-btn")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const id =
+            Number(
+              button.dataset.id
+            );
+
+          data.todos =
+            data.todos.filter(
+              item =>
+                item.id !== id
+            );
+
+          saveData();
+
+          renderTodos();
+
+        }
+      );
 
     });
 
@@ -1499,655 +1785,972 @@ function renderNotifications() {
 
 
 /* =========================================================
-   SETTINGS
-========================================================= */
+   22. GOALS
+   ========================================================= */
 
-function saveSettings() {
+function setupGoalForm() {
 
-    const settings = {
-
-        enableReminders:
-            document.getElementById(
-                "enableReminders"
-            ).checked,
-
-        showCharacter:
-            document.getElementById(
-                "showCharacter"
-            ).checked,
-
-        silentNotifications:
-            document.getElementById(
-                "silentNotifications"
-            ).checked
-
-    };
-
-
-    localStorage.setItem(
-        "layraazSettings",
-        JSON.stringify(settings)
+  const form =
+    document.getElementById(
+      "goalForm"
     );
+
+  if (!form) return;
+
+  form.addEventListener(
+    "submit",
+    event => {
+
+      event.preventDefault();
+
+      const title =
+        document
+          .getElementById(
+            "goalTitle"
+          )
+          ?.value.trim();
+
+      const category =
+        document
+          .getElementById(
+            "goalCategory"
+          )
+          ?.value;
+
+      if (!title) return;
+
+      data.goals.push({
+
+        id: Date.now(),
+
+        title,
+
+        category:
+          category || "Personal",
+
+        progress: 0,
+
+        created:
+          new Date().toISOString()
+
+      });
+
+      saveData();
+
+      renderGoals();
+
+      form.reset();
+
+    }
+  );
 
 }
 
 
+function renderGoals() {
 
-function loadSettings() {
-
-    const settings =
-        JSON.parse(
-            localStorage.getItem(
-                "layraazSettings"
-            )
-        );
-
-
-    if (!settings) return;
-
-
+  const container =
     document.getElementById(
-        "enableReminders"
-    ).checked =
-        settings.enableReminders;
+      "goalsList"
+    );
 
+  if (!container) return;
 
-    document.getElementById(
-        "showCharacter"
-    ).checked =
-        settings.showCharacter;
+  container.innerHTML = "";
 
+  if (data.goals.length === 0) {
 
-    document.getElementById(
-        "silentNotifications"
-    ).checked =
-        settings.silentNotifications;
+    container.innerHTML =
+      `<div class="empty-state">
+        No goals yet.
+      </div>`;
+
+    return;
+
+  }
+
+  data.goals.forEach(goal => {
+
+    const item =
+      document.createElement("div");
+
+    item.className =
+      "goal-item";
+
+    item.innerHTML = `
+
+      <div class="goal-header">
+
+        <div>
+
+          <h4>
+            ${escapeHTML(goal.title)}
+          </h4>
+
+          <span class="category-tag">
+            ${escapeHTML(goal.category)}
+          </span>
+
+        </div>
+
+        <strong>
+          ${goal.progress}%
+        </strong>
+
+      </div>
+
+      <div class="goal-progress">
+
+        <div
+          class="goal-progress-bar"
+          style="width:${goal.progress}%">
+        </div>
+
+      </div>
+
+      <div class="goal-controls">
+
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value="${goal.progress}"
+          data-id="${goal.id}"
+        >
+
+        <button
+          type="button"
+          class="delete-btn"
+          data-id="${goal.id}">
+          Delete
+        </button>
+
+      </div>
+
+    `;
+
+    container.appendChild(item);
+
+  });
+
+  container
+    .querySelectorAll(
+      'input[type="range"]'
+    )
+    .forEach(range => {
+
+      range.addEventListener(
+        "input",
+        () => {
+
+          const goal =
+            data.goals.find(
+              item =>
+                item.id ===
+                Number(range.dataset.id)
+            );
+
+          if (!goal) return;
+
+          goal.progress =
+            Number(range.value);
+
+          saveData();
+
+          renderGoals();
+
+        }
+      );
+
+    });
+
+  container
+    .querySelectorAll(".delete-btn")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          data.goals =
+            data.goals.filter(
+              goal =>
+                goal.id !==
+                Number(
+                  button.dataset.id
+                )
+            );
+
+          saveData();
+
+          renderGoals();
+
+        }
+      );
+
+    });
 
 }
 
 
 /* =========================================================
-   THEMES
-========================================================= */
+   23. NOTES
+   ========================================================= */
 
-const themes = {
+function setupNoteForm() {
 
-    forest: {
-        background: "#111713",
-        surface: "#19231d",
-        surfaceLight: "#243128",
-        primary: "#244d38",
-        accent: "#8aaa91",
-        text: "#c8c8c8",
-        muted: "#89958d"
-    },
+  const form =
+    document.getElementById(
+      "noteForm"
+    );
 
+  if (!form) return;
 
-    charcoal: {
-        background: "#111111",
-        surface: "#1d1d1d",
-        surfaceLight: "#2b2b2b",
-        primary: "#3a3a3a",
-        accent: "#a8a8a8",
-        text: "#d0d0d0",
-        muted: "#8c8c8c"
-    },
+  form.addEventListener(
+    "submit",
+    event => {
 
+      event.preventDefault();
 
-    pink: {
-        background: "#24171d",
-        surface: "#332027",
-        surfaceLight: "#442b35",
-        primary: "#8c405b",
-        accent: "#e39ab3",
-        text: "#f0d8df",
-        muted: "#b99aa5"
-    },
+      const title =
+        document
+          .getElementById(
+            "noteTitle"
+          )
+          ?.value.trim();
 
+      const content =
+        document
+          .getElementById(
+            "noteContent"
+          )
+          ?.value.trim();
 
-    yellow: {
-        background: "#252112",
-        surface: "#342f1b",
-        surfaceLight: "#454022",
-        primary: "#8d7c27",
-        accent: "#e8d46a",
-        text: "#f1e9bd",
-        muted: "#b7ad7a"
-    },
+      if (!title && !content) {
 
+        showTemporaryMessage(
+          "Write something first."
+        );
 
-    butter: {
-        background: "#292715",
-        surface: "#39361d",
-        surfaceLight: "#4a4627",
-        primary: "#9b8d45",
-        accent: "#f7e7a1",
-        text: "#f4edc8",
-        muted: "#c1b98e"
-    },
+        return;
 
+      }
 
-    blue: {
-        background: "#111b29",
-        surface: "#18263a",
-        surfaceLight: "#233653",
-        primary: "#315d91",
-        accent: "#79a9dc",
-        text: "#d2e1f1",
-        muted: "#91a5ba"
-    },
+      data.notes.unshift({
 
+        id: Date.now(),
 
-    babyblue: {
-        background: "#15222a",
-        surface: "#20323d",
-        surfaceLight: "#2c424f",
-        primary: "#527f94",
-        accent: "#a8d8f0",
-        text: "#dcecf3",
-        muted: "#9cb4bf"
-    },
+        title:
+          title || "Untitled Note",
 
+        content:
 
-    skyblue: {
-        background: "#10212a",
-        surface: "#19323f",
-        surfaceLight: "#254556",
-        primary: "#327e9f",
-        accent: "#70c5eb",
-        text: "#d7edf6",
-        muted: "#91b4c3"
-    },
+          content || "",
 
+        date:
+          new Date().toISOString()
 
-    lavender: {
-        background: "#1c1728",
-        surface: "#29223a",
-        surfaceLight: "#392e4c",
-        primary: "#69558f",
-        accent: "#c2b2ec",
-        text: "#e6def4",
-        muted: "#a89db9"
-    },
+      });
 
+      saveData();
 
-    brown: {
-        background: "#211916",
-        surface: "#30241f",
-        surfaceLight: "#40302a",
-        primary: "#715143",
-        accent: "#b99883",
-        text: "#eadbd2",
-        muted: "#ad968a"
-    },
+      renderNotes();
 
+      form.reset();
 
-    purple: {
-        background: "#1b1425",
-        surface: "#292039",
-        surfaceLight: "#3b2c51",
-        primary: "#684595",
-        accent: "#b38be0",
-        text: "#e5d8ef",
-        muted: "#aa98ba"
-    },
-
-
-    lilac: {
-        background: "#211a27",
-        surface: "#30253a",
-        surfaceLight: "#40314d",
-        primary: "#80618f",
-        accent: "#d0acd9",
-        text: "#eadfea",
-        muted: "#b6a4ba"
-    },
-
-
-    lime: {
-        background: "#182013",
-        surface: "#26321c",
-        surfaceLight: "#344427",
-        primary: "#628629",
-        accent: "#a8d447",
-        text: "#e0e9c9",
-        muted: "#aab590"
-    },
-
-
-    red: {
-        background: "#241314",
-        surface: "#341a1b",
-        surfaceLight: "#482123",
-        primary: "#8e3034",
-        accent: "#df7777",
-        text: "#efd7d7",
-        muted: "#b89a9a"
-    },
-
-
-    maroon: {
-        background: "#201117",
-        surface: "#301820",
-        surfaceLight: "#43222c",
-        primary: "#72253b",
-        accent: "#b95d75",
-        text: "#ecd8df",
-        muted: "#b69aa3"
-    },
-
-
-    orange: {
-        background: "#251911",
-        surface: "#352219",
-        surfaceLight: "#472e20",
-        primary: "#a65324",
-        accent: "#e99a5c",
-        text: "#f1ded0",
-        muted: "#bba08e"
-    },
-
-
-    terracotta: {
-        background: "#251916",
-        surface: "#35221d",
-        surfaceLight: "#483029",
-        primary: "#965039",
-        accent: "#d99376",
-        text: "#efdad1",
-        muted: "#b69b90"
-    },
-
-
-    navy: {
-        background: "#101724",
-        surface: "#182236",
-        surfaceLight: "#23314a",
-        primary: "#304c7b",
-        accent: "#7e9dcc",
-        text: "#d9e2f0",
-        muted: "#929fb3"
-    },
-
-
-    gold: {
-        background: "#211c12",
-        surface: "#30291a",
-        surfaceLight: "#42391f",
-        primary: "#8f7029",
-        accent: "#d8b75c",
-        text: "#eee4c4",
-        muted: "#b6a979"
-    },
-
-
-    rosegold: {
-        background: "#261b1b",
-        surface: "#382524",
-        surfaceLight: "#4a302e",
-        primary: "#965f59",
-        accent: "#d9a09a",
-        text: "#efdedb",
-        muted: "#b9a09d"
-    },
-
-
-    emerald: {
-        background: "#0e201a",
-        surface: "#153128",
-        surfaceLight: "#204438",
-        primary: "#176c4e",
-        accent: "#65c29b",
-        text: "#d2e9df",
-        muted: "#91afa3"
-    },
-
-
-    sage: {
-        background: "#171e19",
-        surface: "#252f27",
-        surfaceLight: "#344036",
-        primary: "#5d725e",
-        accent: "#9eb59d",
-        text: "#dce6dc",
-        muted: "#a2aea3"
-    },
-
-
-    burgundy: {
-        background: "#211116",
-        surface: "#311821",
-        surfaceLight: "#43232e",
-        primary: "#70233e",
-        accent: "#b9617e",
-        text: "#ead9df",
-        muted: "#b59aa4"
-    },
-
-
-    midnight: {
-        background: "#0e1421",
-        surface: "#161e31",
-        surfaceLight: "#222d45",
-        primary: "#293e68",
-        accent: "#718bbd",
-        text: "#d7deec",
-        muted: "#909bb0"
-    },
-
-
-    plum: {
-        background: "#1d1420",
-        surface: "#2c1e31",
-        surfaceLight: "#3d2a43",
-        primary: "#62366d",
-        accent: "#aa76b6",
-        text: "#e7dce9",
-        muted: "#ac9cae"
     }
+  );
 
-};
-
-
-
-function applyTheme(themeName) {
-
-    const theme =
-        themes[themeName];
+}
 
 
-    if (!theme) return;
+function renderNotes() {
 
+  const container =
+    document.getElementById(
+      "notesList"
+    );
 
-    Object.entries(theme).forEach(
-        ([variable, value]) => {
+  if (!container) return;
 
-            document.documentElement.style
-                .setProperty(
-                    `--${convertThemeVariable(variable)}`,
-                    value
-                );
+  container.innerHTML = "";
+
+  if (data.notes.length === 0) {
+
+    container.innerHTML =
+      `<div class="empty-state">
+        No notes yet.
+      </div>`;
+
+    return;
+
+  }
+
+  data.notes.forEach(note => {
+
+    const item =
+      document.createElement("article");
+
+    item.className =
+      "note-item";
+
+    item.innerHTML = `
+
+      <div class="note-header">
+
+        <div>
+
+          <h4>
+            ${escapeHTML(note.title)}
+          </h4>
+
+          <small>
+            ${formatDateTime(note.date)}
+          </small>
+
+        </div>
+
+        <button
+          type="button"
+          class="delete-btn"
+          data-id="${note.id}">
+          Delete
+        </button>
+
+      </div>
+
+      <p>
+        ${escapeHTML(note.content)}
+      </p>
+
+    `;
+
+    container.appendChild(item);
+
+  });
+
+  container
+    .querySelectorAll(".delete-btn")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          data.notes =
+            data.notes.filter(
+              note =>
+                note.id !==
+                Number(
+                  button.dataset.id
+                )
+            );
+
+          saveData();
+
+          renderNotes();
 
         }
-    );
+      );
 
-
-    localStorage.setItem(
-        "layraazTheme",
-        themeName
-    );
-
-}
-
-
-
-function convertThemeVariable(name) {
-
-    const map = {
-
-        background: "background",
-
-        surface: "surface",
-
-        surfaceLight: "surface-light",
-
-        primary: "primary",
-
-        accent: "accent",
-
-        text: "text",
-
-        muted: "muted"
-
-    };
-
-
-    return map[name];
-
-}
-
-
-
-function applyCustomTheme() {
-
-    const background =
-        document.getElementById(
-            "customBackground"
-        ).value;
-
-
-    const primary =
-        document.getElementById(
-            "customPrimary"
-        ).value;
-
-
-    const accent =
-        document.getElementById(
-            "customAccent"
-        ).value;
-
-
-    const text =
-        document.getElementById(
-            "customText"
-        ).value;
-
-
-    document.documentElement.style
-        .setProperty(
-            "--background",
-            background
-        );
-
-
-    document.documentElement.style
-        .setProperty(
-            "--primary",
-            primary
-        );
-
-
-    document.documentElement.style
-        .setProperty(
-            "--accent",
-            accent
-        );
-
-
-    document.documentElement.style
-        .setProperty(
-            "--text",
-            text
-        );
-
-
-    localStorage.setItem(
-        "layraazCustomTheme",
-        JSON.stringify({
-
-            background,
-            primary,
-            accent,
-            text
-
-        })
-    );
-
-}
-
-
-
-function loadTheme() {
-
-    const savedTheme =
-        localStorage.getItem(
-            "layraazTheme"
-        );
-
-
-    const custom =
-        JSON.parse(
-            localStorage.getItem(
-                "layraazCustomTheme"
-            )
-        );
-
-
-    if (custom) {
-
-        document.documentElement.style
-            .setProperty(
-                "--background",
-                custom.background
-            );
-
-
-        document.documentElement.style
-            .setProperty(
-                "--primary",
-                custom.primary
-            );
-
-
-        document.documentElement.style
-            .setProperty(
-                "--accent",
-                custom.accent
-            );
-
-
-        document.documentElement.style
-            .setProperty(
-                "--text",
-                custom.text
-            );
-
-    }
-
-
-    if (savedTheme) {
-
-        applyTheme(savedTheme);
-
-    }
+    });
 
 }
 
 
 /* =========================================================
-   HELPERS
-========================================================= */
+   24. SEARCH
+   ========================================================= */
 
-function setText(id, value) {
+function setupSearch() {
 
-    const element =
-        document.getElementById(id);
+  const search =
+    document.getElementById(
+      "globalSearch"
+    );
 
+  if (!search) return;
 
-    if (element) {
+  search.addEventListener(
+    "input",
+    () => {
 
-        element.textContent = value;
+      performSearch(
+        search.value.trim()
+      );
 
     }
+  );
 
 }
 
 
+function performSearch(query) {
 
-function formatDate(dateString) {
+  if (!query) {
 
-    if (!dateString) return "";
+    renderReminders();
+    renderTodos();
+    renderGoals();
+    renderNotes();
 
+    return;
 
-    const date =
-        new Date(dateString);
+  }
 
+  const lower =
+    query.toLowerCase();
 
-    if (isNaN(date)) return dateString;
-
-
-    return date.toLocaleDateString(
-        "en-IN",
-        {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric"
-        }
+  const reminderResults =
+    data.reminders.filter(
+      item =>
+        item.title
+          .toLowerCase()
+          .includes(lower) ||
+        item.category
+          .toLowerCase()
+          .includes(lower)
     );
 
-}
-
-
-
-function formatDateTime(dateString) {
-
-    if (!dateString) return "";
-
-
-    const date =
-        new Date(dateString);
-
-
-    if (isNaN(date)) return dateString;
-
-
-    return date.toLocaleString(
-        "en-IN",
-        {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit"
-        }
+  const todoResults =
+    data.todos.filter(
+      item =>
+        item.title
+          .toLowerCase()
+          .includes(lower) ||
+        item.category
+          .toLowerCase()
+          .includes(lower)
     );
 
+  const goalResults =
+    data.goals.filter(
+      item =>
+        item.title
+          .toLowerCase()
+          .includes(lower) ||
+        item.category
+          .toLowerCase()
+          .includes(lower)
+    );
+
+  const noteResults =
+    data.notes.filter(
+      item =>
+        item.title
+          .toLowerCase()
+          .includes(lower) ||
+        item.content
+          .toLowerCase()
+          .includes(lower)
+    );
+
+  renderSearchResults(
+    reminderResults,
+    todoResults,
+    goalResults,
+    noteResults
+  );
+
 }
 
 
+function renderSearchResults(
+  reminders,
+  todos,
+  goals,
+  notes
+) {
+
+  const container =
+    document.getElementById(
+      "searchResults"
+    );
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  const total =
+    reminders.length +
+    todos.length +
+    goals.length +
+    notes.length;
+
+  if (total === 0) {
+
+    container.innerHTML =
+      `<div class="empty-state">
+        Nothing found.
+      </div>`;
+
+    return;
+
+  }
+
+  const addGroup =
+    (title, items, formatter) => {
+
+      if (!items.length) return;
+
+      const group =
+        document.createElement("div");
+
+      group.className =
+        "search-group";
+
+      group.innerHTML =
+        `<h3>${title}</h3>`;
+
+      items.forEach(item => {
+
+        const result =
+          document.createElement("div");
+
+        result.className =
+          "search-result";
+
+        result.innerHTML =
+          formatter(item);
+
+        group.appendChild(result);
+
+      });
+
+      container.appendChild(group);
+
+    };
+
+  addGroup(
+    "Reminders",
+    reminders,
+    item =>
+      `<strong>${escapeHTML(item.title)}</strong>
+       <small>${formatDateTime(item.due)}</small>`
+  );
+
+  addGroup(
+    "To-Do",
+    todos,
+    item =>
+      `<strong>${escapeHTML(item.title)}</strong>
+       <small>${escapeHTML(item.category)}</small>`
+  );
+
+  addGroup(
+    "Goals",
+    goals,
+    item =>
+      `<strong>${escapeHTML(item.title)}</strong>
+       <small>${item.progress}% complete</small>`
+  );
+
+  addGroup(
+    "Notes",
+    notes,
+    item =>
+      `<strong>${escapeHTML(item.title)}</strong>
+       <small>${escapeHTML(item.content)}</small>`
+  );
+
+}
+
+
+/* =========================================================
+   25. APPEARANCE
+   ========================================================= */
+
+function setupAppearance() {
+
+  document
+    .querySelectorAll(
+      "[data-palette]"
+    )
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const index =
+            Number(
+              button.dataset.palette
+            );
+
+          if (
+            Number.isNaN(index) ||
+            !palettes[index]
+          ) {
+            return;
+          }
+
+          data.appearance.palette =
+            index;
+
+          saveData();
+
+          applyPalette();
+
+          renderAppearance();
+
+        }
+      );
+
+    });
+
+}
+
+
+function applyPalette() {
+
+  const palette =
+    palettes[
+      data.appearance.palette
+    ] || palettes[0];
+
+  document.documentElement.style.setProperty(
+    "--background",
+    palette.background
+  );
+
+  document.documentElement.style.setProperty(
+    "--main",
+    palette.main
+  );
+
+  document.documentElement.style.setProperty(
+    "--font",
+    palette.font
+  );
+
+  document.documentElement.style.setProperty(
+    "--accent",
+    palette.main
+  );
+
+}
+
+
+function renderAppearance() {
+
+  document
+    .querySelectorAll(
+      "[data-palette]"
+    )
+    .forEach(button => {
+
+      const index =
+        Number(
+          button.dataset.palette
+        );
+
+      button.classList.toggle(
+        "selected",
+        index ===
+          data.appearance.palette
+      );
+
+    });
+
+}
+
+
+/* =========================================================
+   26. CHARACTER SETTINGS
+   ========================================================= */
+
+function setupCharacterSettings() {
+
+  const saveButton =
+    document.getElementById(
+      "saveCharacterSettings"
+    );
+
+  if (!saveButton) return;
+
+  saveButton.addEventListener(
+    "click",
+    () => {
+
+      const name =
+        document
+          .getElementById(
+            "characterName"
+          )
+          ?.value.trim();
+
+      const personality =
+        document
+          .getElementById(
+            "characterPersonality"
+          )
+          ?.value.trim();
+
+      data.profile.characterName =
+        name || "Character";
+
+      data.profile.characterPersonality =
+        personality ||
+        "Calm, intelligent, firm, caring";
+
+      saveData();
+
+      updateCharacterNameDisplay();
+
+      showTemporaryMessage(
+        "Character settings saved."
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   27. CLOCK
+   ========================================================= */
+
+function updateClock() {
+
+  const elements =
+    document.querySelectorAll(
+      ".current-time"
+    );
+
+  const now =
+    new Date();
+
+  const time =
+    now.toLocaleTimeString(
+      [],
+      {
+        hour: "2-digit",
+        minute: "2-digit"
+      }
+    );
+
+  elements.forEach(element => {
+
+    element.textContent =
+      time;
+
+  });
+
+}
+
+
+/* =========================================================
+   28. DATE / TIME FORMAT
+   ========================================================= */
+
+function formatDateTime(value) {
+
+  if (!value) return "";
+
+  const date =
+    new Date(value);
+
+  if (isNaN(date.getTime())) {
+
+    return value;
+
+  }
+
+  return date.toLocaleString(
+    [],
+    {
+      dateStyle: "medium",
+      timeStyle: "short"
+    }
+  );
+
+}
+
+
+/* =========================================================
+   29. HTML SECURITY
+   ========================================================= */
 
 function escapeHTML(value) {
 
-    return String(value || "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+  if (value === null ||
+      value === undefined) {
+
+    return "";
+
+  }
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 
 }
 
 
 /* =========================================================
-   START LAYRAAZ
-========================================================= */
+   30. TEMPORARY MESSAGE
+   ========================================================= */
+
+function showTemporaryMessage(message) {
+
+  let box =
+    document.getElementById(
+      "layraazToast"
+    );
+
+  if (!box) {
+
+    box =
+      document.createElement(
+        "div"
+      );
+
+    box.id =
+      "layraazToast";
+
+    box.className =
+      "layraaz-toast";
+
+    document.body.appendChild(box);
+
+  }
+
+  box.textContent =
+    message;
+
+  box.classList.add("show");
+
+  clearTimeout(
+    window.layraazToastTimer
+  );
+
+  window.layraazToastTimer =
+    setTimeout(() => {
+
+      box.classList.remove(
+        "show"
+      );
+
+    }, 2500);
+
+}
+
+
+/* =========================================================
+   31. CHARACTER SETTINGS INIT
+   ========================================================= */
 
 document.addEventListener(
-    "DOMContentLoaded",
-    function() {
+  "DOMContentLoaded",
+  () => {
 
-        loadProfile();
+    setupCharacterSettings();
 
-        loadPersonality();
+  }
+);
 
-        loadCharacter();
 
-        loadSettings();
+/* =========================================================
+   32. NOTIFICATION PERMISSION BUTTON
+   ========================================================= */
 
-        loadTheme();
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
 
-        renderReminders();
+    const button =
+      document.getElementById(
+        "enableNotifications"
+      );
 
-        renderTodos();
+    if (!button) return;
 
-        renderGoals();
+    button.addEventListener(
+      "click",
+      () => {
 
-        renderNotes();
+        requestNotificationPermission();
+
+      }
+    );
+
+  }
+);
+
+
+/* =========================================================
+   33. CLEAR NOTIFICATIONS
+   ========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    const button =
+      document.getElementById(
+        "clearNotifications"
+      );
+
+    if (!button) return;
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        data.notifications = [];
+
+        saveData();
 
         renderNotifications();
 
-        updateProgressLabel();
+      }
+    );
 
-    }
+  }
+);
+
+
+/* =========================================================
+   34. RESET WEBSITE DATA
+   ========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    const button =
+      document.getElementById(
+        "resetData"
+      );
+
+    if (!button) return;
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        const confirmed =
+          confirm(
+            "Reset all LAYRAAZ data?"
+          );
+
+        if (!confirmed) return;
+
+        data =
+          structuredClone(
+            defaultData
+          );
+
+        saveData();
+
+        location.reload();
+
+      }
+    );
+
+  }
 );
