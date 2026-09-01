@@ -1,938 +1,785 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>LAYRAAZ</title>
+  <title>LAYRAAZ</title>
 
-    <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Playpen+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- ================= SIDEBAR ================= -->
+  <div class="app">
 
-<aside class="sidebar" id="sidebar">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
 
-    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+      <div class="brand">
+        <div class="brand-mark">L</div>
+        <span>LAYRAAZ</span>
+      </div>
 
-    <div class="logo">
-        <span class="logo-icon">✦</span>
-        <span class="logo-text">LAYRAAZ</span>
-    </div>
+      <nav class="nav">
 
-    <nav>
-
-        <button class="nav-item active" onclick="showPage('dashboard')">
-            <span class="nav-icon">⌂</span>
-            <span class="nav-text">Dashboard</span>
+        <button class="nav-item active" data-section="profile" title="My Profile">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="3.5"></circle>
+            <path d="M5 20c.7-3.5 3.1-5.5 7-5.5s6.3 2 7 5.5"></path>
+          </svg>
+          <span>My Profile</span>
         </button>
 
-        <button class="nav-item" onclick="showPage('reminders')">
-            <span class="nav-icon">♧</span>
-            <span class="nav-text">Reminders</span>
+        <button class="nav-item" data-section="dashboard" title="Dashboard">
+          <svg viewBox="0 0 24 24">
+            <rect x="4" y="4" width="6" height="6" rx="1"></rect>
+            <rect x="14" y="4" width="6" height="6" rx="1"></rect>
+            <rect x="4" y="14" width="6" height="6" rx="1"></rect>
+            <rect x="14" y="14" width="6" height="6" rx="1"></rect>
+          </svg>
+          <span>Dashboard</span>
         </button>
 
-        <button class="nav-item" onclick="showPage('todo')">
-            <span class="nav-icon">✓</span>
-            <span class="nav-text">To-Do List</span>
+        <button class="nav-item" data-section="reminders" title="Reminders">
+          <svg viewBox="0 0 24 24">
+            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+            <path d="M10 21h4"></path>
+          </svg>
+          <span>Reminders</span>
         </button>
 
-        <button class="nav-item" onclick="showPage('goals')">
-            <span class="nav-icon">◇</span>
-            <span class="nav-text">Goals</span>
+        <button class="nav-item" data-section="todos" title="To-do List">
+          <svg viewBox="0 0 24 24">
+            <rect x="4" y="5" width="15" height="15" rx="2"></rect>
+            <path d="m8 12 2 2 5-5"></path>
+          </svg>
+          <span>To-do List</span>
         </button>
 
-        <button class="nav-item" onclick="showPage('notes')">
-            <span class="nav-icon">▤</span>
-            <span class="nav-text">Notes</span>
+        <button class="nav-item" data-section="goals" title="My Goals">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="8"></circle>
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="m16 8 4-4"></path>
+            <path d="M17 4h3v3"></path>
+          </svg>
+          <span>My Goals</span>
         </button>
 
-        <button class="nav-item" onclick="showPage('notifications')">
-            <span class="nav-icon">♢</span>
-            <span class="nav-text">Notifications</span>
+        <button class="nav-item" data-section="notes" title="Notes">
+          <svg viewBox="0 0 24 24">
+            <path d="M6 3h12v18H6z"></path>
+            <path d="M9 8h6"></path>
+            <path d="M9 12h6"></path>
+            <path d="M9 16h4"></path>
+          </svg>
+          <span>Notes</span>
         </button>
 
-        <button class="nav-item" onclick="showPage('character')">
-            <span class="nav-icon">♡</span>
-            <span class="nav-text">Aarzoo</span>
+        <button class="nav-item" data-section="notifications" title="Notifications">
+          <svg viewBox="0 0 24 24">
+            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+            <path d="M10 21h4"></path>
+          </svg>
+          <span>Notifications</span>
         </button>
 
-        <button class="nav-item" onclick="showPage('profile')">
-            <span class="nav-icon">◉</span>
-            <span class="nav-text">My Profile</span>
+        <button class="nav-item" data-section="character" title="Character">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="3"></circle>
+            <path d="M7 20c.5-3 2-5 5-5s4.5 2 5 5"></path>
+            <path d="M5 5c1.5-2 3.5-3 7-3s5.5 1 7 3"></path>
+          </svg>
+          <span>Character</span>
         </button>
 
-        <button class="nav-item" onclick="showPage('appearance')">
-            <span class="nav-icon">✧</span>
-            <span class="nav-text">Appearance</span>
+        <button class="nav-item" data-section="appearance" title="Appearance">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="8"></circle>
+            <path d="M12 4v16"></path>
+            <path d="M4 12h16"></path>
+          </svg>
+          <span>Appearance</span>
         </button>
 
-        <button class="nav-item" onclick="showPage('settings')">
-            <span class="nav-icon">⚙</span>
-            <span class="nav-text">Settings</span>
-        </button>
+      </nav>
 
-    </nav>
+      <button class="sidebar-toggle" id="sidebarToggle" title="Expand sidebar">
+        <svg viewBox="0 0 24 24">
+          <path d="m9 6 6 6-6 6"></path>
+        </svg>
+      </button>
 
-</aside>
-
-
-<!-- ================= MAIN ================= -->
-
-<main class="main">
+    </aside>
 
 
-<!-- ================= DASHBOARD ================= -->
+    <!-- MAIN -->
+    <main class="main">
 
-<section id="dashboard" class="page active-page">
-
-    <div class="page-header">
+      <!-- TOP BAR -->
+      <header class="topbar">
 
         <div>
-            <p class="eyebrow">WELCOME BACK</p>
-
-            <h1>
-                Hello,
-                <span id="dashboardName">Laya</span>
-                ♡
-            </h1>
-
-            <p>Your little digital world is ready.</p>
+          <p class="eyebrow">WELCOME BACK</p>
+          <h1 id="pageTitle">My Profile</h1>
         </div>
 
-        <div class="character-mini">
-            <img id="dashboardCharacter" src="character.png" alt="Aarzoo">
-        </div>
-
-    </div>
-
-
-    <div class="dashboard-grid">
-
-        <div class="info-card">
-            <span class="card-icon">◈</span>
-            <small>CHARACTER</small>
-            <h2 id="characterNameDashboard">Aarzoo</h2>
-        </div>
-
-        <div class="info-card">
-            <span class="card-icon">♧</span>
-            <small>PERSONALITY</small>
-            <h2 id="personalityDashboard">Not Set</h2>
-        </div>
-
-        <div class="info-card">
-            <span class="card-icon">♢</span>
-            <small>MBTI</small>
-            <h2 id="mbtiDashboard">INTJ</h2>
-        </div>
-
-        <div class="info-card">
-            <span class="card-icon">♡</span>
-            <small>FAVOURITE FOOD</small>
-            <h2 id="foodDashboard">Dahi Puri</h2>
-        </div>
-
-    </div>
-
-
-    <div class="section-title">
-        <h2>About You</h2>
-
-        <button onclick="showPage('profile')" class="small-btn">
-            Edit
-        </button>
-    </div>
-
-
-    <div class="profile-summary">
-
-        <div>
-            <span>Name</span>
-            <strong id="summaryName">Laya</strong>
-        </div>
-
-        <div>
-            <span>DOB</span>
-            <strong id="summaryDOB">28/08/2002</strong>
-        </div>
-
-        <div>
-            <span>Occupation</span>
-            <strong id="summaryOccupation">Executive Assistant</strong>
-        </div>
-
-        <div>
-            <span>Body Type</span>
-            <strong id="summaryBody">Rectangular</strong>
-        </div>
-
-        <div>
-            <span>Skin Type</span>
-            <strong id="summarySkin">Sensitive</strong>
-        </div>
-
-        <div>
-            <span>Favourite Music</span>
-            <strong id="summaryMusic">Melody</strong>
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ================= REMINDERS ================= -->
-
-<section id="reminders" class="page">
-
-    <p class="eyebrow">PRODUCTIVITY</p>
-
-    <h1>Reminders</h1>
-
-    <div class="input-row">
-
-        <input
-            id="reminderText"
-            type="text"
-            placeholder="What should Aarzoo remind you about?"
-        >
-
-        <input
-            id="reminderDate"
-            type="datetime-local"
-        >
-
-        <button onclick="addReminder()">
-            Add Reminder
-        </button>
-
-    </div>
-
-    <div id="reminderList" class="list"></div>
-
-</section>
-
-
-<!-- ================= TODO ================= -->
-
-<section id="todo" class="page">
-
-    <p class="eyebrow">PRODUCTIVITY</p>
-
-    <h1>To-Do List</h1>
-
-    <div class="input-row">
-
-        <input
-            id="todoInput"
-            type="text"
-            placeholder="Add something to do..."
-        >
-
-        <button onclick="addTodo()">Add</button>
-
-    </div>
-
-    <div id="todoList" class="list"></div>
-
-</section>
-
-
-<!-- ================= GOALS ================= -->
-
-<section id="goals" class="page">
-
-    <p class="eyebrow">YOUR FUTURE</p>
-
-    <h1>Goals</h1>
-
-    <p class="page-description">
-        Define what you want. Track what you're doing.
-        Let Aarzoo keep an eye on the destination.
-    </p>
-
-
-    <div class="goal-form">
-
-        <input
-            id="goalName"
-            type="text"
-            placeholder="Goal name"
-        >
-
-        <select id="goalCategory">
-
-            <option value="Personal">Personal</option>
-            <option value="Career">Career</option>
-            <option value="Business">Business</option>
-            <option value="Finance">Finance</option>
-            <option value="Learning">Learning</option>
-            <option value="Health">Health</option>
-            <option value="Travel">Travel</option>
-            <option value="Creative">Creative</option>
-            <option value="Other">Other</option>
-
-        </select>
-
-
-        <input
-            id="goalDate"
-            type="date"
-        >
-
-
-        <textarea
-            id="goalDescription"
-            placeholder="Describe your goal..."
-        ></textarea>
-
-
-        <label class="progress-label">
-
-            <span>Progress</span>
-
-            <span id="progressValue">0%</span>
-
-        </label>
-
-
-        <input
-            id="goalProgress"
-            type="range"
-            min="0"
-            max="100"
-            value="0"
-            oninput="updateProgressLabel()"
-        >
-
-
-        <button class="primary-btn" onclick="addGoal()">
-            Add Goal
-        </button>
-
-    </div>
-
-
-    <div class="section-title">
-        <h2>My Goals</h2>
-    </div>
-
-
-    <div id="goalList" class="goal-grid"></div>
-
-</section>
-
-
-<!-- ================= NOTES ================= -->
-
-<section id="notes" class="page">
-
-    <p class="eyebrow">MEMORY</p>
-
-    <h1>Notes</h1>
-
-
-    <div class="note-box">
-
-        <input
-            id="noteTitle"
-            type="text"
-            placeholder="Note title"
-        >
-
-        <textarea
-            id="noteContent"
-            placeholder="Write your note..."
-        ></textarea>
-
-        <button onclick="addNote()">
-            Save Note
-        </button>
-
-    </div>
-
-
-    <div id="notesList" class="notes-grid"></div>
-
-</section>
-
-
-<!-- ================= NOTIFICATIONS ================= -->
-
-<section id="notifications" class="page">
-
-    <p class="eyebrow">ALERTS</p>
-
-    <h1>Notifications</h1>
-
-    <div id="notificationList" class="list">
-
-        <div class="empty-state">
-            No new notifications.
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ================= AARZOO ================= -->
-
-<section id="character" class="page">
-
-    <p class="eyebrow">YOUR DIGITAL COMPANION</p>
-
-    <h1>Aarzoo</h1>
-
-
-    <div class="character-layout">
-
-
-        <div class="character-preview">
-
-            <img
-                id="characterImage"
-                src="character.png"
-                alt="Aarzoo"
-            >
-
-            <label class="upload-btn">
-
-                Change Character
-
-                <input
-                    type="file"
-                    id="characterUpload"
-                    accept="image/*"
-                    onchange="changeCharacter(event)"
-                >
-
-            </label>
+        <div class="top-actions">
+
+          <button class="icon-button" id="searchButton" title="Search">
+            <svg viewBox="0 0 24 24">
+              <circle cx="10.5" cy="10.5" r="6"></circle>
+              <path d="m16 16 5 5"></path>
+            </svg>
+          </button>
+
+          <button class="icon-button" id="notificationButton" title="Notifications">
+            <svg viewBox="0 0 24 24">
+              <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+              <path d="M10 21h4"></path>
+            </svg>
+            <span class="notification-dot" id="notificationDot"></span>
+          </button>
 
         </div>
 
-
-        <div class="personality-panel">
-
-            <h2>Aarzoo's Personality</h2>
-
-            <p>
-                Define how Aarzoo behaves and communicates with you.
-            </p>
+      </header>
 
 
-            <label>Personality Type</label>
+      <!-- SEARCH -->
+      <div class="search-panel hidden" id="searchPanel">
 
-            <select
-                id="personalityType"
-                onchange="savePersonality()"
-            >
+        <div class="search-box">
 
-                <option value="gentle">
-                    Gentle & Caring
-                </option>
+          <svg viewBox="0 0 24 24">
+            <circle cx="10.5" cy="10.5" r="6"></circle>
+            <path d="m16 16 5 5"></path>
+          </svg>
 
-                <option value="strict">
-                    Strict & Disciplined
-                </option>
+          <input
+            type="search"
+            id="searchInput"
+            placeholder="Search reminders, tasks, notes and goals..."
+          >
 
-                <option value="bold">
-                    Bold & Confident
-                </option>
+          <button id="closeSearch">×</button>
 
-                <option value="playful">
-                    Playful & Cute
-                </option>
+        </div>
 
-                <option value="professional">
-                    Professional & Direct
-                </option>
+        <div id="searchResults" class="search-results"></div>
 
-                <option value="protective">
-                    Protective & Assertive
-                </option>
-
-                <option value="custom">
-                    Custom
-                </option>
-
-            </select>
+      </div>
 
 
-            <label>How should she speak to you?</label>
-
-            <textarea
-                id="personalityDescription"
-                placeholder="Describe Aarzoo's personality..."
-                oninput="savePersonality()"
-            ></textarea>
+      <!-- CONTENT -->
+      <div class="content">
 
 
-            <label>Relationship with You</label>
+        <!-- PROFILE -->
+        <section class="section active" id="profile">
 
-            <select
-                id="relationshipType"
-                onchange="savePersonality()"
-            >
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">ABOUT YOU</p>
+              <h2>My Profile</h2>
+            </div>
 
-                <option>Digital Companion</option>
-                <option>Best Friend</option>
-                <option>Mentor</option>
-                <option>Personal Assistant</option>
-                <option>Accountability Partner</option>
+            <button class="primary-button" id="saveProfile">
+              Save Profile
+            </button>
+          </div>
 
-            </select>
+          <div class="profile-layout">
+
+            <div class="card profile-card">
+
+              <div class="profile-avatar" id="profileAvatar">
+                L
+              </div>
+
+              <h3 id="profileDisplayName">Laya</h3>
+              <p id="profileDisplayUsername">@laya</p>
+
+              <div class="profile-mini-grid">
+                <div>
+                  <span>MBTI</span>
+                  <strong id="miniMbti">INTJ</strong>
+                </div>
+
+                <div>
+                  <span>Age</span>
+                  <strong id="miniAge">24</strong>
+                </div>
+              </div>
+
+            </div>
 
 
-            <button
-                onclick="testAarzoo()"
-                class="primary-btn"
-            >
-                Test Aarzoo
+            <div class="card form-card">
+
+              <div class="form-grid">
+
+                <label>
+                  <span>Name</span>
+                  <input id="profileName" type="text" value="Laya">
+                </label>
+
+                <label>
+                  <span>Username</span>
+                  <input id="profileUsername" type="text" value="laya">
+                </label>
+
+                <label>
+                  <span>Email</span>
+                  <input id="profileEmail" type="email">
+                </label>
+
+                <label>
+                  <span>Gender</span>
+                  <input id="profileGender" type="text">
+                </label>
+
+                <label>
+                  <span>Date of Birth</span>
+                  <input id="profileDob" type="date" value="2002-08-28">
+                </label>
+
+                <label>
+                  <span>Age</span>
+                  <input id="profileAge" type="text" readonly>
+                </label>
+
+                <label>
+                  <span>MBTI</span>
+                  <input id="profileMbti" type="text" value="INTJ">
+                </label>
+
+                <label>
+                  <span>Occupation</span>
+                  <input
+                    id="profileOccupation"
+                    type="text"
+                    value="Executive Assistant to Terminal Head"
+                  >
+                </label>
+
+                <label class="full">
+                  <span>Hobbies</span>
+                  <textarea id="profileHobbies">Singing, Crocheting, Travelling, Poetry, Kuchipudi Dancing</textarea>
+                </label>
+
+                <label class="full">
+                  <span>About Me</span>
+                  <textarea id="profileAbout">Playback singer, poet, dancer and aspiring entrepreneur.</textarea>
+                </label>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="card details-card">
+
+            <div class="card-title">
+              <h3>Personal Details</h3>
+            </div>
+
+            <div class="detail-grid">
+
+              <div class="detail-item">
+                <span>Favourite Colours</span>
+                <strong>Forest Green, Charcoal Black, Silver</strong>
+              </div>
+
+              <div class="detail-item">
+                <span>Favourite Food</span>
+                <strong>Dahi Puri</strong>
+              </div>
+
+              <div class="detail-item">
+                <span>Favourite Places</span>
+                <strong>Hill Stations</strong>
+              </div>
+
+              <div class="detail-item">
+                <span>Favourite Music</span>
+                <strong>Melody</strong>
+              </div>
+
+              <div class="detail-item">
+                <span>Skin Type</span>
+                <strong>Sensitive Skin</strong>
+              </div>
+
+              <div class="detail-item">
+                <span>Body Type</span>
+                <strong>Rectangular</strong>
+              </div>
+
+              <div class="detail-item">
+                <span>Height</span>
+                <strong>5'1"</strong>
+              </div>
+
+              <div class="detail-item">
+                <span>Family</span>
+                <strong>4 Members</strong>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- DASHBOARD -->
+        <section class="section" id="dashboard">
+
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">OVERVIEW</p>
+              <h2>Dashboard</h2>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+
+            <div class="stat-card">
+              <span>Reminders</span>
+              <strong id="statReminders">0</strong>
+            </div>
+
+            <div class="stat-card">
+              <span>Tasks</span>
+              <strong id="statTasks">0</strong>
+            </div>
+
+            <div class="stat-card">
+              <span>Goals</span>
+              <strong id="statGoals">0</strong>
+            </div>
+
+            <div class="stat-card">
+              <span>Notes</span>
+              <strong id="statNotes">0</strong>
+            </div>
+
+          </div>
+
+
+          <div class="dashboard-grid">
+
+            <div class="card">
+
+              <div class="card-title">
+                <h3>Today's Focus</h3>
+              </div>
+
+              <div id="dashboardTasks" class="dashboard-list"></div>
+
+            </div>
+
+
+            <div class="card">
+
+              <div class="card-title">
+                <h3>Upcoming Reminders</h3>
+              </div>
+
+              <div id="dashboardReminders" class="dashboard-list"></div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- REMINDERS -->
+        <section class="section" id="reminders">
+
+          <div class="section-heading">
+
+            <div>
+              <p class="eyebrow">TIME MANAGEMENT</p>
+              <h2>Reminders</h2>
+            </div>
+
+            <button class="primary-button" id="enableNotifications">
+              Enable Notifications
             </button>
 
-        </div>
+          </div>
+
+
+          <div class="card form-card">
+
+            <div class="form-grid">
+
+              <label class="full">
+                <span>Reminder</span>
+                <input id="reminderText" type="text" placeholder="What do you need to remember?">
+              </label>
+
+              <label>
+                <span>Date</span>
+                <input id="reminderDate" type="date">
+              </label>
+
+              <label>
+                <span>Time</span>
+                <input id="reminderTime" type="time">
+              </label>
+
+              <label>
+                <span>Category</span>
+
+                <select id="reminderCategory">
+                  <option value="Work">Work</option>
+                  <option value="Personal">Personal</option>
+                  <option value="Finance">Finance</option>
+                  <option value="Learning">Learning</option>
+                </select>
+
+              </label>
+
+            </div>
+
+            <div class="form-actions">
+              <button class="primary-button" id="saveReminder">
+                Add Reminder
+              </button>
+
+              <button class="secondary-button hidden" id="cancelReminderEdit">
+                Cancel Edit
+              </button>
+            </div>
+
+          </div>
+
+
+          <div id="reminderList" class="item-list"></div>
+
+        </section>
+
+
+        <!-- TODO -->
+        <section class="section" id="todos">
+
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">TASKS</p>
+              <h2>To-do List</h2>
+            </div>
+          </div>
+
+
+          <div class="card todo-input-card">
+
+            <input
+              id="todoText"
+              type="text"
+              placeholder="Add a task..."
+            >
+
+            <select id="todoCategory">
+              <option value="Work">Work</option>
+              <option value="Personal">Personal</option>
+              <option value="Finance">Finance</option>
+              <option value="Learning">Learning</option>
+            </select>
+
+            <button class="primary-button" id="addTodo">
+              Add
+            </button>
+
+          </div>
+
+
+          <div id="todoList" class="todo-list"></div>
+
+        </section>
+
+
+        <!-- GOALS -->
+        <section class="section" id="goals">
+
+          <div class="section-heading">
+
+            <div>
+              <p class="eyebrow">DIRECTION</p>
+              <h2>My Goals</h2>
+            </div>
+
+          </div>
+
+
+          <div class="card form-card">
+
+            <div class="form-grid">
+
+              <label class="full">
+                <span>Goal</span>
+                <input id="goalText" type="text" placeholder="What do you want to achieve?">
+              </label>
+
+              <label>
+                <span>Target Date</span>
+                <input id="goalDate" type="date">
+              </label>
+
+            </div>
+
+            <div class="form-actions">
+              <button class="primary-button" id="addGoal">
+                Add Goal
+              </button>
+            </div>
+
+          </div>
+
+
+          <div id="goalList" class="goal-list"></div>
+
+        </section>
+
+
+        <!-- NOTES -->
+        <section class="section" id="notes">
+
+          <div class="section-heading">
+
+            <div>
+              <p class="eyebrow">THOUGHTS</p>
+              <h2>Notes</h2>
+            </div>
+
+          </div>
+
+
+          <div class="card form-card">
+
+            <div class="form-grid">
+
+              <label class="full">
+                <span>Title</span>
+                <input id="noteTitle" type="text" placeholder="Note title">
+              </label>
+
+              <label class="full">
+                <span>Note</span>
+                <textarea id="noteText" placeholder="Write your note..."></textarea>
+              </label>
+
+            </div>
+
+            <div class="form-actions">
+              <button class="primary-button" id="addNote">
+                Save Note
+              </button>
+            </div>
+
+          </div>
+
+
+          <div id="noteList" class="note-list"></div>
+
+        </section>
+
+
+        <!-- NOTIFICATIONS -->
+        <section class="section" id="notifications">
+
+          <div class="section-heading">
+
+            <div>
+              <p class="eyebrow">ALERT CENTRE</p>
+              <h2>Notifications</h2>
+            </div>
+
+            <button class="secondary-button" id="clearNotifications">
+              Clear All
+            </button>
+
+          </div>
+
+          <div id="notificationList" class="notification-list"></div>
+
+        </section>
+
+
+        <!-- CHARACTER -->
+        <section class="section" id="character">
+
+          <div class="section-heading">
+
+            <div>
+              <p class="eyebrow">YOUR COMPANION</p>
+              <h2>Character</h2>
+            </div>
+
+          </div>
+
+
+          <div class="character-layout">
+
+            <div class="card character-preview-card">
+
+              <div class="character-stage" id="characterStage">
+
+                <img
+                  id="characterPreview"
+                  class="character-preview"
+                  alt="Character"
+                >
+
+                <div class="character-placeholder" id="characterPlaceholder">
+                  <span>Character</span>
+                </div>
+
+              </div>
+
+              <p class="preview-note">
+                Your Character appears here as a transparent sticker.
+              </p>
+
+            </div>
+
+
+            <div class="card form-card">
+
+              <div class="form-grid">
+
+                <label class="full">
+                  <span>Character Name</span>
+
+                  <input
+                    id="characterName"
+                    type="text"
+                    value="Character"
+                    placeholder="Character"
+                  >
+
+                  <small>
+                    Everyone can choose their own Character name.
+                  </small>
+                </label>
+
+
+                <label class="full">
+                  <span>Character Personality</span>
+
+                  <textarea
+                    id="characterPersonality"
+                    placeholder="Describe how your Character should behave..."
+                  >Calm, intelligent, observant, firm and caring.</textarea>
+
+                </label>
+
+
+                <label class="full">
+                  <span>Character Image</span>
+
+                  <input
+                    id="characterUpload"
+                    type="file"
+                    accept="image/png,image/jpeg,image/webp"
+                  >
+
+                  <small>
+                    The background will be removed and the Character will be cropped into a sticker automatically.
+                  </small>
+
+                </label>
+
+              </div>
+
+
+              <div class="form-actions">
+
+                <button class="primary-button" id="saveCharacter">
+                  Save Character
+                </button>
+
+                <button class="secondary-button" id="testCharacter">
+                  Test Character
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- APPEARANCE -->
+        <section class="section" id="appearance">
+
+          <div class="section-heading">
+
+            <div>
+              <p class="eyebrow">VISUAL IDENTITY</p>
+              <h2>Appearance</h2>
+            </div>
+
+          </div>
+
+
+          <div class="palette-grid" id="paletteGrid"></div>
+
+        </section>
+
+      </div>
+
+    </main>
+
+  </div>
+
+
+  <!-- CHARACTER REMINDER -->
+  <div class="character-reminder hidden" id="characterReminder">
+
+    <div class="character-reminder-character" id="reminderCharacterContainer">
+
+      <img
+        id="reminderCharacterImage"
+        alt="Character"
+      >
 
     </div>
 
-</section>
+    <div class="character-bubble">
 
+      <div class="bubble-header">
+        <strong id="reminderCharacterName">Character</strong>
+        <button id="closeCharacterReminder">×</button>
+      </div>
 
-<!-- ================= PROFILE ================= -->
+      <p id="characterMessage">
+        You have a reminder.
+      </p>
 
-<section id="profile" class="page">
-
-    <p class="eyebrow">ABOUT YOU</p>
-
-    <h1>My Profile</h1>
-
-
-    <div class="form-grid">
-
-        <div class="field">
-            <label>Name</label>
-            <input id="profileName">
-        </div>
-
-        <div class="field">
-            <label>Username</label>
-            <input id="profileUsername">
-        </div>
-
-        <div class="field">
-            <label>Gender</label>
-            <input id="profileGender">
-        </div>
-
-        <div class="field">
-            <label>DOB</label>
-            <input id="profileDOB" type="date">
-        </div>
-
-        <div class="field">
-            <label>Email ID</label>
-            <input id="profileEmail" type="email">
-        </div>
-
-        <div class="field">
-            <label>MBTI</label>
-            <input id="profileMBTI">
-        </div>
-
-        <div class="field">
-            <label>Age</label>
-            <input id="profileAge" type="number">
-        </div>
-
-        <div class="field">
-            <label>Height</label>
-            <input id="profileHeight">
-        </div>
-
-        <div class="field">
-            <label>Occupation</label>
-            <input id="profileOccupation">
-        </div>
-
-        <div class="field">
-            <label>Skin Type</label>
-            <input id="profileSkin">
-        </div>
-
-        <div class="field">
-            <label>Body Type</label>
-            <input id="profileBody">
-        </div>
-
-        <div class="field">
-            <label>Family Members</label>
-            <input id="profileFamily">
-        </div>
-
-        <div class="field">
-            <label>Favourite Colours</label>
-            <input id="profileColours">
-        </div>
-
-        <div class="field">
-            <label>Favourite Food</label>
-            <input id="profileFood">
-        </div>
-
-        <div class="field">
-            <label>Favourite Places</label>
-            <input id="profilePlaces">
-        </div>
-
-        <div class="field">
-            <label>Favourite Music Genres</label>
-            <input id="profileMusic">
-        </div>
-
-        <div class="field">
-            <label>Hobbies</label>
-            <textarea id="profileHobbies"></textarea>
-        </div>
-
-        <div class="field">
-            <label>Goals</label>
-            <textarea id="profileGoals"></textarea>
-        </div>
+      <div class="character-prop" id="characterProp"></div>
 
     </div>
 
+  </div>
 
-    <button class="primary-btn" onclick="saveProfile()">
-        Save Profile
-    </button>
 
-</section>
+  <div class="toast hidden" id="toast"></div>
 
 
-<!-- ================= APPEARANCE ================= -->
-
-<section id="appearance" class="page">
-
-    <p class="eyebrow">PERSONALISE LAYRAAZ</p>
-
-    <h1>Appearance</h1>
-
-    <p class="page-description">
-        Choose the colour atmosphere of your LAYRAAZ world.
-    </p>
-
-
-    <h2>Colour Themes</h2>
-
-
-    <div class="theme-grid">
-
-
-        <button onclick="applyTheme('forest')">
-            <span class="theme-preview forest"></span>
-            Forest Green
-        </button>
-
-
-        <button onclick="applyTheme('charcoal')">
-            <span class="theme-preview charcoal"></span>
-            Charcoal
-        </button>
-
-
-        <button onclick="applyTheme('pink')">
-            <span class="theme-preview pink"></span>
-            Pink
-        </button>
-
-
-        <button onclick="applyTheme('yellow')">
-            <span class="theme-preview yellow"></span>
-            Yellow
-        </button>
-
-
-        <button onclick="applyTheme('butter')">
-            <span class="theme-preview butter"></span>
-            Butter Yellow
-        </button>
-
-
-        <button onclick="applyTheme('blue')">
-            <span class="theme-preview blue"></span>
-            Blue
-        </button>
-
-
-        <button onclick="applyTheme('babyblue')">
-            <span class="theme-preview babyblue"></span>
-            Baby Blue
-        </button>
-
-
-        <button onclick="applyTheme('skyblue')">
-            <span class="theme-preview skyblue"></span>
-            Sky Blue
-        </button>
-
-
-        <button onclick="applyTheme('lavender')">
-            <span class="theme-preview lavender"></span>
-            Lavender
-        </button>
-
-
-        <button onclick="applyTheme('brown')">
-            <span class="theme-preview brown"></span>
-            Brown
-        </button>
-
-
-        <button onclick="applyTheme('purple')">
-            <span class="theme-preview purple"></span>
-            Purple
-        </button>
-
-
-        <button onclick="applyTheme('lilac')">
-            <span class="theme-preview lilac"></span>
-            Lilac
-        </button>
-
-
-        <button onclick="applyTheme('lime')">
-            <span class="theme-preview lime"></span>
-            Lime Green
-        </button>
-
-
-        <button onclick="applyTheme('red')">
-            <span class="theme-preview red"></span>
-            Red
-        </button>
-
-
-        <button onclick="applyTheme('maroon')">
-            <span class="theme-preview maroon"></span>
-            Maroon
-        </button>
-
-
-        <button onclick="applyTheme('orange')">
-            <span class="theme-preview orange"></span>
-            Orange
-        </button>
-
-
-        <button onclick="applyTheme('terracotta')">
-            <span class="theme-preview terracotta"></span>
-            Terracotta
-        </button>
-
-
-        <button onclick="applyTheme('navy')">
-            <span class="theme-preview navy"></span>
-            Navy Blue
-        </button>
-
-
-        <button onclick="applyTheme('gold')">
-            <span class="theme-preview gold"></span>
-            Gold
-        </button>
-
-
-        <button onclick="applyTheme('rosegold')">
-            <span class="theme-preview rosegold"></span>
-            Rose Gold
-        </button>
-
-
-        <button onclick="applyTheme('emerald')">
-            <span class="theme-preview emerald"></span>
-            Emerald
-        </button>
-
-
-        <button onclick="applyTheme('sage')">
-            <span class="theme-preview sage"></span>
-            Sage
-        </button>
-
-
-        <button onclick="applyTheme('burgundy')">
-            <span class="theme-preview burgundy"></span>
-            Burgundy
-        </button>
-
-
-        <button onclick="applyTheme('midnight')">
-            <span class="theme-preview midnight"></span>
-            Midnight
-        </button>
-
-
-        <button onclick="applyTheme('plum')">
-            <span class="theme-preview plum"></span>
-            Plum
-        </button>
-
-    </div>
-
-
-    <h2>Create Your Own Colour Combination</h2>
-
-
-    <div class="colour-picker-grid">
-
-
-        <label>
-            Background
-            <input
-                type="color"
-                id="customBackground"
-                onchange="applyCustomTheme()"
-            >
-        </label>
-
-
-        <label>
-            Main Colour
-            <input
-                type="color"
-                id="customPrimary"
-                onchange="applyCustomTheme()"
-            >
-        </label>
-
-
-        <label>
-            Accent
-            <input
-                type="color"
-                id="customAccent"
-                onchange="applyCustomTheme()"
-            >
-        </label>
-
-
-        <label>
-            Font Colour
-            <input
-                type="color"
-                id="customText"
-                onchange="applyCustomTheme()"
-            >
-        </label>
-
-    </div>
-
-</section>
-
-
-<!-- ================= SETTINGS ================= -->
-
-<section id="settings" class="page">
-
-    <p class="eyebrow">SYSTEM</p>
-
-    <h1>Settings</h1>
-
-
-    <div class="settings-card">
-
-        <label class="switch-row">
-
-            <span>Enable Aarzoo reminders</span>
-
-            <input
-                type="checkbox"
-                id="enableReminders"
-                checked
-                onchange="saveSettings()"
-            >
-
-        </label>
-
-
-        <label class="switch-row">
-
-            <span>Show character with reminders</span>
-
-            <input
-                type="checkbox"
-                id="showCharacter"
-                checked
-                onchange="saveSettings()"
-            >
-
-        </label>
-
-
-        <label class="switch-row">
-
-            <span>Use silent notifications</span>
-
-            <input
-                type="checkbox"
-                id="silentNotifications"
-                checked
-                onchange="saveSettings()"
-            >
-
-        </label>
-
-    </div>
-
-</section>
-
-</main>
-
-
-<!-- ================= AARZOO REMINDER ================= -->
-
-<div id="aarzooReminder" class="aarzoo-reminder">
-
-    <img
-        id="reminderCharacter"
-        src="character.png"
-        alt="Aarzoo"
-    >
-
-
-    <div class="speech-bubble">
-
-        <button
-            class="close-reminder"
-            onclick="closeReminder()"
-        >
-            ×
-        </button>
-
-
-        <strong id="aarzooMessage">
-            Laya, you have a reminder.
-        </strong>
-
-
-        <span id="aarzooSubMessage">
-            I'm waiting.
-        </span>
-
-    </div>
-
-</div>
-
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>
