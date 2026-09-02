@@ -48,7 +48,7 @@ const defaultData = {
         image: ""
     },
 
-    appearance: "forest",
+    appearance: "palette1",
 
     reminders: [],
 
@@ -70,17 +70,23 @@ let data = loadData();
 
 
 function loadData() {
+
     try {
-        const saved = localStorage.getItem(STORAGE_KEY);
+
+        const saved =
+            localStorage.getItem(STORAGE_KEY);
 
         if (!saved) {
             return structuredClone(defaultData);
         }
 
-        const parsed = JSON.parse(saved);
+        const parsed =
+            JSON.parse(saved);
 
         return {
+
             ...structuredClone(defaultData),
+
             ...parsed,
 
             profile: {
@@ -93,99 +99,131 @@ function loadData() {
                 ...(parsed.character || {})
             },
 
-            reminders: Array.isArray(parsed.reminders) ? parsed.reminders : [],
-            todos: Array.isArray(parsed.todos) ? parsed.todos : [],
-            goals: Array.isArray(parsed.goals) ? parsed.goals : [],
-            notes: Array.isArray(parsed.notes) ? parsed.notes : [],
-            notifications: Array.isArray(parsed.notifications)
-                ? parsed.notifications
-                : []
+            reminders:
+                Array.isArray(parsed.reminders)
+                    ? parsed.reminders
+                    : [],
+
+            todos:
+                Array.isArray(parsed.todos)
+                    ? parsed.todos
+                    : [],
+
+            goals:
+                Array.isArray(parsed.goals)
+                    ? parsed.goals
+                    : [],
+
+            notes:
+                Array.isArray(parsed.notes)
+                    ? parsed.notes
+                    : [],
+
+            notifications:
+                Array.isArray(parsed.notifications)
+                    ? parsed.notifications
+                    : []
         };
 
     } catch (error) {
-        console.error("Could not load LAYRAAZ data:", error);
+
+        console.error(
+            "Could not load LAYRAAZ data:",
+            error
+        );
+
         return structuredClone(defaultData);
     }
 }
 
 
 function saveData() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(data)
+    );
 }
 
 
 /* =========================================================
    APPEARANCE PALETTES
-   Exactly 10 palettes
+   =========================================================
+
+   Each palette contains ONLY:
+   1. Background
+   2. Main
+   3. Font
+
    ========================================================= */
 
 const palettes = {
 
-    forest: {
-        name: "Deep Forest Green",
+    palette1: {
+        name: "Palette 1",
         background: "#1d251c",
         main: "#101411",
         font: "#D0D4CE"
     },
 
-    butter: {
-        name: "Butter Yellow",
+    palette2: {
+        name: "Palette 2",
         background: "#F3E7A3",
         main: "#8CB8D0",
         font: "#4A2C20"
     },
 
-    almond: {
-        name: "Almond",
+    palette3: {
+        name: "Palette 3",
         background: "#E8D8C3",
         main: "#8DBFA9",
         font: "#8E2636"
     },
 
-    sage: {
-        name: "Misty Sage",
+    palette4: {
+        name: "Palette 4",
         background: "#B8C5B1",
         main: "#6D2026",
         font: "#3B2922"
     },
 
-    navy: {
-        name: "Navy",
+    palette5: {
+        name: "Palette 5",
         background: "#111D38",
         main: "#C8A85C",
-        font: "#E5D5B8"
+        font: "#F5F1E8"
     },
 
-    champagne: {
-        name: "Champagne",
-        background: "#F0DFC3",
+    palette6: {
+        name: "Palette 6",
+        background: "#722F37",
         main: "#70752F",
-        font: "#403A25"
+        font: "#F3E6D0"
     },
 
-    gunmetal: {
-        name: "Gunmetal",
-        background: "#353B40",
-        main: "#E9E0D0",
-        font: "#F4EBDD"
+    palette7: {
+        name: "Palette 7",
+        background: "#DC9F2A",
+        main: "#8399B9",
+        font: "#475418"
     },
 
-    cadet: {
-        name: "Cadet Grey",
-        background: "#919FA5",
-        main: "#EEEAE2",
-        font: "#30251F"
+    palette8: {
+        name: "Palette 8",
+        background: "#D3A6A3",
+        main: "#70702E",
+        font: "#C7BEB3"
     },
 
-    pink: {
-        name: "Muted Pink",
-        background: "#C99BA1",
-        main: "#9D233B",
-        font: "#681D2B"
+    palette9: {
+        name: "Palette 9",
+        background: "#BCC2F4",
+        main: "#B0BC68",
+        font: "#FFFecd"
     },
 
-    lavender: {
-        name: "Lavender Mist",
+    palette10: {
+        name: "Palette 10",
         background: "#DAD1E6",
         main: "#4A302A",
         font: "#39243A"
@@ -194,13 +232,14 @@ const palettes = {
 
 
 /* =========================================================
-   APPEARANCE
+   APPLY APPEARANCE
    ========================================================= */
 
 function applyAppearance() {
 
     const palette =
-        palettes[data.appearance] || palettes.forest;
+        palettes[data.appearance] ||
+        palettes.palette1;
 
     document.documentElement.style.setProperty(
         "--background",
@@ -232,8 +271,11 @@ function calculateAge(dob) {
 
     if (!dob) return "";
 
-    const birthDate = new Date(dob);
-    const today = new Date();
+    const birthDate =
+        new Date(dob);
+
+    const today =
+        new Date();
 
     let age =
         today.getFullYear() -
@@ -247,9 +289,11 @@ function calculateAge(dob) {
         monthDifference < 0 ||
         (
             monthDifference === 0 &&
-            today.getDate() < birthDate.getDate()
+            today.getDate() <
+            birthDate.getDate()
         )
     ) {
+
         age--;
     }
 
@@ -258,17 +302,21 @@ function calculateAge(dob) {
 
 
 /* =========================================================
-   ELEMENT HELPERS
+   ELEMENT HELPER
    ========================================================= */
 
 function get(id) {
+
     return document.getElementById(id);
 }
 
 
 function escapeHTML(value) {
 
-    if (value === null || value === undefined) {
+    if (
+        value === null ||
+        value === undefined
+    ) {
         return "";
     }
 
@@ -287,25 +335,46 @@ function escapeHTML(value) {
 
 function showSection(sectionId) {
 
-    document.querySelectorAll(".section").forEach(section => {
-        section.classList.remove("active");
-    });
+    document
+        .querySelectorAll(".section")
+        .forEach(section => {
 
-    const target = get(sectionId);
+            section.classList.remove(
+                "active"
+            );
+
+        });
+
+    const target =
+        get(sectionId);
 
     if (target) {
-        target.classList.add("active");
+
+        target.classList.add(
+            "active"
+        );
     }
 
-    document.querySelectorAll(".nav-item").forEach(item => {
-        item.classList.remove("active");
-    });
+    document
+        .querySelectorAll(".nav-item")
+        .forEach(item => {
+
+            item.classList.remove(
+                "active"
+            );
+
+        });
 
     const navItem =
-        document.querySelector(`[data-section="${sectionId}"]`);
+        document.querySelector(
+            `[data-section="${sectionId}"]`
+        );
 
     if (navItem) {
-        navItem.classList.add("active");
+
+        navItem.classList.add(
+            "active"
+        );
     }
 
     window.scrollTo({
@@ -321,28 +390,51 @@ function showSection(sectionId) {
 
 function setupSidebar() {
 
-    const sidebar = get("sidebar");
-    const toggle = get("sidebarToggle");
+    const sidebar =
+        get("sidebar");
 
-    if (!sidebar || !toggle) return;
+    const toggle =
+        get("sidebarToggle");
 
-    toggle.addEventListener("click", () => {
-        sidebar.classList.toggle("collapsed");
-    });
+    if (!sidebar || !toggle) {
+        return;
+    }
 
-    document.querySelectorAll(".nav-item").forEach(item => {
+    toggle.addEventListener(
+        "click",
+        () => {
 
-        item.addEventListener("click", () => {
+            sidebar.classList.toggle(
+                "collapsed"
+            );
 
-            const section =
-                item.getAttribute("data-section");
+        }
+    );
 
-            if (section) {
-                showSection(section);
-            }
+    document
+        .querySelectorAll(".nav-item")
+        .forEach(item => {
+
+            item.addEventListener(
+                "click",
+                () => {
+
+                    const section =
+                        item.getAttribute(
+                            "data-section"
+                        );
+
+                    if (section) {
+
+                        showSection(
+                            section
+                        );
+                    }
+
+                }
+            );
+
         });
-
-    });
 }
 
 
@@ -352,105 +444,215 @@ function setupSidebar() {
 
 function renderProfile() {
 
-    const profile = data.profile;
+    const profile =
+        data.profile;
 
-    const nameInput = get("profileName");
-    const dobInput = get("profileDob");
-    const mbtiInput = get("profileMbti");
-    const occupationInput = get("profileOccupation");
-    const hobbiesInput = get("profileHobbies");
-    const coloursInput = get("profileColours");
-    const foodInput = get("profileFood");
-    const placesInput = get("profilePlaces");
-    const musicInput = get("profileMusic");
-    const skinInput = get("profileSkin");
-    const bodyInput = get("profileBody");
-    const familyInput = get("profileFamily");
-    const heightInput = get("profileHeight");
-    const jewelleryInput = get("profileJewellery");
-    const businessInput = get("profileBusiness");
+    const nameInput =
+        get("profileName");
 
-    if (nameInput) nameInput.value = profile.name || "";
-    if (dobInput) dobInput.value = profile.dob || "";
-    if (mbtiInput) mbtiInput.value = profile.mbti || "";
-    if (occupationInput) occupationInput.value = profile.occupation || "";
+    const dobInput =
+        get("profileDob");
+
+    const mbtiInput =
+        get("profileMbti");
+
+    const occupationInput =
+        get("profileOccupation");
+
+    const hobbiesInput =
+        get("profileHobbies");
+
+    const coloursInput =
+        get("profileColours");
+
+    const foodInput =
+        get("profileFood");
+
+    const placesInput =
+        get("profilePlaces");
+
+    const musicInput =
+        get("profileMusic");
+
+    const skinInput =
+        get("profileSkin");
+
+    const bodyInput =
+        get("profileBody");
+
+    const familyInput =
+        get("profileFamily");
+
+    const heightInput =
+        get("profileHeight");
+
+    const jewelleryInput =
+        get("profileJewellery");
+
+    const businessInput =
+        get("profileBusiness");
+
+
+    if (nameInput) {
+
+        nameInput.value =
+            profile.name || "";
+    }
+
+
+    if (dobInput) {
+
+        dobInput.value =
+            profile.dob || "";
+    }
+
+
+    if (mbtiInput) {
+
+        mbtiInput.value =
+            profile.mbti || "";
+    }
+
+
+    if (occupationInput) {
+
+        occupationInput.value =
+            profile.occupation || "";
+    }
+
 
     if (hobbiesInput) {
+
         hobbiesInput.value =
             Array.isArray(profile.hobbies)
                 ? profile.hobbies.join(", ")
                 : profile.hobbies || "";
     }
 
+
     if (coloursInput) {
-        coloursInput.value = profile.favouriteColours || "";
+
+        coloursInput.value =
+            profile.favouriteColours || "";
     }
+
 
     if (foodInput) {
-        foodInput.value = profile.favouriteFood || "";
+
+        foodInput.value =
+            profile.favouriteFood || "";
     }
+
 
     if (placesInput) {
-        placesInput.value = profile.favouritePlaces || "";
+
+        placesInput.value =
+            profile.favouritePlaces || "";
     }
+
 
     if (musicInput) {
-        musicInput.value = profile.favouriteMusic || "";
+
+        musicInput.value =
+            profile.favouriteMusic || "";
     }
+
 
     if (skinInput) {
-        skinInput.value = profile.skinType || "";
+
+        skinInput.value =
+            profile.skinType || "";
     }
+
 
     if (bodyInput) {
-        bodyInput.value = profile.bodyType || "";
+
+        bodyInput.value =
+            profile.bodyType || "";
     }
+
 
     if (familyInput) {
-        familyInput.value = profile.familyMembers || "";
+
+        familyInput.value =
+            profile.familyMembers || "";
     }
+
 
     if (heightInput) {
-        heightInput.value = profile.height || "";
+
+        heightInput.value =
+            profile.height || "";
     }
+
 
     if (jewelleryInput) {
-        jewelleryInput.value = profile.jewellery || "";
+
+        jewelleryInput.value =
+            profile.jewellery || "";
     }
+
 
     if (businessInput) {
-        businessInput.value = profile.businessGoal || "";
+
+        businessInput.value =
+            profile.businessGoal || "";
     }
 
-    const ageElement = get("profileAge");
+
+    const ageElement =
+        get("profileAge");
 
     if (ageElement) {
+
         ageElement.textContent =
-            calculateAge(profile.dob);
+            calculateAge(
+                profile.dob
+            );
     }
+
 
     updateProfileImages();
 }
 
 
+/* =========================================================
+   SAVE PROFILE
+   ========================================================= */
+
 function saveProfile() {
 
-    const profile = data.profile;
+    const profile =
+        data.profile;
+
 
     profile.name =
-        get("profileName")?.value.trim() || "";
+        get("profileName")
+            ?.value
+            .trim() || "";
+
 
     profile.dob =
-        get("profileDob")?.value || "";
+        get("profileDob")
+            ?.value || "";
+
 
     profile.mbti =
-        get("profileMbti")?.value.trim() || "";
+        get("profileMbti")
+            ?.value
+            .trim() || "";
+
 
     profile.occupation =
-        get("profileOccupation")?.value.trim() || "";
+        get("profileOccupation")
+            ?.value
+            .trim() || "";
+
 
     const hobbies =
-        get("profileHobbies")?.value || "";
+        get("profileHobbies")
+            ?.value || "";
+
 
     profile.hobbies =
         hobbies
@@ -458,75 +660,120 @@ function saveProfile() {
             .map(item => item.trim())
             .filter(Boolean);
 
+
     profile.favouriteColours =
-        get("profileColours")?.value.trim() || "";
+        get("profileColours")
+            ?.value
+            .trim() || "";
+
 
     profile.favouriteFood =
-        get("profileFood")?.value.trim() || "";
+        get("profileFood")
+            ?.value
+            .trim() || "";
+
 
     profile.favouritePlaces =
-        get("profilePlaces")?.value.trim() || "";
+        get("profilePlaces")
+            ?.value
+            .trim() || "";
+
 
     profile.favouriteMusic =
-        get("profileMusic")?.value.trim() || "";
+        get("profileMusic")
+            ?.value
+            .trim() || "";
+
 
     profile.skinType =
-        get("profileSkin")?.value.trim() || "";
+        get("profileSkin")
+            ?.value
+            .trim() || "";
+
 
     profile.bodyType =
-        get("profileBody")?.value.trim() || "";
+        get("profileBody")
+            ?.value
+            .trim() || "";
+
 
     profile.familyMembers =
-        get("profileFamily")?.value.trim() || "";
+        get("profileFamily")
+            ?.value
+            .trim() || "";
+
 
     profile.height =
-        get("profileHeight")?.value.trim() || "";
+        get("profileHeight")
+            ?.value
+            .trim() || "";
+
 
     profile.jewellery =
-        get("profileJewellery")?.value.trim() || "";
+        get("profileJewellery")
+            ?.value
+            .trim() || "";
+
 
     profile.businessGoal =
-        get("profileBusiness")?.value.trim() || "";
+        get("profileBusiness")
+            ?.value
+            .trim() || "";
+
 
     saveData();
 
     renderProfile();
+
     renderDashboard();
 
-    showToast("Profile saved.");
+    showToast(
+        "Profile saved."
+    );
 }
 
 
 /* =========================================================
-   PROFILE IMAGE
+   PROFILE IMAGE UPLOAD
    ========================================================= */
 
 function setupProfileImageUpload() {
 
-    const input = get("profileImageUpload");
+    const input =
+        get("profileImageUpload");
 
     if (!input) return;
 
-    input.addEventListener("change", event => {
+    input.addEventListener(
+        "change",
+        event => {
 
-        const file = event.target.files[0];
+            const file =
+                event.target.files[0];
 
-        if (!file) return;
+            if (!file) return;
 
-        const reader = new FileReader();
+            const reader =
+                new FileReader();
 
-        reader.onload = function(e) {
+            reader.onload =
+                function(e) {
 
-            data.profile.image = e.target.result;
+                    data.profile.image =
+                        e.target.result;
 
-            saveData();
-            updateProfileImages();
+                    saveData();
 
-            showToast("Profile picture updated.");
-        };
+                    updateProfileImages();
 
-        reader.readAsDataURL(file);
-    });
+                    showToast(
+                        "Profile picture updated."
+                    );
+                };
+
+            reader.readAsDataURL(file);
+        }
+    );
 }
 
 
@@ -537,7 +784,9 @@ function updateProfileImages() {
         .forEach(img => {
 
             if (data.profile.image) {
-                img.src = data.profile.image;
+
+                img.src =
+                    data.profile.image;
             }
 
         });
@@ -550,7 +799,9 @@ function updateProfileImages() {
 
 function renderDashboard() {
 
-    const profile = data.profile;
+    const profile =
+        data.profile;
+
 
     const welcome =
         get("welcomeMessage");
@@ -564,37 +815,48 @@ function renderDashboard() {
             `Welcome Back, ${name}`;
     }
 
+
     const dashboardName =
         get("dashboardName");
 
     if (dashboardName) {
+
         dashboardName.textContent =
             profile.name || "Laya";
     }
+
 
     const dashboardAge =
         get("dashboardAge");
 
     if (dashboardAge) {
+
         dashboardAge.textContent =
-            calculateAge(profile.dob) || "—";
+            calculateAge(
+                profile.dob
+            ) || "—";
     }
+
 
     const dashboardMbti =
         get("dashboardMbti");
 
     if (dashboardMbti) {
+
         dashboardMbti.textContent =
             profile.mbti || "—";
     }
+
 
     const dashboardOccupation =
         get("dashboardOccupation");
 
     if (dashboardOccupation) {
+
         dashboardOccupation.textContent =
             profile.occupation || "—";
     }
+
 
     const dashboardHobbies =
         get("dashboardHobbies");
@@ -602,70 +864,91 @@ function renderDashboard() {
     if (dashboardHobbies) {
 
         dashboardHobbies.textContent =
-            Array.isArray(profile.hobbies)
+            Array.isArray(
+                profile.hobbies
+            )
                 ? profile.hobbies.join(", ")
                 : profile.hobbies || "—";
     }
+
 
     const dashboardFood =
         get("dashboardFood");
 
     if (dashboardFood) {
+
         dashboardFood.textContent =
             profile.favouriteFood || "—";
     }
+
 
     const dashboardPlaces =
         get("dashboardPlaces");
 
     if (dashboardPlaces) {
+
         dashboardPlaces.textContent =
             profile.favouritePlaces || "—";
     }
+
 
     const dashboardMusic =
         get("dashboardMusic");
 
     if (dashboardMusic) {
+
         dashboardMusic.textContent =
             profile.favouriteMusic || "—";
     }
+
 
     const dashboardColours =
         get("dashboardColours");
 
     if (dashboardColours) {
+
         dashboardColours.textContent =
             profile.favouriteColours || "—";
     }
+
 
     const dashboardSkin =
         get("dashboardSkin");
 
     if (dashboardSkin) {
+
         dashboardSkin.textContent =
             profile.skinType || "—";
     }
+
 
     const dashboardBody =
         get("dashboardBody");
 
     if (dashboardBody) {
+
         dashboardBody.textContent =
             profile.bodyType || "—";
     }
+
 
     const dashboardFamily =
         get("dashboardFamily");
 
     if (dashboardFamily) {
+
         dashboardFamily.textContent =
             profile.familyMembers || "—";
     }
 
+
     updateDashboardCharacter();
 }
 
+
+/* =========================================================
+   DASHBOARD CHARACTER
+   ========================================================= */
 
 function updateDashboardCharacter() {
 
@@ -675,14 +958,18 @@ function updateDashboardCharacter() {
     if (!image) return;
 
     if (data.character.image) {
-        image.src = data.character.image;
-        image.style.display = "block";
+
+        image.src =
+            data.character.image;
+
+        image.style.display =
+            "block";
     }
 }
 
 
 /* =========================================================
-   CHARACTER
+   CHARACTER SETTINGS
    ========================================================= */
 
 function renderCharacterSettings() {
@@ -693,15 +980,22 @@ function renderCharacterSettings() {
     const personalityInput =
         get("characterPersonality");
 
+
     if (nameInput) {
+
         nameInput.value =
-            data.character.name || "Character";
+            data.character.name ||
+            "Character";
     }
 
+
     if (personalityInput) {
+
         personalityInput.value =
-            data.character.personality || "";
+            data.character.personality ||
+            "";
     }
+
 
     updateCharacterImages();
 }
@@ -710,19 +1004,28 @@ function renderCharacterSettings() {
 function saveCharacterSettings() {
 
     data.character.name =
-        get("characterName")?.value.trim() ||
+        get("characterName")
+            ?.value
+            .trim() ||
         "Character";
 
+
     data.character.personality =
-        get("characterPersonality")?.value.trim() ||
+        get("characterPersonality")
+            ?.value
+            .trim() ||
         "Calm, intelligent, firm and caring.";
+
 
     saveData();
 
     renderCharacterSettings();
+
     renderDashboard();
 
-    showToast("Character settings saved.");
+    showToast(
+        "Character settings saved."
+    );
 }
 
 
@@ -737,31 +1040,42 @@ function setupCharacterImageUpload() {
 
     if (!input) return;
 
-    input.addEventListener("change", event => {
 
-        const file =
-            event.target.files[0];
+    input.addEventListener(
+        "change",
+        event => {
 
-        if (!file) return;
+            const file =
+                event.target.files[0];
 
-        const reader =
-            new FileReader();
+            if (!file) return;
 
-        reader.onload = function(e) {
 
-            data.character.image =
-                e.target.result;
+            const reader =
+                new FileReader();
 
-            saveData();
 
-            updateCharacterImages();
-            updateDashboardCharacter();
+            reader.onload =
+                function(e) {
 
-            showToast("Character picture updated.");
-        };
+                    data.character.image =
+                        e.target.result;
 
-        reader.readAsDataURL(file);
-    });
+                    saveData();
+
+                    updateCharacterImages();
+
+                    updateDashboardCharacter();
+
+                    showToast(
+                        "Character picture updated."
+                    );
+                };
+
+
+            reader.readAsDataURL(file);
+        }
+    );
 }
 
 
@@ -772,19 +1086,23 @@ function updateCharacterImages() {
         .forEach(img => {
 
             if (data.character.image) {
+
                 img.src =
                     data.character.image;
             }
 
         });
 
+
     const dashboardImage =
         get("dashboardCharacterImage");
+
 
     if (
         dashboardImage &&
         data.character.image
     ) {
+
         dashboardImage.src =
             data.character.image;
     }
@@ -807,15 +1125,20 @@ function testCharacter() {
    CHARACTER REMINDER
    ========================================================= */
 
-function showCharacterReminder(message) {
+function showCharacterReminder(
+    message
+) {
 
     let container =
         get("characterReminder");
 
+
     if (!container) {
 
         container =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         container.id =
             "characterReminder";
@@ -823,18 +1146,36 @@ function showCharacterReminder(message) {
         container.className =
             "character-reminder";
 
-        document.body.appendChild(container);
+        document.body.appendChild(
+            container
+        );
     }
 
+
     const characterName =
-        data.character.name || "Character";
+        data.character.name ||
+        "Character";
+
 
     const imageHTML =
         data.character.image
-            ? `<img src="${data.character.image}" class="character-reminder-image">`
-            : `<div class="character-placeholder">✦</div>`;
+
+            ? `
+                <img
+                    src="${data.character.image}"
+                    class="character-reminder-image"
+                >
+              `
+
+            : `
+                <div class="character-placeholder">
+                    ✦
+                </div>
+              `;
+
 
     container.innerHTML = `
+
         <div class="character-reminder-inner">
 
             <div class="character-reminder-figure">
@@ -856,11 +1197,22 @@ function showCharacterReminder(message) {
         </div>
     `;
 
-    container.classList.add("show");
 
-    setTimeout(() => {
-        container.classList.remove("show");
-    }, 10000);
+    container.classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        () => {
+
+            container.classList.remove(
+                "show"
+            );
+
+        },
+        10000
+    );
 }
 
 
@@ -875,13 +1227,19 @@ function renderReminders() {
 
     if (!container) return;
 
+
     if (!data.reminders.length) {
 
         container.innerHTML =
-            `<div class="empty-state">No reminders yet.</div>`;
+            `
+            <div class="empty-state">
+                No reminders yet.
+            </div>
+            `;
 
         return;
     }
+
 
     const sorted =
         [...data.reminders]
@@ -891,64 +1249,95 @@ function renderReminders() {
                     new Date(b.datetime)
             );
 
+
     container.innerHTML =
-        sorted.map(reminder => {
+        sorted
+            .map(reminder => {
 
-            const date =
-                new Date(reminder.datetime);
+                const date =
+                    new Date(
+                        reminder.datetime
+                    );
 
-            return `
-                <div class="reminder-item">
 
-                    <div>
-                        <strong>
-                            ${escapeHTML(reminder.title)}
-                        </strong>
+                return `
 
-                        <div class="muted">
-                            ${date.toLocaleString()}
+                    <div class="reminder-item">
+
+                        <div>
+
+                            <strong>
+                                ${escapeHTML(
+                                    reminder.title
+                                )}
+                            </strong>
+
+                            <div class="muted">
+                                ${date.toLocaleString()}
+                            </div>
+
+                            ${
+                                reminder.description
+
+                                    ? `
+                                        <div>
+                                            ${escapeHTML(
+                                                reminder.description
+                                            )}
+                                        </div>
+                                      `
+
+                                    : ""
+                            }
+
                         </div>
 
-                        ${
-                            reminder.description
-                                ? `<div>
-                                    ${escapeHTML(reminder.description)}
-                                   </div>`
-                                : ""
-                        }
-                    </div>
 
-                    <div class="item-actions">
+                        <div class="item-actions">
 
-                        <button
-                            onclick="editReminder('${reminder.id}')">
-                            Edit
-                        </button>
+                            <button
+                                onclick="editReminder('${reminder.id}')">
+                                Edit
+                            </button>
 
-                        <button
-                            onclick="deleteReminder('${reminder.id}')">
-                            Delete
-                        </button>
+                            <button
+                                onclick="deleteReminder('${reminder.id}')">
+                                Delete
+                            </button>
+
+                        </div>
 
                     </div>
 
-                </div>
-            `;
+                `;
 
-        }).join("");
+            })
+            .join("");
 }
 
+
+/* =========================================================
+   SAVE REMINDER
+   ========================================================= */
 
 function saveReminder() {
 
     const title =
-        get("reminderTitle")?.value.trim();
+        get("reminderTitle")
+            ?.value
+            .trim();
+
 
     const datetime =
-        get("reminderDateTime")?.value;
+        get("reminderDateTime")
+            ?.value;
+
 
     const description =
-        get("reminderDescription")?.value.trim() || "";
+        get("reminderDescription")
+            ?.value
+            .trim() || "";
+
 
     if (!title || !datetime) {
 
@@ -959,22 +1348,35 @@ function saveReminder() {
         return;
     }
 
+
     const editingId =
-        get("editingReminderId")?.value;
+        get("editingReminderId")
+            ?.value;
+
 
     if (editingId) {
 
         const reminder =
             data.reminders.find(
-                item => item.id === editingId
+                item =>
+                    item.id ===
+                    editingId
             );
+
 
         if (reminder) {
 
-            reminder.title = title;
-            reminder.datetime = datetime;
-            reminder.description = description;
-            reminder.notified = false;
+            reminder.title =
+                title;
+
+            reminder.datetime =
+                datetime;
+
+            reminder.description =
+                description;
+
+            reminder.notified =
+                false;
         }
 
     } else {
@@ -984,15 +1386,24 @@ function saveReminder() {
             id:
                 Date.now().toString(),
 
-            title,
+            title:
 
-            datetime,
+                title,
 
-            description,
+            datetime:
 
-            notified: false
+                datetime,
+
+            description:
+
+                description,
+
+            notified:
+
+                false
         });
     }
+
 
     saveData();
 
@@ -1000,42 +1411,65 @@ function saveReminder() {
 
     clearReminderForm();
 
-    showToast("Reminder saved.");
+    showToast(
+        "Reminder saved."
+    );
 }
 
+
+/* =========================================================
+   EDIT REMINDER
+   ========================================================= */
 
 function editReminder(id) {
 
     const reminder =
         data.reminders.find(
-            item => item.id === id
+            item =>
+                item.id === id
         );
+
 
     if (!reminder) return;
 
+
     if (get("reminderTitle")) {
+
         get("reminderTitle").value =
             reminder.title;
     }
 
+
     if (get("reminderDateTime")) {
+
         get("reminderDateTime").value =
             reminder.datetime;
     }
 
+
     if (get("reminderDescription")) {
+
         get("reminderDescription").value =
             reminder.description || "";
     }
 
+
     if (get("editingReminderId")) {
+
         get("editingReminderId").value =
             reminder.id;
     }
 
-    showSection("reminders");
+
+    showSection(
+        "reminders"
+    );
 }
 
+
+/* =========================================================
+   DELETE REMINDER
+   ========================================================= */
 
 function deleteReminder(id) {
 
@@ -1045,30 +1479,48 @@ function deleteReminder(id) {
                 reminder.id !== id
         );
 
+
     saveData();
 
     renderReminders();
 
-    showToast("Reminder deleted.");
+    showToast(
+        "Reminder deleted."
+    );
 }
 
+
+/* =========================================================
+   CLEAR REMINDER FORM
+   ========================================================= */
 
 function clearReminderForm() {
 
     if (get("reminderTitle")) {
-        get("reminderTitle").value = "";
+
+        get("reminderTitle").value =
+            "";
     }
+
 
     if (get("reminderDateTime")) {
-        get("reminderDateTime").value = "";
+
+        get("reminderDateTime").value =
+            "";
     }
+
 
     if (get("reminderDescription")) {
-        get("reminderDescription").value = "";
+
+        get("reminderDescription").value =
+            "";
     }
 
+
     if (get("editingReminderId")) {
-        get("editingReminderId").value = "";
+
+        get("editingReminderId").value =
+            "";
     }
 }
 
@@ -1093,47 +1545,71 @@ function checkReminders() {
     const now =
         new Date();
 
-    let changed = false;
+    let changed =
+        false;
 
-    data.reminders.forEach(reminder => {
 
-        if (reminder.notified) {
-            return;
+    data.reminders.forEach(
+        reminder => {
+
+            if (reminder.notified) {
+                return;
+            }
+
+
+            const reminderTime =
+                new Date(
+                    reminder.datetime
+                );
+
+
+            if (
+                !isNaN(
+                    reminderTime.getTime()
+                ) &&
+                reminderTime <= now
+            ) {
+
+                reminder.notified =
+                    true;
+
+                changed =
+                    true;
+
+
+                const message =
+                    reminder.description
+
+                        ? `${reminder.title}: ${reminder.description}`
+
+                        : reminder.title;
+
+
+                showCharacterReminder(
+                    message
+                );
+
+
+                sendBrowserNotification(
+                    reminder.title,
+                    message
+                );
+
+
+                addNotification(
+                    reminder.title,
+                    message
+                );
+            }
+
         }
+    );
 
-        const reminderTime =
-            new Date(reminder.datetime);
-
-        if (
-            !isNaN(reminderTime.getTime()) &&
-            reminderTime <= now
-        ) {
-
-            reminder.notified = true;
-            changed = true;
-
-            const message =
-                reminder.description
-                    ? `${reminder.title}: ${reminder.description}`
-                    : reminder.title;
-
-            showCharacterReminder(message);
-
-            sendBrowserNotification(
-                reminder.title,
-                message
-            );
-
-            addNotification(
-                reminder.title,
-                message
-            );
-        }
-
-    });
 
     if (changed) {
+
         saveData();
+
         renderNotifications();
     }
 }
@@ -1146,8 +1622,10 @@ function checkReminders() {
 async function requestNotificationPermission() {
 
     if (
-        typeof Notification === "undefined"
+        typeof Notification ===
+        "undefined"
     ) {
+
         showToast(
             "Browser notifications are not supported here."
         );
@@ -1155,12 +1633,17 @@ async function requestNotificationPermission() {
         return;
     }
 
+
     try {
 
         const permission =
             await Notification.requestPermission();
 
-        if (permission === "granted") {
+
+        if (
+            permission ===
+            "granted"
+        ) {
 
             showToast(
                 "Browser notifications enabled."
@@ -1173,6 +1656,7 @@ async function requestNotificationPermission() {
             );
         }
 
+
     } catch (error) {
 
         console.error(
@@ -1183,30 +1667,39 @@ async function requestNotificationPermission() {
 }
 
 
-function sendBrowserNotification(title, body) {
+function sendBrowserNotification(
+    title,
+    body
+) {
 
     if (
-        typeof Notification === "undefined"
+        typeof Notification ===
+        "undefined"
     ) {
         return;
     }
 
+
     if (
-        Notification.permission !== "granted"
+        Notification.permission !==
+        "granted"
     ) {
         return;
     }
+
 
     try {
 
         new Notification(
-            title || "LAYRAAZ Reminder",
+            title ||
+            "LAYRAAZ Reminder",
             {
                 body:
                     body ||
                     "You have a reminder."
             }
         );
+
 
     } catch (error) {
 
@@ -1219,32 +1712,49 @@ function sendBrowserNotification(title, body) {
 
 
 /* =========================================================
-   NOTIFICATIONS SECTION
+   NOTIFICATIONS
    ========================================================= */
 
-function addNotification(title, message) {
+function addNotification(
+    title,
+    message
+) {
 
     data.notifications.unshift({
 
         id:
             Date.now().toString(),
 
-        title,
+        title:
 
-        message,
+            title,
+
+        message:
+
+            message,
 
         date:
+
             new Date().toISOString(),
 
-        read: false
+        read:
+
+            false
     });
 
+
     if (
-        data.notifications.length > 100
+        data.notifications.length >
+        100
     ) {
+
         data.notifications =
-            data.notifications.slice(0, 100);
+            data.notifications.slice(
+                0,
+                100
+            );
     }
+
 
     saveData();
 }
@@ -1257,49 +1767,66 @@ function renderNotifications() {
 
     if (!container) return;
 
-    if (!data.notifications.length) {
+
+    if (
+        !data.notifications.length
+    ) {
 
         container.innerHTML =
-            `<div class="empty-state">
+            `
+            <div class="empty-state">
                 No notifications yet.
-             </div>`;
+            </div>
+            `;
 
         return;
     }
 
+
     container.innerHTML =
-        data.notifications.map(notification => {
+        data.notifications
+            .map(notification => {
 
-            const date =
-                new Date(notification.date);
+                const date =
+                    new Date(
+                        notification.date
+                    );
 
-            return `
-                <div class="notification-item ${
-                    notification.read
-                        ? "read"
-                        : "unread"
-                }">
 
-                    <div>
+                return `
 
-                        <strong>
-                            ${escapeHTML(notification.title)}
-                        </strong>
+                    <div class="notification-item ${
+                        notification.read
+                            ? "read"
+                            : "unread"
+                    }">
 
                         <div>
-                            ${escapeHTML(notification.message)}
-                        </div>
 
-                        <div class="muted">
-                            ${date.toLocaleString()}
+                            <strong>
+                                ${escapeHTML(
+                                    notification.title
+                                )}
+                            </strong>
+
+                            <div>
+                                ${escapeHTML(
+                                    notification.message
+                                )}
+                            </div>
+
+                            <div class="muted">
+                                ${date.toLocaleString()}
+                            </div>
+
                         </div>
 
                     </div>
 
-                </div>
-            `;
+                `;
 
-        }).join("");
+            })
+            .join("");
 }
 
 
@@ -1307,7 +1834,8 @@ function renderNotifications() {
    TO-DO LIST
    ========================================================= */
 
-let currentTodoCategory = "All";
+let currentTodoCategory =
+    "All";
 
 
 function renderTodos() {
@@ -1317,12 +1845,16 @@ function renderTodos() {
 
     if (!container) return;
 
+
     let todos =
         [...data.todos];
 
+
     if (
-        currentTodoCategory !== "All"
+        currentTodoCategory !==
+        "All"
     ) {
+
         todos =
             todos.filter(
                 todo =>
@@ -1331,63 +1863,84 @@ function renderTodos() {
             );
     }
 
+
     if (!todos.length) {
 
         container.innerHTML =
-            `<div class="empty-state">
+            `
+            <div class="empty-state">
                 No tasks yet.
-             </div>`;
+            </div>
+            `;
 
         return;
     }
 
+
     container.innerHTML =
-        todos.map(todo => {
+        todos
+            .map(todo => {
 
-            return `
-                <div class="todo-item">
+                return `
 
-                    <label class="todo-left">
+                    <div class="todo-item">
 
-                        <input
-                            type="checkbox"
-                            ${
+                        <label class="todo-left">
+
+                            <input
+                                type="checkbox"
+                                ${
+                                    todo.completed
+                                        ? "checked"
+                                        : ""
+                                }
+                                onchange="toggleTodo('${todo.id}')"
+                            >
+
+                            <span class="${
                                 todo.completed
-                                    ? "checked"
+                                    ? "completed"
                                     : ""
-                            }
-                            onchange="toggleTodo('${todo.id}')"
-                        >
+                            }">
 
-                        <span class="${
-                            todo.completed
-                                ? "completed"
-                                : ""
-                        }">
-                            ${escapeHTML(todo.title)}
-                        </span>
+                                ${escapeHTML(
+                                    todo.title
+                                )}
 
-                    </label>
+                            </span>
 
-                    <div class="todo-meta">
+                        </label>
 
-                        <span>
-                            ${escapeHTML(todo.category)}
-                        </span>
 
-                        <button
-                            onclick="deleteTodo('${todo.id}')">
-                            Delete
-                        </button>
+                        <div class="todo-meta">
+
+                            <span>
+                                ${escapeHTML(
+                                    todo.category
+                                )}
+                            </span>
+
+                            <button
+                                onclick="deleteTodo('${todo.id}')">
+
+                                Delete
+
+                            </button>
+
+                        </div>
 
                     </div>
 
-                </div>
-            `;
+                `;
 
-        }).join("");
+            })
+            .join("");
 }
 
+
+/* =========================================================
+   SAVE TODO
+   ========================================================= */
 
 function saveTodo() {
 
@@ -1396,8 +1949,10 @@ function saveTodo() {
 
     if (!input) return;
 
+
     const title =
         input.value.trim();
+
 
     if (!title) {
 
@@ -1408,52 +1963,79 @@ function saveTodo() {
         return;
     }
 
+
     const category =
-        get("todoCategory")?.value ||
+        get("todoCategory")
+            ?.value ||
         "Personal";
+
 
     data.todos.push({
 
         id:
             Date.now().toString(),
 
-        title,
+        title:
 
-        category,
+            title,
 
-        completed: false,
+        category:
+
+            category,
+
+        completed:
+
+            false,
 
         createdAt:
+
             new Date().toISOString()
     });
 
+
     saveData();
 
-    input.value = "";
+    input.value =
+        "";
+
 
     renderTodos();
 
-    showToast("Task added.");
+    showToast(
+        "Task added."
+    );
 }
 
+
+/* =========================================================
+   TOGGLE TODO
+   ========================================================= */
 
 function toggleTodo(id) {
 
     const todo =
         data.todos.find(
-            item => item.id === id
+            item =>
+                item.id === id
         );
+
 
     if (!todo) return;
 
+
     todo.completed =
         !todo.completed;
+
 
     saveData();
 
     renderTodos();
 }
 
+
+/* =========================================================
+   DELETE TODO
+   ========================================================= */
 
 function deleteTodo(id) {
 
@@ -1463,13 +2045,20 @@ function deleteTodo(id) {
                 todo.id !== id
         );
 
+
     saveData();
 
     renderTodos();
 
-    showToast("Task deleted.");
+    showToast(
+        "Task deleted."
+    );
 }
 
+
+/* =========================================================
+   FILTER TODO
+   ========================================================= */
 
 function filterTodos(category) {
 
@@ -1491,88 +2080,127 @@ function renderGoals() {
 
     if (!container) return;
 
+
     if (!data.goals.length) {
 
         container.innerHTML =
-            `<div class="empty-state">
+            `
+            <div class="empty-state">
                 No goals yet.
-             </div>`;
+            </div>
+            `;
 
         return;
     }
 
+
     container.innerHTML =
-        data.goals.map(goal => {
+        data.goals
+            .map(goal => {
 
-            const progress =
-                Number(goal.progress) || 0;
+                const progress =
+                    Number(
+                        goal.progress
+                    ) || 0;
 
-            return `
-                <div class="goal-item">
 
-                    <div class="goal-header">
+                return `
 
-                        <strong>
-                            ${escapeHTML(goal.title)}
-                        </strong>
+                    <div class="goal-item">
 
-                        <span>
-                            ${progress}%
-                        </span>
+                        <div class="goal-header">
 
-                    </div>
+                            <strong>
+                                ${escapeHTML(
+                                    goal.title
+                                )}
+                            </strong>
 
-                    <div class="goal-progress">
-                        <div
-                            class="goal-progress-fill"
-                            style="width:${Math.min(
-                                100,
-                                Math.max(0, progress)
-                            )}%">
+                            <span>
+                                ${progress}%
+                            </span>
+
                         </div>
+
+
+                        <div class="goal-progress">
+
+                            <div
+                                class="goal-progress-fill"
+                                style="width:${Math.min(
+                                    100,
+                                    Math.max(
+                                        0,
+                                        progress
+                                    )
+                                )}%">
+                            </div>
+
+                        </div>
+
+
+                        ${
+                            goal.description
+
+                                ? `
+                                    <p>
+                                        ${escapeHTML(
+                                            goal.description
+                                        )}
+                                    </p>
+                                  `
+
+                                : ""
+                        }
+
+
+                        <div class="item-actions">
+
+                            <button
+                                onclick="editGoal('${goal.id}')">
+                                Edit
+                            </button>
+
+                            <button
+                                onclick="deleteGoal('${goal.id}')">
+                                Delete
+                            </button>
+
+                        </div>
+
                     </div>
 
-                    ${
-                        goal.description
-                            ? `<p>
-                                ${escapeHTML(goal.description)}
-                               </p>`
-                            : ""
-                    }
+                `;
 
-                    <div class="item-actions">
-
-                        <button
-                            onclick="editGoal('${goal.id}')">
-                            Edit
-                        </button>
-
-                        <button
-                            onclick="deleteGoal('${goal.id}')">
-                            Delete
-                        </button>
-
-                    </div>
-
-                </div>
-            `;
-
-        }).join("");
+            })
+            .join("");
 }
 
+
+/* =========================================================
+   SAVE GOAL
+   ========================================================= */
 
 function saveGoal() {
 
     const title =
-        get("goalTitle")?.value.trim();
+        get("goalTitle")
+            ?.value
+            .trim();
+
 
     const progress =
         Number(
-            get("goalProgress")?.value || 0
+            get("goalProgress")
+                ?.value || 0
         );
 
+
     const description =
-        get("goalDescription")?.value.trim() || "";
+        get("goalDescription")
+            ?.value
+            .trim() || "";
+
 
     if (!title) {
 
@@ -1583,21 +2211,32 @@ function saveGoal() {
         return;
     }
 
+
     const editingId =
-        get("editingGoalId")?.value;
+        get("editingGoalId")
+            ?.value;
+
 
     if (editingId) {
 
         const goal =
             data.goals.find(
-                item => item.id === editingId
+                item =>
+                    item.id ===
+                    editingId
             );
+
 
         if (goal) {
 
-            goal.title = title;
-            goal.progress = progress;
-            goal.description = description;
+            goal.title =
+                title;
+
+            goal.progress =
+                progress;
+
+            goal.description =
+                description;
         }
 
     } else {
@@ -1607,16 +2246,24 @@ function saveGoal() {
             id:
                 Date.now().toString(),
 
-            title,
+            title:
 
-            progress,
+                title,
 
-            description,
+            progress:
+
+                progress,
+
+            description:
+
+                description,
 
             createdAt:
+
                 new Date().toISOString()
         });
     }
+
 
     saveData();
 
@@ -1624,40 +2271,60 @@ function saveGoal() {
 
     clearGoalForm();
 
-    showToast("Goal saved.");
+    showToast(
+        "Goal saved."
+    );
 }
 
+
+/* =========================================================
+   EDIT GOAL
+   ========================================================= */
 
 function editGoal(id) {
 
     const goal =
         data.goals.find(
-            item => item.id === id
+            item =>
+                item.id === id
         );
+
 
     if (!goal) return;
 
+
     if (get("goalTitle")) {
+
         get("goalTitle").value =
             goal.title;
     }
 
+
     if (get("goalProgress")) {
+
         get("goalProgress").value =
             goal.progress;
     }
 
+
     if (get("goalDescription")) {
+
         get("goalDescription").value =
             goal.description || "";
     }
 
+
     if (get("editingGoalId")) {
+
         get("editingGoalId").value =
             goal.id;
     }
 }
 
+
+/* =========================================================
+   DELETE GOAL
+   ========================================================= */
 
 function deleteGoal(id) {
 
@@ -1667,30 +2334,48 @@ function deleteGoal(id) {
                 goal.id !== id
         );
 
+
     saveData();
 
     renderGoals();
 
-    showToast("Goal deleted.");
+    showToast(
+        "Goal deleted."
+    );
 }
 
+
+/* =========================================================
+   CLEAR GOAL FORM
+   ========================================================= */
 
 function clearGoalForm() {
 
     if (get("goalTitle")) {
-        get("goalTitle").value = "";
+
+        get("goalTitle").value =
+            "";
     }
+
 
     if (get("goalProgress")) {
-        get("goalProgress").value = 0;
+
+        get("goalProgress").value =
+            0;
     }
+
 
     if (get("goalDescription")) {
-        get("goalDescription").value = "";
+
+        get("goalDescription").value =
+            "";
     }
 
+
     if (get("editingGoalId")) {
-        get("editingGoalId").value = "";
+
+        get("editingGoalId").value =
+            "";
     }
 }
 
@@ -1706,69 +2391,95 @@ function renderNotes() {
 
     if (!container) return;
 
+
     if (!data.notes.length) {
 
         container.innerHTML =
-            `<div class="empty-state">
+            `
+            <div class="empty-state">
                 No notes yet.
-             </div>`;
+            </div>
+            `;
 
         return;
     }
 
+
     container.innerHTML =
-        data.notes.map(note => {
+        data.notes
+            .map(note => {
 
-            const date =
-                new Date(note.date);
+                const date =
+                    new Date(
+                        note.date
+                    );
 
-            return `
-                <div class="note-item">
 
-                    <div>
+                return `
 
-                        <strong>
-                            ${escapeHTML(note.title)}
-                        </strong>
+                    <div class="note-item">
 
-                        <div class="muted">
-                            ${date.toLocaleDateString()}
+                        <div>
+
+                            <strong>
+                                ${escapeHTML(
+                                    note.title
+                                )}
+                            </strong>
+
+                            <div class="muted">
+                                ${date.toLocaleDateString()}
+                            </div>
+
+                            <p>
+                                ${escapeHTML(
+                                    note.content
+                                )}
+                            </p>
+
                         </div>
 
-                        <p>
-                            ${escapeHTML(note.content)}
-                        </p>
+
+                        <div class="item-actions">
+
+                            <button
+                                onclick="editNote('${note.id}')">
+                                Edit
+                            </button>
+
+                            <button
+                                onclick="deleteNote('${note.id}')">
+                                Delete
+                            </button>
+
+                        </div>
 
                     </div>
 
-                    <div class="item-actions">
+                `;
 
-                        <button
-                            onclick="editNote('${note.id}')">
-                            Edit
-                        </button>
-
-                        <button
-                            onclick="deleteNote('${note.id}')">
-                            Delete
-                        </button>
-
-                    </div>
-
-                </div>
-            `;
-
-        }).join("");
+            })
+            .join("");
 }
 
+
+/* =========================================================
+   SAVE NOTE
+   ========================================================= */
 
 function saveNote() {
 
     const title =
-        get("noteTitle")?.value.trim();
+        get("noteTitle")
+            ?.value
+            .trim();
+
 
     const content =
-        get("noteContent")?.value.trim();
+        get("noteContent")
+            ?.value
+            .trim();
+
 
     if (!title || !content) {
 
@@ -1779,20 +2490,30 @@ function saveNote() {
         return;
     }
 
+
     const editingId =
-        get("editingNoteId")?.value;
+        get("editingNoteId")
+            ?.value;
+
 
     if (editingId) {
 
         const note =
             data.notes.find(
-                item => item.id === editingId
+                item =>
+                    item.id ===
+                    editingId
             );
+
 
         if (note) {
 
-            note.title = title;
-            note.content = content;
+            note.title =
+                title;
+
+            note.content =
+                content;
+
             note.date =
                 new Date().toISOString();
         }
@@ -1804,14 +2525,20 @@ function saveNote() {
             id:
                 Date.now().toString(),
 
-            title,
+            title:
 
-            content,
+                title,
+
+            content:
+
+                content,
 
             date:
+
                 new Date().toISOString()
         });
     }
+
 
     saveData();
 
@@ -1819,37 +2546,58 @@ function saveNote() {
 
     clearNoteForm();
 
-    showToast("Note saved.");
+    showToast(
+        "Note saved."
+    );
 }
 
+
+/* =========================================================
+   EDIT NOTE
+   ========================================================= */
 
 function editNote(id) {
 
     const note =
         data.notes.find(
-            item => item.id === id
+            item =>
+                item.id === id
         );
+
 
     if (!note) return;
 
+
     if (get("noteTitle")) {
+
         get("noteTitle").value =
             note.title;
     }
 
+
     if (get("noteContent")) {
+
         get("noteContent").value =
             note.content;
     }
 
+
     if (get("editingNoteId")) {
+
         get("editingNoteId").value =
             note.id;
     }
 
-    showSection("notes");
+
+    showSection(
+        "notes"
+    );
 }
 
+
+/* =========================================================
+   DELETE NOTE
+   ========================================================= */
 
 function deleteNote(id) {
 
@@ -1859,26 +2607,41 @@ function deleteNote(id) {
                 note.id !== id
         );
 
+
     saveData();
 
     renderNotes();
 
-    showToast("Note deleted.");
+    showToast(
+        "Note deleted."
+    );
 }
 
+
+/* =========================================================
+   CLEAR NOTE FORM
+   ========================================================= */
 
 function clearNoteForm() {
 
     if (get("noteTitle")) {
-        get("noteTitle").value = "";
+
+        get("noteTitle").value =
+            "";
     }
+
 
     if (get("noteContent")) {
-        get("noteContent").value = "";
+
+        get("noteContent").value =
+            "";
     }
 
+
     if (get("editingNoteId")) {
-        get("editingNoteId").value = "";
+
+        get("editingNoteId").value =
+            "";
     }
 }
 
@@ -1895,122 +2658,203 @@ function performSearch() {
     const results =
         get("searchResults");
 
-    if (!input || !results) return;
+
+    if (!input || !results) {
+        return;
+    }
+
 
     const query =
         input.value
             .trim()
             .toLowerCase();
 
+
     if (!query) {
 
-        results.innerHTML = "";
+        results.innerHTML =
+            "";
 
         return;
     }
 
+
     const matches = [];
 
-    data.reminders.forEach(item => {
 
-        const text =
-            `${item.title} ${item.description || ""}`
-                .toLowerCase();
+    /* REMINDERS */
 
-        if (text.includes(query)) {
+    data.reminders.forEach(
+        item => {
 
-            matches.push({
-                type: "Reminder",
-                title: item.title,
-                text: item.description || ""
-            });
+            const text =
+                `${item.title} ${
+                    item.description || ""
+                }`.toLowerCase();
+
+
+            if (
+                text.includes(query)
+            ) {
+
+                matches.push({
+
+                    type:
+                        "Reminder",
+
+                    title:
+                        item.title,
+
+                    text:
+                        item.description || ""
+                });
+            }
+
         }
+    );
 
-    });
 
-    data.todos.forEach(item => {
+    /* TO-DOS */
 
-        const text =
-            `${item.title} ${item.category}`
-                .toLowerCase();
+    data.todos.forEach(
+        item => {
 
-        if (text.includes(query)) {
+            const text =
+                `${item.title} ${
+                    item.category
+                }`.toLowerCase();
 
-            matches.push({
-                type: "To-do",
-                title: item.title,
-                text: item.category
-            });
+
+            if (
+                text.includes(query)
+            ) {
+
+                matches.push({
+
+                    type:
+                        "To-do",
+
+                    title:
+                        item.title,
+
+                    text:
+                        item.category
+                });
+            }
+
         }
+    );
 
-    });
 
-    data.goals.forEach(item => {
+    /* GOALS */
 
-        const text =
-            `${item.title} ${item.description || ""}`
-                .toLowerCase();
+    data.goals.forEach(
+        item => {
 
-        if (text.includes(query)) {
+            const text =
+                `${item.title} ${
+                    item.description || ""
+                }`.toLowerCase();
 
-            matches.push({
-                type: "Goal",
-                title: item.title,
-                text: item.description || ""
-            });
+
+            if (
+                text.includes(query)
+            ) {
+
+                matches.push({
+
+                    type:
+                        "Goal",
+
+                    title:
+                        item.title,
+
+                    text:
+                        item.description || ""
+                });
+            }
+
         }
+    );
 
-    });
 
-    data.notes.forEach(item => {
+    /* NOTES */
 
-        const text =
-            `${item.title} ${item.content}`
-                .toLowerCase();
+    data.notes.forEach(
+        item => {
 
-        if (text.includes(query)) {
+            const text =
+                `${item.title} ${
+                    item.content
+                }`.toLowerCase();
 
-            matches.push({
-                type: "Note",
-                title: item.title,
-                text: item.content
-            });
+
+            if (
+                text.includes(query)
+            ) {
+
+                matches.push({
+
+                    type:
+                        "Note",
+
+                    title:
+                        item.title,
+
+                    text:
+                        item.content
+                });
+            }
+
         }
+    );
 
-    });
 
     if (!matches.length) {
 
         results.innerHTML =
-            `<div class="search-empty">
+            `
+            <div class="search-empty">
                 No results found.
-             </div>`;
+            </div>
+            `;
 
         return;
     }
 
+
     results.innerHTML =
-        matches.map(match => {
+        matches
+            .map(match => {
 
-            return `
-                <div class="search-result">
+                return `
 
-                    <div class="search-result-type">
-                        ${escapeHTML(match.type)}
+                    <div class="search-result">
+
+                        <div class="search-result-type">
+                            ${escapeHTML(
+                                match.type
+                            )}
+                        </div>
+
+                        <strong>
+                            ${escapeHTML(
+                                match.title
+                            )}
+                        </strong>
+
+                        <div>
+                            ${escapeHTML(
+                                match.text
+                            )}
+                        </div>
+
                     </div>
 
-                    <strong>
-                        ${escapeHTML(match.title)}
-                    </strong>
+                `;
 
-                    <div>
-                        ${escapeHTML(match.text)}
-                    </div>
-
-                </div>
-            `;
-
-        }).join("");
+            })
+            .join("");
 }
 
 
@@ -2024,6 +2868,7 @@ function setupSearch() {
         get("searchInput");
 
     if (!input) return;
+
 
     input.addEventListener(
         "input",
@@ -2043,65 +2888,92 @@ function renderAppearance() {
 
     if (!container) return;
 
+
     container.innerHTML =
         Object.entries(palettes)
-            .map(([key, palette]) => {
+            .map(
+                ([key, palette]) => {
 
-                const selected =
-                    data.appearance === key;
+                    const selected =
+                        data.appearance ===
+                        key;
 
-                return `
-                    <button
-                        class="appearance-option ${
-                            selected ? "selected" : ""
-                        }"
-                        data-palette="${key}"
-                        onclick="selectAppearance('${key}')">
 
-                        <span
-                            class="appearance-preview"
-                            style="
-                                background:${palette.background};
-                                border-color:${palette.main};
-                                color:${palette.font};
-                            ">
+                    return `
+
+                        <button
+                            class="appearance-option ${
+                                selected
+                                    ? "selected"
+                                    : ""
+                            }"
+                            data-palette="${key}"
+                            onclick="selectAppearance('${key}')">
 
                             <span
+                                class="appearance-preview"
                                 style="
-                                    background:${palette.main};
-                                ">
-                            </span>
-
-                            <span
-                                style="
+                                    background:${palette.background};
+                                    border-color:${palette.main};
                                     color:${palette.font};
-                                ">
-                                Aa
+                                "
+                            >
+
+                                <span
+                                    style="
+                                        background:${palette.main};
+                                    "
+                                >
+                                </span>
+
+                                <span
+                                    style="
+                                        color:${palette.font};
+                                    "
+                                >
+                                    Aa
+                                </span>
+
                             </span>
 
-                        </span>
 
-                        <span>
-                            ${escapeHTML(palette.name)}
-                        </span>
+                            <span>
+                                ${escapeHTML(
+                                    palette.name
+                                )}
+                            </span>
 
-                    </button>
-                `;
+                        </button>
 
-            }).join("");
+                    `;
+
+                }
+            )
+            .join("");
 }
 
 
+/* =========================================================
+   SELECT APPEARANCE
+   ========================================================= */
+
 function selectAppearance(key) {
 
-    if (!palettes[key]) return;
+    if (!palettes[key]) {
+        return;
+    }
 
-    data.appearance = key;
+
+    data.appearance =
+        key;
+
 
     saveData();
 
     applyAppearance();
+
     renderAppearance();
+
 
     showToast(
         `${palettes[key].name} applied.`
@@ -2118,10 +2990,13 @@ function showToast(message) {
     let toast =
         get("layraazToast");
 
+
     if (!toast) {
 
         toast =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         toast.id =
             "layraazToast";
@@ -2129,24 +3004,37 @@ function showToast(message) {
         toast.className =
             "layraaz-toast";
 
-        document.body.appendChild(toast);
+        document.body.appendChild(
+            toast
+        );
     }
+
 
     toast.textContent =
         message;
 
-    toast.classList.add("show");
+
+    toast.classList.add(
+        "show"
+    );
+
 
     clearTimeout(
         window.__layraazToastTimer
     );
 
+
     window.__layraazToastTimer =
-        setTimeout(() => {
+        setTimeout(
+            () => {
 
-            toast.classList.remove("show");
+                toast.classList.remove(
+                    "show"
+                );
 
-        }, 2500);
+            },
+            2500
+        );
 }
 
 
@@ -2159,13 +3047,17 @@ function setupEnterKeySupport() {
     const todoInput =
         get("todoInput");
 
+
     if (todoInput) {
 
         todoInput.addEventListener(
             "keydown",
             event => {
 
-                if (event.key === "Enter") {
+                if (
+                    event.key ===
+                    "Enter"
+                ) {
 
                     event.preventDefault();
 
@@ -2176,8 +3068,10 @@ function setupEnterKeySupport() {
         );
     }
 
+
     const searchInput =
         get("searchInput");
+
 
     if (searchInput) {
 
@@ -2185,9 +3079,13 @@ function setupEnterKeySupport() {
             "keydown",
             event => {
 
-                if (event.key === "Escape") {
+                if (
+                    event.key ===
+                    "Escape"
+                ) {
 
-                    searchInput.value = "";
+                    searchInput.value =
+                        "";
 
                     performSearch();
                 }
@@ -2199,7 +3097,7 @@ function setupEnterKeySupport() {
 
 
 /* =========================================================
-   BUTTON EVENT SETUP
+   BUTTON SETUP
    ========================================================= */
 
 function setupButtons() {
@@ -2207,85 +3105,110 @@ function setupButtons() {
     const profileSave =
         get("saveProfile");
 
+
     if (profileSave) {
+
         profileSave.addEventListener(
             "click",
             saveProfile
         );
     }
 
+
     const characterSave =
         get("saveCharacter");
 
+
     if (characterSave) {
+
         characterSave.addEventListener(
             "click",
             saveCharacterSettings
         );
     }
 
+
     const characterTest =
         get("testCharacter");
 
+
     if (characterTest) {
+
         characterTest.addEventListener(
             "click",
             testCharacter
         );
     }
 
+
     const reminderSave =
         get("saveReminder");
 
+
     if (reminderSave) {
+
         reminderSave.addEventListener(
             "click",
             saveReminder
         );
     }
 
+
     const reminderClear =
         get("clearReminder");
 
+
     if (reminderClear) {
+
         reminderClear.addEventListener(
             "click",
             clearReminderForm
         );
     }
 
+
     const todoSave =
         get("saveTodo");
 
+
     if (todoSave) {
+
         todoSave.addEventListener(
             "click",
             saveTodo
         );
     }
 
+
     const goalSave =
         get("saveGoal");
 
+
     if (goalSave) {
+
         goalSave.addEventListener(
             "click",
             saveGoal
         );
     }
 
+
     const noteSave =
         get("saveNote");
 
+
     if (noteSave) {
+
         noteSave.addEventListener(
             "click",
             saveNote
         );
     }
 
+
     const notificationPermission =
         get("enableNotifications");
+
 
     if (notificationPermission) {
 
@@ -2298,7 +3221,7 @@ function setupButtons() {
 
 
 /* =========================================================
-   PROFILE DATE CHANGE
+   PROFILE AGE
    ========================================================= */
 
 function setupProfileAge() {
@@ -2306,7 +3229,9 @@ function setupProfileAge() {
     const dob =
         get("profileDob");
 
+
     if (!dob) return;
+
 
     dob.addEventListener(
         "change",
@@ -2314,6 +3239,7 @@ function setupProfileAge() {
 
             const age =
                 get("profileAge");
+
 
             if (age) {
 
@@ -2328,7 +3254,7 @@ function setupProfileAge() {
 
 
 /* =========================================================
-   INITIAL RENDER
+   INITIALIZE LAYRAAZ
    ========================================================= */
 
 function initializeLAYRAAZ() {
