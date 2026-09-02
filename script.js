@@ -1,23 +1,22 @@
+/* =========================================================
+   LAYRAAZ
+   MAIN APPLICATION
+========================================================= */
+
 "use strict";
 
 
 /* =========================================================
-   LAYRAAZ
-   ========================================================= */
+   STORAGE
+========================================================= */
 
-const STORAGE_KEY = "LAYRAAZ_DATA_V5";
-
-const OLD_KEYS = [
-    "LAYRAAZ_DATA_V4",
-    "LAYRAAZ_DATA_V3",
-    "LAYRAAZ_DATA_V2",
-    "LAYRAAZ_DATA"
-];
+const STORAGE_KEY = "LAYRAAZ_DATA_V3";
 
 
 /* =========================================================
    PALETTES
-   ========================================================= */
+   Internal names stay stable so old data does not break.
+========================================================= */
 
 const palettes = {
 
@@ -88,230 +87,109 @@ const palettes = {
         name: "Palette 10",
         background: "#BCC2F4",
         main: "#B0BC68",
-        font: "#FFFECD"
+        font: "#FFF ECD".replace(" ","")
     }
-
-};
-
-
-/* =========================================================
-   ICONS
-   ========================================================= */
-
-const ICONS = {
-
-    menu: `
-        <svg viewBox="0 0 24 24" fill="none"
-             stroke="currentColor"
-             stroke-width="1.8"
-             stroke-linecap="round">
-            <path d="M5 7h14M5 12h14M5 17h14"/>
-        </svg>
-    `,
-
-    home: `
-        <svg viewBox="0 0 24 24" fill="none"
-             stroke="currentColor"
-             stroke-width="1.7"
-             stroke-linejoin="round">
-            <path d="m3.5 10.5 8.5-7 8.5 7v9a1.5 1.5 0 0 1-1.5 1.5H5a1.5 1.5 0 0 1-1.5-1.5v-9Z"/>
-            <path d="M9 21v-6h6v6"/>
-        </svg>
-    `,
-
-    profile: `
-        <svg viewBox="0 0 24 24" fill="none"
-             stroke="currentColor"
-             stroke-width="1.7"
-             stroke-linecap="round">
-            <circle cx="12" cy="8" r="3.5"/>
-            <path d="M4.5 20c.8-3.3 3.3-5 7.5-5s6.7 1.7 7.5 5"/>
-        </svg>
-    `,
-
-    character: `
-        <svg viewBox="0 0 24 24" fill="none"
-             stroke="currentColor"
-             stroke-width="1.7"
-             stroke-linecap="round">
-            <circle cx="12" cy="12" r="8.5"/>
-            <circle cx="9" cy="11" r=".7" fill="currentColor"/>
-            <circle cx="15" cy="11" r=".7" fill="currentColor"/>
-            <path d="M9 15c1.8 1.4 4.2 1.4 6 0"/>
-        </svg>
-    `,
-
-    bell: `
-        <svg viewBox="0 0 24 24" fill="none"
-             stroke="currentColor"
-             stroke-width="1.7"
-             stroke-linecap="round">
-            <path d="M6 9a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9Z"/>
-            <path d="M10 21h4"/>
-        </svg>
-    `,
-
-    check: `
-        <svg viewBox="0 0 24 24" fill="none"
-             stroke="currentColor"
-             stroke-width="1.7"
-             stroke-linejoin="round">
-            <rect x="4" y="3.5" width="16" height="17" rx="2"/>
-            <path d="m8 12 2.5 2.5L16 9"/>
-        </svg>
-    `,
-
-    target: `
-        <svg viewBox="0 0 24 24" fill="none"
-             stroke="currentColor"
-             stroke-width="1.7">
-            <circle cx="12" cy="12" r="8.5"/>
-            <circle cx="12" cy="12" r="4.5"/>
-            <circle cx="12" cy="12" r="1.2" fill="currentColor"/>
-            <path d="m15.5 8.5 4-4M16.5 4.5h3v3"/>
-        </svg>
-    `,
-
-    note: `
-        <svg viewBox="0 0 24 24" fill="none"
-             stroke="currentColor"
-             stroke-width="1.7"
-             stroke-linejoin="round">
-            <path d="M6 3.5h9l3 3V20a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z"/>
-            <path d="M14 3.5V7h4M8 11h8M8 15h8M8 18h5"/>
-        </svg>
-    `,
-
-    notification: `
-        <svg viewBox="0 0 24 24" fill="none"
-             stroke="currentColor"
-             stroke-width="1.7"
-             stroke-linecap="round">
-            <path d="M6 9a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9Z"/>
-            <path d="M10 21h4"/>
-        </svg>
-    `,
-
-    palette: `
-        <svg viewBox="0 0 24 24" fill="none"
-             stroke="currentColor"
-             stroke-width="1.7"
-             stroke-linejoin="round">
-            <path d="M12 4a8 8 0 0 0 0 16h1.2a1.8 1.8 0 0 0 1.2-3.1c-.8-.8-.2-2.2 1-2.2h1.1A3.5 3.5 0 0 0 21 11.2C20.6 7.1 17 4 12 4Z"/>
-            <circle cx="7.5" cy="10" r=".8"/>
-            <circle cx="10" cy="7.5" r=".8"/>
-            <circle cx="14" cy="7.5" r=".8"/>
-            <circle cx="17" cy="10" r=".8"/>
-        </svg>
-    `,
-
-    search: `
-        <svg viewBox="0 0 24 24" fill="none"
-             stroke="currentColor"
-             stroke-width="1.8"
-             stroke-linecap="round">
-            <circle cx="10.8" cy="10.8" r="6.8"/>
-            <path d="m16 16 5 5"/>
-        </svg>
-    `,
-
-    edit: `
-        <svg viewBox="0 0 24 24" fill="none"
-             stroke="currentColor"
-             stroke-width="1.7"
-             stroke-linecap="round"
-             stroke-linejoin="round">
-            <path d="m4 16.5-.8 4.3 4.3-.8L19 8.5 15.5 5 4 16.5Z"/>
-            <path d="m13.8 6.7 3.5 3.5"/>
-        </svg>
-    `,
-
-    trash: `
-        <svg viewBox="0 0 24 24" fill="none"
-             stroke="currentColor"
-             stroke-width="1.7"
-             stroke-linecap="round">
-            <path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5M14 11v5"/>
-        </svg>
-    `,
-
-    plus: `
-        <svg viewBox="0 0 24 24" fill="none"
-             stroke="currentColor"
-             stroke-width="1.8"
-             stroke-linecap="round">
-            <path d="M12 5v14M5 12h14"/>
-        </svg>
-    `
-
 };
 
 
 /* =========================================================
    DEFAULT DATA
-   ========================================================= */
+========================================================= */
 
 const defaultData = {
 
     profile: {
+
         name: "Laya",
+
         dob: "2002-08-28",
+
         mbti: "INTJ",
 
         hobbies:
-            "Singing, Crocheting, Travelling, Poetry, Kuchipudi Dancing",
+            "Singer, Crocheting, Travelling, Poetry, Kuchipudi",
 
         occupation:
             "Executive Assistant to Terminal Head",
 
-        goal:
+        goals:
             "Start an Edible Cutlery Business in 2 years",
 
-        favoriteColors:
+        favouriteColours:
             "Forest Green, Charcoal Black, Silver",
 
-        favoriteFood:
+        favouriteFood:
             "Dahi Puri",
 
-        favoritePlaces:
-            "Hill stations",
+        favouritePlaces:
+            "Hill Stations",
 
-        favoriteMusic:
+        favouriteMusic:
             "Melody",
 
         skinType:
             "Sensitive Skin",
 
         bodyType:
-            "Rectangular Body",
+            "Rectangular",
 
         familyMembers:
             "4",
+
+        strengths:
+            "Ambitious, self-motivated, hardworking",
+
+        weaknesses:
+            "Social anxiety, procrastination, fear of failure",
+
+        favouriteBeverages:
+            "Buttermilk",
+
+        bloodGroup:
+            "",
+
+        favouriteAnimal:
+            "Dog",
+
+        favouriteBird:
+            "",
 
         image:
             ""
     },
 
     character: {
-        name: "Character",
+
+        name:
+            "Character",
 
         personality:
-            "Calm, intelligent, firm and caring.",
+            "Calm, Intelligent, Firm, Caring",
 
         sticker:
             "",
 
-        online:
-            true
+        sourceImage:
+            "",
+
+        mood:
+            "Ready to help",
+
+        lastMessage:
+            ""
     },
 
     appearance:
         "forest",
 
     reminders: [],
+
     todos: [],
+
     goals: [],
+
     notes: [],
+
     notifications: []
 
 };
@@ -319,184 +197,71 @@ const defaultData = {
 
 let data = loadData();
 
-let activeSection = "dashboard";
-
-let reminderTimer = null;
-
-let toastTimer = null;
-
 
 /* =========================================================
-   HELPERS
-   ========================================================= */
-
-const $ = id =>
-    document.getElementById(id);
-
-
-function clone(value) {
-    return JSON.parse(
-        JSON.stringify(value)
-    );
-}
-
-
-function esc(value) {
-
-    return String(
-        value ?? ""
-    ).replace(
-        /[&<>"']/g,
-        char => ({
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#39;"
-        }[char])
-    );
-
-}
-
-
-function uid(prefix) {
-
-    return (
-        prefix +
-        "_" +
-        Date.now() +
-        "_" +
-        Math.random()
-            .toString(36)
-            .slice(2,8)
-    );
-
-}
-
-
-function save() {
-
-    try {
-
-        localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(data)
-        );
-
-    } catch (error) {
-
-        console.error(
-            "LAYRAAZ storage error:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   LOAD DATA
-   ========================================================= */
+   SAFE STORAGE
+========================================================= */
 
 function loadData() {
 
-    let raw = null;
-
     try {
 
-        raw =
-            localStorage.getItem(
-                STORAGE_KEY
+        const saved =
+            JSON.parse(
+                localStorage.getItem(STORAGE_KEY)
             );
 
-        if (!raw) {
+        if (!saved) {
 
-            for (
-                const key of OLD_KEYS
-            ) {
-
-                raw =
-                    localStorage.getItem(
-                        key
-                    );
-
-                if (raw) break;
-
-            }
-
+            return structuredClone(defaultData);
         }
 
-    } catch (error) {
+        const merged = {
 
-        raw = null;
+            ...structuredClone(defaultData),
 
-    }
+            ...saved,
 
+            profile: {
+                ...defaultData.profile,
+                ...(saved.profile || {})
+            },
 
-    if (!raw) {
+            character: {
+                ...defaultData.character,
+                ...(saved.character || {})
+            },
 
-        return clone(
-            defaultData
-        );
+            reminders:
+                Array.isArray(saved.reminders)
+                    ? saved.reminders
+                    : [],
 
-    }
+            todos:
+                Array.isArray(saved.todos)
+                    ? saved.todos
+                    : [],
 
+            goals:
+                Array.isArray(saved.goals)
+                    ? saved.goals
+                    : [],
 
-    try {
+            notes:
+                Array.isArray(saved.notes)
+                    ? saved.notes
+                    : [],
 
-        const incoming =
-            JSON.parse(raw);
-
-        const result =
-            clone(defaultData);
-
-
-        result.profile = {
-            ...result.profile,
-            ...(incoming.profile || {})
+            notifications:
+                Array.isArray(saved.notifications)
+                    ? saved.notifications
+                    : []
         };
 
 
-        result.character = {
-            ...result.character,
-            ...(incoming.character || {})
-        };
+        /* OLD PALETTE COMPATIBILITY */
 
-
-        if (
-            incoming.appearance
-        ) {
-
-            result.appearance =
-                incoming.appearance;
-
-        }
-
-
-        [
-            "reminders",
-            "todos",
-            "goals",
-            "notes",
-            "notifications"
-        ].forEach(key => {
-
-            if (
-                Array.isArray(
-                    incoming[key]
-                )
-            ) {
-
-                result[key] =
-                    incoming[key];
-
-            }
-
-        });
-
-
-        const oldPaletteMap = {
+        const aliases = {
 
             palette1: "forest",
             palette2: "butter",
@@ -508,1190 +273,1664 @@ function loadData() {
             palette8: "cadet",
             palette9: "pink",
             palette10: "lavender"
-
         };
 
+        if (aliases[merged.appearance]) {
 
-        if (
-            oldPaletteMap[
-                result.appearance
-            ]
-        ) {
-
-            result.appearance =
-                oldPaletteMap[
-                    result.appearance
-                ];
-
+            merged.appearance =
+                aliases[merged.appearance];
         }
 
 
-        if (
-            !palettes[
-                result.appearance
-            ]
-        ) {
-
-            result.appearance =
-                "forest";
-
-        }
-
-
-        return result;
+        return merged;
 
     } catch (error) {
 
         console.error(
-            "LAYRAAZ data error:",
+            "LAYRAAZ storage error:",
             error
         );
 
-        return clone(
-            defaultData
+        return structuredClone(defaultData);
+    }
+}
+
+
+function saveData() {
+
+    try {
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(data)
         );
 
-    }
+    } catch (error) {
 
+        console.error(
+            "Could not save LAYRAAZ data:",
+            error
+        );
+
+        toast(
+            "Storage is full. Some changes could not be saved."
+        );
+    }
 }
 
 
 /* =========================================================
-   DATE
-   ========================================================= */
+   UTILITIES
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+function uid(prefix = "id") {
+
+    return (
+        prefix +
+        "_" +
+        Date.now() +
+        "_" +
+        Math.random()
+            .toString(36)
+            .slice(2, 8)
+    );
+}
+
+
+function get(id) {
+
+    return document.getElementById(id);
+}
+
+
+function formatDate(dateString) {
+
+    if (!dateString) {
+        return "";
+    }
+
+    const date =
+        new Date(dateString);
+
+    if (Number.isNaN(date.getTime())) {
+        return dateString;
+    }
+
+    return date.toLocaleDateString(
+        undefined,
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+}
+
 
 function calculateAge(dob) {
 
-    if (!dob) return "";
+    if (!dob) {
+        return "";
+    }
 
     const birth =
-        new Date(
-            dob + "T00:00:00"
-        );
+        new Date(dob + "T00:00:00");
 
-    const now =
-        new Date();
-
-    if (
-        Number.isNaN(
-            birth.getTime()
-        )
-    ) {
-
+    if (Number.isNaN(birth.getTime())) {
         return "";
-
     }
 
+    const today =
+        new Date();
 
-    let years =
-        now.getFullYear() -
+    let age =
+        today.getFullYear() -
         birth.getFullYear();
 
+    const monthDifference =
+        today.getMonth() -
+        birth.getMonth();
 
-    const birthdayPassed =
-        now.getMonth() >
-        birth.getMonth() ||
+    if (
+        monthDifference < 0 ||
         (
-            now.getMonth() ===
-            birth.getMonth() &&
-            now.getDate() >=
-            birth.getDate()
-        );
-
-
-    if (!birthdayPassed) {
-        years--;
-    }
-
-
-    return years;
-
-}
-
-
-function formatDate(value) {
-
-    const date =
-        new Date(value);
-
-    if (
-        Number.isNaN(
-            date.getTime()
+            monthDifference === 0 &&
+            today.getDate() < birth.getDate()
         )
     ) {
 
-        return String(
-            value || ""
+        age--;
+    }
+
+    return age;
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+function toast(message) {
+
+    const el = get("toast");
+
+    if (!el) {
+        return;
+    }
+
+    el.textContent = message;
+
+    el.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer =
+        setTimeout(
+            () => el.classList.remove("show"),
+            2500
         );
-
-    }
-
-
-    return date.toLocaleString(
-        [],
-        {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit"
-        }
-    );
-
 }
 
 
-function sameDay(value) {
+/* =========================================================
+   SVG ICONS
+========================================================= */
 
-    const date =
-        new Date(value);
+const ICONS = {
 
-    const now =
-        new Date();
+    menu: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.7"
+             stroke-linecap="round">
+            <path d="M5 7h14"/>
+            <path d="M5 12h14"/>
+            <path d="M5 17h14"/>
+        </svg>
+    `,
+
+    home: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.7"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+            <path d="M3.5 10.5 12 3.8l8.5 6.7"/>
+            <path d="M5.5 9.8V20h13V9.8"/>
+            <path d="M9.5 20v-6h5v6"/>
+        </svg>
+    `,
+
+    profile: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.7"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+            <circle cx="12" cy="8" r="3.2"/>
+            <path d="M5.5 20c.7-4 2.9-6 6.5-6s5.8 2 6.5 6"/>
+        </svg>
+    `,
+
+    character: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.7"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+            <path d="M8 5.5c1.2-2 6.8-2 8 0"/>
+            <path d="M6.5 9c0-2.2 2.5-4 5.5-4s5.5 1.8 5.5 4v5c0 3-2.5 5-5.5 5s-5.5-2-5.5-5V9Z"/>
+            <path d="M9.5 12h.01"/>
+            <path d="M14.5 12h.01"/>
+            <path d="M9.5 15c1.6 1 3.4 1 5 0"/>
+        </svg>
+    `,
+
+    bell: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.7"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+            <path d="M6.5 17.5h11"/>
+            <path d="M8 17.5V11a4 4 0 0 1 8 0v6.5"/>
+            <path d="M10 20h4"/>
+        </svg>
+    `,
+
+    check: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.7"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+            <rect x="4" y="4" width="16" height="16" rx="4"/>
+            <path d="m8 12 2.5 2.5L16 9"/>
+        </svg>
+    `,
+
+    target: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.7"
+             stroke-linecap="round">
+            <circle cx="12" cy="12" r="8"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="12" cy="12" r="1"/>
+        </svg>
+    `,
+
+    note: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.7"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+            <path d="M6 4.5h12v15H6z"/>
+            <path d="M9 8h6"/>
+            <path d="M9 12h6"/>
+            <path d="M9 16h4"/>
+        </svg>
+    `,
+
+    notification: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.7"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+            <path d="M7 16.5h10"/>
+            <path d="M8.5 16.5V10a3.5 3.5 0 0 1 7 0v6.5"/>
+            <path d="M10.5 19h3"/>
+        </svg>
+    `,
+
+    palette: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.7"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+            <path d="M12 4a8 8 0 1 0 0 16h1.2c1.2 0 1.8-1.4 1-2.3-.7-.8-.1-2 1-2h1.3A4.5 4.5 0 0 0 21 11.2C20.6 7.1 17 4 12 4Z"/>
+            <circle cx="8" cy="10" r=".8"/>
+            <circle cx="11" cy="7.5" r=".8"/>
+            <circle cx="15" cy="8" r=".8"/>
+        </svg>
+    `,
+
+    search: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.7"
+             stroke-linecap="round">
+            <circle cx="10.8" cy="10.8" r="5.8"/>
+            <path d="m15.2 15.2 4.2 4.2"/>
+        </svg>
+    `,
+
+    plus: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.7"
+             stroke-linecap="round">
+            <path d="M12 5v14"/>
+            <path d="M5 12h14"/>
+        </svg>
+    `,
+
+    trash: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.7"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+            <path d="M5 7h14"/>
+            <path d="M9 7V4.5h6V7"/>
+            <path d="M7 7l.7 13h8.6L17 7"/>
+            <path d="M10 11v5"/>
+            <path d="M14 11v5"/>
+        </svg>
+    `,
+
+    edit: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.7"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+            <path d="m15.5 5.5 3 3"/>
+            <path d="M5 19l1.2-4.4L15.5 5.3a1.7 1.7 0 0 1 2.4 0l.8.8a1.7 1.7 0 0 1 0 2.4L9.4 18.8 5 19Z"/>
+        </svg>
+    `,
+
+    clock: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.7"
+             stroke-linecap="round">
+            <circle cx="12" cy="12" r="8"/>
+            <path d="M12 7v5l3 2"/>
+        </svg>
+    `,
+
+    close: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.7"
+             stroke-linecap="round">
+            <path d="m7 7 10 10"/>
+            <path d="m17 7-10 10"/>
+        </svg>
+    `
+};
 
 
-    return (
-        date.getFullYear() ===
-            now.getFullYear() &&
+function renderIcons() {
 
-        date.getMonth() ===
-            now.getMonth() &&
+    document
+        .querySelectorAll(".icon, .nav-icon")
+        .forEach(el => {
 
-        date.getDate() ===
-            now.getDate()
-    );
+            const classes =
+                [...el.classList];
 
-}
+            const iconClass =
+                classes.find(
+                    c => c.startsWith("icon-") &&
+                         c !== "icon"
+                );
 
+            if (!iconClass) {
+                return;
+            }
 
-function localDateTime(value) {
+            const name =
+                iconClass
+                    .replace("icon-", "");
 
-    if (!value) return "";
+            if (ICONS[name]) {
 
-    const date =
-        new Date(value);
-
-    if (
-        Number.isNaN(
-            date.getTime()
-        )
-    ) {
-
-        return "";
-
-    }
-
-
-    const pad =
-        number =>
-            String(number)
-                .padStart(2,"0");
-
-
-    return (
-        date.getFullYear() +
-        "-" +
-        pad(
-            date.getMonth() + 1
-        ) +
-        "-" +
-        pad(
-            date.getDate()
-        ) +
-        "T" +
-        pad(
-            date.getHours()
-        ) +
-        ":" +
-        pad(
-            date.getMinutes()
-        )
-    );
-
+                el.innerHTML =
+                    ICONS[name];
+            }
+        });
 }
 
 
 /* =========================================================
    APPEARANCE
-   ========================================================= */
+========================================================= */
 
-function applyPalette() {
+function applyAppearance() {
 
-    const palette =
-        palettes[
-            data.appearance
-        ] ||
-        palettes.forest;
+    let key =
+        data.appearance;
 
-
-    document.documentElement
-        .style
-        .setProperty(
-            "--bg",
-            palette.background
-        );
-
-
-    document.documentElement
-        .style
-        .setProperty(
-            "--main",
-            palette.main
-        );
-
-
-    document.documentElement
-        .style
-        .setProperty(
-            "--font",
-            palette.font
-        );
-
-
-    const hex =
-        palette.background
-            .replace("#","");
-
-
-    const r =
-        parseInt(
-            hex.slice(0,2),
-            16
-        );
-
-    const g =
-        parseInt(
-            hex.slice(2,4),
-            16
-        );
-
-    const b =
-        parseInt(
-            hex.slice(4,6),
-            16
-        );
-
-
-    const brightness =
-        (
-            .2126 * r +
-            .7152 * g +
-            .0722 * b
-        ) / 255;
-
-
-    document.documentElement
-        .style
-        .setProperty(
-            "--muted",
-            brightness < .62
-                ? "rgba(255,255,255,.65)"
-                : "rgba(50,35,30,.68)"
-        );
-
-
-    const meta =
-        document.querySelector(
-            'meta[name="theme-color"]'
-        );
-
-
-    if (meta) {
-
-        meta.content =
-            palette.background;
-
+    if (!palettes[key]) {
+        key = "forest";
+        data.appearance = key;
     }
 
-}
-
-
-/* =========================================================
-   ICONS
-   ========================================================= */
-
-function renderIcons() {
-
-    document
-        .querySelectorAll(".nav-icon")
-        .forEach(element => {
-
-            const className =
-                [...element.classList]
-                    .find(
-                        name =>
-                            name.startsWith(
-                                "icon-"
-                            )
-                    );
-
-
-            if (!className) return;
-
-
-            const key =
-                className.slice(5);
-
-
-            if (ICONS[key]) {
-
-                element.innerHTML =
-                    ICONS[key];
-
-            }
-
-        });
-
-
-    document
-        .querySelectorAll(".icon-search")
-        .forEach(element => {
-
-            element.innerHTML =
-                ICONS.search;
-
-        });
-
-}
-
-
-/* =========================================================
-   AVATAR
-   ========================================================= */
-
-function setAvatar(
-    element,
-    src
-) {
-
-    if (!element) return;
-
-
-    element.style.backgroundImage =
-        src
-            ? `url("${src}")`
-            : "none";
-
-}
-
-
-/* =========================================================
-   UI HELPERS
-   ========================================================= */
-
-function sectionHead(
-    title,
-    subtitle,
-    button = ""
-) {
-
-    return `
-        <div class="section-head">
-
-            <div>
-
-                <h2>${esc(title)}</h2>
-
-                <p>${esc(subtitle)}</p>
-
-            </div>
-
-            ${button}
-
-        </div>
-    `;
-
-}
-
-
-function actionButton(
-    text,
-    action,
-    classes = "btn"
-) {
-
-    return `
-        <button
-            class="${classes}"
-            data-action="${esc(action)}"
-            type="button">
-
-            ${text}
-
-        </button>
-    `;
-
-}
-
-
-function statCard(
-    icon,
-    number,
-    label,
-    sub
-) {
-
-    return `
-        <article class="card stat">
-
-            <span class="stat-icon">
-                ${ICONS[icon]}
-            </span>
-
-            <div>
-
-                <div class="stat-number">
-                    ${number}
-                </div>
-
-                <div class="stat-label">
-                    ${esc(label)}<br>
-                    ${esc(sub)}
-                </div>
-
-            </div>
-
-        </article>
-    `;
-
-}
-
-
-/* =========================================================
-   TOP BAR
-   ========================================================= */
-
-function updateTop() {
-
-    const name =
-        data.profile.name ||
-        "Laya";
-
-
-    $("topName").textContent =
-        name;
-
-
-    $("pageTitle").innerHTML =
-        `Welcome back, ${esc(name)}
-         <span class="title-sparkle">✦</span>`;
-
-
-    const unread =
-        data.notifications
-            .filter(
-                notification =>
-                    !notification.read
-            )
-            .length;
-
-
-    $("notificationCount")
-        .textContent =
-        unread || "";
-
-
-    setAvatar(
-        $("topAvatar"),
-        data.profile.image
+    const palette =
+        palettes[key];
+
+    const root =
+        document.documentElement;
+
+    root.style.setProperty(
+        "--bg",
+        palette.background
     );
 
+    root.style.setProperty(
+        "--main",
+        palette.main
+    );
+
+    root.style.setProperty(
+        "--font",
+        palette.font
+    );
+
+    root.style.setProperty(
+        "--muted",
+        palette.font
+    );
+
+    saveData();
 }
 
 
 /* =========================================================
-   DASHBOARD
-   ========================================================= */
+   NAVIGATION
+========================================================= */
 
-function renderDashboard() {
+function showSection(sectionId) {
 
-    const name =
-        data.profile.name ||
-        "Laya";
+    document
+        .querySelectorAll(".page-section")
+        .forEach(section => {
 
+            section.classList.toggle(
+                "active",
+                section.id === sectionId
+            );
+        });
 
-    const remindersToday =
-        data.reminders.filter(
-            reminder =>
-                sameDay(reminder.when) &&
-                !reminder.completed
-        ).length;
 
+    document
+        .querySelectorAll(".nav-item")
+        .forEach(item => {
 
-    const pendingTodos =
-        data.todos.filter(
-            todo =>
-                !todo.done
-        ).length;
+            item.classList.toggle(
+                "active",
+                item.dataset.section === sectionId
+            );
+        });
 
 
-    const activeGoals =
-        data.goals.filter(
-            goal =>
-                Number(
-                    goal.progress || 0
-                ) < 100
-        ).length;
+    const titles = {
 
+        profile: [
+            "Your Profile",
+            "A little map of you."
+        ],
 
-    const notesCount =
-        data.notes.length;
+        dashboard: [
+            `Welcome back, ${data.profile.name} ✦`,
+            "Take a deep breath. You've got this. ♡"
+        ],
 
+        character: [
+            data.character.name || "Character",
+            "A little companion, shaped by your rules."
+        ],
 
-    const upcoming =
-        [...data.reminders]
-            .filter(
-                reminder =>
-                    !reminder.completed &&
-                    new Date(
-                        reminder.when
-                    ).getTime() >=
-                    Date.now() - 86400000
-            )
-            .sort(
-                (a,b) =>
-                    new Date(a.when) -
-                    new Date(b.when)
-            )
-            .slice(0,3);
+        reminders: [
+            "Reminders",
+            "Things you don't want slipping through the cracks."
+        ],
 
+        todos: [
+            "To-do List",
+            "Small tasks. Visible progress."
+        ],
 
-    const todos =
-        data.todos
-            .filter(
-                todo =>
-                    !todo.done
-            )
-            .slice(0,5);
+        goals: [
+            "Goals",
+            "Give the future somewhere to go."
+        ],
 
+        notes: [
+            "Notes",
+            "Ideas, thoughts and little things worth keeping."
+        ],
 
-    const latestNote =
-        [...data.notes]
-            .sort(
-                (a,b) =>
-                    new Date(b.createdAt) -
-                    new Date(a.createdAt)
-            )[0];
+        notifications: [
+            "Notifications",
+            "Your recent reminders and character messages."
+        ],
 
+        appearance: [
+            "Appearance",
+            "Choose the atmosphere of your little digital space."
+        ]
+    };
 
-    const sticker =
-        data.character.sticker;
 
+    const title =
+        titles[sectionId] ||
+        titles.dashboard;
 
-    $("dashboard").innerHTML = `
+    get("pageTitle").textContent =
+        title[0];
 
-        <div class="grid dashboard-top">
+    get("pageSubtitle").textContent =
+        title[1];
 
-            <article class="card hero soft">
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
 
-                <div class="hero-copy">
 
-                    <div class="script">
-                        Hey ${esc(name)},
-                    </div>
+/* =========================================================
+   SIDEBAR
+========================================================= */
 
-                    <h2>
-                        Small plans.<br>
-                        Big becoming.
-                    </h2>
+function setupSidebar() {
 
-                    <p>
-                        Keep building the version of
-                        yourself you want to meet.
-                        One little box at a time.
-                    </p>
-
-                </div>
-
-                <div class="hero-art">
-
-                    <span class="doodle-star star-one">✦</span>
-                    <span class="doodle-star star-two">✧</span>
-                    <span class="doodle-star star-three">·</span>
-
-                </div>
-
-            </article>
-
-
-            <article class="card">
-
-                <div class="card-title">
-                    <h3>Today</h3>
-                </div>
-
-                <div class="quote">
-                    One step at a time.
-                </div>
-
-            </article>
-
-
-            <article class="card character-card">
-
-                <div class="card-title">
-                    <h3>${esc(
-                        data.character.name ||
-                        "Character"
-                    )}</h3>
-                </div>
-
-                <div class="sticker-stage">
-
-                    ${
-                        sticker
-                        ? `
-                            <img
-                                class="sticker"
-                                src="${sticker}"
-                                alt="${esc(
-                                    data.character.name ||
-                                    "Character"
-                                )}">
-                        `
-                        : `
-                            <div class="placeholder">
-                                Your little companion
-                                will live here.
-                            </div>
-                        `
-                    }
-
-                </div>
-
-                <div class="pill">
-                    ${
-                        data.character.online
-                            ? "Online"
-                            : "Offline"
-                    }
-                </div>
-
-                <div class="mood">
-                    ${esc(
-                        data.character.personality ||
-                        "Calm, intelligent, firm and caring."
-                    )}
-                </div>
-
-            </article>
-
-
-            <article class="card">
-
-                <div class="card-title">
-                    <h3>Little note</h3>
-                </div>
-
-                <div class="note-paper">
-
-                    ${
-                        latestNote
-                            ? esc(
-                                latestNote.content
-                            )
-                            : "Write something worth remembering."
-                    }
-
-                </div>
-
-            </article>
-
-        </div>
-
-
-        <div class="grid stats">
-
-            ${statCard(
-                "bell",
-                remindersToday,
-                "Reminders",
-                "today"
-            )}
-
-            ${statCard(
-                "check",
-                pendingTodos,
-                "To-dos",
-                "pending"
-            )}
-
-            ${statCard(
-                "target",
-                activeGoals,
-                "Goals",
-                "active"
-            )}
-
-            ${statCard(
-                "note",
-                notesCount,
-                "Notes",
-                "saved"
-            )}
-
-            ${statCard(
-                "character",
-                calculateAge(
-                    data.profile.dob
-                ),
-                "Age",
-                "years"
-            )}
-
-        </div>
-
-
-        <div class="grid lower">
-
-            <article class="card">
-
-                <div class="card-title">
-
-                    <h3>
-                        Upcoming reminders
-                    </h3>
-
-                    ${actionButton(
-                        "View all",
-                        "reminders"
-                    )}
-
-                </div>
-
-                ${
-                    upcoming.length
-                    ? upcoming
-                        .map(
-                            reminder => `
-                                <div class="mini">
-
-                                    <div>
-
-                                        <strong>
-                                            ${esc(
-                                                reminder.title
-                                            )}
-                                        </strong>
-
-                                        <small>
-                                            ${formatDate(
-                                                reminder.when
-                                            )}
-                                        </small>
-
-                                    </div>
-
-                                </div>
-                            `
-                        )
-                        .join("")
-                    : `
-                        <div class="empty">
-                            Nothing pressing.
-                            The little bell is resting.
-                        </div>
-                    `
+    const sidebar =
+        get("sidebar");
+
+    get("sidebarToggle")
+        .addEventListener(
+            "click",
+            () => {
+
+                sidebar.classList.toggle(
+                    "collapsed"
+                );
+            }
+        );
+
+
+    document
+        .querySelectorAll(".nav-item")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    showSection(
+                        button.dataset.section
+                    );
                 }
-
-                <div style="margin-top:12px">
-
-                    ${actionButton(
-                        `${ICONS.plus} Add Reminder`,
-                        "add-reminder"
-                    )}
-
-                </div>
-
-            </article>
-
-
-            <article class="card">
-
-                <div class="card-title">
-
-                    <h3>
-                        Today's to-dos
-                    </h3>
-
-                    ${actionButton(
-                        "View all",
-                        "todos"
-                    )}
-
-                </div>
-
-                ${
-                    todos.length
-                    ? todos
-                        .map(
-                            todo => `
-                                <label class="check-row">
-
-                                    <input
-                                        type="checkbox"
-                                        data-toggle-todo="${esc(
-                                            todo.id
-                                        )}">
-
-                                    <span>
-                                        ${esc(
-                                            todo.title
-                                        )}
-                                    </span>
-
-                                </label>
-                            `
-                        )
-                        .join("")
-                    : `
-                        <div class="empty">
-                            A clean list.
-                            Nice.
-                        </div>
-                    `
-                }
-
-                <div style="margin-top:12px">
-
-                    ${actionButton(
-                        `${ICONS.plus} Add To-do`,
-                        "add-todo"
-                    )}
-
-                </div>
-
-            </article>
-
-
-            <article class="card">
-
-                <div class="card-title">
-
-                    <h3>
-                        Your space
-                    </h3>
-
-                </div>
-
-                <div class="affirmation">
-                    You don't need to do everything today.
-                </div>
-
-                <div
-                    class="actions"
-                    style="margin-top:14px">
-
-                    ${actionButton(
-                        "Profile",
-                        "profile"
-                    )}
-
-                    ${actionButton(
-                        "Character",
-                        "character"
-                    )}
-
-                    ${actionButton(
-                        "Appearance",
-                        "appearance"
-                    )}
-
-                </div>
-
-            </article>
-
-        </div>
-
-    `;
-
+            );
+        });
 }
 
 
 /* =========================================================
    PROFILE
-   ========================================================= */
-
-const profileFields = [
-
-    ["name", "Name", "text"],
-
-    ["dob", "Date of Birth", "date"],
-
-    ["mbti", "MBTI", "text"],
-
-    ["hobbies", "Hobbies", "text"],
-
-    ["occupation", "Occupation", "text"],
-
-    ["goal", "Main Goal", "text"],
-
-    ["favoriteColors", "Favourite Colours", "text"],
-
-    ["favoriteFood", "Favourite Food", "text"],
-
-    ["favoritePlaces", "Favourite Places", "text"],
-
-    ["favoriteMusic", "Favourite Music Genres", "text"],
-
-    ["skinType", "Skin Type", "text"],
-
-    ["bodyType", "Body Type", "text"],
-
-    ["familyMembers", "Family Members", "number"]
-
-];
-
+========================================================= */
 
 function renderProfile() {
 
-    const profile =
+    const p =
         data.profile;
 
+    const age =
+        calculateAge(p.dob);
 
-    $("profile").innerHTML = `
+    get("profile").innerHTML = `
 
-        ${sectionHead(
-            "Profile",
-            "Your little corner. Everything here is editable."
-        )}
+        <div class="section-head">
+
+            <div>
+                <h2>Profile</h2>
+
+                <p>
+                    Everything that makes you, you.
+                </p>
+            </div>
+
+        </div>
 
 
         <div class="profile-grid">
 
-            <article class="card">
+            <div class="card">
 
                 <div class="card-title">
-                    <h3>Your profile</h3>
+                    <h3>Personal Details</h3>
                 </div>
 
+                <div class="form-grid">
 
-                <form
-                    id="profileForm"
-                    class="form-grid">
+                    <div class="field">
+                        <label>Name</label>
 
-                    ${
-                        profileFields
-                            .map(
-                                ([key,label,type]) => `
-
-                                    <div class="field">
-
-                                        <label>
-                                            ${esc(label)}
-                                        </label>
-
-                                        <input
-                                            name="${esc(key)}"
-                                            type="${esc(type)}"
-                                            value="${esc(
-                                                profile[key] ||
-                                                ""
-                                            )}">
-
-                                    </div>
-
-                                `
-                            )
-                            .join("")
-                    }
+                        <input
+                            id="profileName"
+                            value="${escapeHTML(p.name)}">
+                    </div>
 
 
-                    <div class="field full">
+                    <div class="field">
+                        <label>Date of Birth</label>
+
+                        <input
+                            id="profileDob"
+                            type="date"
+                            value="${escapeHTML(p.dob)}">
 
                         <span class="field-note">
-
-                            Age is calculated automatically
-                            from your date of birth:
-
-                            <b>
-                                ${
-                                    calculateAge(
-                                        profile.dob
-                                    ) || "not set"
-                                }
-                            </b>
-
+                            Age is calculated automatically.
                         </span>
+                    </div>
+
+
+                    <div class="field">
+                        <label>MBTI</label>
+
+                        <input
+                            id="profileMbti"
+                            value="${escapeHTML(p.mbti)}">
+                    </div>
+
+
+                    <div class="field">
+                        <label>Blood Group</label>
+
+                        <input
+                            id="profileBlood"
+                            placeholder="e.g. O+"
+                            value="${escapeHTML(p.bloodGroup)}">
+                    </div>
+
+
+                    <div class="field">
+                        <label>Height</label>
+
+                        <input
+                            id="profileHeight"
+                            value="${escapeHTML(p.height || "5'1")}">
+                    </div>
+
+
+                    <div class="field">
+                        <label>Skin Type</label>
+
+                        <input
+                            id="profileSkin"
+                            value="${escapeHTML(p.skinType)}">
+                    </div>
+
+
+                    <div class="field">
+                        <label>Body Type</label>
+
+                        <input
+                            id="profileBody"
+                            value="${escapeHTML(p.bodyType)}">
+                    </div>
+
+
+                    <div class="field">
+                        <label>Family Members</label>
+
+                        <input
+                            id="profileFamily"
+                            value="${escapeHTML(p.familyMembers)}">
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>Occupation</label>
+
+                        <input
+                            id="profileOccupation"
+                            value="${escapeHTML(p.occupation)}">
 
                     </div>
 
 
                     <div class="field full">
 
-                        <div class="button-row">
+                        <label>Hobbies</label>
 
-                            <button
-                                class="btn primary"
-                                type="submit">
-
-                                Save Profile
-
-                            </button>
-
-                        </div>
+                        <textarea id="profileHobbies">${escapeHTML(p.hobbies)}</textarea>
 
                     </div>
 
-                </form>
+                </div>
 
-            </article>
+            </div>
 
 
-            <article class="card">
+            <div class="card">
 
                 <div class="card-title">
-                    <h3>Profile picture</h3>
+                    <h3>Favorites</h3>
                 </div>
 
+                <div class="form-grid">
 
-                <div class="upload-box">
+                    <div class="field full">
 
-                    <div
-                        class="avatar"
-                        id="profilePreview"
-                        style="
-                            width:100px;
-                            height:100px;
-                            margin:auto;
-                        ">
-                    </div>
-
-                    <p class="field-note">
-                        Used only as your profile avatar.
-                    </p>
-
-                    <input
-                        id="profileImage"
-                        type="file"
-                        accept="image/*">
-
-                </div>
-
-
-                <div class="affirmation">
-                    ${esc(
-                        profile.name ||
-                        "You"
-                    )}, this space is yours.
-                </div>
-
-            </article>
-
-        </div>
-
-    `;
-
-
-    setAvatar(
-        $("profilePreview"),
-        profile.image
-    );
-
-}
-
-
-/* =========================================================
-   CHARACTER
-   ========================================================= */
-
-function renderCharacter() {
-
-    const character =
-        data.character;
-
-
-    const notificationsSupported =
-        typeof Notification !==
-        "undefined";
-
-
-    const permission =
-        notificationsSupported
-            ? Notification.permission
-            : "unsupported";
-
-
-    $("character").innerHTML = `
-
-        ${sectionHead(
-            "Character",
-            "Give your companion a name, personality and sticker."
-        )}
-
-
-        <div class="character-settings">
-
-            <article class="card">
-
-                <div class="card-title">
-                    <h3>Character settings</h3>
-                </div>
-
-
-                <form
-                    id="characterForm"
-                    class="form-grid">
-
-                    <div class="field">
-
-                        <label>
-                            Character name
-                        </label>
+                        <label>Favourite Colours</label>
 
                         <input
-                            name="name"
-                            value="${esc(
-                                character.name ||
-                                "Character"
-                            )}"
-                            maxlength="40">
+                            id="profileColours"
+                            value="${escapeHTML(p.favouriteColours)}">
 
                     </div>
 
 
                     <div class="field">
 
-                        <label>
-                            Personality
-                        </label>
+                        <label>Favourite Food</label>
 
                         <input
-                            name="personality"
-                            value="${esc(
-                                character.personality ||
-                                ""
-                            )}"
-                            maxlength="160">
+                            id="profileFood"
+                            value="${escapeHTML(p.favouriteFood)}">
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Favourite Beverages</label>
+
+                        <input
+                            id="profileBeverages"
+                            value="${escapeHTML(p.favouriteBeverages)}">
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Favourite Places</label>
+
+                        <input
+                            id="profilePlaces"
+                            value="${escapeHTML(p.favouritePlaces)}">
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Favourite Music Genres</label>
+
+                        <input
+                            id="profileMusic"
+                            value="${escapeHTML(p.favouriteMusic)}">
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Favourite Animal</label>
+
+                        <input
+                            id="profileAnimal"
+                            value="${escapeHTML(p.favouriteAnimal)}">
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Favourite Bird</label>
+
+                        <input
+                            id="profileBird"
+                            value="${escapeHTML(p.favouriteBird)}">
 
                     </div>
 
 
                     <div class="field full">
 
-                        <label>
-                            Character image
-                        </label>
+                        <label>Strengths</label>
+
+                        <textarea id="profileStrengths">${escapeHTML(p.strengths)}</textarea>
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>Weaknesses</label>
+
+                        <textarea id="profileWeaknesses">${escapeHTML(p.weaknesses)}</textarea>
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>Long-Term Goal</label>
+
+                        <textarea id="profileGoals">${escapeHTML(p.goals)}</textarea>
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>Profile Picture</label>
 
                         <input
-                            id="characterImage"
+                            id="profileImage"
                             type="file"
                             accept="image/*">
 
                     </div>
 
 
+                    <div class="button-row field full">
+
+                        <button
+                            class="btn primary"
+                            id="saveProfile"
+                            type="button">
+
+                            Save Profile
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+
+    if (p.image) {
+
+        get("topAvatar").style.backgroundImage =
+            `url("${p.image}")`;
+    }
+
+
+    get("saveProfile")
+        .addEventListener(
+            "click",
+            saveProfile
+        );
+
+
+    get("profileImage")
+        .addEventListener(
+            "change",
+            handleProfileImage
+        );
+}
+
+
+function saveProfile() {
+
+    const p =
+        data.profile;
+
+    p.name =
+        get("profileName").value.trim();
+
+    p.dob =
+        get("profileDob").value;
+
+    p.mbti =
+        get("profileMbti").value.trim();
+
+    p.bloodGroup =
+        get("profileBlood").value.trim();
+
+    p.height =
+        get("profileHeight").value.trim();
+
+    p.skinType =
+        get("profileSkin").value.trim();
+
+    p.bodyType =
+        get("profileBody").value.trim();
+
+    p.familyMembers =
+        get("profileFamily").value.trim();
+
+    p.occupation =
+        get("profileOccupation").value.trim();
+
+    p.hobbies =
+        get("profileHobbies").value.trim();
+
+    p.favouriteColours =
+        get("profileColours").value.trim();
+
+    p.favouriteFood =
+        get("profileFood").value.trim();
+
+    p.favouriteBeverages =
+        get("profileBeverages").value.trim();
+
+    p.favouritePlaces =
+        get("profilePlaces").value.trim();
+
+    p.favouriteMusic =
+        get("profileMusic").value.trim();
+
+    p.favouriteAnimal =
+        get("profileAnimal").value.trim();
+
+    p.favouriteBird =
+        get("profileBird").value.trim();
+
+    p.strengths =
+        get("profileStrengths").value.trim();
+
+    p.weaknesses =
+        get("profileWeaknesses").value.trim();
+
+    p.goals =
+        get("profileGoals").value.trim();
+
+
+    saveData();
+
+    get("topName").textContent =
+        p.name || "Laya";
+
+    renderDashboard();
+
+    showSection("dashboard");
+
+    toast("Profile saved.");
+}
+
+
+function handleProfileImage(event) {
+
+    const file =
+        event.target.files?.[0];
+
+    if (!file) {
+        return;
+    }
+
+    const reader =
+        new FileReader();
+
+    reader.onload =
+        function () {
+
+            data.profile.image =
+                reader.result;
+
+            saveData();
+
+            get("topAvatar").style.backgroundImage =
+                `url("${reader.result}")`;
+
+            toast("Profile picture saved.");
+
+            renderProfile();
+        };
+
+    reader.readAsDataURL(file);
+}
+
+
+/* =========================================================
+   DASHBOARD DECORATIVE SVG
+========================================================= */
+
+function tinyPlantSVG() {
+
+    return `
+        <svg viewBox="0 0 80 80"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+
+            <path d="M30 57h20"/>
+            <path d="M34 57V68h12V57"/>
+            <path d="M40 57V34"/>
+            <path d="M40 43c-11 0-14-8-14-14 8 0 14 4 14 14Z"/>
+            <path d="M40 39c11 0 14-8 14-14-8 0-14 4-14 14Z"/>
+
+        </svg>
+    `;
+}
+
+
+function tinyMoonSVG() {
+
+    return `
+        <svg viewBox="0 0 80 80"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round">
+
+            <path d="M52 19c-9 1-16 9-16 19 0 11 8 20 19 20 7 0 13-4 17-10-3 1-5 2-8 2-11 0-20-9-20-20 0-4 1-8 3-11 2-1 3-1 5 0Z"/>
+
+            <path d="M17 18v8"/>
+            <path d="M13 22h8"/>
+
+            <path d="M62 16v5"/>
+            <path d="M59.5 18.5h5"/>
+
+        </svg>
+    `;
+}
+
+
+function tinySparkSVG() {
+
+    return `
+        <svg viewBox="0 0 80 80"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+
+            <path d="M40 10c2 18 5 21 23 23-18 2-21 5-23 23-2-18-5-21-23-23 18-2 21-5 23-23Z"/>
+
+        </svg>
+    `;
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function renderDashboard() {
+
+    const p =
+        data.profile;
+
+    const age =
+        calculateAge(p.dob);
+
+    const pendingTodos =
+        data.todos.filter(
+            todo => !todo.done
+        ).length;
+
+    const activeGoals =
+        data.goals.filter(
+            goal => !goal.done
+        ).length;
+
+    const unread =
+        data.notifications.filter(
+            n => !n.read
+        ).length;
+
+
+    const latestReminder =
+        data.reminders
+            .slice()
+            .sort(
+                (a,b) =>
+                    new Date(a.datetime) -
+                    new Date(b.datetime)
+            )[0];
+
+
+    get("dashboard").innerHTML = `
+
+        <div class="section-head">
+
+            <div>
+                <h2>Today, gently.</h2>
+
+                <p>
+                    A little structure without making your day feel crowded.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="grid dashboard-top">
+
+
+            <!-- HERO -->
+
+            <div class="card hero">
+
+                <div class="hero-copy">
+
+                    <div class="script">
+                        plan softly ✦
+                    </div>
+
+                    <h2>
+                        You don't need to do everything today.
+                    </h2>
+
+                    <p>
+                        Pick what matters, make some room,
+                        and let the rest wait its turn.
+                    </p>
+
+                </div>
+
+
+                <div class="decor-sticker decor-star">
+                    ✦
+                </div>
+
+                <div class="decor-sticker decor-doodle">
+                    ${tinySparkSVG()}
+                </div>
+
+            </div>
+
+
+            <!-- PROFILE -->
+
+            <div class="card">
+
+                <div class="card-title">
+                    <h3>You</h3>
+                </div>
+
+                <div class="profile-head">
+
+                    <span
+                        class="avatar"
+                        style="
+                            ${p.image
+                                ? `background-image:url("${p.image}")`
+                                : ""}
+                        ">
+                    </span>
+
+                    <div>
+
+                        <div class="profile-name">
+                            ${escapeHTML(p.name || "Laya")}
+                        </div>
+
+                        <div class="meta">
+                            ${escapeHTML(p.mbti || "")}
+                            ${age ? ` · ${age} years` : ""}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="role">
+                    ${escapeHTML(p.occupation || "")}
+                </div>
+
+
+                <div class="mini">
+
+                    <div>
+                        <strong>Strengths</strong>
+                        <small>
+                            ${escapeHTML(p.strengths || "Add some strengths")}
+                        </small>
+                    </div>
+
+                </div>
+
+
+                <div class="mini">
+
+                    <div>
+                        <strong>Favourite</strong>
+                        <small>
+                            ${escapeHTML(p.favouriteFood || "")}
+                        </small>
+                    </div>
+
+                </div>
+
+                <div class="decor-sticker decor-heart">
+                    ♡
+                </div>
+
+            </div>
+
+
+            <!-- CHARACTER -->
+
+            <div class="card character">
+
+                <div class="card-title">
+
+                    <h3>
+                        ${escapeHTML(
+                            data.character.name || "Character"
+                        )}
+                    </h3>
+
+                </div>
+
+                <div class="sticker-stage">
+
+                    ${
+                        data.character.sticker
+
+                        ?
+
+                        `<img
+                            class="sticker"
+                            src="${data.character.sticker}"
+                            alt="Character sticker">`
+
+                        :
+
+                        `<div class="placeholder">
+                            Add your sticker
+                        </div>`
+                    }
+
+                </div>
+
+                <span class="pill">
+                    ${escapeHTML(data.character.mood)}
+                </span>
+
+                <div class="mood">
+                    ${escapeHTML(data.character.personality)}
+                </div>
+
+            </div>
+
+
+            <!-- TODAY -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <h3>Little note</h3>
+
+                </div>
+
+                <div class="quote">
+                    Small progress still counts.
+                </div>
+
+                <div class="decor-sticker decor-doodle">
+                    ${tinyMoonSVG()}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATS -->
+
+        <div class="grid stats">
+
+            <div class="card stat">
+
+                <div class="stat-icon">
+                    <span class="icon icon-check"></span>
+                </div>
+
+                <div>
+
+                    <div class="stat-number">
+                        ${pendingTodos}
+                    </div>
+
+                    <div class="stat-label">
+                        Tasks left
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card stat">
+
+                <div class="stat-icon">
+                    <span class="icon icon-bell"></span>
+                </div>
+
+                <div>
+
+                    <div class="stat-number">
+                        ${data.reminders.length}
+                    </div>
+
+                    <div class="stat-label">
+                        Reminders
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card stat">
+
+                <div class="stat-icon">
+                    <span class="icon icon-target"></span>
+                </div>
+
+                <div>
+
+                    <div class="stat-number">
+                        ${activeGoals}
+                    </div>
+
+                    <div class="stat-label">
+                        Active goals
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card stat">
+
+                <div class="stat-icon">
+                    <span class="icon icon-note"></span>
+                </div>
+
+                <div>
+
+                    <div class="stat-number">
+                        ${data.notes.length}
+                    </div>
+
+                    <div class="stat-label">
+                        Notes
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card stat">
+
+                <div class="stat-icon">
+                    <span class="icon icon-notification"></span>
+                </div>
+
+                <div>
+
+                    <div class="stat-number">
+                        ${unread}
+                    </div>
+
+                    <div class="stat-label">
+                        Unread
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOWER -->
+
+        <div class="grid lower">
+
+
+            <!-- REMINDER -->
+
+            <div class="card">
+
+                <div class="card-title">
+                    <h3>Next reminder</h3>
+
+                    <span class="icon icon-clock"></span>
+                </div>
+
+                ${
+                    latestReminder
+
+                    ?
+
+                    `
+                    <div class="mini">
+
+                        <div>
+
+                            <strong>
+                                ${escapeHTML(latestReminder.title)}
+                            </strong>
+
+                            <small>
+                                ${formatDateTime(
+                                    latestReminder.datetime
+                                )}
+                            </small>
+
+                        </div>
+
+                    </div>
+                    `
+
+                    :
+
+                    `
+                    <div class="empty">
+                        Nothing scheduled yet.
+                    </div>
+                    `
+                }
+
+            </div>
+
+
+            <!-- TO DO -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <h3>To-do</h3>
+
+                    <button
+                        class="btn"
+                        id="dashboardTodoBtn"
+                        type="button">
+
+                        Add
+
+                    </button>
+
+                </div>
+
+                ${
+                    data.todos.length
+
+                    ?
+
+                    data.todos
+                        .slice(0,4)
+                        .map(todo => `
+
+                            <label class="check-row">
+
+                                <input
+                                    type="checkbox"
+                                    data-dashboard-todo="${todo.id}"
+                                    ${todo.done ? "checked" : ""}>
+
+                                <span
+                                    class="check-label ${
+                                        todo.done
+                                            ? "done"
+                                            : ""
+                                    }">
+
+                                    ${escapeHTML(todo.text)}
+
+                                </span>
+
+                            </label>
+
+                        `)
+                        .join("")
+
+                    :
+
+                    `
+                    <div class="empty">
+                        Your list is wonderfully empty.
+                    </div>
+                    `
+                }
+
+                <div class="decor-sticker decor-heart">
+                    ♡
+                </div>
+
+            </div>
+
+
+            <!-- SOFT PANEL -->
+
+            <div class="card soft">
+
+                <div class="card-title">
+                    <h3>A tiny reminder</h3>
+                </div>
+
+                <div class="note-paper">
+
+                    You are allowed to move slowly
+                    without standing still.
+
+                </div>
+
+                <div class="affirmation">
+
+                    one step at a time ✦
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+
+    renderIcons();
+
+
+    get("dashboardTodoBtn")
+        ?.addEventListener(
+            "click",
+            () => showSection("todos")
+        );
+
+
+    document
+        .querySelectorAll(
+            "[data-dashboard-todo]"
+        )
+        .forEach(box => {
+
+            box.addEventListener(
+                "change",
+                () => {
+
+                    const id =
+                        box.dataset.dashboardTodo;
+
+                    const todo =
+                        data.todos.find(
+                            item => item.id === id
+                        );
+
+                    if (!todo) {
+                        return;
+                    }
+
+                    todo.done =
+                        box.checked;
+
+                    saveData();
+
+                    renderDashboard();
+
+                    updateNotificationCount();
+                }
+            );
+        });
+}
+
+
+/* =========================================================
+   DATE/TIME
+========================================================= */
+
+function formatDateTime(value) {
+
+    const date =
+        new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return value;
+    }
+
+    return date.toLocaleString(
+        undefined,
+        {
+            day: "2-digit",
+            month: "short",
+            hour: "2-digit",
+            minute: "2-digit"
+        }
+    );
+}
+
+
+/* =========================================================
+   CHARACTER
+========================================================= */
+
+function renderCharacter() {
+
+    const c =
+        data.character;
+
+    const personalities = [
+        "Calm",
+        "Intelligent",
+        "Firm",
+        "Caring",
+        "Playful",
+        "Motivating",
+        "Direct",
+        "Protective"
+    ];
+
+
+    get("character").innerHTML = `
+
+        <div class="section-head">
+
+            <div>
+                <h2>Character</h2>
+
+                <p>
+                    Give your companion a personality instead of a script.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="character-settings">
+
+
+            <!-- SETTINGS -->
+
+            <div class="card">
+
+                <div class="card-title">
+                    <h3>Character Settings</h3>
+                </div>
+
+
+                <div class="form-grid">
+
+
                     <div class="field full">
 
+                        <label>
+                            Character Name
+                        </label>
+
+                        <input
+                            id="characterName"
+                            value="${escapeHTML(c.name)}">
+
                         <span class="field-note">
-
-                            LAYRAAZ will turn the uploaded
-                            picture into a transparent
-                            sticker automatically.
-
-                            The original rectangular image
-                            will not be displayed.
-
+                            Everyone can rename their character.
+                            The default is Character.
                         </span>
 
                     </div>
@@ -1699,1574 +1938,1616 @@ function renderCharacter() {
 
                     <div class="field full">
 
-                        <div class="button-row">
+                        <label>
+                            Personality
+                        </label>
 
-                            <button
-                                class="btn primary"
-                                type="submit">
+                        <div
+                            class="personality-grid"
+                            id="personalityGrid">
 
-                                Save Character
+                            ${personalities
+                                .map(personality => `
 
-                            </button>
+                                    <button
+                                        class="
+                                            personality-chip
+                                            ${
+                                                c.personality
+                                                    .toLowerCase()
+                                                    .includes(
+                                                        personality.toLowerCase()
+                                                    )
+                                                    ? "selected"
+                                                    : ""
+                                            }
+                                        "
+                                        type="button"
+                                        data-personality="${personality}">
 
-                            ${actionButton(
-                                "Test Notification",
-                                "test-notification"
-                            )}
+                                        ${personality}
+
+                                    </button>
+
+                                `)
+                                .join("")}
 
                         </div>
 
                     </div>
 
-                </form>
 
-            </article>
+                    <div class="field full">
+
+                        <label>
+                            Current personality
+                        </label>
+
+                        <input
+                            id="personalityText"
+                            value="${escapeHTML(c.personality)}">
+
+                    </div>
 
 
-            <article class="card">
+                    <div class="button-row field full">
+
+                        <button
+                            class="btn primary"
+                            id="saveCharacter"
+                            type="button">
+
+                            Save Character
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="button-row field full">
+
+                        <button
+                            class="btn"
+                            id="testCharacter"
+                            type="button">
+
+                            Test Character
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- STICKER -->
+
+            <div class="card">
 
                 <div class="card-title">
-                    <h3>Sticker preview</h3>
+
+                    <h3>Character Sticker</h3>
+
                 </div>
 
 
-                <div class="sticker-preview">
+                <div class="upload-box">
 
-                    ${
-                        character.sticker
-                        ? `
+                    <p>
+                        Upload the original character picture.
+                    </p>
+
+                    <p class="field-note">
+
+                        LAYRAAZ will remove the
+                        edge-connected background and
+                        create a transparent sticker.
+
+                    </p>
+
+
+                    <input
+                        id="characterImage"
+                        type="file"
+                        accept="image/*">
+
+
+                    <div class="sticker-preview">
+
+                        ${
+                            c.sticker
+
+                            ?
+
+                            `
                             <img
-                                src="${character.sticker}"
-                                alt="${esc(
-                                    character.name ||
-                                    "Character"
-                                )}">
-                        `
-                        : `
+                                src="${c.sticker}"
+                                alt="Character sticker preview">
+                            `
+
+                            :
+
+                            `
                             <div class="placeholder">
-                                Upload a picture
-                                and your sticker
-                                will appear here.
+                                Your sticker will appear here.
                             </div>
-                        `
-                    }
+                            `
+                        }
+
+                    </div>
 
                 </div>
 
-            </article>
+            </div>
 
         </div>
 
 
-        <article
-            class="card"
-            style="margin-top:15px">
+        <!-- TEST MESSAGE -->
+
+        <div class="card" style="margin-top:15px;">
 
             <div class="card-title">
-                <h3>Browser notifications</h3>
+                <h3>Personality Preview</h3>
             </div>
 
-            <p class="field-note">
+            <div class="quote" id="characterPreview">
 
-                Browser notifications are different
-                from the LAYRAAZ notification page.
-
-                Once permission is granted, a reminder
-                can appear as a system/browser notification
-                even when you are viewing another website.
-
-            </p>
-
-            <p class="field-note">
-
-                Current permission:
-                <b>${esc(permission)}</b>
-
-            </p>
-
-            <div class="actions">
-
-                ${actionButton(
-                    "Allow Browser Notifications",
-                    "request-notifications",
-                    "btn primary"
-                )}
+                ${
+                    c.lastMessage
+                        ? escapeHTML(c.lastMessage)
+                        : "Set a reminder and let Character respond in its own voice."
+                }
 
             </div>
 
-        </article>
-
+        </div>
     `;
 
+
+    document
+        .querySelectorAll(
+            "[data-personality]"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const value =
+                        button.dataset.personality;
+
+                    const input =
+                        get("personalityText");
+
+                    let current =
+                        input.value
+                            .split(",")
+                            .map(x => x.trim())
+                            .filter(Boolean);
+
+                    if (
+                        current
+                            .map(x => x.toLowerCase())
+                            .includes(
+                                value.toLowerCase()
+                            )
+                    ) {
+
+                        current =
+                            current.filter(
+                                x =>
+                                    x.toLowerCase() !==
+                                    value.toLowerCase()
+                            );
+
+                    } else {
+
+                        current.push(value);
+                    }
+
+                    input.value =
+                        current.join(", ");
+
+                    button.classList.toggle(
+                        "selected"
+                    );
+                }
+            );
+        });
+
+
+    get("saveCharacter")
+        .addEventListener(
+            "click",
+            saveCharacter
+        );
+
+
+    get("testCharacter")
+        .addEventListener(
+            "click",
+            () => {
+
+                const message =
+                    characterSpeak({
+                        title: "your test reminder",
+                        category: "Personal"
+                    });
+
+                get("characterPreview")
+                    .textContent = message;
+
+                data.character.lastMessage =
+                    message;
+
+                saveData();
+            }
+        );
+
+
+    get("characterImage")
+        .addEventListener(
+            "change",
+            handleCharacterImage
+        );
+}
+
+
+function saveCharacter() {
+
+    data.character.name =
+        get("characterName")
+            .value
+            .trim() ||
+        "Character";
+
+    data.character.personality =
+        get("personalityText")
+            .value
+            .trim() ||
+        "Calm, Intelligent, Firm, Caring";
+
+    saveData();
+
+    renderCharacter();
+
+    renderDashboard();
+
+    toast("Character settings saved.");
+}
+
+
+/* =========================================================
+   CHARACTER PERSONALITY ENGINE
+========================================================= */
+
+function characterHas(word) {
+
+    return data.character.personality
+        .toLowerCase()
+        .includes(word.toLowerCase());
+}
+
+
+function characterSpeak(reminder) {
+
+    const name =
+        data.character.name ||
+        "Character";
+
+    const title =
+        reminder.title ||
+        "that reminder";
+
+    const category =
+        reminder.category ||
+        "Personal";
+
+
+    /*
+       IMPORTANT:
+       The reminder title is NOT simply repeated.
+       Personality changes the actual wording.
+    */
+
+    const calm =
+        characterHas("calm");
+
+    const intelligent =
+        characterHas("intelligent");
+
+    const firm =
+        characterHas("firm") ||
+        characterHas("direct");
+
+    const caring =
+        characterHas("caring") ||
+        characterHas("protective");
+
+    const playful =
+        characterHas("playful");
+
+    const motivating =
+        characterHas("motivating");
+
+
+    if (firm && caring) {
+
+        return `${title} is due. Handle it now, then you can move on with your day. I'm keeping you accountable because I know you can handle it.`;
+
+    }
+
+
+    if (firm) {
+
+        return `${title} is due. No negotiating with the clock. Go take care of it.`;
+
+    }
+
+
+    if (caring && calm) {
+
+        return `A small nudge from me: ${title} is due. Take care of it when you're ready, and don't forget to breathe.`;
+
+    }
+
+
+    if (intelligent && firm) {
+
+        return `${title} is due. You've already decided this matters, so follow through. One completed action is better than another round of thinking about it.`;
+
+    }
+
+
+    if (motivating) {
+
+        return `${title} is due. This is your next small win. Go get it done. ✦`;
+
+    }
+
+
+    if (playful) {
+
+        return `Tiny interruption: ${title} is due. Your future self is waiting for you to tick this one off.`;
+
+    }
+
+
+    if (caring) {
+
+        return `Just checking in. ${title} is due. Take care of yourself and this little task too. ♡`;
+
+    }
+
+
+    if (calm) {
+
+        return `A gentle reminder: ${title} is due. Take it one step at a time.`;
+
+    }
+
+
+    return `${title} is due. Time to take care of it.`;
+}
+
+
+/* =========================================================
+   CHARACTER IMAGE -> TRANSPARENT STICKER
+========================================================= */
+
+function handleCharacterImage(event) {
+
+    const file =
+        event.target.files?.[0];
+
+    if (!file) {
+        return;
+    }
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function () {
+
+            data.character.sourceImage =
+                reader.result;
+
+            createSticker(
+                reader.result
+            );
+        };
+
+
+    reader.readAsDataURL(file);
+}
+
+
+/*
+    This creates a sticker rather than simply displaying
+    the original rectangular image.
+
+    It:
+    1. Loads the image.
+    2. Resizes it.
+    3. Samples pixels around the border.
+    4. Flood-fills from the edges.
+    5. Removes pixels sufficiently similar to the
+       detected background.
+    6. Adds a tiny transparent margin.
+    7. Saves the resulting PNG.
+*/
+
+function createSticker(src) {
+
+    const img =
+        new Image();
+
+    img.onload =
+        function () {
+
+            const MAX =
+                600;
+
+            const scale =
+                Math.min(
+                    1,
+                    MAX / Math.max(
+                        img.width,
+                        img.height
+                    )
+                );
+
+            const width =
+                Math.max(
+                    1,
+                    Math.round(img.width * scale)
+                );
+
+            const height =
+                Math.max(
+                    1,
+                    Math.round(img.height * scale)
+                );
+
+
+            const canvas =
+                document.createElement("canvas");
+
+            canvas.width =
+                width;
+
+            canvas.height =
+                height;
+
+
+            const ctx =
+                canvas.getContext(
+                    "2d",
+                    {
+                        willReadFrequently: true
+                    }
+                );
+
+            ctx.drawImage(
+                img,
+                0,
+                0,
+                width,
+                height
+            );
+
+
+            const imageData =
+                ctx.getImageData(
+                    0,
+                    0,
+                    width,
+                    height
+                );
+
+            const pixels =
+                imageData.data;
+
+
+            /*
+               Estimate background from the
+               four corners and nearby edge pixels.
+            */
+
+            const samples = [];
+
+            const samplePoints = [
+
+                [0,0],
+
+                [width - 1,0],
+
+                [0,height - 1],
+
+                [width - 1,height - 1],
+
+                [Math.floor(width / 2),0],
+
+                [Math.floor(width / 2),height - 1],
+
+                [0,Math.floor(height / 2)],
+
+                [width - 1,Math.floor(height / 2)]
+            ];
+
+
+            samplePoints.forEach(
+                ([x,y]) => {
+
+                    const i =
+                        (y * width + x) * 4;
+
+                    samples.push([
+                        pixels[i],
+                        pixels[i + 1],
+                        pixels[i + 2]
+                    ]);
+                }
+            );
+
+
+            const bg =
+                averageColor(samples);
+
+
+            /*
+               Background tolerance.
+               Increase if the original background
+               is strongly uneven.
+            */
+
+            const tolerance =
+                68;
+
+
+            const visited =
+                new Uint8Array(
+                    width * height
+                );
+
+
+            const queue = [];
+
+
+            function pushIfBackground(x,y) {
+
+                if (
+                    x < 0 ||
+                    y < 0 ||
+                    x >= width ||
+                    y >= height
+                ) {
+                    return;
+                }
+
+                const index =
+                    y * width + x;
+
+                if (visited[index]) {
+                    return;
+                }
+
+                const pixel =
+                    index * 4;
+
+                const distance =
+                    colorDistance(
+                        pixels[pixel],
+                        pixels[pixel + 1],
+                        pixels[pixel + 2],
+                        bg[0],
+                        bg[1],
+                        bg[2]
+                    );
+
+                if (
+                    distance <= tolerance
+                ) {
+
+                    visited[index] = 1;
+
+                    queue.push([
+                        x,
+                        y
+                    ]);
+                }
+            }
+
+
+            /*
+               Start from every border point.
+            */
+
+            for (let x = 0; x < width; x++) {
+
+                pushIfBackground(x,0);
+
+                pushIfBackground(
+                    x,
+                    height - 1
+                );
+            }
+
+
+            for (let y = 0; y < height; y++) {
+
+                pushIfBackground(0,y);
+
+                pushIfBackground(
+                    width - 1,
+                    y
+                );
+            }
+
+
+            /*
+               Flood fill.
+            */
+
+            let pointer = 0;
+
+            while (
+                pointer <
+                queue.length
+            ) {
+
+                const [
+                    x,
+                    y
+                ] =
+                    queue[pointer++];
+
+                pushIfBackground(
+                    x + 1,
+                    y
+                );
+
+                pushIfBackground(
+                    x - 1,
+                    y
+                );
+
+                pushIfBackground(
+                    x,
+                    y + 1
+                );
+
+                pushIfBackground(
+                    x,
+                    y - 1
+                );
+            }
+
+
+            /*
+               Remove detected background.
+            */
+
+            for (
+                let i = 0;
+                i < visited.length;
+                i++
+            ) {
+
+                if (visited[i]) {
+
+                    pixels[
+                        i * 4 + 3
+                    ] = 0;
+                }
+            }
+
+
+            ctx.putImageData(
+                imageData,
+                0,
+                0
+            );
+
+
+            /*
+               Crop transparent edges.
+            */
+
+            const cropped =
+                cropTransparentCanvas(
+                    canvas
+                );
+
+
+            /*
+               Add transparent breathing room.
+            */
+
+            const padded =
+                addTransparentPadding(
+                    cropped,
+                    20
+                );
+
+
+            const sticker =
+                padded.toDataURL(
+                    "image/png"
+                );
+
+
+            data.character.sticker =
+                sticker;
+
+            saveData();
+
+            renderCharacter();
+
+            renderDashboard();
+
+            toast(
+                "Character sticker created."
+            );
+        };
+
+
+    img.onerror =
+        function () {
+
+            toast(
+                "I couldn't process that image."
+            );
+        };
+
+
+    img.src = src;
+}
+
+
+function averageColor(samples) {
+
+    if (!samples.length) {
+
+        return [
+            255,
+            255,
+            255
+        ];
+    }
+
+    let r = 0;
+    let g = 0;
+    let b = 0;
+
+    samples.forEach(
+        color => {
+
+            r += color[0];
+            g += color[1];
+            b += color[2];
+        }
+    );
+
+    return [
+
+        Math.round(r / samples.length),
+
+        Math.round(g / samples.length),
+
+        Math.round(b / samples.length)
+    ];
+}
+
+
+function colorDistance(
+    r1,
+    g1,
+    b1,
+    r2,
+    g2,
+    b2
+) {
+
+    return Math.sqrt(
+
+        Math.pow(r1 - r2, 2) +
+
+        Math.pow(g1 - g2, 2) +
+
+        Math.pow(b1 - b2, 2)
+    );
+}
+
+
+function cropTransparentCanvas(canvas) {
+
+    const ctx =
+        canvas.getContext(
+            "2d",
+            {
+                willReadFrequently: true
+            }
+        );
+
+    const imageData =
+        ctx.getImageData(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+    const pixels =
+        imageData.data;
+
+
+    let minX =
+        canvas.width;
+
+    let minY =
+        canvas.height;
+
+    let maxX =
+        -1;
+
+    let maxY =
+        -1;
+
+
+    for (
+        let y = 0;
+        y < canvas.height;
+        y++
+    ) {
+
+        for (
+            let x = 0;
+            x < canvas.width;
+            x++
+        ) {
+
+            const alpha =
+                pixels[
+                    (y * canvas.width + x) * 4 + 3
+                ];
+
+            if (alpha > 8) {
+
+                minX =
+                    Math.min(
+                        minX,
+                        x
+                    );
+
+                minY =
+                    Math.min(
+                        minY,
+                        y
+                    );
+
+                maxX =
+                    Math.max(
+                        maxX,
+                        x
+                    );
+
+                maxY =
+                    Math.max(
+                        maxY,
+                        y
+                    );
+            }
+        }
+    }
+
+
+    if (maxX === -1) {
+
+        return canvas;
+    }
+
+
+    const width =
+        maxX - minX + 1;
+
+    const height =
+        maxY - minY + 1;
+
+
+    const result =
+        document.createElement("canvas");
+
+    result.width =
+        width;
+
+    result.height =
+        height;
+
+
+    result
+        .getContext("2d")
+        .drawImage(
+            canvas,
+            minX,
+            minY,
+            width,
+            height,
+            0,
+            0,
+            width,
+            height
+        );
+
+
+    return result;
+}
+
+
+function addTransparentPadding(
+    canvas,
+    padding
+) {
+
+    const result =
+        document.createElement("canvas");
+
+    result.width =
+        canvas.width + padding * 2;
+
+    result.height =
+        canvas.height + padding * 2;
+
+
+    result
+        .getContext("2d")
+        .drawImage(
+            canvas,
+            padding,
+            padding
+        );
+
+
+    return result;
 }
 
 
 /* =========================================================
    REMINDERS
-   ========================================================= */
+========================================================= */
 
 function renderReminders() {
 
-    const sorted =
-        [...data.reminders]
-            .sort(
-                (a,b) =>
-                    new Date(a.when) -
-                    new Date(b.when)
-            );
+    get("reminders").innerHTML = `
 
+        <div class="section-head">
 
-    $("reminders").innerHTML = `
+            <div>
+                <h2>Reminders</h2>
 
-        ${sectionHead(
-            "Reminders",
-            "Little nudges for things you don't want to forget.",
-            actionButton(
-                `${ICONS.plus} Add Reminder`,
-                "add-reminder"
-            )
-        )}
-
-
-        <div class="list-page">
-
-            ${
-                sorted.length
-
-                ? sorted
-                    .map(
-                        reminder => `
-
-                            <article class="card item-card">
-
-                                <div class="main">
-
-                                    <h3>
-                                        ${esc(
-                                            reminder.title
-                                        )}
-                                    </h3>
-
-                                    <p>
-                                        ${formatDate(
-                                            reminder.when
-                                        )}
-
-                                        ·
-
-                                        ${esc(
-                                            reminder.category ||
-                                            "Personal"
-                                        )}
-
-                                        ${
-                                            reminder.completed
-                                                ? " · completed"
-                                                : ""
-                                        }
-                                    </p>
-
-                                </div>
-
-
-                                <div class="item-actions">
-
-                                    ${actionButton(
-                                        reminder.completed
-                                            ? "Undo"
-                                            : "Done",
-                                        `complete-reminder:${reminder.id}`
-                                    )}
-
-                                    ${actionButton(
-                                        ICONS.edit,
-                                        `edit-reminder:${reminder.id}`
-                                    )}
-
-                                    ${actionButton(
-                                        ICONS.trash,
-                                        `delete-reminder:${reminder.id}`,
-                                        "btn danger"
-                                    )}
-
-                                </div>
-
-                            </article>
-
-                        `
-                    )
-                    .join("")
-
-                : `
-
-                    <article class="card empty">
-                        No reminders yet.
-                    </article>
-
-                `
-            }
-
-        </div>
-
-    `;
-
-}
-
-
-/* =========================================================
-   TODOS
-   ========================================================= */
-
-function renderTodos() {
-
-    $("todos").innerHTML = `
-
-        ${sectionHead(
-            "To-do List",
-            "Work, Personal, Finance and Learning.",
-            actionButton(
-                `${ICONS.plus} Add To-do`,
-                "add-todo"
-            )
-        )}
-
-
-        <div class="list-page">
-
-            ${
-                data.todos.length
-
-                ? data.todos
-                    .map(
-                        todo => `
-
-                            <article class="card item-card">
-
-                                <div class="main">
-
-                                    <label
-                                        class="check-row"
-                                        style="
-                                            border:0;
-                                            padding:0;
-                                        ">
-
-                                        <input
-                                            type="checkbox"
-                                            data-toggle-todo="${esc(
-                                                todo.id
-                                            )}"
-                                            ${
-                                                todo.done
-                                                    ? "checked"
-                                                    : ""
-                                            }>
-
-                                        <span class="${
-                                            todo.done
-                                                ? "done"
-                                                : ""
-                                        }">
-
-                                            ${esc(
-                                                todo.title
-                                            )}
-
-                                        </span>
-
-                                    </label>
-
-                                    <p>
-                                        ${esc(
-                                            todo.category ||
-                                            "Personal"
-                                        )}
-
-                                        ${
-                                            todo.due
-                                                ? ` · Due ${esc(todo.due)}`
-                                                : ""
-                                        }
-                                    </p>
-
-                                </div>
-
-
-                                <div class="item-actions">
-
-                                    ${actionButton(
-                                        ICONS.edit,
-                                        `edit-todo:${todo.id}`
-                                    )}
-
-                                    ${actionButton(
-                                        ICONS.trash,
-                                        `delete-todo:${todo.id}`,
-                                        "btn danger"
-                                    )}
-
-                                </div>
-
-                            </article>
-
-                        `
-                    )
-                    .join("")
-
-                : `
-
-                    <article class="card empty">
-                        Your list is empty.
-                    </article>
-
-                `
-            }
-
-        </div>
-
-    `;
-
-}
-
-
-/* =========================================================
-   GOALS
-   ========================================================= */
-
-function renderGoals() {
-
-    $("goals").innerHTML = `
-
-        ${sectionHead(
-            "Goals",
-            "Track progress without turning your life into a spreadsheet.",
-            actionButton(
-                `${ICONS.plus} Add Goal`,
-                "add-goal"
-            )
-        )}
-
-
-        <div class="list-page">
-
-            ${
-                data.goals.length
-
-                ? data.goals
-                    .map(
-                        goal => {
-
-                            const progress =
-                                Math.max(
-                                    0,
-                                    Math.min(
-                                        100,
-                                        Number(
-                                            goal.progress ||
-                                            0
-                                        )
-                                    )
-                                );
-
-
-                            return `
-
-                                <article
-                                    class="card item-card">
-
-                                    <div
-                                        class="main"
-                                        style="width:100%">
-
-                                        <h3>
-                                            ${esc(
-                                                goal.title
-                                            )}
-                                        </h3>
-
-                                        <p>
-                                            ${esc(
-                                                goal.category ||
-                                                "Personal"
-                                            )}
-
-                                            ·
-
-                                            ${progress}%
-                                        </p>
-
-                                        <div class="progress">
-
-                                            <span
-                                                style="
-                                                    width:${progress}%;
-                                                ">
-                                            </span>
-
-                                        </div>
-
-                                    </div>
-
-
-                                    <div class="item-actions">
-
-                                        ${actionButton(
-                                            ICONS.edit,
-                                            `edit-goal:${goal.id}`
-                                        )}
-
-                                        ${actionButton(
-                                            ICONS.trash,
-                                            ICONS.trash,
-                                            "btn danger"
-                                        )}
-
-                                    </div>
-
-                                </article>
-
-                            `;
-
-                        }
-                    )
-                    .join("")
-
-                : `
-
-                    <article class="card empty">
-                        No goals yet.
-                    </article>
-
-                `
-            }
-
-        </div>
-
-    `;
-
-}
-
-
-/* =========================================================
-   NOTES
-   ========================================================= */
-
-function renderNotes() {
-
-    const notes =
-        [...data.notes]
-            .sort(
-                (a,b) =>
-                    new Date(b.createdAt) -
-                    new Date(a.createdAt)
-            );
-
-
-    $("notes").innerHTML = `
-
-        ${sectionHead(
-            "Notes",
-            "Little thoughts, ideas and things worth keeping.",
-            actionButton(
-                `${ICONS.plus} New Note`,
-                "add-note"
-            )
-        )}
-
-
-        <div class="list-page">
-
-            ${
-                notes.length
-
-                ? notes
-                    .map(
-                        note => `
-
-                            <article class="card item-card">
-
-                                <div class="main">
-
-                                    <h3>
-                                        ${esc(
-                                            note.title
-                                        )}
-                                    </h3>
-
-                                    <p>
-                                        ${formatDate(
-                                            note.createdAt
-                                        )}
-                                    </p>
-
-                                    <div
-                                        class="note-paper"
-                                        style="
-                                            margin-top:10px;
-                                            min-height:90px;
-                                        ">
-
-                                        ${esc(
-                                            note.content
-                                        )}
-
-                                    </div>
-
-                                </div>
-
-
-                                <div class="item-actions">
-
-                                    ${actionButton(
-                                        ICONS.edit,
-                                        `edit-note:${note.id}`
-                                    )}
-
-                                    ${actionButton(
-                                        ICONS.trash,
-                                        `delete-note:${note.id}`,
-                                        "btn danger"
-                                    )}
-
-                                </div>
-
-                            </article>
-
-                        `
-                    )
-                    .join("")
-
-                : `
-
-                    <article class="card empty">
-                        No notes yet.
-                    </article>
-
-                `
-            }
-
-        </div>
-
-    `;
-
-}
-
-
-/* =========================================================
-   NOTIFICATIONS
-   ========================================================= */
-
-function renderNotifications() {
-
-    $("notifications").innerHTML = `
-
-        ${sectionHead(
-            "Notifications",
-            "Your notification history stays here."
-        )}
-
-
-        <div class="card">
-
-            <div
-                class="actions"
-                style="margin-bottom:12px">
-
-                ${actionButton(
-                    "Allow Browser Notifications",
-                    "request-notifications",
-                    "btn primary"
-                )}
-
-                ${actionButton(
-                    "Mark All Read",
-                    "read-all"
-                )}
-
+                <p>
+                    Character will speak when one becomes due.
+                </p>
             </div>
 
+            <button
+                class="btn primary"
+                id="addReminder"
+                type="button">
+
+                + Add Reminder
+
+            </button>
+
+        </div>
+
+
+        <div class="list-page">
 
             ${
-                data.notifications.length
+                data.reminders.length
 
-                ? [...data.notifications]
-                    .reverse()
-                    .map(
-                        notification => `
+                ?
 
-                            <div
-                                class="notice ${
-                                    notification.read
-                                        ? ""
-                                        : "unread"
-                                }">
+                data.reminders
+                    .slice()
+                    .sort(
+                        (a,b) =>
+                            new Date(a.datetime) -
+                            new Date(b.datetime)
+                    )
+                    .map(reminder => `
 
-                                <div>
+                        <div class="card item-card">
 
-                                    <strong>
-                                        ${esc(
-                                            notification.title
-                                        )}
-                                    </strong>
+                            <div class="main">
 
-                                    <small>
+                                <h3>
+                                    ${escapeHTML(
+                                        reminder.title
+                                    )}
+                                </h3>
 
-                                        ${esc(
-                                            notification.body
-                                        )}
+                                <p>
 
-                                        ·
+                                    ${escapeHTML(
+                                        reminder.category
+                                    )}
 
-                                        ${formatDate(
-                                            notification.createdAt
-                                        )}
+                                    ·
 
-                                    </small>
+                                    ${formatDateTime(
+                                        reminder.datetime
+                                    )}
 
-                                </div>
-
-
-                                ${
-                                    notification.read
-                                    ? ""
-                                    : actionButton(
-                                        "Read",
-                                        `read:${notification.id}`
-                                    )
-                                }
+                                </p>
 
                             </div>
 
-                        `
-                    )
+
+                            <div class="item-actions">
+
+                                <button
+                                    class="btn"
+                                    type="button"
+                                    data-edit-reminder="${reminder.id}">
+
+                                    Edit
+
+                                </button>
+
+                                <button
+                                    class="btn danger"
+                                    type="button"
+                                    data-delete-reminder="${reminder.id}">
+
+                                    Delete
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    `)
                     .join("")
 
-                : `
+                :
 
-                    <div class="empty">
-                        No notifications yet.
-                    </div>
-
+                `
+                <div class="card empty">
+                    No reminders yet.
+                </div>
                 `
             }
 
         </div>
-
     `;
 
+
+    get("addReminder")
+        .addEventListener(
+            "click",
+            () => openReminderModal()
+        );
+
+
+    document
+        .querySelectorAll(
+            "[data-edit-reminder]"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const reminder =
+                        data.reminders.find(
+                            r =>
+                                r.id ===
+                                button.dataset.editReminder
+                        );
+
+                    if (reminder) {
+
+                        openReminderModal(
+                            reminder
+                        );
+                    }
+                }
+            );
+        });
+
+
+    document
+        .querySelectorAll(
+            "[data-delete-reminder]"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    data.reminders =
+                        data.reminders.filter(
+                            r =>
+                                r.id !==
+                                button.dataset.deleteReminder
+                        );
+
+                    saveData();
+
+                    renderReminders();
+
+                    renderDashboard();
+
+                    toast(
+                        "Reminder deleted."
+                    );
+                }
+            );
+        });
 }
 
 
-/* =========================================================
-   APPEARANCE
-   ========================================================= */
+function openReminderModal(reminder = null) {
 
-function renderAppearance() {
-
-    $("appearance").innerHTML = `
-
-        ${sectionHead(
-            "Appearance",
-            "Ten fixed palettes. Pick the one that feels right."
-        )}
-
-
-        <div class="palette-grid">
-
-            ${
-                Object.entries(
-                    palettes
+    const existing =
+        reminder
+            ? toDateTimeLocal(
+                reminder.datetime
+            )
+            : toDateTimeLocal(
+                new Date(
+                    Date.now() + 10 * 60000
                 )
-                .map(
-                    ([key,palette]) => `
+            );
+
+
+    get("modalRoot").innerHTML = `
+
+        <div class="modal-backdrop">
+
+            <div class="modal">
+
+                <div class="modal-head">
+
+                    <h2>
+                        ${reminder
+                            ? "Edit Reminder"
+                            : "New Reminder"}
+                    </h2>
+
+                    <button
+                        class="close"
+                        id="closeModal"
+                        type="button">
+
+                        ×
+
+                    </button>
+
+                </div>
+
+
+                <div class="form-grid">
+
+                    <div class="field full">
+
+                        <label>
+                            Reminder
+                        </label>
+
+                        <input
+                            id="reminderTitle"
+                            placeholder="What should I remind you about?"
+                            value="${
+                                escapeHTML(
+                                    reminder?.title || ""
+                                )
+                            }">
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            Date & Time
+                        </label>
+
+                        <input
+                            id="reminderDatetime"
+                            type="datetime-local"
+                            value="${existing}">
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            Category
+                        </label>
+
+                        <select id="reminderCategory">
+
+                            ${[
+                                "Work",
+                                "Personal",
+                                "Finance",
+                                "Learning"
+                            ]
+                                .map(
+                                    category => `
+
+                                        <option
+                                            ${
+                                                (
+                                                    reminder?.category ||
+                                                    "Personal"
+                                                ) === category
+                                                    ? "selected"
+                                                    : ""
+                                            }
+                                        >
+                                            ${category}
+                                        </option>
+
+                                    `
+                                )
+                                .join("")}
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="button-row field full">
 
                         <button
-                            class="palette ${
-                                data.appearance === key
-                                    ? "selected"
-                                    : ""
-                            }"
-                            data-palette="${esc(key)}"
+                            class="btn"
+                            id="cancelReminder"
                             type="button">
 
-                            <div class="swatches">
-
-                                <i style="
-                                    background:${palette.background};
-                                "></i>
-
-                                <i style="
-                                    background:${palette.main};
-                                "></i>
-
-                                <i style="
-                                    background:${palette.font};
-                                "></i>
-
-                            </div>
-
-                            <strong>
-                                ${esc(
-                                    palette.name
-                                )}
-                            </strong>
-
-                            <div class="meta">
-                                Background · Main · Font
-                            </div>
+                            Cancel
 
                         </button>
 
-                    `
-                )
-                .join("")
-            }
+
+                        <button
+                            class="btn primary"
+                            id="saveReminder"
+                            type="button">
+
+                            Save Reminder
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
-
     `;
 
-}
 
+    get("closeModal")
+        .addEventListener(
+            "click",
+            closeModal
+        );
 
-/* =========================================================
-   NAVIGATION
-   ========================================================= */
-
-function navigate(section) {
-
-    if (
-        !document.getElementById(
-            section
-        )
-    ) {
-
-        return;
-
-    }
-
-
-    activeSection =
-        section;
-
-
-    document
-        .querySelectorAll(
-            ".page-section"
-        )
-        .forEach(
-            element => {
-
-                element.classList.toggle(
-                    "active",
-                    element.id ===
-                    section
-                );
-
-            }
+    get("cancelReminder")
+        .addEventListener(
+            "click",
+            closeModal
         );
 
 
-    document
-        .querySelectorAll(
-            ".nav-item"
-        )
-        .forEach(
-            element => {
+    get("saveReminder")
+        .addEventListener(
+            "click",
+            () => {
 
-                element.classList.toggle(
-                    "active",
-                    element.dataset.section ===
-                    section
-                );
+                const title =
+                    get("reminderTitle")
+                        .value
+                        .trim();
 
-            }
-        );
+                const datetime =
+                    get("reminderDatetime")
+                        .value;
 
-
-    renderPage(
-        section
-    );
+                const category =
+                    get("reminderCategory")
+                        .value;
 
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+                if (!title || !datetime) {
 
-}
-
-
-function renderPage(section) {
-
-    switch (section) {
-
-        case "profile":
-            renderProfile();
-            break;
-
-        case "dashboard":
-            renderDashboard();
-            break;
-
-        case "character":
-            renderCharacter();
-            break;
-
-        case "reminders":
-            renderReminders();
-            break;
-
-        case "todos":
-            renderTodos();
-            break;
-
-        case "goals":
-            renderGoals();
-            break;
-
-        case "notes":
-            renderNotes();
-            break;
-
-        case "notifications":
-            renderNotifications();
-            break;
-
-        case "appearance":
-            renderAppearance();
-            break;
-
-        default:
-            renderDashboard();
-
-    }
-
-
-    updateTop();
-
-}
-
-
-/* =========================================================
-   FILE READER
-   ========================================================= */
-
-function readFile(file) {
-
-    return new Promise(
-        (resolve,reject) => {
-
-            const reader =
-                new FileReader();
-
-
-            reader.onload =
-                () =>
-                    resolve(
-                        reader.result
+                    toast(
+                        "Please enter the reminder and time."
                     );
 
+                    return;
+                }
 
-            reader.onerror =
-                reject;
+
+                if (reminder) {
+
+                    reminder.title =
+                        title;
+
+                    reminder.datetime =
+                        datetime;
+
+                    reminder.category =
+                        category;
+
+                    reminder.triggered = false;
+
+                } else {
+
+                    data.reminders.push({
+
+                        id: uid("reminder"),
+
+                        title,
+
+                        datetime,
+
+                        category,
+
+                        triggered: false,
+
+                        done: false
+                    });
+                }
 
 
-            reader.readAsDataURL(
-                file
+                saveData();
+
+                closeModal();
+
+                renderReminders();
+
+                renderDashboard();
+
+                toast(
+                    reminder
+                        ? "Reminder updated."
+                        : "Reminder saved."
+                );
+            }
+        );
+}
+
+
+function closeModal() {
+
+    get("modalRoot")
+        .innerHTML = "";
+}
+
+
+function toDateTimeLocal(date) {
+
+    const d =
+        new Date(date);
+
+    const pad =
+        n =>
+            String(n).padStart(
+                2,
+                "0"
             );
 
-        }
-    );
+    return [
 
+        d.getFullYear(),
+
+        "-",
+
+        pad(
+            d.getMonth() + 1
+        ),
+
+        "-",
+
+        pad(
+            d.getDate()
+        ),
+
+        "T",
+
+        pad(
+            d.getHours()
+        ),
+
+        ":",
+
+        pad(
+            d.getMinutes()
+        )
+
+    ].join("");
 }
 
 
 /* =========================================================
-   STICKER PROCESSOR
-   ========================================================= */
+   REMINDER WATCHER
+========================================================= */
 
-function makeSticker(
-    dataURL
-) {
+let reminderWatcherStarted =
+    false;
 
-    return new Promise(
-        (resolve,reject) => {
 
-            const image =
-                new Image();
+function startReminderWatcher() {
 
+    if (reminderWatcherStarted) {
+        return;
+    }
 
-            image.onload =
-                () => {
+    reminderWatcherStarted = true;
 
-                    try {
 
-                        const scale =
-                            Math.min(
-                                800 / image.width,
-                                800 / image.height,
-                                1
-                            );
+    checkReminders();
 
+    setInterval(
+        checkReminders,
+        15000
+    );
+}
 
-                        const width =
-                            Math.max(
-                                1,
-                                Math.round(
-                                    image.width *
-                                    scale
-                                )
-                            );
 
+function checkReminders() {
 
-                        const height =
-                            Math.max(
-                                1,
-                                Math.round(
-                                    image.height *
-                                    scale
-                                )
-                            );
+    const now =
+        Date.now();
 
 
-                        const canvas =
-                            document.createElement(
-                                "canvas"
-                            );
+    data.reminders.forEach(
+        reminder => {
 
+            if (reminder.done) {
+                return;
+            }
 
-                        canvas.width =
-                            width;
+            if (reminder.snoozedUntil) {
 
-                        canvas.height =
-                            height;
+                if (
+                    now <
+                    new Date(
+                        reminder.snoozedUntil
+                    ).getTime()
+                ) {
 
+                    return;
+                }
 
-                        const ctx =
-                            canvas.getContext(
-                                "2d",
-                                {
-                                    willReadFrequently:
-                                        true
-                                }
-                            );
+                reminder.snoozedUntil =
+                    null;
+            }
 
 
-                        if (!ctx) {
+            if (reminder.triggered) {
+                return;
+            }
 
-                            reject(
-                                new Error(
-                                    "Canvas unavailable"
-                                )
-                            );
 
-                            return;
+            const due =
+                new Date(
+                    reminder.datetime
+                ).getTime();
 
-                        }
 
+            if (
+                Number.isNaN(due)
+            ) {
+                return;
+            }
 
-                        ctx.drawImage(
-                            image,
-                            0,
-                            0,
-                            width,
-                            height
-                        );
 
+            if (
+                now >= due &&
+                now < due + 120000
+            ) {
 
-                        const imageData =
-                            ctx.getImageData(
-                                0,
-                                0,
-                                width,
-                                height
-                            );
-
-
-                        const pixels =
-                            imageData.data;
-
-
-                        const visited =
-                            new Uint8Array(
-                                width * height
-                            );
-
-
-                        const queue = [];
-
-
-                        const pos =
-                            (x,y) =>
-                                y * width + x;
-
-
-                        function rgb(
-                            x,
-                            y
-                        ) {
-
-                            const i =
-                                pos(x,y) * 4;
-
-                            return [
-                                pixels[i],
-                                pixels[i + 1],
-                                pixels[i + 2]
-                            ];
-
-                        }
-
-
-                        const corners = [
-
-                            [0,0],
-
-                            [width - 1,0],
-
-                            [0,height - 1],
-
-                            [width - 1,height - 1]
-
-                        ];
-
-
-                        const backgrounds =
-                            corners.map(
-                                ([x,y]) =>
-                                    rgb(x,y)
-                            );
-
-
-                        function similar(
-                            r,
-                            g,
-                            b
-                        ) {
-
-                            return backgrounds.some(
-                                color => {
-
-                                    const difference =
-                                        Math.abs(
-                                            r - color[0]
-                                        ) +
-                                        Math.abs(
-                                            g - color[1]
-                                        ) +
-                                        Math.abs(
-                                            b - color[2]
-                                        );
-
-
-                                    return (
-                                        difference <
-                                        115
-                                    );
-
-                                }
-                            );
-
-                        }
-
-
-                        corners.forEach(
-                            ([x,y]) => {
-
-                                const p =
-                                    pos(x,y);
-
-                                visited[p] =
-                                    1;
-
-                                queue.push(
-                                    p
-                                );
-
-                            }
-                        );
-
-
-                        let pointer = 0;
-
-
-                        while (
-                            pointer <
-                            queue.length
-                        ) {
-
-                            const current =
-                                queue[
-                                    pointer++
-                                ];
-
-
-                            const x =
-                                current %
-                                width;
-
-
-                            const y =
-                                Math.floor(
-                                    current /
-                                    width
-                                );
-
-
-                            const i =
-                                current * 4;
-
-
-                            const isBackground =
-                                similar(
-                                    pixels[i],
-                                    pixels[i + 1],
-                                    pixels[i + 2]
-                                );
-
-
-                            if (
-                                !isBackground
-                            ) {
-
-                                continue;
-
-                            }
-
-
-                            pixels[i + 3] =
-                                0;
-
-
-                            const neighbours = [
-
-                                [x + 1,y],
-
-                                [x - 1,y],
-
-                                [x,y + 1],
-
-                                [x,y - 1]
-
-                            ];
-
-
-                            neighbours.forEach(
-                                ([nx,ny]) => {
-
-                                    if (
-                                        nx < 0 ||
-                                        ny < 0 ||
-                                        nx >= width ||
-                                        ny >= height
-                                    ) {
-
-                                        return;
-
-                                    }
-
-
-                                    const next =
-                                        pos(
-                                            nx,
-                                            ny
-                                        );
-
-
-                                    if (
-                                        visited[next]
-                                    ) {
-
-                                        return;
-
-                                    }
-
-
-                                    visited[next] =
-                                        1;
-
-
-                                    const ni =
-                                        next * 4;
-
-
-                                    if (
-                                        similar(
-                                            pixels[ni],
-                                            pixels[ni + 1],
-                                            pixels[ni + 2]
-                                        )
-                                    ) {
-
-                                        queue.push(
-                                            next
-                                        );
-
-                                    }
-
-                                }
-                            );
-
-                        }
-
-
-                        ctx.putImageData(
-                            imageData,
-                            0,
-                            0
-                        );
-
-
-                        /*
-                            Find remaining character bounds.
-                        */
-
-                        let minX = width;
-                        let minY = height;
-                        let maxX = -1;
-                        let maxY = -1;
-
-
-                        for (
-                            let y = 0;
-                            y < height;
-                            y++
-                        ) {
-
-                            for (
-                                let x = 0;
-                                x < width;
-                                x++
-                            ) {
-
-                                const i =
-                                    pos(x,y) * 4;
-
-
-                                if (
-                                    pixels[i + 3] >
-                                    30
-                                ) {
-
-                                    minX =
-                                        Math.min(
-                                            minX,
-                                            x
-                                        );
-
-                                    minY =
-                                        Math.min(
-                                            minY,
-                                            y
-                                        );
-
-                                    maxX =
-                                        Math.max(
-                                            maxX,
-                                            x
-                                        );
-
-                                    maxY =
-                                        Math.max(
-                                            maxY,
-                                            y
-                                        );
-
-                                }
-
-                            }
-
-                        }
-
-
-                        if (
-                            maxX < 0 ||
-                            maxY < 0
-                        ) {
-
-                            reject(
-                                new Error(
-                                    "No character detected"
-                                )
-                            );
-
-                            return;
-
-                        }
-
-
-                        const padding = 14;
-
-
-                        minX =
-                            Math.max(
-                                0,
-                                minX - padding
-                            );
-
-                        minY =
-                            Math.max(
-                                0,
-                                minY - padding
-                            );
-
-                        maxX =
-                            Math.min(
-                                width - 1,
-                                maxX + padding
-                            );
-
-                        maxY =
-                            Math.min(
-                                height - 1,
-                                maxY + padding
-                            );
-
-
-                        const cropWidth =
-                            maxX - minX + 1;
-
-                        const cropHeight =
-                            maxY - minY + 1;
-
-
-                        const output =
-                            document.createElement(
-                                "canvas"
-                            );
-
-
-                        output.width =
-                            cropWidth;
-
-                        output.height =
-                            cropHeight;
-
-
-                        const outputCtx =
-                            output.getContext(
-                                "2d"
-                            );
-
-
-                        outputCtx.drawImage(
-                            canvas,
-                            minX,
-                            minY,
-                            cropWidth,
-                            cropHeight,
-                            0,
-                            0,
-                            cropWidth,
-                            cropHeight
-                        );
-
-
-                        /*
-                            Add a subtle white sticker edge.
-                        */
-
-                        const finalCanvas =
-                            document.createElement(
-                                "canvas"
-                            );
-
-
-                        const edge = 7;
-
-
-                        finalCanvas.width =
-                            cropWidth +
-                            edge * 2;
-
-                        finalCanvas.height =
-                            cropHeight +
-                            edge * 2;
-
-
-                        const finalCtx =
-                            finalCanvas.getContext(
-                                "2d"
-                            );
-
-
-                        finalCtx.drawImage(
-                            output,
-                            edge,
-                            edge
-                        );
-
-
-                        const finalImage =
-                            finalCtx.getImageData(
-                                0,
-                                0,
-                                finalCanvas.width,
-                                finalCanvas.height
-                            );
-
-
-                        const source =
-                            finalImage.data;
-
-
-                        /*
-                            Soft white halo around
-                            visible pixels.
-                        */
-
-                        const copy =
-                            new Uint8ClampedArray(
-                                source
-                            );
-
-
-                        for (
-                            let y = edge;
-                            y <
-                            finalCanvas.height - edge;
-                            y++
-                        ) {
-
-                            for (
-                                let x = edge;
-                                x <
-                                finalCanvas.width - edge;
-                                x++
-                            ) {
-
-                                const i =
-                                    (
-                                        y *
-                                        finalCanvas.width +
-                                        x
-                                    ) * 4;
-
-
-                                if (
-                                    copy[i + 3] <
-                                    30
-                                ) {
-
-                                    continue;
-
-                                }
-
-
-                                const neighbours = [
-
-                                    [x + 3,y],
-
-                                    [x - 3,y],
-
-                                    [x,y + 3],
-
-                                    [x,y - 3]
-
-                                ];
-
-
-                                neighbours.forEach(
-                                    ([nx,ny]) => {
-
-                                        if (
-                                            nx < 0 ||
-                                            ny < 0 ||
-                                            nx >= finalCanvas.width ||
-                                            ny >= finalCanvas.height
-                                        ) {
-
-                                            return;
-
-                                        }
-
-
-                                        const ni =
-                                            (
-                                                ny *
-                                                finalCanvas.width +
-                                                nx
-                                            ) * 4;
-
-
-                                        if (
-                                            source[ni + 3] <
-                                            30
-                                        ) {
-
-                                            source[ni] =
-                                                255;
-
-                                            source[ni + 1] =
-                                                255;
-
-                                            source[ni + 2] =
-                                                255;
-
-                                            source[ni + 3] =
-                                                210;
-
-                                        }
-
-                                    }
-                                );
-
-                            }
-
-                        }
-
-
-                        finalCtx.putImageData(
-                            finalImage,
-                            0,
-                            0
-                        );
-
-
-                        resolve(
-                            finalCanvas.toDataURL(
-                                "image/png"
-                            )
-                        );
-
-
-                    } catch (error) {
-
-                        reject(error);
-
-                    }
-
-                };
-
-
-            image.onerror =
-                () =>
-                    reject(
-                        new Error(
-                            "Image could not be loaded"
-                        )
-                    );
-
-
-            image.src =
-                dataURL;
-
+                triggerReminder(
+                    reminder
+                );
+            }
         }
     );
+}
 
+
+function triggerReminder(reminder) {
+
+    reminder.triggered =
+        true;
+
+
+    const message =
+        characterSpeak(
+            reminder
+        );
+
+
+    data.character.lastMessage =
+        message;
+
+
+    data.notifications.unshift({
+
+        id: uid("notification"),
+
+        reminderId:
+            reminder.id,
+
+        title:
+            data.character.name ||
+            "Character",
+
+        message,
+
+        createdAt:
+            new Date().toISOString(),
+
+        read: false,
+
+        done: false
+    });
+
+
+    saveData();
+
+
+    /*
+       This browser notification appears outside
+       the LAYRAAZ webpage, including while the user
+       is browsing another site, as long as the browser
+       has permission and the page is running.
+    */
+
+    sendBrowserNotification(
+        reminder,
+        message
+    );
+
+
+    renderDashboard();
+
+    renderNotifications();
+
+    updateNotificationCount();
+
+
+    toast(
+        `${data.character.name || "Character"} has a reminder for you.`
+    );
 }
 
 
 /* =========================================================
    BROWSER NOTIFICATIONS
-   ========================================================= */
+========================================================= */
 
-async function requestNotifications() {
+async function requestNotificationPermission() {
 
     if (
-        typeof Notification ===
-        "undefined"
+        !("Notification" in window)
     ) {
 
         toast(
@@ -3274,16 +3555,26 @@ async function requestNotifications() {
         );
 
         return;
+    }
 
+
+    if (
+        Notification.permission ===
+        "granted"
+    ) {
+
+        toast(
+            "Browser notifications are already enabled."
+        );
+
+        return;
     }
 
 
     try {
 
         const permission =
-            await Notification
-                .requestPermission();
-
+            await Notification.requestPermission();
 
         if (
             permission ===
@@ -3297,36 +3588,30 @@ async function requestNotifications() {
         } else {
 
             toast(
-                "Notification permission was not granted."
+                "Browser notification permission was not granted."
             );
-
         }
 
-
-        renderCharacter();
-
     } catch (error) {
+
+        console.error(error);
 
         toast(
             "Could not request notification permission."
         );
-
     }
-
 }
 
 
 function sendBrowserNotification(
-    reminder
+    reminder,
+    message
 ) {
 
     if (
-        typeof Notification ===
-        "undefined"
+        !("Notification" in window)
     ) {
-
         return;
-
     }
 
 
@@ -3334,9 +3619,7 @@ function sendBrowserNotification(
         Notification.permission !==
         "granted"
     ) {
-
         return;
-
     }
 
 
@@ -3344,35 +3627,40 @@ function sendBrowserNotification(
 
         const notification =
             new Notification(
-                reminder.title,
+                data.character.name ||
+                "Character",
                 {
-                    body:
-                        "Your LAYRAAZ reminder is due.",
 
-                    /*
-                        The transparent sticker is used
-                        as the notification icon.
-                    */
+                    body: message,
+
                     icon:
                         data.character.sticker ||
                         undefined,
 
-                    tag:
-                        "layraaz-" +
-                        reminder.id,
+                    badge:
+                        data.character.sticker ||
+                        undefined,
 
-                    renotify:
-                        true
+                    tag:
+                        `layraaz-${reminder.id}`,
+
+                    renotify: true
                 }
             );
 
 
         notification.onclick =
-            () => {
+            function () {
 
                 window.focus();
 
+                showSection(
+                    "notifications"
+                );
+
+                notification.close();
             };
+
 
     } catch (error) {
 
@@ -3380,437 +3668,310 @@ function sendBrowserNotification(
             "Notification error:",
             error
         );
-
     }
-
 }
 
 
 /* =========================================================
-   IN-APP COMPANION
-   ========================================================= */
+   NOTIFICATIONS
+========================================================= */
 
-function showCompanion(
-    reminder
-) {
+function renderNotifications() {
 
-    const box =
-        $("companionReminder");
+    get("notifications").innerHTML = `
 
-    const image =
-        $("companionSticker");
+        <div class="section-head">
 
+            <div>
 
-    if (
-        !box ||
-        !data.character.sticker
-    ) {
+                <h2>Notifications</h2>
 
-        return;
-
-    }
-
-
-    image.src =
-        data.character.sticker;
-
-
-    image.alt =
-        data.character.name ||
-        "Character";
-
-
-    $("companionTitle")
-        .textContent =
-        data.character.name ||
-        "Character";
-
-
-    $("companionMessage")
-        .textContent =
-        reminder.title +
-        " is due now.";
-
-
-    box.classList.remove(
-        "hidden"
-    );
-
-}
-
-
-function hideCompanion() {
-
-    const box =
-        $("companionReminder");
-
-
-    if (box) {
-
-        box.classList.add(
-            "hidden"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   NOTIFICATION HISTORY
-   ========================================================= */
-
-function addNotification(
-    title,
-    body
-) {
-
-    data.notifications.push({
-
-        id:
-            uid("notification"),
-
-        title,
-
-        body,
-
-        createdAt:
-            new Date()
-                .toISOString(),
-
-        read:
-            false
-
-    });
-
-
-    if (
-        data.notifications.length >
-        100
-    ) {
-
-        data.notifications =
-            data.notifications
-                .slice(-100);
-
-    }
-
-
-    save();
-
-}
-
-
-/* =========================================================
-   REMINDER ENGINE
-   ========================================================= */
-
-function fireReminder(
-    reminder
-) {
-
-    sendBrowserNotification(
-        reminder
-    );
-
-
-    addNotification(
-        "Reminder due",
-        `${reminder.title} is due now.`
-    );
-
-
-    showCompanion(
-        reminder
-    );
-
-
-    reminder.lastNotifiedAt =
-        new Date()
-            .toISOString();
-
-}
-
-
-function checkReminders() {
-
-    const now =
-        Date.now();
-
-
-    let changed =
-        false;
-
-
-    for (
-        const reminder of
-        data.reminders
-    ) {
-
-        const due =
-            new Date(
-                reminder.when
-            ).getTime();
-
-
-        if (
-            reminder.completed ||
-            !Number.isFinite(due) ||
-            due > now
-        ) {
-
-            continue;
-
-        }
-
-
-        const last =
-            reminder.lastNotifiedAt
-                ? new Date(
-                    reminder.lastNotifiedAt
-                ).getTime()
-                : 0;
-
-
-        /*
-            Do not repeat the same reminder
-            for 12 hours.
-        */
-
-        if (
-            now - last <
-            12 * 60 * 60 * 1000
-        ) {
-
-            continue;
-
-        }
-
-
-        fireReminder(
-            reminder
-        );
-
-
-        changed =
-            true;
-
-    }
-
-
-    if (changed) {
-
-        save();
-
-        renderDashboard();
-
-        if (
-            activeSection ===
-            "reminders"
-        ) {
-
-            renderReminders();
-
-        }
-
-        updateTop();
-
-    }
-
-}
-
-
-function startReminderEngine() {
-
-    if (
-        reminderTimer
-    ) {
-
-        clearInterval(
-            reminderTimer
-        );
-
-    }
-
-
-    /*
-        10 second check while
-        the page is active.
-    */
-
-    reminderTimer =
-        setInterval(
-            checkReminders,
-            10000
-        );
-
-
-    checkReminders();
-
-}
-
-
-/* =========================================================
-   TOAST
-   ========================================================= */
-
-function toast(
-    message
-) {
-
-    const element =
-        $("toast");
-
-
-    if (!element) return;
-
-
-    element.textContent =
-        message;
-
-
-    element.classList.add(
-        "show"
-    );
-
-
-    clearTimeout(
-        toastTimer
-    );
-
-
-    toastTimer =
-        setTimeout(
-            () => {
-
-                element.classList.remove(
-                    "show"
-                );
-
-            },
-            2300
-        );
-
-}
-
-
-/* =========================================================
-   MODALS
-   ========================================================= */
-
-function openModal(
-    title,
-    html,
-    submit
-) {
-
-    $("modalRoot").innerHTML = `
-
-        <div
-            class="modal-backdrop"
-            data-close-modal>
-
-            <div class="modal">
-
-                <div class="modal-head">
-
-                    <h2>
-                        ${esc(title)}
-                    </h2>
-
-                    <button
-                        class="close"
-                        data-close-modal
-                        type="button">
-
-                        ×
-
-                    </button>
-
-                </div>
-
-                ${html}
+                <p>
+                    Your Character's recent nudges.
+                </p>
 
             </div>
 
+
+            <button
+                class="btn"
+                id="enableNotifications"
+                type="button">
+
+                Enable Browser Notifications
+
+            </button>
+
         </div>
 
+
+        <div class="list-page">
+
+            ${
+                data.notifications.length
+
+                ?
+
+                data.notifications
+                    .map(notification => `
+
+                        <div
+                            class="
+                                card
+                                notice
+                                ${
+                                    notification.read
+                                        ? ""
+                                        : "unread"
+                                }
+                            "
+                        >
+
+                            <div>
+
+                                <strong>
+                                    ${escapeHTML(
+                                        notification.title
+                                    )}
+                                </strong>
+
+                                <div>
+                                    ${escapeHTML(
+                                        notification.message
+                                    )}
+                                </div>
+
+                                <small>
+                                    ${formatDateTime(
+                                        notification.createdAt
+                                    )}
+                                </small>
+
+                            </div>
+
+
+                            <div class="notice-actions">
+
+                                <button
+                                    class="btn"
+                                    type="button"
+                                    data-notice-done="${notification.id}">
+
+                                    Done
+
+                                </button>
+
+
+                                <button
+                                    class="btn"
+                                    type="button"
+                                    data-notice-snooze="${notification.id}">
+
+                                    Snooze 5 min
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    `)
+                    .join("")
+
+                :
+
+                `
+                <div class="card empty">
+                    No notifications yet.
+                </div>
+                `
+            }
+
+        </div>
     `;
 
 
-    const form =
-        $("modalRoot")
-            .querySelector(
-                "form"
-            );
-
-
-    if (form) {
-
-        form.addEventListener(
-            "submit",
-            event => {
-
-                event.preventDefault();
-
-                submit(
-                    new FormData(form)
-                );
-
-            }
+    get("enableNotifications")
+        .addEventListener(
+            "click",
+            requestNotificationPermission
         );
 
-    }
 
+    document
+        .querySelectorAll(
+            "[data-notice-done]"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    finishNotification(
+                        button.dataset.noticeDone
+                    );
+                }
+            );
+        });
+
+
+    document
+        .querySelectorAll(
+            "[data-notice-snooze]"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    snoozeNotification(
+                        button.dataset.noticeSnooze
+                    );
+                }
+            );
+        });
 }
 
 
-function closeModal() {
+function finishNotification(
+    notificationId
+) {
 
-    $("modalRoot").innerHTML =
-        "";
+    const notification =
+        data.notifications.find(
+            n =>
+                n.id ===
+                notificationId
+        );
 
+    if (!notification) {
+        return;
+    }
+
+
+    notification.read =
+        true;
+
+    notification.done =
+        true;
+
+
+    const reminder =
+        data.reminders.find(
+            r =>
+                r.id ===
+                notification.reminderId
+        );
+
+
+    if (reminder) {
+
+        reminder.done =
+            true;
+    }
+
+
+    saveData();
+
+    renderNotifications();
+
+    renderReminders();
+
+    renderDashboard();
+
+    updateNotificationCount();
+
+    toast("Done. ✓");
+}
+
+
+function snoozeNotification(
+    notificationId
+) {
+
+    const notification =
+        data.notifications.find(
+            n =>
+                n.id ===
+                notificationId
+        );
+
+    if (!notification) {
+        return;
+    }
+
+
+    const reminder =
+        data.reminders.find(
+            r =>
+                r.id ===
+                notification.reminderId
+        );
+
+
+    if (reminder) {
+
+        reminder.snoozedUntil =
+            new Date(
+                Date.now() +
+                5 * 60 * 1000
+            ).toISOString();
+
+        reminder.triggered =
+            false;
+    }
+
+
+    notification.read =
+        true;
+
+
+    saveData();
+
+    renderNotifications();
+
+    renderReminders();
+
+    renderDashboard();
+
+    updateNotificationCount();
+
+    toast(
+        "Snoozed for 5 minutes."
+    );
+}
+
+
+function updateNotificationCount() {
+
+    const count =
+        data.notifications.filter(
+            n => !n.read
+        ).length;
+
+    const el =
+        get("notificationCount");
+
+    if (!el) {
+        return;
+    }
+
+    el.textContent =
+        count > 0
+            ? count
+            : "";
 }
 
 
 /* =========================================================
-   FORM HELPERS
-   ========================================================= */
+   TODO LIST
+========================================================= */
 
-function field(
-    name,
-    label,
-    value,
-    type = "text",
-    required = false
-) {
+function renderTodos() {
 
-    return `
-
-        <div class="field">
-
-            <label>
-                ${esc(label)}
-            </label>
-
-            <input
-                name="${esc(name)}"
-                type="${esc(type)}"
-                value="${esc(value)}"
-                ${required ? "required" : ""}>
-
-        </div>
-
-    `;
-
-}
-
-
-function categoryField(
-    value = "Personal"
-) {
-
-    const options = [
+    const categories = [
         "Work",
         "Personal",
         "Finance",
@@ -3818,820 +3979,945 @@ function categoryField(
     ];
 
 
-    return `
+    get("todos").innerHTML = `
 
-        <div class="field">
+        <div class="section-head">
 
-            <label>
-                Category
-            </label>
+            <div>
 
-            <select name="category">
+                <h2>To-do List</h2>
 
-                ${
-                    options
-                        .map(
-                            item => `
+                <p>
+                    Four categories. No unnecessary priority ladder.
+                </p>
 
-                                <option
-                                    value="${item}"
-                                    ${
-                                        item ===
-                                        value
-                                            ? "selected"
-                                            : ""
-                                    }>
-
-                                    ${item}
-
-                                </option>
-
-                            `
-                        )
-                        .join("")
-                }
-
-            </select>
+            </div>
 
         </div>
 
+
+        <div class="card">
+
+            <div class="form-grid">
+
+                <div class="field">
+
+                    <label>
+                        Task
+                    </label>
+
+                    <input
+                        id="todoText"
+                        placeholder="What needs doing?">
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Category
+                    </label>
+
+                    <select id="todoCategory">
+
+                        ${categories
+                            .map(
+                                category =>
+                                    `<option>${category}</option>`
+                            )
+                            .join("")}
+
+                    </select>
+
+                </div>
+
+
+                <div class="button-row field full">
+
+                    <button
+                        class="btn primary"
+                        id="addTodo"
+                        type="button">
+
+                        Add Task
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="list-page"
+            style="margin-top:15px;">
+
+            ${
+                data.todos.length
+
+                ?
+
+                data.todos
+                    .map(todo => `
+
+                        <div class="card item-card">
+
+                            <label
+                                class="check-row"
+                                style="
+                                    flex:1;
+                                    border:0;
+                                    padding:0;
+                                "
+                            >
+
+                                <input
+                                    type="checkbox"
+                                    data-todo-check="${todo.id}"
+                                    ${todo.done ? "checked" : ""}>
+
+                                <span
+                                    class="check-label ${
+                                        todo.done
+                                            ? "done"
+                                            : ""
+                                    }"
+                                >
+                                    ${escapeHTML(todo.text)}
+                                </span>
+
+                            </label>
+
+
+                            <div class="item-actions">
+
+                                <span class="pill">
+                                    ${escapeHTML(todo.category)}
+                                </span>
+
+                                <button
+                                    class="btn danger"
+                                    type="button"
+                                    data-delete-todo="${todo.id}">
+
+                                    Delete
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    `)
+                    .join("")
+
+                :
+
+                `
+                <div class="card empty">
+                    Nothing here yet.
+                </div>
+                `
+            }
+
+        </div>
     `;
 
+
+    get("addTodo")
+        .addEventListener(
+            "click",
+            addTodo
+        );
+
+
+    document
+        .querySelectorAll(
+            "[data-todo-check]"
+        )
+        .forEach(box => {
+
+            box.addEventListener(
+                "change",
+                () => {
+
+                    const todo =
+                        data.todos.find(
+                            item =>
+                                item.id ===
+                                box.dataset.todoCheck
+                        );
+
+                    if (!todo) {
+                        return;
+                    }
+
+                    todo.done =
+                        box.checked;
+
+                    saveData();
+
+                    renderTodos();
+
+                    renderDashboard();
+                }
+            );
+        });
+
+
+    document
+        .querySelectorAll(
+            "[data-delete-todo]"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    data.todos =
+                        data.todos.filter(
+                            todo =>
+                                todo.id !==
+                                button.dataset.deleteTodo
+                        );
+
+                    saveData();
+
+                    renderTodos();
+
+                    renderDashboard();
+
+                    toast(
+                        "Task deleted."
+                    );
+                }
+            );
+        });
 }
 
 
-/* =========================================================
-   ADD / EDIT
-   ========================================================= */
+function addTodo() {
 
-function openAdd(
-    type,
-    id = null
-) {
+    const text =
+        get("todoText")
+            .value
+            .trim();
 
-    const collectionName =
-        type + "s";
+    const category =
+        get("todoCategory")
+            .value;
 
 
-    const collection =
-        data[
-            collectionName
-        ] || [];
+    if (!text) {
 
-
-    const existing =
-        id
-            ? collection.find(
-                item =>
-                    item.id === id
-            )
-            : null;
-
-
-    /* -------------------------
-       REMINDER
-       ------------------------- */
-
-    if (
-        type === "reminder"
-    ) {
-
-        const reminder =
-            existing || {};
-
-
-        openModal(
-
-            existing
-                ? "Edit Reminder"
-                : "Add Reminder",
-
-            `
-
-                <form class="form-grid">
-
-                    ${field(
-                        "title",
-                        "Reminder",
-                        reminder.title ||
-                        "",
-                        "text",
-                        true
-                    )}
-
-                    <div class="field">
-
-                        <label>
-                            Date & time
-                        </label>
-
-                        <input
-                            name="when"
-                            type="datetime-local"
-                            value="${localDateTime(
-                                reminder.when
-                            )}"
-                            required>
-
-                    </div>
-
-                    ${categoryField(
-                        reminder.category ||
-                        "Personal"
-                    )}
-
-                    <div class="field full">
-
-                        <div class="button-row">
-
-                            <button
-                                class="btn primary"
-                                type="submit">
-
-                                Save Reminder
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </form>
-
-            `,
-
-            formData => {
-
-                const title =
-                    String(
-                        formData.get(
-                            "title"
-                        ) || ""
-                    ).trim();
-
-
-                const when =
-                    String(
-                        formData.get(
-                            "when"
-                        ) || ""
-                    );
-
-
-                if (
-                    !title ||
-                    !when
-                ) {
-
-                    toast(
-                        "Please enter a reminder and time."
-                    );
-
-                    return;
-
-                }
-
-
-                const object = {
-
-                    title,
-
-                    when:
-                        new Date(
-                            when
-                        ).toISOString(),
-
-                    category:
-                        String(
-                            formData.get(
-                                "category"
-                            ) ||
-                            "Personal"
-                        ),
-
-                    completed:
-                        existing
-                            ? existing.completed
-                            : false,
-
-                    lastNotifiedAt:
-                        existing
-                            ? existing.lastNotifiedAt
-                            : null
-
-                };
-
-
-                if (existing) {
-
-                    Object.assign(
-                        existing,
-                        object
-                    );
-
-                } else {
-
-                    data.reminders.push({
-
-                        id:
-                            uid(
-                                "reminder"
-                            ),
-
-                        ...object
-
-                    });
-
-                }
-
-
-                save();
-
-                closeModal();
-
-                renderReminders();
-
-                renderDashboard();
-
-                toast(
-                    "Reminder saved."
-                );
-
-            }
-
+        toast(
+            "Write the task first."
         );
 
         return;
-
     }
 
 
-    /* -------------------------
-       TODO
-       ------------------------- */
+    data.todos.unshift({
 
-    if (
-        type === "todo"
-    ) {
+        id: uid("todo"),
 
-        const todo =
-            existing || {};
+        text,
 
+        category,
 
-        openModal(
+        done: false
+    });
 
-            existing
-                ? "Edit To-do"
-                : "Add To-do",
 
-            `
+    saveData();
 
-                <form class="form-grid">
-
-                    ${field(
-                        "title",
-                        "Task",
-                        todo.title ||
-                        "",
-                        "text",
-                        true
-                    )}
-
-                    ${categoryField(
-                        todo.category ||
-                        "Personal"
-                    )}
-
-                    ${field(
-                        "due",
-                        "Due date",
-                        todo.due ||
-                        "",
-                        "date"
-                    )}
-
-                    <div class="field full">
-
-                        <div class="button-row">
-
-                            <button
-                                class="btn primary"
-                                type="submit">
-
-                                Save To-do
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </form>
-
-            `,
-
-            formData => {
-
-                const title =
-                    String(
-                        formData.get(
-                            "title"
-                        ) || ""
-                    ).trim();
-
-
-                if (!title) {
-
-                    toast(
-                        "Please enter a task."
-                    );
-
-                    return;
-
-                }
-
-
-                const object = {
-
-                    title,
-
-                    category:
-                        String(
-                            formData.get(
-                                "category"
-                            ) ||
-                            "Personal"
-                        ),
-
-                    due:
-                        String(
-                            formData.get(
-                                "due"
-                            ) || ""
-                        ),
-
-                    done:
-                        existing
-                            ? existing.done
-                            : false
-
-                };
-
-
-                if (existing) {
-
-                    Object.assign(
-                        existing,
-                        object
-                    );
-
-                } else {
-
-                    data.todos.push({
-
-                        id:
-                            uid("todo"),
-
-                        ...object
-
-                    });
-
-                }
-
-
-                save();
-
-                closeModal();
-
-                renderTodos();
-
-                renderDashboard();
-
-                toast(
-                    "To-do saved."
-                );
-
-            }
-
-        );
-
-        return;
-
-    }
-
-
-    /* -------------------------
-       GOAL
-       ------------------------- */
-
-    if (
-        type === "goal"
-    ) {
-
-        const goal =
-            existing || {};
-
-
-        openModal(
-
-            existing
-                ? "Edit Goal"
-                : "Add Goal",
-
-            `
-
-                <form class="form-grid">
-
-                    ${field(
-                        "title",
-                        "Goal",
-                        goal.title ||
-                        "",
-                        "text",
-                        true
-                    )}
-
-                    ${categoryField(
-                        goal.category ||
-                        "Personal"
-                    )}
-
-                    ${field(
-                        "progress",
-                        "Progress %",
-                        goal.progress ||
-                        "0",
-                        "number"
-                    )}
-
-                    <div class="field full">
-
-                        <div class="button-row">
-
-                            <button
-                                class="btn primary"
-                                type="submit">
-
-                                Save Goal
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </form>
-
-            `,
-
-            formData => {
-
-                const title =
-                    String(
-                        formData.get(
-                            "title"
-                        ) || ""
-                    ).trim();
-
-
-                if (!title) {
-
-                    toast(
-                        "Please enter a goal."
-                    );
-
-                    return;
-
-                }
-
-
-                const object = {
-
-                    title,
-
-                    category:
-                        String(
-                            formData.get(
-                                "category"
-                            ) ||
-                            "Personal"
-                        ),
-
-                    progress:
-                        Math.max(
-                            0,
-                            Math.min(
-                                100,
-                                Number(
-                                    formData.get(
-                                        "progress"
-                                    )
-                                ) || 0
-                            )
-                        )
-
-                };
-
-
-                if (existing) {
-
-                    Object.assign(
-                        existing,
-                        object
-                    );
-
-                } else {
-
-                    data.goals.push({
-
-                        id:
-                            uid("goal"),
-
-                        ...object
-
-                    });
-
-                }
-
-
-                save();
-
-                closeModal();
-
-                renderGoals();
-
-                renderDashboard();
-
-                toast(
-                    "Goal saved."
-                );
-
-            }
-
-        );
-
-        return;
-
-    }
-
-
-    /* -------------------------
-       NOTE
-       ------------------------- */
-
-    if (
-        type === "note"
-    ) {
-
-        const note =
-            existing || {};
-
-
-        openModal(
-
-            existing
-                ? "Edit Note"
-                : "New Note",
-
-            `
-
-                <form class="form-grid">
-
-                    ${field(
-                        "title",
-                        "Title",
-                        note.title ||
-                        "Note",
-                        "text",
-                        true
-                    )}
-
-                    <div class="field full">
-
-                        <label>
-                            Note
-                        </label>
-
-                        <textarea
-                            name="content"
-                            required>${esc(
-                                note.content ||
-                                ""
-                            )}</textarea>
-
-                    </div>
-
-                    <div class="field full">
-
-                        <div class="button-row">
-
-                            <button
-                                class="btn primary"
-                                type="submit">
-
-                                Save Note
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </form>
-
-            `,
-
-            formData => {
-
-                const content =
-                    String(
-                        formData.get(
-                            "content"
-                        ) || ""
-                    ).trim();
-
-
-                if (!content) {
-
-                    toast(
-                        "Please write something first."
-                    );
-
-                    return;
-
-                }
-
-
-                const object = {
-
-                    title:
-                        String(
-                            formData.get(
-                                "title"
-                            ) ||
-                            "Note"
-                        ).trim() ||
-                        "Note",
-
-                    content,
-
-                    createdAt:
-                        existing
-                            ? existing.createdAt
-                            : new Date()
-                                .toISOString()
-
-                };
-
-
-                if (existing) {
-
-                    Object.assign(
-                        existing,
-                        object
-                    );
-
-                } else {
-
-                    data.notes.push({
-
-                        id:
-                            uid("note"),
-
-                        ...object
-
-                    });
-
-                }
-
-
-                save();
-
-                closeModal();
-
-                renderNotes();
-
-                renderDashboard();
-
-                toast(
-                    "Note saved."
-                );
-
-            }
-
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   DELETE
-   ========================================================= */
-
-function removeItem(
-    collection,
-    id,
-    message
-) {
-
-    const array =
-        data[collection];
-
-
-    if (!Array.isArray(array)) {
-        return;
-    }
-
-
-    const index =
-        array.findIndex(
-            item =>
-                item.id === id
-        );
-
-
-    if (index < 0) {
-        return;
-    }
-
-
-    array.splice(
-        index,
-        1
-    );
-
-
-    save();
-
-    renderPage(
-        activeSection
-    );
+    renderTodos();
 
     renderDashboard();
 
     toast(
-        message
+        "Task added."
     );
+}
 
+
+/* =========================================================
+   GOALS
+========================================================= */
+
+function renderGoals() {
+
+    get("goals").innerHTML = `
+
+        <div class="section-head">
+
+            <div>
+
+                <h2>Goals</h2>
+
+                <p>
+                    Keep the future visible.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="form-grid">
+
+                <div class="field">
+
+                    <label>
+                        Goal
+                    </label>
+
+                    <input
+                        id="goalText"
+                        placeholder="What are you working toward?">
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Target
+                    </label>
+
+                    <input
+                        id="goalTarget"
+                        type="date">
+
+                </div>
+
+
+                <div class="button-row field full">
+
+                    <button
+                        class="btn primary"
+                        id="addGoal"
+                        type="button">
+
+                        Add Goal
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="list-page"
+            style="margin-top:15px;">
+
+            ${
+                data.goals.length
+
+                ?
+
+                data.goals
+                    .map(goal => `
+
+                        <div class="card">
+
+                            <div class="item-card">
+
+                                <div class="main">
+
+                                    <h3>
+                                        ${escapeHTML(
+                                            goal.text
+                                        )}
+                                    </h3>
+
+                                    <p>
+                                        ${
+                                            goal.target
+                                                ? `Target: ${formatDate(goal.target)}`
+                                                : "No target date"
+                                        }
+                                    </p>
+
+                                </div>
+
+
+                                <div class="item-actions">
+
+                                    <button
+                                        class="btn"
+                                        type="button"
+                                        data-goal-done="${goal.id}">
+
+                                        ${
+                                            goal.done
+                                                ? "Reopen"
+                                                : "Done"
+                                        }
+
+                                    </button>
+
+
+                                    <button
+                                        class="btn danger"
+                                        type="button"
+                                        data-goal-delete="${goal.id}">
+
+                                        Delete
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    `)
+                    .join("")
+
+                :
+
+                `
+                <div class="card empty">
+                    No goals yet.
+                </div>
+                `
+            }
+
+        </div>
+    `;
+
+
+    get("addGoal")
+        .addEventListener(
+            "click",
+            addGoal
+        );
+
+
+    document
+        .querySelectorAll(
+            "[data-goal-done]"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const goal =
+                        data.goals.find(
+                            g =>
+                                g.id ===
+                                button.dataset.goalDone
+                        );
+
+                    if (!goal) {
+                        return;
+                    }
+
+                    goal.done =
+                        !goal.done;
+
+                    saveData();
+
+                    renderGoals();
+
+                    renderDashboard();
+                }
+            );
+        });
+
+
+    document
+        .querySelectorAll(
+            "[data-goal-delete]"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    data.goals =
+                        data.goals.filter(
+                            g =>
+                                g.id !==
+                                button.dataset.goalDelete
+                        );
+
+                    saveData();
+
+                    renderGoals();
+
+                    renderDashboard();
+
+                    toast(
+                        "Goal deleted."
+                    );
+                }
+            );
+        });
+}
+
+
+function addGoal() {
+
+    const text =
+        get("goalText")
+            .value
+            .trim();
+
+    const target =
+        get("goalTarget")
+            .value;
+
+
+    if (!text) {
+
+        toast(
+            "Write the goal first."
+        );
+
+        return;
+    }
+
+
+    data.goals.unshift({
+
+        id: uid("goal"),
+
+        text,
+
+        target,
+
+        done: false
+    });
+
+
+    saveData();
+
+    renderGoals();
+
+    renderDashboard();
+
+    toast(
+        "Goal added."
+    );
+}
+
+
+/* =========================================================
+   NOTES
+========================================================= */
+
+function renderNotes() {
+
+    get("notes").innerHTML = `
+
+        <div class="section-head">
+
+            <div>
+
+                <h2>Notes</h2>
+
+                <p>
+                    Keep thoughts without turning them into clutter.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="form-grid">
+
+                <div class="field full">
+
+                    <label>
+                        New Note
+                    </label>
+
+                    <textarea
+                        id="noteText"
+                        placeholder="Write something..."></textarea>
+
+                </div>
+
+
+                <div class="button-row field full">
+
+                    <button
+                        class="btn primary"
+                        id="addNote"
+                        type="button">
+
+                        Save Note
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="list-page"
+            style="margin-top:15px;">
+
+            ${
+                data.notes.length
+
+                ?
+
+                data.notes
+                    .map(note => `
+
+                        <div class="card">
+
+                            <div class="note-paper">
+
+                                ${escapeHTML(
+                                    note.text
+                                )}
+
+                            </div>
+
+                            <div
+                                class="mini"
+                                style="
+                                    margin-top:10px;
+                                "
+                            >
+
+                                <small>
+                                    ${formatDateTime(
+                                        note.createdAt
+                                    )}
+                                </small>
+
+                                <button
+                                    class="btn danger"
+                                    type="button"
+                                    data-delete-note="${note.id}">
+
+                                    Delete
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    `)
+                    .join("")
+
+                :
+
+                `
+                <div class="card empty">
+                    No notes yet.
+                </div>
+                `
+            }
+
+        </div>
+    `;
+
+
+    get("addNote")
+        .addEventListener(
+            "click",
+            addNote
+        );
+
+
+    document
+        .querySelectorAll(
+            "[data-delete-note]"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    data.notes =
+                        data.notes.filter(
+                            note =>
+                                note.id !==
+                                button.dataset.deleteNote
+                        );
+
+                    saveData();
+
+                    renderNotes();
+
+                    renderDashboard();
+
+                    toast(
+                        "Note deleted."
+                    );
+                }
+            );
+        });
+}
+
+
+function addNote() {
+
+    const text =
+        get("noteText")
+            .value
+            .trim();
+
+
+    if (!text) {
+
+        toast(
+            "Write something first."
+        );
+
+        return;
+    }
+
+
+    data.notes.unshift({
+
+        id: uid("note"),
+
+        text,
+
+        createdAt:
+            new Date().toISOString()
+    });
+
+
+    saveData();
+
+    renderNotes();
+
+    renderDashboard();
+
+    toast(
+        "Note saved."
+    );
+}
+
+
+/* =========================================================
+   APPEARANCE
+========================================================= */
+
+function renderAppearance() {
+
+    get("appearance").innerHTML = `
+
+        <div class="section-head">
+
+            <div>
+
+                <h2>Appearance</h2>
+
+                <p>
+                    Ten atmospheres. Same LAYRAAZ.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="palette-grid">
+
+                ${Object.entries(palettes)
+                    .map(
+                        ([key,palette]) => `
+
+                            <button
+                                class="
+                                    palette
+                                    ${
+                                        data.appearance === key
+                                            ? "selected"
+                                            : ""
+                                    }
+                                "
+                                type="button"
+                                data-palette="${key}">
+
+                                <div class="swatches">
+
+                                    <i
+                                        style="
+                                            background:${palette.background}
+                                        ">
+                                    </i>
+
+                                    <i
+                                        style="
+                                            background:${palette.main}
+                                        ">
+                                    </i>
+
+                                    <i
+                                        style="
+                                            background:${palette.font}
+                                        ">
+                                    </i>
+
+                                </div>
+
+                                <strong>
+                                    ${palette.name}
+                                </strong>
+
+                            </button>
+
+                        `
+                    )
+                    .join("")}
+
+            </div>
+
+        </div>
+    `;
+
+
+    document
+        .querySelectorAll(
+            "[data-palette]"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    data.appearance =
+                        button.dataset.palette;
+
+                    applyAppearance();
+
+                    renderAppearance();
+
+                    renderDashboard();
+
+                    renderProfile();
+
+                    renderCharacter();
+
+                    toast(
+                        `${palettes[data.appearance].name} applied.`
+                    );
+                }
+            );
+        });
 }
 
 
 /* =========================================================
    SEARCH
-   ========================================================= */
+========================================================= */
 
-function search(
-    query
-) {
+function setupSearch() {
 
-    const box =
-        $("searchResults");
+    const input =
+        get("globalSearch");
 
-
-    const value =
-        String(
-            query || ""
-        )
-        .trim()
-        .toLowerCase();
+    input.addEventListener(
+        "input",
+        performSearch
+    );
 
 
-    if (!value) {
+    document.addEventListener(
+        "click",
+        event => {
 
-        box.classList.add(
+            const results =
+                get("searchResults");
+
+            if (
+                !results.contains(event.target) &&
+                event.target !== input
+            ) {
+
+                results.classList.add(
+                    "hidden"
+                );
+            }
+        }
+    );
+}
+
+
+function performSearch() {
+
+    const query =
+        get("globalSearch")
+            .value
+            .trim()
+            .toLowerCase();
+
+
+    const results =
+        get("searchResults");
+
+
+    if (!query) {
+
+        results.classList.add(
             "hidden"
         );
 
-        box.innerHTML =
-            "";
-
         return;
-
     }
 
 
-    const results = [];
+    const matches = [];
 
 
     data.reminders.forEach(
         reminder => {
 
             if (
-                `${reminder.title} ${reminder.category}`
+                reminder.title
                     .toLowerCase()
-                    .includes(value)
+                    .includes(query)
             ) {
 
-                results.push([
-                    "Reminder",
-                    reminder.title,
-                    "reminders"
-                ]);
+                matches.push({
 
+                    type: "Reminder",
+
+                    title:
+                        reminder.title,
+
+                    section:
+                        "reminders",
+
+                    detail:
+                        reminder.category
+                });
             }
-
         }
     );
 
@@ -4640,19 +4926,25 @@ function search(
         todo => {
 
             if (
-                `${todo.title} ${todo.category}`
+                todo.text
                     .toLowerCase()
-                    .includes(value)
+                    .includes(query)
             ) {
 
-                results.push([
-                    "To-do",
-                    todo.title,
-                    "todos"
-                ]);
+                matches.push({
 
+                    type: "To-do",
+
+                    title:
+                        todo.text,
+
+                    section:
+                        "todos",
+
+                    detail:
+                        todo.category
+                });
             }
-
         }
     );
 
@@ -4661,19 +4953,25 @@ function search(
         goal => {
 
             if (
-                `${goal.title} ${goal.category}`
+                goal.text
                     .toLowerCase()
-                    .includes(value)
+                    .includes(query)
             ) {
 
-                results.push([
-                    "Goal",
-                    goal.title,
-                    "goals"
-                ]);
+                matches.push({
 
+                    type: "Goal",
+
+                    title:
+                        goal.text,
+
+                    section:
+                        "goals",
+
+                    detail:
+                        "Goal"
+                });
             }
-
         }
     );
 
@@ -4682,974 +4980,235 @@ function search(
         note => {
 
             if (
-                `${note.title} ${note.content}`
+                note.text
                     .toLowerCase()
-                    .includes(value)
+                    .includes(query)
             ) {
 
-                results.push([
-                    "Note",
-                    note.title,
-                    "notes"
-                ]);
+                matches.push({
 
+                    type: "Note",
+
+                    title:
+                        note.text.slice(
+                            0,
+                            80
+                        ),
+
+                    section:
+                        "notes",
+
+                    detail:
+                        "Note"
+                });
             }
-
         }
     );
 
 
-    box.innerHTML =
+    if (!matches.length) {
 
-        results.length
-
-        ? results
-            .slice(0,12)
-            .map(
-                result => `
-
-                    <div
-                        class="search-result"
-                        data-search="${esc(
-                            result[2]
-                        )}">
-
-                        <strong>
-                            ${esc(
-                                result[1]
-                            )}
-                        </strong>
-
-                        <span>
-                            ${esc(
-                                result[0]
-                            )}
-                        </span>
-
-                    </div>
-
-                `
-            )
-            .join("")
-
-        : `
-
-            <div class="empty">
-                Nothing found.
+        results.innerHTML = `
+            <div class="search-result">
+                <strong>No results</strong>
+                <span>Nothing matched that search.</span>
             </div>
-
         `;
 
+    } else {
 
-    box.classList.remove(
+        results.innerHTML =
+            matches
+                .slice(0,10)
+                .map(
+                    (match,index) => `
+
+                        <div
+                            class="search-result"
+                            data-search-index="${index}">
+
+                            <strong>
+                                ${escapeHTML(
+                                    match.title
+                                )}
+                            </strong>
+
+                            <span>
+                                ${escapeHTML(
+                                    match.type
+                                )}
+                                ·
+                                ${escapeHTML(
+                                    match.detail
+                                )}
+                            </span>
+
+                        </div>
+                    `
+                )
+                .join("");
+    }
+
+
+    results.classList.remove(
         "hidden"
     );
 
+
+    results
+        .querySelectorAll(
+            "[data-search-index]"
+        )
+        .forEach(
+            (item,index) => {
+
+                item.addEventListener(
+                    "click",
+                    () => {
+
+                        const match =
+                            matches[index];
+
+                        if (!match) {
+                            return;
+                        }
+
+                        showSection(
+                            match.section
+                        );
+
+                        results.classList.add(
+                            "hidden"
+                        );
+
+                        get("globalSearch")
+                            .value = "";
+                    }
+                );
+            }
+        );
 }
 
 
 /* =========================================================
-   EVENTS
-   ========================================================= */
+   TOP BUTTONS
+========================================================= */
 
-function setupEvents() {
+function setupTopButtons() {
 
-    /* Sidebar */
-
-    $("sidebarToggle")
+    get("notificationBtn")
         .addEventListener(
             "click",
-            () => {
-
-                const sidebar =
-                    $("sidebar");
-
-
-                sidebar.classList.toggle(
-                    "collapsed"
-                );
-
-            }
+            () => showSection(
+                "notifications"
+            )
         );
 
 
-    /* Navigation */
-
-    document
-        .querySelectorAll(
-            ".nav-item"
-        )
-        .forEach(
-            button => {
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        navigate(
-                            button.dataset.section
-                        );
-
-                    }
-                );
-
-            }
-        );
-
-
-    /* Notification button */
-
-    $("notificationBtn")
+    get("profileBtn")
         .addEventListener(
             "click",
-            () => {
-
-                navigate(
-                    "notifications"
-                );
-
-            }
+            () => showSection(
+                "profile"
+            )
         );
+}
 
 
-    /* Profile button */
+/* =========================================================
+   ENTER KEY HELP
+========================================================= */
 
-    $("profileBtn")
-        .addEventListener(
-            "click",
-            () => {
-
-                navigate(
-                    "profile"
-                );
-
-            }
-        );
-
-
-    /* Search */
-
-    $("globalSearch")
-        .addEventListener(
-            "input",
-            event => {
-
-                search(
-                    event.target.value
-                );
-
-            }
-        );
-
-
-    /* Close companion */
-
-    $("closeCompanion")
-        .addEventListener(
-            "click",
-            hideCompanion
-        );
-
-
-    /* Click delegation */
+function setupKeyboard() {
 
     document.addEventListener(
-        "click",
-        async event => {
-
-            const actionElement =
-                event.target.closest(
-                    "[data-action]"
-                );
-
-
-            if (actionElement) {
-
-                const action =
-                    actionElement.dataset.action;
-
-
-                if (
-                    [
-                        "profile",
-                        "dashboard",
-                        "character",
-                        "reminders",
-                        "todos",
-                        "goals",
-                        "notes",
-                        "notifications",
-                        "appearance"
-                    ].includes(action)
-                ) {
-
-                    navigate(action);
-
-                    return;
-
-                }
-
-
-                if (
-                    action ===
-                    "add-reminder"
-                ) {
-
-                    openAdd(
-                        "reminder"
-                    );
-
-                    return;
-
-                }
-
-
-                if (
-                    action ===
-                    "add-todo"
-                ) {
-
-                    openAdd(
-                        "todo"
-                    );
-
-                    return;
-
-                }
-
-
-                if (
-                    action ===
-                    "add-goal"
-                ) {
-
-                    openAdd(
-                        "goal"
-                    );
-
-                    return;
-
-                }
-
-
-                if (
-                    action ===
-                    "add-note"
-                ) {
-
-                    openAdd(
-                        "note"
-                    );
-
-                    return;
-
-                }
-
-
-                if (
-                    action ===
-                    "request-notifications"
-                ) {
-
-                    await requestNotifications();
-
-                    return;
-
-                }
-
-
-                if (
-                    action ===
-                    "test-notification"
-                ) {
-
-                    if (
-                        typeof Notification ===
-                        "undefined"
-                    ) {
-
-                        toast(
-                            "This browser does not support notifications."
-                        );
-
-                        return;
-
-                    }
-
-
-                    if (
-                        Notification.permission !==
-                        "granted"
-                    ) {
-
-                        await requestNotifications();
-
-                    }
-
-
-                    if (
-                        Notification.permission ===
-                        "granted"
-                    ) {
-
-                        sendBrowserNotification({
-
-                            id:
-                                "test",
-
-                            title:
-                                "LAYRAAZ Test"
-
-                        });
-
-                    }
-
-
-                    return;
-
-                }
-
-
-                if (
-                    action ===
-                    "read-all"
-                ) {
-
-                    data.notifications
-                        .forEach(
-                            notification =>
-                                notification.read =
-                                    true
-                        );
-
-
-                    save();
-
-                    renderNotifications();
-
-                    updateTop();
-
-                    return;
-
-                }
-
-
-                if (
-                    action.startsWith(
-                        "complete-reminder:"
-                    )
-                ) {
-
-                    const id =
-                        action.split(
-                            ":"
-                        )[1];
-
-
-                    const reminder =
-                        data.reminders.find(
-                            item =>
-                                item.id ===
-                                id
-                        );
-
-
-                    if (reminder) {
-
-                        reminder.completed =
-                            !reminder.completed;
-
-
-                        if (
-                            reminder.completed
-                        ) {
-
-                            reminder.lastNotifiedAt =
-                                null;
-
-                        }
-
-
-                        save();
-
-                        renderReminders();
-
-                        renderDashboard();
-
-                    }
-
-
-                    return;
-
-                }
-
-
-                if (
-                    action.startsWith(
-                        "edit-reminder:"
-                    )
-                ) {
-
-                    openAdd(
-                        "reminder",
-                        action.split(
-                            ":"
-                        )[1]
-                    );
-
-                    return;
-
-                }
-
-
-                if (
-                    action.startsWith(
-                        "delete-reminder:"
-                    )
-                ) {
-
-                    removeItem(
-                        "reminders",
-                        action.split(
-                            ":"
-                        )[1],
-                        "Reminder deleted."
-                    );
-
-                    return;
-
-                }
-
-
-                if (
-                    action.startsWith(
-                        "edit-todo:"
-                    )
-                ) {
-
-                    openAdd(
-                        "todo",
-                        action.split(
-                            ":"
-                        )[1]
-                    );
-
-                    return;
-
-                }
-
-
-                if (
-                    action.startsWith(
-                        "delete-todo:"
-                    )
-                ) {
-
-                    removeItem(
-                        "todos",
-                        action.split(
-                            ":"
-                        )[1],
-                        "To-do deleted."
-                    );
-
-                    return;
-
-                }
-
-
-                if (
-                    action.startsWith(
-                        "edit-goal:"
-                    )
-                ) {
-
-                    openAdd(
-                        "goal",
-                        action.split(
-                            ":"
-                        )[1]
-                    );
-
-                    return;
-
-                }
-
-
-                if (
-                    action.startsWith(
-                        "delete-goal:"
-                    )
-                ) {
-
-                    removeItem(
-                        "goals",
-                        action.split(
-                            ":"
-                        )[1],
-                        "Goal deleted."
-                    );
-
-                    return;
-
-                }
-
-
-                if (
-                    action.startsWith(
-                        "edit-note:"
-                    )
-                ) {
-
-                    openAdd(
-                        "note",
-                        action.split(
-                            ":"
-                        )[1]
-                    );
-
-                    return;
-
-                }
-
-
-                if (
-                    action.startsWith(
-                        "delete-note:"
-                    )
-                ) {
-
-                    removeItem(
-                        "notes",
-                        action.split(
-                            ":"
-                        )[1],
-                        "Note deleted."
-                    );
-
-                    return;
-
-                }
-
-
-                if (
-                    action.startsWith(
-                        "read:"
-                    )
-                ) {
-
-                    const id =
-                        action.split(
-                            ":"
-                        )[1];
-
-
-                    const notification =
-                        data.notifications.find(
-                            item =>
-                                item.id ===
-                                id
-                        );
-
-
-                    if (
-                        notification
-                    ) {
-
-                        notification.read =
-                            true;
-
-                    }
-
-
-                    save();
-
-                    renderNotifications();
-
-                    updateTop();
-
-                    return;
-
-                }
-
-            }
-
-
-            /* Palette */
-
-            const paletteButton =
-                event.target.closest(
-                    "[data-palette]"
-                );
-
+        "keydown",
+        event => {
 
             if (
-                paletteButton
-            ) {
-
-                const key =
-                    paletteButton.dataset
-                        .palette;
-
-
-                if (
-                    palettes[key]
-                ) {
-
-                    data.appearance =
-                        key;
-
-                    save();
-
-                    applyPalette();
-
-                    renderAppearance();
-
-                    toast(
-                        palettes[key].name +
-                        " selected."
-                    );
-
-                }
-
-
-                return;
-
-            }
-
-
-            /* To-do */
-
-            const checkbox =
-                event.target.closest(
-                    "[data-toggle-todo]"
-                );
-
-
-            if (checkbox) {
-
-                const todo =
-                    data.todos.find(
-                        item =>
-                            item.id ===
-                            checkbox.dataset
-                                .toggleTodo
-                    );
-
-
-                if (todo) {
-
-                    todo.done =
-                        checkbox.checked;
-
-
-                    save();
-
-                    renderTodos();
-
-                    renderDashboard();
-
-                }
-
-
-                return;
-
-            }
-
-
-            /* Search result */
-
-            const searchResult =
-                event.target.closest(
-                    "[data-search]"
-                );
-
-
-            if (
-                searchResult
-            ) {
-
-                $("globalSearch")
-                    .value = "";
-
-
-                $("searchResults")
-                    .classList
-                    .add("hidden");
-
-
-                navigate(
-                    searchResult.dataset
-                        .search
-                );
-
-
-                return;
-
-            }
-
-
-            /* Modal */
-
-            if (
-                event.target.matches(
-                    "[data-close-modal]"
-                )
+                event.key === "Escape"
             ) {
 
                 closeModal();
 
+                get("searchResults")
+                    ?.classList.add(
+                        "hidden"
+                    );
             }
-
         }
     );
-
-
-    /* Profile form */
-
-    document.addEventListener(
-        "submit",
-        async event => {
-
-            if (
-                event.target.id ===
-                "profileForm"
-            ) {
-
-                event.preventDefault();
-
-
-                const form =
-                    new FormData(
-                        event.target
-                    );
-
-
-                profileFields.forEach(
-                    ([key]) => {
-
-                        data.profile[key] =
-                            String(
-                                form.get(
-                                    key
-                                ) || ""
-                            );
-
-                    }
-                );
-
-
-                save();
-
-                renderProfile();
-
-                renderDashboard();
-
-                updateTop();
-
-                toast(
-                    "Profile saved."
-                );
-
-                return;
-
-            }
-
-
-            /* Character form */
-
-            if (
-                event.target.id ===
-                "characterForm"
-            ) {
-
-                event.preventDefault();
-
-
-                const form =
-                    new FormData(
-                        event.target
-                    );
-
-
-                data.character.name =
-                    String(
-                        form.get(
-                            "name"
-                        ) ||
-                        "Character"
-                    ).trim() ||
-                    "Character";
-
-
-                data.character.personality =
-                    String(
-                        form.get(
-                            "personality"
-                        ) ||
-                        ""
-                    ).trim() ||
-                    "Calm, intelligent, firm and caring.";
-
-
-                const input =
-                    $("characterImage");
-
-
-                const file =
-                    input &&
-                    input.files[0];
-
-
-                if (file) {
-
-                    try {
-
-                        toast(
-                            "Making your sticker..."
-                        );
-
-
-                        const image =
-                            await readFile(
-                                file
-                            );
-
-
-                        data.character.sticker =
-                            await makeSticker(
-                                image
-                            );
-
-
-                    } catch (error) {
-
-                        console.error(
-                            error
-                        );
-
-
-                        toast(
-                            "The sticker could not be created."
-                        );
-
-                        return;
-
-                    }
-
-                }
-
-
-                save();
-
-                renderCharacter();
-
-                renderDashboard();
-
-                toast(
-                    "Character saved."
-                );
-
-                return;
-
-            }
-
-        }
-    );
-
-
-    /* Profile image */
-
-    document.addEventListener(
-        "change",
-        async event => {
-
-            if (
-                event.target.id ===
-                "profileImage"
-            ) {
-
-                const file =
-                    event.target.files[0];
-
-
-                if (!file) return;
-
-
-                try {
-
-                    data.profile.image =
-                        await readFile(
-                            file
-                        );
-
-
-                    save();
-
-                    renderProfile();
-
-                    renderDashboard();
-
-                    updateTop();
-
-                    toast(
-                        "Profile picture saved."
-                    );
-
-                } catch (error) {
-
-                    toast(
-                        "Could not save profile picture."
-                    );
-
-                }
-
-            }
-
-        }
-    );
-
 }
 
 
 /* =========================================================
-   INITIALISE
-   ========================================================= */
+   INIT
+========================================================= */
 
 function init() {
 
-    applyPalette();
+    applyAppearance();
 
     renderIcons();
 
-    setupEvents();
+    setupSidebar();
+
+    setupSearch();
+
+    setupTopButtons();
+
+    setupKeyboard();
+
+    renderProfile();
 
     renderDashboard();
 
-    updateTop();
+    renderCharacter();
 
-    startReminderEngine();
+    renderReminders();
 
-}
+    renderTodos();
+
+    renderGoals();
+
+    renderNotes();
+
+    renderNotifications();
+
+    renderAppearance();
+
+    updateNotificationCount();
+
+    startReminderWatcher();
 
 
-/*
-    DOMContentLoaded is safe even if this file is
-    loaded at the end of the body.
-*/
+    get("topName").textContent =
+        data.profile.name ||
+        "Laya";
 
-if (
-    document.readyState ===
-    "loading"
-) {
 
-    document.addEventListener(
-        "DOMContentLoaded",
-        init
+    if (data.profile.image) {
+
+        get("topAvatar")
+            .style
+            .backgroundImage =
+            `url("${data.profile.image}")`;
+    }
+
+
+    /*
+       We intentionally do NOT automatically request
+       browser notification permission on page load.
+       The user can enable it from Notifications.
+    */
+
+    console.log(
+        "LAYRAAZ loaded successfully."
     );
-
-} else {
-
-    init();
-
 }
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    init
+);
