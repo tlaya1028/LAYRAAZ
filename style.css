@@ -2,25 +2,24 @@
   --bg: #1D251C;
   --main: #101411;
   --font: #D0D4CE;
-  --font-muted: #9ea79e;
+  --font-muted: #AEB4AE;
 
-  --card: rgba(255,255,255,.055);
-  --card-strong: rgba(255,255,255,.09);
+  --card: color-mix(in srgb, var(--font) 8%, var(--bg));
+  --card-strong: color-mix(in srgb, var(--font) 12%, var(--bg));
 
-  --border: rgba(255,255,255,.16);
+  --border: color-mix(in srgb, var(--font) 18%, transparent);
 
   --shadow:
-    0 14px 35px rgba(0,0,0,.16);
+    0 14px 35px color-mix(in srgb, #000 12%, transparent);
 
   --radius: 22px;
-  --radius-sm: 16px;
-
-  --sidebar-width: 238px;
-  --transition: 180ms ease;
+  --transition: .22s ease;
 }
 
 
-/* RESET */
+/* =========================
+   RESET
+========================= */
 
 * {
   box-sizing: border-box;
@@ -37,14 +36,10 @@ body {
   background: var(--bg);
   color: var(--font);
 
-  font-family:
-    "DM Sans",
-    system-ui,
-    sans-serif;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
 
-  transition:
-    background .25s,
-    color .25s;
+  overflow-x: hidden;
 }
 
 button,
@@ -59,165 +54,146 @@ button {
   cursor: pointer;
 }
 
-button:focus-visible,
-input:focus-visible,
-textarea:focus-visible,
-select:focus-visible {
-  outline: 2px solid var(--main);
-  outline-offset: 2px;
-}
-
-.hidden {
-  display: none !important;
+button,
+input,
+textarea,
+select {
+  outline-color: var(--main);
 }
 
 
-/* APP */
+/* =========================
+   APP
+========================= */
 
 .app-shell {
+  width: 100%;
   min-height: 100vh;
+  display: flex;
 }
 
 
-/* SIDEBAR */
+/* =========================
+   SIDEBAR
+========================= */
 
 .sidebar {
   position: fixed;
 
-  inset: 0 auto 0 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
 
-  width: var(--sidebar-width);
+  width: 220px;
 
-  padding:
-    25px
-    14px
-    18px;
+  z-index: 30;
+
+  padding: 25px 14px 18px;
 
   background:
     color-mix(
       in srgb,
-      var(--bg) 90%,
-      white 10%
+      var(--bg) 91%,
+      var(--font)
     );
 
-  border-right:
-    1px solid var(--border);
-
-  display: flex;
-  flex-direction: column;
-
-  z-index: 40;
+  border-right: 1px dashed var(--border);
 
   transition:
     width var(--transition),
     padding var(--transition);
+
+  overflow: hidden;
 }
 
 .sidebar.collapsed {
   width: 78px;
-  padding-inline: 10px;
+  padding-inline: 12px;
 }
 
 
-.brand-block {
-  padding:
-    3px
-    8px
-    20px;
+/* Brand */
 
-  text-align: center;
+.brand-block {
+  padding: 0 10px 23px;
+  white-space: nowrap;
+}
+
+.sidebar.collapsed .brand-block {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .brand {
-  font-family:
-    "Patrick Hand",
-    cursive;
-
-  font-size: 34px;
-
+  font-family: "Patrick Hand", cursive;
+  font-size: 30px;
   letter-spacing: 1px;
-
-  line-height: 1;
 }
 
-.brand span {
+.brand-spark {
   color: var(--main);
+  margin-left: 3px;
 }
 
 .brand-sub {
-  margin-top: 8px;
-
   font-size: 10px;
-
-  line-height: 1.5;
-
-  opacity: .7;
+  line-height: 1.45;
+  opacity: .58;
+  margin-top: 2px;
 }
 
-.sidebar.collapsed .brand-block,
-.sidebar.collapsed .sidebar-footer {
-  display: none;
-}
 
+/* Toggle */
 
 .sidebar-toggle {
   position: absolute;
 
+  right: 10px;
   top: 17px;
-  right: -15px;
 
-  width: 31px;
-  height: 31px;
+  width: 42px;
+  height: 42px;
 
-  border:
-    1px solid var(--border);
-
+  border: 0;
   border-radius: 50%;
 
-  background: var(--bg);
+  background: var(--card-strong);
 
   display: grid;
   place-items: center;
-
-  box-shadow: var(--shadow);
-
-  z-index: 50;
 }
 
-.sidebar-toggle svg {
-  width: 18px;
-  height: 18px;
+.sidebar.collapsed .sidebar-toggle {
+  right: 18px;
 }
 
+
+/* Navigation */
 
 .nav-list {
   display: grid;
-
-  gap: 6px;
-
-  margin-top: 48px;
+  gap: 7px;
+  margin-top: 34px;
 }
 
 .nav-item {
-  border: 0;
+  width: 100%;
+  height: 48px;
 
+  border: 0;
   background: transparent;
 
-  border-radius: 15px;
-
-  min-height: 46px;
-
-  padding:
-    0
-    12px;
+  border-radius: 17px;
 
   display: flex;
-
   align-items: center;
 
-  gap: 12px;
+  gap: 13px;
+
+  padding: 0 14px;
 
   text-align: left;
+  white-space: nowrap;
 
   transition:
     background var(--transition),
@@ -228,49 +204,18 @@ select:focus-visible {
   background:
     color-mix(
       in srgb,
-      var(--main) 12%,
+      var(--main) 10%,
       transparent
     );
-
-  transform:
-    translateX(2px);
 }
 
 .nav-item.active {
-  background: var(--main);
-
-  box-shadow:
-    0 7px 18px
+  background:
     color-mix(
       in srgb,
-      var(--main) 22%,
+      var(--main) 19%,
       transparent
     );
-}
-
-.nav-icon {
-  width: 21px;
-  height: 21px;
-
-  display: grid;
-  place-items: center;
-
-  flex: 0 0 auto;
-}
-
-.nav-icon svg {
-  width: 100%;
-  height: 100%;
-
-  display: block;
-}
-
-.nav-label {
-  white-space: nowrap;
-
-  font-size: 13px;
-
-  font-weight: 600;
 }
 
 .sidebar.collapsed .nav-item {
@@ -278,112 +223,106 @@ select:focus-visible {
   padding: 0;
 }
 
+.nav-label {
+  font-size: 12px;
+  font-weight: 600;
+}
+
 .sidebar.collapsed .nav-label {
   display: none;
 }
 
 
+/* Sidebar footer */
+
 .sidebar-footer {
-  margin-top: auto;
+  position: absolute;
+
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+
+  font-family: "Patrick Hand", cursive;
+  font-size: 14px;
+
+  opacity: .58;
+
+  line-height: 1.3;
 }
 
-.tiny-quote {
-  padding:
-    16px
-    12px;
-
-  border-radius: 18px;
-
-  background:
-    color-mix(
-      in srgb,
-      var(--main) 10%,
-      transparent
-    );
-
-  font-family:
-    "Patrick Hand",
-    cursive;
-
-  font-size: 16px;
-
-  line-height: 1.4;
-}
-
-.tiny-quote span {
-  color: var(--main);
+.sidebar.collapsed .sidebar-footer {
+  display: none;
 }
 
 
-/* MAIN */
+/* =========================
+   MAIN CONTENT
+========================= */
 
 .main-content {
-  width:
-    calc(
-      100% -
-      var(--sidebar-width)
-    );
+  width: calc(100% - 78px);
 
-  margin-left:
-    var(--sidebar-width);
+  margin-left: 78px;
+
+  min-width: 0;
 
   padding:
     28px
-    34px
-    45px;
+    28px
+    50px;
 
   transition:
     margin-left var(--transition),
     width var(--transition);
 }
 
-.sidebar.collapsed ~ .main-content {
-  width:
-    calc(
-      100% -
-      78px
-    );
-
-  margin-left: 78px;
+.sidebar:not(.collapsed) ~ .main-content {
+  width: calc(100% - 220px);
+  margin-left: 220px;
 }
 
 
-/* TOPBAR */
+/* =========================
+   TOPBAR
+========================= */
 
 .topbar {
   display: flex;
 
-  justify-content:
-    space-between;
+  align-items: center;
+  justify-content: space-between;
 
   gap: 24px;
 
-  align-items:
-    flex-end;
+  margin-bottom: 22px;
 
-  margin-bottom: 20px;
+  min-width: 0;
+}
+
+.topbar-copy {
+  min-width: 0;
 }
 
 .eyebrow {
   font-size: 9px;
 
-  letter-spacing: 2px;
+  letter-spacing: 2.5px;
 
-  opacity: .5;
+  opacity: .52;
 
   margin-bottom: 5px;
 }
 
 .topbar h1 {
-  font-family:
-    "Patrick Hand",
-    cursive;
+  font-family: "Patrick Hand", cursive;
 
-  font-size: 42px;
+  font-size: 40px;
 
   font-weight: 400;
 
-  line-height: 1.05;
+  line-height: 1;
+
+  margin: 0;
 }
 
 .sparkles {
@@ -391,14 +330,11 @@ select:focus-visible {
 }
 
 .topbar p {
-  margin:
-    6px
-    0
-    0;
+  margin: 7px 0 0;
 
   font-size: 13px;
 
-  opacity: .68;
+  opacity: .65;
 }
 
 .topbar p span {
@@ -406,34 +342,31 @@ select:focus-visible {
 }
 
 
+/* Search */
+
 .topbar-actions {
   display: flex;
-
   align-items: center;
 
-  gap: 8px;
-}
+  gap: 9px;
 
+  flex: 0 0 auto;
+}
 
 .search-wrap {
   position: relative;
 
-  width:
-    min(
-      330px,
-      30vw
-    );
+  width: min(340px, 30vw);
 }
 
 .search-wrap input {
   width: 100%;
 
-  height: 44px;
+  height: 45px;
 
-  border:
-    1px solid var(--border);
+  border: 1px solid var(--border);
 
-  border-radius: 23px;
+  border-radius: 24px;
 
   padding:
     0
@@ -442,10 +375,13 @@ select:focus-visible {
     16px;
 
   background: var(--card);
+
+  color: var(--font);
 }
 
 .search-wrap input::placeholder {
-  opacity: .52;
+  color: var(--font);
+  opacity: .5;
 }
 
 .search-icon {
@@ -453,16 +389,10 @@ select:focus-visible {
 
   right: 15px;
   top: 12px;
-
-  width: 20px;
-  height: 20px;
 }
 
-.search-icon svg {
-  width: 100%;
-  height: 100%;
-}
 
+/* Top buttons */
 
 .icon-button,
 .profile-mini {
@@ -476,10 +406,10 @@ select:focus-visible {
   width: 43px;
   height: 43px;
 
+  border-radius: 50%;
+
   display: grid;
   place-items: center;
-
-  border-radius: 50%;
 }
 
 .icon-button:hover,
@@ -492,30 +422,16 @@ select:focus-visible {
     );
 }
 
-.top-icon {
-  width: 21px;
-  height: 21px;
-}
-
-.top-icon svg {
-  width: 100%;
-  height: 100%;
-}
-
 .notification-count {
   position: absolute;
 
   right: 0;
-  top: 0;
+  top: -1px;
 
   min-width: 18px;
   height: 18px;
 
-  padding:
-    0
-    4px;
-
-  border-radius: 99px;
+  border-radius: 50%;
 
   background: var(--main);
 
@@ -523,14 +439,11 @@ select:focus-visible {
 
   display: grid;
   place-items: center;
-
-  font-weight: 700;
 }
 
 .notification-count:empty {
   display: none;
 }
-
 
 .profile-mini {
   display: flex;
@@ -539,11 +452,9 @@ select:focus-visible {
 
   gap: 8px;
 
-  padding:
-    4px
-    7px;
+  padding: 4px 7px;
 
-  border-radius: 23px;
+  border-radius: 24px;
 
   font-weight: 600;
 }
@@ -554,8 +465,7 @@ select:focus-visible {
 
   border-radius: 50%;
 
-  border:
-    1px solid var(--border);
+  border: 1px solid var(--border);
 
   background:
     color-mix(
@@ -568,110 +478,55 @@ select:focus-visible {
   background-position: center;
 
   display: inline-block;
+
+  overflow: hidden;
 }
 
 .chevron {
-  font-size: 17px;
-  opacity: .6;
+  font-size: 18px;
+  opacity: .55;
 }
 
 
-/* SEARCH */
-
-.search-results {
-  position: relative;
-
-  z-index: 30;
-
-  margin:
-    -7px
-    0
-    15px;
-
-  padding: 10px;
-
-  border:
-    1px solid var(--border);
-
-  border-radius: 18px;
-
-  background: var(--card-strong);
-
-  box-shadow: var(--shadow);
-}
-
-.search-result {
-  padding: 9px;
-
-  border-radius: 12px;
-
-  cursor: pointer;
-}
-
-.search-result:hover {
-  background:
-    color-mix(
-      in srgb,
-      var(--main) 11%,
-      transparent
-    );
-}
-
-.search-result strong {
-  display: block;
-
-  font-size: 12px;
-}
-
-.search-result span {
-  font-size: 10px;
-
-  opacity: .6;
-}
-
-
-/* SECTIONS */
+/* =========================
+   SECTIONS
+========================= */
 
 .page-section {
   display: none;
+  min-width: 0;
 }
 
 .page-section.active-section {
   display: block;
 }
 
-
 .section-heading {
   display: flex;
 
   align-items: end;
+  justify-content: space-between;
 
-  justify-content:
-    space-between;
-
-  gap: 15px;
+  gap: 16px;
 
   margin:
     8px
     0
-    16px;
+    17px;
 }
 
 .section-heading h2 {
-  font-family:
-    "Patrick Hand",
-    cursive;
+  font-family: "Patrick Hand", cursive;
 
-  font-size: 35px;
+  font-size: 37px;
 
   font-weight: 400;
+
+  margin: 0;
 }
 
 .section-heading p {
-  margin:
-    4px
-    0
-    0;
+  margin: 4px 0 0;
 
   opacity: .62;
 
@@ -679,21 +534,24 @@ select:focus-visible {
 }
 
 
-/* CARDS */
+/* =========================
+   CARDS
+========================= */
 
 .card {
   position: relative;
 
+  min-width: 0;
+
   background: var(--card);
 
-  border:
-    1px solid var(--border);
+  border: 1px solid var(--border);
 
   border-radius: var(--radius);
 
   box-shadow: var(--shadow);
 
-  padding: 18px;
+  padding: 19px;
 
   overflow: hidden;
 }
@@ -706,9 +564,7 @@ select:focus-visible {
   display: flex;
 
   align-items: center;
-
-  justify-content:
-    space-between;
+  justify-content: space-between;
 
   gap: 10px;
 
@@ -716,51 +572,52 @@ select:focus-visible {
 }
 
 .card-title h3 {
-  font-family:
-    "Patrick Hand",
-    cursive;
+  font-family: "Patrick Hand", cursive;
 
-  font-size: 22px;
+  font-size: 23px;
 
   font-weight: 400;
+
+  margin: 0;
 }
 
 .card-title small {
   opacity: .5;
 }
 
-.dotted {
-  border-top:
-    1px dashed var(--border);
-}
 
-
-/* DASHBOARD */
+/* =========================
+   DASHBOARD
+========================= */
 
 .dashboard-grid {
   display: grid;
 
   grid-template-columns:
-    1.25fr
-    1fr
-    1fr;
+    minmax(0, 2fr)
+    minmax(190px, 1fr)
+    minmax(190px, 1fr);
 
   gap: 14px;
 }
 
 
+/* Welcome */
+
 .hero-card {
   min-height: 235px;
+
+  grid-column: span 2;
 
   display: flex;
 
   align-items: center;
 
-  padding: 24px;
+  padding: 25px;
 }
 
 .hero-copy {
-  max-width: 70%;
+  max-width: 64%;
 
   position: relative;
 
@@ -768,33 +625,29 @@ select:focus-visible {
 }
 
 .script-title {
-  font-family:
-    "Patrick Hand",
-    cursive;
+  font-family: "Patrick Hand", cursive;
 
-  font-size: 28px;
+  font-size: 29px;
 
   color: var(--main);
 
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
 
 .hero-copy h2 {
-  font-family:
-    "Patrick Hand",
-    cursive;
+  font-family: "Patrick Hand", cursive;
 
   font-size: 32px;
 
   font-weight: 400;
 
-  line-height: 1.08;
+  line-height: 1.1;
 
   margin: 0;
 }
 
 .hero-copy p {
-  font-size: 12px;
+  font-size: 13px;
 
   line-height: 1.55;
 
@@ -806,36 +659,39 @@ select:focus-visible {
     0;
 }
 
-.hero-sticker {
+
+/* Hero character */
+
+.hero-character {
   position: absolute;
 
-  right: 22px;
-  bottom: 5px;
+  right: 14px;
+  bottom: -2px;
 
-  max-width: 105px;
-  max-height: 115px;
+  width: 34%;
+  height: 90%;
 
-  object-fit: contain;
+  display: flex;
 
-  transform:
-    rotate(3deg);
+  align-items: flex-end;
+  justify-content: center;
 
-  filter:
-    drop-shadow(
-      0
-      8px
-      5px
-      rgba(0,0,0,.16)
-    );
+  pointer-events: none;
 }
 
+.hero-character .character-sticker {
+  max-height: 170px;
+  max-width: 105px;
+}
+
+
+/* Profile dashboard card */
 
 .profile-card,
 .today-card,
 .character-card {
   min-height: 235px;
 }
-
 
 .profile-head {
   display: flex;
@@ -846,58 +702,48 @@ select:focus-visible {
 }
 
 .profile-head .avatar {
-  width: 55px;
-  height: 55px;
+  width: 56px;
+  height: 56px;
 }
 
 .profile-name {
-  font-family:
-    "Patrick Hand",
-    cursive;
+  font-family: "Patrick Hand", cursive;
 
-  font-size: 26px;
+  font-size: 27px;
 }
 
 .profile-meta {
   font-size: 11px;
 
-  opacity: .65;
+  opacity: .62;
 
   margin-top: 2px;
 }
 
 .profile-role {
-  margin:
-    13px
-    0;
-
   font-size: 12px;
 
-  line-height: 1.45;
+  line-height: 1.4;
 
-  opacity: .85;
+  margin: 15px 0;
 }
 
 
-/* TODAY */
+/* Today */
 
 .quote-box {
-  border-radius: 16px;
+  border-radius: 17px;
 
-  padding:
-    17px
-    14px;
+  padding: 17px 14px;
 
   background:
     color-mix(
       in srgb,
-      var(--main) 14%,
+      var(--main) 15%,
       transparent
     );
 
-  font-family:
-    "Patrick Hand",
-    cursive;
+  font-family: "Patrick Hand", cursive;
 
   font-size: 18px;
 
@@ -905,71 +751,149 @@ select:focus-visible {
 }
 
 
-/* CHARACTER */
+/* Character */
 
 .character-card {
-  text-align: left;
+  text-align: center;
 }
 
 .character-stage {
   height: 135px;
 
-  display: flex;
-
-  align-items: flex-end;
-
-  justify-content: center;
-
   position: relative;
+
+  display: grid;
+
+  place-items: center;
 }
 
 .character-sticker {
-  max-width: 95px;
-  max-height: 118px;
+  display: block;
 
   width: auto;
   height: auto;
+
+  max-width: 115px;
+  max-height: 130px;
 
   object-fit: contain;
 
   filter:
     drop-shadow(
-      0
-      7px
-      5px
-      rgba(0,0,0,.16)
+      0 8px 5px rgba(20,15,10,.14)
     );
+
+  user-select: none;
 }
 
-.character-sticker.sitting {
+.character-stage .character-sticker {
+  position: absolute;
+
+  bottom: -3px;
+}
+
+
+/* Character poses */
+
+.pose-normal {
   transform:
-    rotate(-4deg)
-    translateY(3px);
+    translateY(0)
+    rotate(0deg)
+    scale(1);
 }
 
-.character-placeholder {
-  font-family:
-    "Patrick Hand",
-    cursive;
+.pose-tilt {
+  transform:
+    translateY(3px)
+    rotate(4deg)
+    scale(.9);
+}
 
-  opacity: .6;
+.pose-lean {
+  transform:
+    translateY(8px)
+    rotate(-6deg)
+    scale(.78);
+}
 
-  text-align: center;
+.pose-peek {
+  transform:
+    translateY(16px)
+    rotate(2deg)
+    scale(.68);
+}
+
+.pose-flip {
+  transform:
+    translateY(2px)
+    scaleX(-1)
+    scale(.86);
+}
+
+.pose-small {
+  transform:
+    translateY(10px)
+    scale(.65);
+}
+
+
+/* Character placements */
+
+.planner-character {
+  position: absolute;
+
+  pointer-events: none;
+}
+
+.bottom-character {
+  right: 10px;
+  bottom: -2px;
+}
+
+.bottom-character .character-sticker {
+  max-height: 105px;
+  max-width: 75px;
+}
+
+.right-character {
+  right: 12px;
+  bottom: -2px;
+}
+
+.right-character .character-sticker {
+  max-height: 105px;
+  max-width: 72px;
+}
+
+.tiny-character {
+  max-height: 95px !important;
+  max-width: 68px !important;
+}
+
+.small-character {
+  max-height: 108px !important;
+  max-width: 78px !important;
+}
+
+.character-empty-message {
+  font-family: "Patrick Hand", cursive;
+
+  opacity: .58;
+
+  font-size: 18px;
 }
 
 .status-pill {
   display: inline-flex;
 
-  padding:
-    5px
-    11px;
+  padding: 5px 12px;
 
   border-radius: 99px;
 
   background:
     color-mix(
       in srgb,
-      var(--main) 15%,
+      var(--main) 17%,
       transparent
     );
 
@@ -979,21 +903,32 @@ select:focus-visible {
 }
 
 .character-mood {
-  margin-top: 7px;
-
   font-size: 11px;
 
-  opacity: .66;
+  opacity: .62;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  margin-top: 8px;
 }
 
 
-/* STATISTICS */
+/* =========================
+   STATS
+========================= */
 
 .stats-row {
   display: grid;
 
   grid-template-columns:
-    repeat(5, 1fr);
+    repeat(
+      5,
+      minmax(0,1fr)
+    );
 
   gap: 11px;
 
@@ -1001,7 +936,7 @@ select:focus-visible {
 }
 
 .stat-card {
-  min-height: 86px;
+  min-height: 94px;
 
   display: flex;
 
@@ -1011,8 +946,8 @@ select:focus-visible {
 }
 
 .stat-icon {
-  width: 38px;
-  height: 38px;
+  width: 39px;
+  height: 39px;
 
   border-radius: 13px;
 
@@ -1022,24 +957,17 @@ select:focus-visible {
   background:
     color-mix(
       in srgb,
-      var(--main) 12%,
+      var(--main) 14%,
       transparent
     );
 
   flex: 0 0 auto;
 }
 
-.stat-icon svg {
-  width: 20px;
-  height: 20px;
-}
-
 .stat-number {
-  font-family:
-    "Patrick Hand",
-    cursive;
+  font-family: "Patrick Hand", cursive;
 
-  font-size: 26px;
+  font-size: 28px;
 
   line-height: 1;
 }
@@ -1049,32 +977,32 @@ select:focus-visible {
 
   line-height: 1.25;
 
-  opacity: .62;
+  opacity: .63;
 
-  margin-top: 3px;
+  margin-top: 4px;
 }
 
 
-/* LOWER DASHBOARD */
+/* =========================
+   LOWER DASHBOARD
+========================= */
 
 .lower-grid {
   display: grid;
 
   grid-template-columns:
-    1fr
-    1fr
-    1fr;
+    repeat(
+      3,
+      minmax(0,1fr)
+    );
 
   gap: 14px;
 
   margin-top: 14px;
 }
 
-
 .list-item {
-  padding:
-    9px
-    0;
+  padding: 10px 0;
 
   border-bottom:
     1px dashed var(--border);
@@ -1092,24 +1020,6 @@ select:focus-visible {
   gap: 9px;
 }
 
-.item-main {
-  min-width: 0;
-}
-
-.item-title {
-  font-size: 12px;
-
-  font-weight: 600;
-}
-
-.item-meta {
-  font-size: 10px;
-
-  opacity: .55;
-
-  margin-top: 3px;
-}
-
 .dot {
   width: 8px;
   height: 8px;
@@ -1121,6 +1031,382 @@ select:focus-visible {
   flex: 0 0 auto;
 }
 
+.item-main {
+  min-width: 0;
+}
+
+.item-title {
+  font-size: 12px;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+.item-meta {
+  font-size: 10px;
+
+  opacity: .55;
+
+  margin-top: 2px;
+}
+
+.note-paper {
+  background:
+    color-mix(
+      in srgb,
+      var(--main) 10%,
+      var(--card)
+    );
+
+  border-radius: 15px;
+
+  padding: 17px;
+
+  min-height: 140px;
+
+  font-family: "Patrick Hand", cursive;
+
+  font-size: 20px;
+
+  line-height: 1.4;
+
+  transform: rotate(-.4deg);
+}
+
+.note-paper::before {
+  content: "✦";
+
+  float: right;
+
+  color: var(--main);
+}
+
+.affirmation {
+  margin-top: 14px;
+
+  padding: 15px;
+
+  text-align: center;
+
+  font-family: "Patrick Hand", cursive;
+
+  font-size: 19px;
+}
+
+
+/* =========================
+   PLANNER DECORATIONS
+========================= */
+
+.doodle {
+  position: absolute;
+
+  pointer-events: none;
+
+  opacity: .72;
+
+  color: var(--main);
+}
+
+.doodle-star {
+  width: 29px;
+  height: 29px;
+
+  right: 18px;
+  top: 16px;
+}
+
+.doodle-heart {
+  width: 30px;
+  height: 30px;
+
+  right: 18px;
+  bottom: 14px;
+}
+
+.doodle-flower {
+  width: 26px;
+  height: 26px;
+
+  right: 15px;
+  top: 14px;
+}
+
+.doodle-spark {
+  width: 25px;
+  height: 25px;
+
+  right: 15px;
+  top: 13px;
+}
+
+.dotted-divider {
+  border-top:
+    1px dashed var(--border);
+
+  margin:
+    14px
+    0;
+}
+
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile-layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(270px,.72fr)
+    minmax(0,1.45fr);
+
+  gap: 15px;
+
+  align-items: start;
+}
+
+
+/*
+  IMPORTANT:
+  The old version used a 150px circular
+  background image. That is what caused
+  the badly cropped profile image.
+
+  This version uses a real image element.
+*/
+
+.profile-preview {
+  text-align: center;
+
+  min-height: 100%;
+}
+
+.profile-photo-frame {
+  width: min(190px,100%);
+
+  height: 225px;
+
+  margin:
+    5px
+    auto
+    15px;
+
+  border:
+    1px dashed var(--border);
+
+  border-radius: 28px;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--main) 9%,
+      var(--bg)
+    );
+
+  display: grid;
+
+  place-items: center;
+
+  overflow: hidden;
+
+  padding: 12px;
+}
+
+.profile-photo {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  display: block;
+}
+
+.profile-photo-placeholder {
+  font-family: "Patrick Hand", cursive;
+
+  font-size: 20px;
+
+  opacity: .5;
+}
+
+.profile-preview h3 {
+  font-family: "Patrick Hand", cursive;
+
+  font-size: 31px;
+
+  font-weight: 400;
+
+  margin: 0;
+}
+
+.profile-preview > p {
+  font-size: 12px;
+
+  opacity: .62;
+
+  margin:
+    4px
+    0
+    16px;
+}
+
+.upload-label {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px dashed var(--border);
+
+  padding:
+    9px
+    13px;
+
+  border-radius: 99px;
+
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+.upload-label input {
+  display: none;
+}
+
+.profile-form-card {
+  padding: 21px;
+}
+
+.profile-form-section-title {
+  font-family: "Patrick Hand", cursive;
+
+  font-size: 24px;
+
+  margin:
+    0
+    0
+    12px;
+}
+
+
+/* =========================
+   FORMS
+========================= */
+
+.form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0,1fr)
+    );
+
+  gap: 13px;
+}
+
+.field {
+  display: grid;
+
+  gap: 6px;
+
+  min-width: 0;
+}
+
+.field.full {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  font-size: 11px;
+
+  font-weight: 700;
+
+  opacity: .68;
+}
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+
+  min-width: 0;
+
+  border:
+    1px solid var(--border);
+
+  background:
+    color-mix(
+      in srgb,
+      var(--font) 6%,
+      transparent
+    );
+
+  border-radius: 14px;
+
+  padding:
+    11px
+    12px;
+
+  color: var(--font);
+}
+
+.field input[readonly] {
+  opacity: .65;
+}
+
+.field textarea {
+  min-height: 105px;
+
+  resize: vertical;
+}
+
+
+/* Buttons */
+
+.primary-button,
+.secondary-button,
+.small-action {
+  transition:
+    transform var(--transition),
+    background var(--transition);
+}
+
+.primary-button {
+  border: 0;
+
+  border-radius: 99px;
+
+  background: var(--main);
+
+  padding:
+    10px
+    16px;
+
+  font-weight: 700;
+}
+
+.secondary-button {
+  border:
+    1px solid var(--border);
+
+  border-radius: 99px;
+
+  background: transparent;
+
+  padding:
+    9px
+    14px;
+
+  font-weight: 600;
+}
 
 .small-action {
   border:
@@ -1139,242 +1425,13 @@ select:focus-visible {
 
   border-radius: 99px;
 
-  font-size: 10px;
-}
-
-.small-action:hover {
-  background:
-    color-mix(
-      in srgb,
-      var(--main) 17%,
-      transparent
-    );
-}
-
-
-.note-paper {
-  background:
-    color-mix(
-      in srgb,
-      var(--main) 10%,
-      white 90%
-    );
-
-  color: var(--font);
-
-  border-radius: 14px;
-
-  padding: 16px;
-
-  min-height: 125px;
-
-  font-family:
-    "Patrick Hand",
-    cursive;
-
-  font-size: 20px;
-
-  line-height: 1.35;
-
-  transform:
-    rotate(-.5deg);
-}
-
-.note-paper::before {
-  content: "✦";
-
-  color: var(--main);
-
-  float: right;
-}
-
-
-.plans-card {
-  min-height: 200px;
-}
-
-.plan-line {
-  display: flex;
-
-  gap: 9px;
-
-  padding:
-    7px
-    0;
-
-  border-bottom:
-    1px dashed var(--border);
-
-  font-size: 12px;
-}
-
-.plan-line:last-child {
-  border-bottom: 0;
-}
-
-
-.mini-sticker {
-  position: absolute;
-
-  right: 8px;
-  bottom: -2px;
-
-  max-width: 80px;
-  max-height: 88px;
-
-  object-fit: contain;
-
-  filter:
-    drop-shadow(
-      0
-      6px
-      4px
-      rgba(0,0,0,.13)
-    );
-}
-
-
-.dashboard-note {
-  min-height: 190px;
-}
-
-.affirmation {
-  margin-top: 14px;
-
-  padding: 15px;
-
-  text-align: center;
-
-  background:
-    color-mix(
-      in srgb,
-      var(--main) 9%,
-      transparent
-    );
-
-  font-family:
-    "Patrick Hand",
-    cursive;
-
-  font-size: 19px;
-}
-
-
-.empty {
-  text-align: center;
-
-  padding:
-    35px
-    18px;
-
-  opacity: .58;
-
-  font-family:
-    "Patrick Hand",
-    cursive;
-
-  font-size: 19px;
-}
-
-
-/* FORMS */
-
-.form-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(
-      2,
-      minmax(0,1fr)
-    );
-
-  gap: 13px;
-}
-
-.field {
-  display: grid;
-
-  gap: 6px;
-}
-
-.field.full {
-  grid-column: 1 / -1;
-}
-
-.field label {
   font-size: 11px;
-
-  font-weight: 700;
-
-  opacity: .7;
 }
 
-.field input,
-.field textarea,
-.field select {
-  width: 100%;
-
-  border:
-    1px solid var(--border);
-
-  background:
-    color-mix(
-      in srgb,
-      white 10%,
-      transparent
-    );
-
-  border-radius: 13px;
-
-  padding:
-    10px
-    11px;
-}
-
-.field textarea {
-  min-height: 105px;
-
-  resize: vertical;
-}
-
-
-.primary-button {
-  border: 0;
-
-  border-radius: 99px;
-
-  background: var(--main);
-
-  padding:
-    10px
-    16px;
-
-  font-weight: 700;
-
-  box-shadow:
-    0
-    7px
-    16px
-    color-mix(
-      in srgb,
-      var(--main) 22%,
-      transparent
-    );
-}
-
-.secondary-button {
-  border:
-    1px solid var(--border);
-
-  border-radius: 99px;
-
-  background: transparent;
-
-  padding:
-    9px
-    14px;
-
-  font-weight: 600;
+.primary-button:hover,
+.secondary-button:hover,
+.small-action:hover {
+  transform: translateY(-1px);
 }
 
 .button-row {
@@ -1384,87 +1441,26 @@ select:focus-visible {
 
   gap: 8px;
 
-  margin-top: 12px;
+  margin-top: 14px;
 }
 
 
-/* PROFILE */
-
-.profile-layout {
-  display: grid;
-
-  grid-template-columns:
-    .72fr
-    1.28fr;
-
-  gap: 14px;
-}
-
-.profile-preview {
-  text-align: center;
-}
-
-.large-avatar {
-  width: 150px;
-  height: 150px;
-
-  margin:
-    4px
-    auto
-    14px;
-
-  border-radius: 50%;
-
-  background-size: cover;
-  background-position: center;
-
-  border:
-    2px solid var(--border);
-
-  background:
-    color-mix(
-      in srgb,
-      var(--main) 16%,
-      var(--bg)
-    );
-}
-
-.upload-label {
-  display: inline-block;
-
-  border:
-    1px dashed var(--border);
-
-  padding:
-    9px
-    13px;
-
-  border-radius: 99px;
-
-  font-size: 11px;
-
-  cursor: pointer;
-}
-
-.upload-label input {
-  display: none;
-}
-
-
-/* CHARACTER PAGE */
+/* =========================
+   CHARACTER SETTINGS
+========================= */
 
 .character-layout {
   display: grid;
 
   grid-template-columns:
-    .72fr
-    1.28fr;
+    minmax(270px,.85fr)
+    minmax(0,1.15fr);
 
-  gap: 14px;
+  gap: 15px;
 }
 
 .character-upload-card {
-  min-height: 390px;
+  min-height: 400px;
 
   display: grid;
 
@@ -1474,7 +1470,7 @@ select:focus-visible {
 }
 
 .sticker-preview {
-  min-height: 250px;
+  min-height: 275px;
 
   display: grid;
 
@@ -1482,25 +1478,22 @@ select:focus-visible {
 }
 
 .sticker-preview img {
-  max-width: 210px;
-  max-height: 250px;
+  max-width: 250px;
+  max-height: 300px;
 
   object-fit: contain;
 
   filter:
     drop-shadow(
-      0
-      10px
-      7px
-      rgba(0,0,0,.15)
+      0 12px 8px rgba(20,15,10,.13)
     );
 }
 
 .sticker-help {
-  max-width: 430px;
+  max-width: 460px;
 
   margin:
-    8px
+    10px
     auto
     0;
 
@@ -1508,27 +1501,71 @@ select:focus-visible {
 
   opacity: .6;
 
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
 
-/* RECORDS */
+/* Character preview poses */
+
+.character-poses-preview {
+  display: flex;
+
+  align-items: end;
+  justify-content: center;
+
+  gap: 12px;
+
+  min-height: 130px;
+
+  padding-top: 10px;
+}
+
+.pose-sample {
+  height: 105px;
+
+  width: auto;
+
+  object-fit: contain;
+}
+
+.pose-sample.pose-2 {
+  transform:
+    scaleX(-1)
+    rotate(-4deg);
+}
+
+.pose-sample.pose-3 {
+  transform:
+    rotate(5deg)
+    translateY(6px)
+    scale(.9);
+}
+
+.pose-sample.pose-4 {
+  transform:
+    scale(.72)
+    translateY(13px);
+}
+
+
+/* =========================
+   RECORDS
+========================= */
 
 .records-grid {
   display: grid;
 
-  gap: 10px;
+  gap: 11px;
 }
 
 .record {
   display: flex;
 
-  justify-content:
-    space-between;
+  justify-content: space-between;
 
   align-items: center;
 
-  gap: 12px;
+  gap: 13px;
 
   padding:
     14px
@@ -1538,26 +1575,25 @@ select:focus-visible {
 .record-left {
   display: flex;
 
-  align-items:
-    flex-start;
+  align-items: center;
 
-  gap: 10px;
+  gap: 11px;
 
   min-width: 0;
 }
 
 .record-title {
-  font-weight: 700;
-
   font-size: 13px;
+
+  font-weight: 700;
 }
 
 .record-desc {
-  font-size: 10px;
+  font-size: 11px;
 
   opacity: .6;
 
-  margin-top: 4px;
+  margin-top: 3px;
 
   white-space: pre-wrap;
 }
@@ -1571,8 +1607,8 @@ select:focus-visible {
 }
 
 .icon-action {
-  width: 32px;
-  height: 32px;
+  width: 33px;
+  height: 33px;
 
   border:
     1px solid var(--border);
@@ -1586,41 +1622,57 @@ select:focus-visible {
   place-items: center;
 }
 
+.icon-action:hover {
+  background:
+    color-mix(
+      in srgb,
+      var(--main) 14%,
+      transparent
+    );
+}
+
 .icon-action svg {
   width: 17px;
   height: 17px;
 }
 
-.icon-action:hover {
-  background:
-    color-mix(
-      in srgb,
-      var(--main) 13%,
-      transparent
-    );
-}
-
 .completed .record-title {
   text-decoration: line-through;
 
-  opacity: .52;
+  opacity: .55;
 }
 
 .completed {
-  opacity: .76;
+  opacity: .78;
+}
+
+.empty {
+  text-align: center;
+
+  padding:
+    34px
+    18px;
+
+  opacity: .6;
+
+  font-family: "Patrick Hand", cursive;
+
+  font-size: 19px;
 }
 
 
-/* TODO CHECKBOX */
+/* =========================
+   TO-DO CHECKBOX
+========================= */
 
 .todo-check {
-  width: 32px;
-  height: 32px;
+  width: 27px;
+  height: 27px;
 
   border:
-    1px solid var(--border);
+    1.5px solid var(--border);
 
-  border-radius: 10px;
+  border-radius: 8px;
 
   background: transparent;
 
@@ -1629,6 +1681,8 @@ select:focus-visible {
   place-items: center;
 
   flex: 0 0 auto;
+
+  padding: 0;
 }
 
 .todo-check svg {
@@ -1636,21 +1690,34 @@ select:focus-visible {
   height: 17px;
 }
 
+.todo-check.checked {
+  background:
+    color-mix(
+      in srgb,
+      var(--main) 17%,
+      transparent
+    );
+}
 
-/* GOALS */
 
-.goals-grid,
-.notes-grid {
+/* =========================
+   GOALS
+========================= */
+
+.goals-grid {
   display: grid;
 
   grid-template-columns:
-    repeat(3,1fr);
+    repeat(
+      3,
+      minmax(0,1fr)
+    );
 
   gap: 13px;
 }
 
 .goal-progress {
-  height: 7px;
+  height: 8px;
 
   border-radius: 99px;
 
@@ -1663,7 +1730,7 @@ select:focus-visible {
 
   overflow: hidden;
 
-  margin-top: 13px;
+  margin-top: 14px;
 }
 
 .goal-progress > span {
@@ -1685,7 +1752,21 @@ select:focus-visible {
 }
 
 
-/* NOTES */
+/* =========================
+   NOTES
+========================= */
+
+.notes-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      3,
+      minmax(0,1fr)
+    );
+
+  gap: 13px;
+}
 
 .note-card {
   min-height: 190px;
@@ -1700,7 +1781,7 @@ select:focus-visible {
 }
 
 .note-content {
-  margin-top: 11px;
+  margin-top: 12px;
 
   white-space: pre-wrap;
 
@@ -1710,13 +1791,18 @@ select:focus-visible {
 }
 
 
-/* PALETTES */
+/* =========================
+   PALETTES
+========================= */
 
 .palette-grid {
   display: grid;
 
   grid-template-columns:
-    repeat(5,1fr);
+    repeat(
+      5,
+      minmax(0,1fr)
+    );
 
   gap: 12px;
 }
@@ -1729,29 +1815,20 @@ select:focus-visible {
 
   background: var(--card);
 
-  border-radius: 17px;
+  border-radius: 18px;
 
   cursor: pointer;
 
-  transition:
-    transform var(--transition),
-    box-shadow var(--transition);
+  text-align: left;
 }
 
 .palette-card:hover {
-  transform:
-    translateY(-2px);
-
-  box-shadow: var(--shadow);
+  transform: translateY(-2px);
 }
 
 .palette-card.selected {
   box-shadow:
-    0
-    0
-    0
-    2px
-    var(--main),
+    0 0 0 2px var(--main),
     var(--shadow);
 }
 
@@ -1769,18 +1846,15 @@ select:focus-visible {
 }
 
 .swatches span:nth-child(1) {
-  background:
-    var(--swatch-bg);
+  background: var(--swatch-bg);
 }
 
 .swatches span:nth-child(2) {
-  background:
-    var(--swatch-main);
+  background: var(--swatch-main);
 }
 
 .swatches span:nth-child(3) {
-  background:
-    var(--swatch-font);
+  background: var(--swatch-font);
 }
 
 .palette-name {
@@ -1808,32 +1882,223 @@ select:focus-visible {
 }
 
 
-/* MODAL */
+/* =========================
+   SEARCH
+========================= */
+
+.search-results {
+  position: relative;
+
+  z-index: 40;
+
+  margin:
+    -8px
+    0
+    15px;
+
+  padding: 10px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 18px;
+
+  background: var(--card-strong);
+
+  box-shadow: var(--shadow);
+}
+
+.search-results.hidden {
+  display: none;
+}
+
+.search-result {
+  padding: 9px;
+
+  border-radius: 11px;
+
+  cursor: pointer;
+}
+
+.search-result:hover {
+  background:
+    color-mix(
+      in srgb,
+      var(--main) 10%,
+      transparent
+    );
+}
+
+.search-result strong {
+  display: block;
+
+  font-size: 12px;
+}
+
+.search-result span {
+  font-size: 10px;
+
+  opacity: .58;
+}
+
+
+/* =========================
+   FLOATING REMINDER COMPANION
+========================= */
+
+.reminder-companion {
+  position: fixed;
+
+  right: 24px;
+  bottom: 24px;
+
+  z-index: 70;
+
+  display: flex;
+
+  align-items: flex-end;
+
+  gap: 10px;
+
+  max-width:
+    min(
+      390px,
+      calc(100vw - 32px)
+    );
+
+  pointer-events: none;
+}
+
+.reminder-companion.hidden {
+  display: none;
+}
+
+.companion-sticker {
+  width: auto;
+
+  height: 115px;
+
+  max-width: 105px;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(
+      0 9px 5px rgba(20,15,10,.16)
+    );
+
+  pointer-events: auto;
+}
+
+.speech-bubble {
+  position: relative;
+
+  max-width: 245px;
+
+  background: var(--card-strong);
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 19px;
+
+  padding:
+    13px
+    14px;
+
+  box-shadow: var(--shadow);
+
+  font-family: "Patrick Hand", cursive;
+
+  font-size: 17px;
+
+  line-height: 1.25;
+
+  pointer-events: auto;
+}
+
+.speech-bubble::after {
+  content: "";
+
+  position: absolute;
+
+  left: 22px;
+  bottom: -9px;
+
+  border-width:
+    9px
+    8px
+    0
+    0;
+
+  border-style: solid;
+
+  border-color:
+    var(--border)
+    transparent
+    transparent
+    transparent;
+}
+
+.speech-actions {
+  display: flex;
+
+  gap: 6px;
+
+  margin-top: 9px;
+}
+
+.speech-actions button {
+  font-family: "DM Sans", sans-serif;
+
+  font-size: 10px;
+
+  padding:
+    6px
+    9px;
+
+  border:
+    1px solid var(--border);
+
+  background: transparent;
+
+  border-radius: 99px;
+}
+
+.speech-actions button:first-child {
+  background: var(--main);
+
+  font-weight: 700;
+}
+
+
+/* =========================
+   MODAL
+========================= */
 
 .modal-backdrop {
   position: fixed;
 
   inset: 0;
 
-  z-index: 80;
+  z-index: 90;
 
   background:
-    rgba(0,0,0,.3);
+    rgba(20,15,10,.3);
 
-  backdrop-filter:
-    blur(5px);
+  backdrop-filter: blur(5px);
 
   display: grid;
 
   place-items: center;
 
-  padding: 20px;
+  padding: 18px;
 }
 
 .modal {
   width:
     min(
-      620px,
+      650px,
       100%
     );
 
@@ -1846,13 +2111,10 @@ select:focus-visible {
   border:
     1px solid var(--border);
 
-  border-radius: 23px;
+  border-radius: 24px;
 
   box-shadow:
-    0
-    25px
-    80px
-    rgba(0,0,0,.3);
+    0 25px 80px rgba(30,20,10,.2);
 
   padding: 20px;
 }
@@ -1860,8 +2122,7 @@ select:focus-visible {
 .modal-head {
   display: flex;
 
-  justify-content:
-    space-between;
+  justify-content: space-between;
 
   align-items: center;
 
@@ -1869,13 +2130,13 @@ select:focus-visible {
 }
 
 .modal-head h3 {
-  font-family:
-    "Patrick Hand",
-    cursive;
+  font-family: "Patrick Hand", cursive;
 
   font-size: 27px;
 
   font-weight: 400;
+
+  margin: 0;
 }
 
 .close-modal {
@@ -1883,17 +2144,42 @@ select:focus-visible {
 
   background: transparent;
 
-  font-size: 22px;
+  font-size: 23px;
 }
 
 
-/* TOAST */
+/* =========================
+   ICONS
+========================= */
+
+.nav-icon,
+.icon {
+  width: 21px;
+  height: 21px;
+
+  display: inline-block;
+
+  flex: 0 0 auto;
+}
+
+.nav-icon svg,
+.icon svg,
+.icon-search svg {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+}
+
+
+/* =========================
+   TOAST
+========================= */
 
 .toast {
   position: fixed;
 
   left: 50%;
-
   bottom: 22px;
 
   transform:
@@ -1906,7 +2192,7 @@ select:focus-visible {
 
   pointer-events: none;
 
-  z-index: 100;
+  z-index: 110;
 
   background: var(--font);
 
@@ -1936,154 +2222,49 @@ select:focus-visible {
 }
 
 
-/* REMINDER CHARACTER */
+/* =========================
+   RESPONSIVE
+========================= */
 
-.reminder-companion {
-  position: fixed;
-
-  right: 24px;
-  bottom: 22px;
-
-  z-index: 70;
-
-  width: 270px;
-
-  min-height: 145px;
-
-  pointer-events: none;
-}
-
-.companion-bubble {
-  position: absolute;
-
-  right: 48px;
-  top: 0;
-
-  width: 210px;
-
-  padding:
-    16px
-    18px;
-
-  border-radius:
-    19px
-    19px
-    4px
-    19px;
-
-  background: var(--font);
-
-  color: var(--bg);
-
-  font-family:
-    "Patrick Hand",
-    cursive;
-
-  font-size: 17px;
-
-  line-height: 1.28;
-
-  box-shadow: var(--shadow);
-}
-
-.companion-sticker {
-  position: absolute;
-
-  right: 0;
-  bottom: -2px;
-
-  max-width: 92px;
-  max-height: 112px;
-
-  object-fit: contain;
-
-  filter:
-    drop-shadow(
-      0
-      8px
-      5px
-      rgba(0,0,0,.18)
-    );
-}
-
-.companion-close {
-  position: absolute;
-
-  right: -2px;
-  top: -8px;
-
-  width: 22px;
-  height: 22px;
-
-  border:
-    1px solid var(--border);
-
-  border-radius: 50%;
-
-  background: var(--bg);
-
-  z-index: 2;
-
-  pointer-events: auto;
-}
-
-.reminder-companion.show {
-  animation:
-    companionIn
-    .22s
-    ease;
-}
-
-@keyframes companionIn {
-
-  from {
-    transform:
-      translateY(12px);
-
-    opacity: 0;
-  }
-
-  to {
-    transform: none;
-
-    opacity: 1;
-  }
-
-}
-
-
-/* RESPONSIVE */
-
-@media (max-width:1180px) {
+@media (max-width:1120px) {
 
   .dashboard-grid {
     grid-template-columns:
-      1.2fr
-      1fr
+      1.4fr
       1fr;
+  }
+
+  .hero-card {
+    grid-column: 1 / -1;
   }
 
   .stats-row {
     grid-template-columns:
-      repeat(3,1fr);
+      repeat(
+        3,
+        minmax(0,1fr)
+      );
   }
 
   .lower-grid {
     grid-template-columns:
-      1fr
-      1fr;
+      repeat(
+        2,
+        minmax(0,1fr)
+      );
   }
 
   .lower-grid > :last-child {
-    grid-column:
-      1 / -1;
+    grid-column: 1 / -1;
   }
 
   .palette-grid {
     grid-template-columns:
-      repeat(4,1fr);
+      repeat(
+        4,
+        minmax(0,1fr)
+      );
   }
-
 }
 
 
@@ -2092,7 +2273,7 @@ select:focus-visible {
   .sidebar {
     width: 78px;
 
-    padding-inline: 10px;
+    padding-inline: 12px;
   }
 
   .sidebar .brand-block,
@@ -2108,11 +2289,10 @@ select:focus-visible {
   }
 
   .main-content,
-  .sidebar.collapsed ~ .main-content {
+  .sidebar:not(.collapsed) ~ .main-content {
     width:
       calc(
-        100% -
-        78px
+        100% - 78px
       );
 
     margin-left: 78px;
@@ -2136,40 +2316,29 @@ select:focus-visible {
     width: auto;
   }
 
-  .dashboard-grid {
-    grid-template-columns:
-      1fr
-      1fr;
-  }
-
-  .hero-card {
-    grid-column:
-      1 / -1;
-  }
-
   .profile-layout,
   .character-layout {
-    grid-template-columns:
-      1fr;
+    grid-template-columns: 1fr;
   }
 
   .goals-grid,
   .notes-grid {
     grid-template-columns:
-      1fr
-      1fr;
+      repeat(
+        2,
+        minmax(0,1fr)
+      );
   }
-
 }
 
 
-@media (max-width:590px) {
+@media (max-width:620px) {
 
   .main-content {
     padding:
-      18px
-      11px
-      30px;
+      20px
+      12px
+      35px;
   }
 
   .dashboard-grid,
@@ -2178,8 +2347,7 @@ select:focus-visible {
   .form-grid,
   .goals-grid,
   .notes-grid {
-    grid-template-columns:
-      1fr;
+    grid-template-columns: 1fr;
   }
 
   .hero-card {
@@ -2187,12 +2355,19 @@ select:focus-visible {
   }
 
   .hero-copy {
-    max-width: 70%;
+    max-width: 72%;
   }
 
   .palette-grid {
     grid-template-columns:
-      repeat(2,1fr);
+      repeat(
+        2,
+        minmax(0,1fr)
+      );
+  }
+
+  .topbar h1 {
+    font-size: 34px;
   }
 
   .topbar-actions {
@@ -2205,19 +2380,26 @@ select:focus-visible {
     flex-basis: 100%;
   }
 
-  .topbar h1 {
-    font-size: 34px;
+  .footer-strip {
+    display: grid;
+  }
+
+  .record {
+    align-items: flex-start;
   }
 
   .reminder-companion {
-    right: 10px;
-    bottom: 10px;
-
-    transform:
-      scale(.9);
-
-    transform-origin:
-      bottom right;
+    right: 12px;
+    bottom: 12px;
   }
 
+  .companion-sticker {
+    height: 90px;
+  }
+
+  .speech-bubble {
+    font-size: 15px;
+
+    max-width: 210px;
+  }
 }
