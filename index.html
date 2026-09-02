@@ -5,306 +5,250 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#1D251C">
   <title>LAYRAAZ</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Patrick+Hand&display=swap"
-    rel="stylesheet"
-  >
-
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <div id="toast" class="toast" aria-live="polite"></div>
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation">
 
-  <div class="app-shell">
+    <button
+      class="sidebar-toggle"
+      id="sidebarToggle"
+      aria-label="Open menu"
+      aria-expanded="false"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16"/>
+      </svg>
+    </button>
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar collapsed" id="sidebar">
+    <div class="brand">LAYRAAZ</div>
 
-      <div class="brand-block">
-        <div class="brand">
-          LAYRAAZ<span class="brand-spark">✦</span>
-        </div>
+    <nav class="nav-list">
 
-        <div class="brand-sub">
-          for the version of you<br>
-          you're becoming
-        </div>
-      </div>
-
-      <button
-        class="sidebar-toggle"
-        id="sidebarToggle"
-        type="button"
-        aria-label="Open sidebar"
-        aria-expanded="false"
-      >
-        <span class="icon icon-menu"></span>
+      <button class="nav-item active" data-section="profile">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="8" r="3.2"/>
+            <path d="M5.5 20c.8-3.7 3-5.5 6.5-5.5s5.7 1.8 6.5 5.5"/>
+          </svg>
+        </span>
+        <span>Profile</span>
       </button>
 
-      <nav class="nav-list" aria-label="Main navigation">
+      <button class="nav-item" data-section="dashboard">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="4" y="4" width="6.5" height="6.5" rx="1"/>
+            <rect x="13.5" y="4" width="6.5" height="6.5" rx="1"/>
+            <rect x="4" y="13.5" width="6.5" height="6.5" rx="1"/>
+            <rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1"/>
+          </svg>
+        </span>
+        <span>Dashboard</span>
+      </button>
 
-        <button
-          class="nav-item"
-          data-section="profile"
-          type="button"
-          title="Profile"
-        >
-          <span class="nav-icon icon-profile"></span>
-          <span class="nav-label">Profile</span>
-        </button>
+      <button class="nav-item" data-section="reminders">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="8"/>
+            <path d="M12 7v5l3 2"/>
+          </svg>
+        </span>
+        <span>Reminders</span>
+      </button>
 
-        <button
-          class="nav-item active"
-          data-section="dashboard"
-          type="button"
-          title="Dashboard"
-        >
-          <span class="nav-icon icon-home"></span>
-          <span class="nav-label">Dashboard</span>
-        </button>
+      <button class="nav-item" data-section="todos">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="5" y="4" width="14" height="16" rx="2"/>
+            <path d="M8 8h8M8 12h8M8 16h5"/>
+          </svg>
+        </span>
+        <span>To-do List</span>
+      </button>
 
-        <button
-          class="nav-item"
-          data-section="reminders"
-          type="button"
-          title="Reminders"
-        >
-          <span class="nav-icon icon-bell"></span>
-          <span class="nav-label">Reminders</span>
-        </button>
+      <button class="nav-item" data-section="goals">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3l2.2 6.1L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-1.9L12 3z"/>
+          </svg>
+        </span>
+        <span>Goals</span>
+      </button>
 
-        <button
-          class="nav-item"
-          data-section="todos"
-          type="button"
-          title="To-do List"
-        >
-          <span class="nav-icon icon-check"></span>
-          <span class="nav-label">To-do List</span>
-        </button>
+      <button class="nav-item" data-section="notes">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 4h12v16H6z"/>
+            <path d="M9 8h6M9 12h6M9 16h4"/>
+          </svg>
+        </span>
+        <span>Notes</span>
+      </button>
 
-        <button
-          class="nav-item"
-          data-section="goals"
-          type="button"
-          title="Goals"
-        >
-          <span class="nav-icon icon-target"></span>
-          <span class="nav-label">Goals</span>
-        </button>
+      <button class="nav-item" data-section="notifications">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+            <path d="M10 21h4"/>
+          </svg>
+        </span>
+        <span>Notifications</span>
+      </button>
 
-        <button
-          class="nav-item"
-          data-section="notes"
-          type="button"
-          title="Notes"
-        >
-          <span class="nav-icon icon-note"></span>
-          <span class="nav-label">Notes</span>
-        </button>
+      <button class="nav-item" data-section="appearance">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="8"/>
+            <path d="M12 4v16M12 12h8"/>
+          </svg>
+        </span>
+        <span>Appearance</span>
+      </button>
 
-        <button
-          class="nav-item"
-          data-section="notifications"
-          type="button"
-          title="Notifications"
-        >
-          <span class="nav-icon icon-notification"></span>
-          <span class="nav-label">Notifications</span>
-        </button>
+      <button class="nav-item" data-section="character">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="8"/>
+            <path d="M8.5 10h.01M15.5 10h.01"/>
+            <path d="M9 15c1.8 1.5 4.2 1.5 6 0"/>
+          </svg>
+        </span>
+        <span>Character</span>
+      </button>
 
-        <button
-          class="nav-item"
-          data-section="appearance"
-          type="button"
-          title="Appearance"
-        >
-          <span class="nav-icon icon-palette"></span>
-          <span class="nav-label">Appearance</span>
-        </button>
+    </nav>
 
-        <button
-          class="nav-item"
-          data-section="character"
-          type="button"
-          title="Character"
-        >
-          <span class="nav-icon icon-character"></span>
-          <span class="nav-label">Character</span>
-        </button>
+    <div class="sidebar-foot">
+      Your quiet little command centre.
+    </div>
 
-      </nav>
+  </aside>
 
-      <div class="sidebar-footer">
-        <div class="tiny-quote">
-          You are doing better than you think you are.
-          <span>♡</span>
-        </div>
+
+  <main class="app-shell">
+
+    <header class="topbar">
+
+      <div>
+        <div class="eyebrow">PERSONAL COMMAND CENTRE</div>
+        <h1 id="pageTitle">Profile</h1>
       </div>
 
-    </aside>
+      <div class="top-actions">
 
+        <label class="search-box" aria-label="Search LAYRAAZ">
 
-    <!-- MAIN -->
-    <main class="main-content">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="10.8" cy="10.8" r="6.6"/>
+            <path d="m16 16 4.5 4.5"/>
+          </svg>
 
-      <header class="topbar">
-
-        <div class="topbar-copy">
-
-          <div class="eyebrow">
-            YOUR LITTLE DIGITAL SPACE
-          </div>
-
-          <h1 id="pageTitle">
-            Welcome back, Laya
-            <span class="sparkles">✦</span>
-          </h1>
-
-          <p id="pageSubtitle">
-            A small space for everything that matters.
-            <span>♡</span>
-          </p>
-
-        </div>
-
-
-        <div class="topbar-actions">
-
-          <div class="search-wrap">
-
-            <input
-              id="globalSearch"
-              type="search"
-              placeholder="Search anything..."
-              autocomplete="off"
-            >
-
-            <span class="search-icon icon-search"></span>
-
-          </div>
-
-
-          <button
-            class="icon-button notification-button"
-            id="topNotificationButton"
-            type="button"
-            aria-label="Notifications"
+          <input
+            id="globalSearch"
+            type="search"
+            placeholder="Search..."
+            autocomplete="off"
           >
 
-            <span class="nav-icon icon-notification"></span>
+        </label>
 
-            <span
-              class="notification-count"
-              id="notificationCount"
-            ></span>
+        <button
+          class="icon-button"
+          id="notificationButton"
+          title="Notifications"
+          aria-label="Notifications"
+        >
 
-          </button>
+          <svg viewBox="0 0 24 24">
+            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+            <path d="M10 21h4"/>
+          </svg>
 
+          <span
+            id="notificationDot"
+            class="notification-dot hidden"
+          ></span>
 
-          <button
-            class="profile-mini"
-            id="profileMiniButton"
-            type="button"
-          >
+        </button>
 
-            <span
-              class="avatar"
-              id="topAvatar"
-            ></span>
+      </div>
 
-            <span id="topName">
-              Laya
-            </span>
-
-            <span class="chevron">
-              ⌄
-            </span>
-
-          </button>
-
-        </div>
-
-      </header>
+    </header>
 
 
-      <!-- SEARCH -->
-      <div
-        id="searchResults"
-        class="search-results hidden"
-      ></div>
+    <section
+      id="appContent"
+      class="content"
+      aria-live="polite"
+    ></section>
+
+  </main>
 
 
-      <!-- SECTIONS -->
-      <section
-        id="profile"
-        class="page-section"
-      ></section>
+  <div
+    id="toast"
+    class="toast"
+    role="status"
+  ></div>
 
-      <section
-        id="dashboard"
-        class="page-section active-section"
-      ></section>
 
-      <section
-        id="reminders"
-        class="page-section"
-      ></section>
+  <div
+    id="companion"
+    class="companion hidden"
+    aria-live="assertive"
+  >
 
-      <section
-        id="todos"
-        class="page-section"
-      ></section>
+    <div class="companion-sticker-wrap">
+      <img
+        id="companionSticker"
+        alt="Character"
+      >
+    </div>
 
-      <section
-        id="goals"
-        class="page-section"
-      ></section>
+    <div class="speech-bubble">
 
-      <section
-        id="notes"
-        class="page-section"
-      ></section>
+      <strong id="companionName">
+        Character
+      </strong>
 
-      <section
-        id="notifications"
-        class="page-section"
-      ></section>
+      <p id="companionMessage"></p>
 
-      <section
-        id="appearance"
-        class="page-section"
-      ></section>
+      <div class="companion-actions">
 
-      <section
-        id="character"
-        class="page-section"
-      ></section>
+        <button id="companionDone">
+          DONE
+        </button>
 
-    </main>
+        <button id="companionSnooze">
+          SNOOZE 5 MIN
+        </button>
+
+      </div>
+
+    </div>
 
   </div>
 
 
-  <!-- FLOATING REMINDER CHARACTER -->
-  <div
-    id="reminderCompanion"
-    class="reminder-companion hidden"
-    aria-live="polite"
-  ></div>
+  <input
+    id="profileImageInput"
+    type="file"
+    accept="image/*"
+    hidden
+  >
+
+  <input
+    id="characterImageInput"
+    type="file"
+    accept="image/*"
+    hidden
+  >
 
 
-  <!-- MODALS -->
-  <div id="modalRoot"></div>
-
-
-  <script src="script.js"></script>
+  <script src="script.js?v=20260902"></script>
 
 </body>
 </html>
