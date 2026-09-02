@@ -1,6 +1,6 @@
 /* =========================================================
    LAYRAAZ
-   Complete Application JavaScript
+   Main Application
    ========================================================= */
 
 
@@ -8,452 +8,324 @@
    STORAGE
    ========================================================= */
 
-const STORAGE_KEY = "LAYRAAZ_V2";
+const STORAGE_KEY = "LAYRAAZ_DATA_V2";
 
 
 const defaultData = {
+    profile: {
+        name: "Laya",
+        dob: "2002-08-28",
+        mbti: "INTJ",
+        occupation: "Executive Assistant to Terminal Head",
+        family: "4",
+        colors: "Forest Green, Charcoal Black, Silver",
+        food: "Dahi Puri",
+        places: "Hill Stations",
+        music: "Melody",
+        skin: "Sensitive Skin",
+        body: "Rectangular Body",
+        height: "5'1\"",
+        hobbies: "Singing, Crocheting, Travelling, Poetry, Kuchipudi Dancing, Playback Singing"
+    },
 
-  profile: {
+    profilePicture: "",
 
-    name: "Laya",
+    reminders: [],
 
-    dob: "2002-08-28",
+    todos: [],
 
-    mbti: "INTJ",
+    goals: [],
 
-    hobbies:
-      "Singer, Crochets, Loves travelling, Poet, Kuchipudi dancer, Playback singer",
+    notes: [],
 
-    occupation:
-      "Executive Assistant to Terminal Head in a container terminal",
+    notifications: [],
 
-    businessGoal:
-      "Start an Edible Cutlery Business in 2 years",
+    character: {
+        name: "Character",
+        personality: "Calm, intelligent, firm and caring.",
+        picture: ""
+    },
 
-    favouriteColours:
-      "Forest Green, Charcoal Black, Silver",
+    appearance: "forest",
 
-    favouriteFood:
-      "Dahi Puri",
-
-    favouritePlaces:
-      "Hill Stations",
-
-    favouriteMusic:
-      "Melody",
-
-    skinType:
-      "Sensitive Skin",
-
-    bodyType:
-      "Rectangular Body",
-
-    familyMembers:
-      "4",
-
-    height:
-      "5'1\"",
-
-    profileImage:
-      "",
-
-    characterName:
-      "Character",
-
-    characterPersonality:
-      "Calm, intelligent, firm, caring",
-
-    characterImage:
-      ""
-
-  },
-
-
-  reminders: [],
-
-  todos: [],
-
-  goals: [],
-
-  notes: [],
-
-  notifications: [],
-
-
-  appearance: {
-
-    palette: 0
-
-  }
-
+    sidebarCollapsed: false
 };
 
 
-let appData = loadData();
+let data = loadData();
 
-
-/* =========================================================
-   LOAD DATA
-   ========================================================= */
 
 function loadData() {
 
-  try {
+    try {
 
-    const saved =
-      localStorage.getItem(
-        STORAGE_KEY
-      );
+        const saved = localStorage.getItem(STORAGE_KEY);
 
+        if (!saved) {
+            return structuredClone(defaultData);
+        }
 
-    if (!saved) {
+        const parsed = JSON.parse(saved);
 
-      return JSON.parse(
-        JSON.stringify(
-          defaultData
-        )
-      );
+        return {
+            ...structuredClone(defaultData),
+            ...parsed,
+            profile: {
+                ...defaultData.profile,
+                ...(parsed.profile || {})
+            },
+            character: {
+                ...defaultData.character,
+                ...(parsed.character || {})
+            },
+            reminders: Array.isArray(parsed.reminders) ? parsed.reminders : [],
+            todos: Array.isArray(parsed.todos) ? parsed.todos : [],
+            goals: Array.isArray(parsed.goals) ? parsed.goals : [],
+            notes: Array.isArray(parsed.notes) ? parsed.notes : [],
+            notifications: Array.isArray(parsed.notifications)
+                ? parsed.notifications
+                : []
+        };
 
+    } catch (error) {
+
+        console.error("Could not load LAYRAAZ data:", error);
+
+        return structuredClone(defaultData);
     }
-
-
-    const parsed =
-      JSON.parse(saved);
-
-
-    return {
-
-      ...JSON.parse(
-        JSON.stringify(
-          defaultData
-        )
-      ),
-
-      ...parsed,
-
-
-      profile: {
-
-        ...defaultData.profile,
-
-        ...(parsed.profile || {})
-
-      },
-
-
-      appearance: {
-
-        ...defaultData.appearance,
-
-        ...(parsed.appearance || {})
-
-      },
-
-
-      reminders:
-        Array.isArray(parsed.reminders)
-          ? parsed.reminders
-          : [],
-
-
-      todos:
-        Array.isArray(parsed.todos)
-          ? parsed.todos
-          : [],
-
-
-      goals:
-        Array.isArray(parsed.goals)
-          ? parsed.goals
-          : [],
-
-
-      notes:
-        Array.isArray(parsed.notes)
-          ? parsed.notes
-          : [],
-
-
-      notifications:
-        Array.isArray(parsed.notifications)
-          ? parsed.notifications
-          : []
-
-    };
-
-  }
-
-  catch (error) {
-
-    console.error(
-      "LAYRAAZ storage error:",
-      error
-    );
-
-    return JSON.parse(
-      JSON.stringify(
-        defaultData
-      )
-    );
-
-  }
-
 }
 
-
-/* =========================================================
-   SAVE DATA
-   ========================================================= */
 
 function saveData() {
 
-  try {
+    try {
 
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(appData)
-    );
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(data)
+        );
 
-    return true;
+    } catch (error) {
 
-  }
+        console.error("Could not save LAYRAAZ data:", error);
 
-  catch (error) {
-
-    console.error(
-      "Could not save LAYRAAZ data:",
-      error
-    );
-
-    showToast(
-      "Could not save. Browser storage may be full."
-    );
-
-    return false;
-
-  }
-
+        alert(
+            "LAYRAAZ could not save this information. Your browser may have blocked local storage."
+        );
+    }
 }
 
 
 /* =========================================================
-   PALETTES
+   UTILITY
    ========================================================= */
 
-const palettes = [
+function createId() {
 
-  {
-    name: "Deep Forest Green",
-    background: "#1d251c",
-    main: "#111111",
-    font: "#c0c0c0"
-  },
+    return Date.now().toString(36) +
+        Math.random().toString(36).substring(2);
+}
 
-  {
-    name: "Butter Yellow",
-    background: "#F6E7A1",
-    main: "#A9D6E5",
-    font: "#6B3E26"
-  },
 
-  {
-    name: "Almond",
-    background: "#EFDECD",
-    main: "#93E9BE",
-    font: "#9B1C31"
-  },
+function escapeHTML(value) {
 
-  {
-    name: "Misty Sage",
-    background: "#B7C9B0",
-    main: "#8E3B46",
-    font: "#FFF1C1"
-  },
+    if (value === null || value === undefined) {
+        return "";
+    }
 
-  {
-    name: "Navy",
-    background: "#14213D",
-    main: "#D4AF37",
-    font: "#D8C3A5"
-  },
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
 
-  {
-    name: "Champagne",
-    background: "#F7E7CE",
-    main: "#808000",
-    font: "#E8E1D1"
-  },
 
-  {
-    name: "Gunmetal",
-    background: "#2A3439",
-    main: "#E8E1D1",
-    font: "#F0EAD6"
-  },
+function calculateAge(dob) {
 
-  {
-    name: "Cadet Grey",
-    background: "#91A3A9",
-    main: "#F0EAD6",
-    font: "#3D2B1F"
-  },
+    if (!dob) {
+        return "";
+    }
 
-  {
-    name: "Muted Pink",
-    background: "#D8A7B1",
-    main: "#A50034",
-    font: "#F6C9D2"
-  },
+    const birth = new Date(dob + "T00:00:00");
 
-  {
-    name: "Lavender Mist",
-    background: "#E6E0F8",
-    main: "#4B2E2A",
-    font: "#FFFDD0"
-  }
+    if (Number.isNaN(birth.getTime())) {
+        return "";
+    }
 
-];
+    const today = new Date();
+
+    let age =
+        today.getFullYear() -
+        birth.getFullYear();
+
+    const monthDifference =
+        today.getMonth() -
+        birth.getMonth();
+
+    if (
+        monthDifference < 0 ||
+        (
+            monthDifference === 0 &&
+            today.getDate() < birth.getDate()
+        )
+    ) {
+        age--;
+    }
+
+    return age >= 0 ? age : "";
+}
+
+
+function formatDate(dateString) {
+
+    if (!dateString) {
+        return "";
+    }
+
+    const date = new Date(dateString + "T00:00:00");
+
+    return date.toLocaleDateString(
+        undefined,
+        {
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+        }
+    );
+}
+
+
+function formatDateTime(dateString) {
+
+    const date = new Date(dateString);
+
+    if (Number.isNaN(date.getTime())) {
+        return "";
+    }
+
+    return date.toLocaleString(
+        undefined,
+        {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+        }
+    );
+}
 
 
 /* =========================================================
-   START APPLICATION
+   DOM READY
    ========================================================= */
 
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
+document.addEventListener("DOMContentLoaded", () => {
 
-    initialise();
+    initialiseNavigation();
 
-  }
-);
+    initialiseSidebar();
 
+    initialiseSearch();
 
-function initialise() {
+    initialiseProfile();
 
-  applyPalette();
+    initialiseReminders();
 
-  loadProfile();
+    initialiseTodos();
 
-  renderDashboard();
+    initialiseGoals();
 
-  renderReminders();
+    initialiseNotes();
 
-  renderTodos();
+    initialiseNotifications();
 
-  renderGoals();
+    initialiseAppearance();
 
-  renderNotes();
+    initialiseCharacter();
 
-  renderNotifications();
+    initialiseCategories();
 
-  renderAppearance();
+    updateDashboard();
 
-  renderCharacter();
+    updateToday();
 
-  setupNavigation();
+    renderAll();
 
-  setupSidebar();
+    updateNotificationIndicators();
 
-  setupProfile();
+    updateNotificationPermissionText();
 
-  setupProfilePicture();
+    applyAppearance();
 
-  setupReminders();
+    startReminderWatcher();
 
-  setupTodos();
-
-  setupGoals();
-
-  setupNotes();
-
-  setupSearch();
-
-  setupNotifications();
-
-  setupAppearance();
-
-  setupCharacter();
-
-  setupCategoryFilters();
-
-  startReminderChecker();
-
-  updateNotificationDot();
-
-}
+});
 
 
 /* =========================================================
    NAVIGATION
    ========================================================= */
 
-function setupNavigation() {
+function initialiseNavigation() {
 
-  document
-    .querySelectorAll(
-      ".nav-item[data-section]"
-    )
-    .forEach(button => {
+    document.querySelectorAll(".nav-item").forEach(button => {
 
-      button.addEventListener(
-        "click",
-        () => {
+        button.addEventListener("click", () => {
 
-          openSection(
-            button.dataset.section
-          );
+            const section =
+                button.dataset.section;
 
-        }
-      );
-
+            openSection(section);
+        });
     });
 
+
+    document.querySelectorAll("[data-open-section]").forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            openSection(button.dataset.openSection);
+        });
+    });
 }
 
 
-function openSection(sectionId) {
+function openSection(sectionName) {
 
-  document
-    .querySelectorAll(".section")
-    .forEach(section => {
+    document.querySelectorAll(".section")
+        .forEach(section => {
+            section.classList.remove("active");
+        });
 
-      section.classList.remove(
-        "active"
-      );
 
+    const target =
+        document.getElementById(
+            "section-" + sectionName
+        );
+
+    if (target) {
+        target.classList.add("active");
+    }
+
+
+    document.querySelectorAll(".nav-item")
+        .forEach(button => {
+
+            button.classList.toggle(
+                "active",
+                button.dataset.section === sectionName
+            );
+
+        });
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
     });
-
-
-  const target =
-    document.getElementById(
-      sectionId
-    );
-
-
-  if (target) {
-
-    target.classList.add(
-      "active"
-    );
-
-  }
-
-
-  document
-    .querySelectorAll(
-      ".nav-item[data-section]"
-    )
-    .forEach(button => {
-
-      button.classList.toggle(
-        "active",
-        button.dataset.section ===
-          sectionId
-      );
-
-    });
-
 }
 
 
@@ -461,36 +333,63 @@ function openSection(sectionId) {
    SIDEBAR
    ========================================================= */
 
-function setupSidebar() {
+function initialiseSidebar() {
 
-  const sidebar =
-    document.getElementById(
-      "sidebar"
-    );
+    const sidebar =
+        document.getElementById("sidebar");
 
-
-  const toggle =
-    document.getElementById(
-      "sidebarToggle"
-    );
+    const collapse =
+        document.getElementById("collapseSidebar");
 
 
-  if (!sidebar || !toggle) {
-    return;
-  }
-
-
-  toggle.addEventListener(
-    "click",
-    () => {
-
-      sidebar.classList.toggle(
-        "collapsed"
-      );
-
+    if (data.sidebarCollapsed) {
+        sidebar.classList.add("collapsed");
     }
-  );
 
+
+    collapse.addEventListener("click", () => {
+
+        data.sidebarCollapsed =
+            !sidebar.classList.contains("collapsed");
+
+        sidebar.classList.toggle(
+            "collapsed"
+        );
+
+        saveData();
+    });
+}
+
+
+/* =========================================================
+   TODAY
+   ========================================================= */
+
+function updateToday() {
+
+    const now = new Date();
+
+    const day =
+        now.toLocaleDateString(
+            undefined,
+            { weekday: "long" }
+        );
+
+    const date =
+        now.toLocaleDateString(
+            undefined,
+            {
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+            }
+        );
+
+    document.getElementById("todayDay").textContent =
+        day;
+
+    document.getElementById("todayDate").textContent =
+        date;
 }
 
 
@@ -498,546 +397,222 @@ function setupSidebar() {
    PROFILE
    ========================================================= */
 
-function setupProfile() {
+function initialiseProfile() {
 
-  const saveButton =
-    document.getElementById(
-      "saveProfile"
-    );
+    const fields = {
 
+        profileName: "name",
+        profileDOB: "dob",
+        profileMBTI: "mbti",
+        profileOccupation: "occupation",
+        profileFamily: "family",
+        profileColors: "colors",
+        profileFood: "food",
+        profilePlaces: "places",
+        profileMusic: "music",
+        profileSkin: "skin",
+        profileBody: "body",
+        profileHeight: "height",
+        profileHobbies: "hobbies"
 
-  if (saveButton) {
+    };
 
-    saveButton.addEventListener(
-      "click",
-      saveProfile
-    );
 
-  }
+    Object.entries(fields).forEach(([id, key]) => {
 
+        const element =
+            document.getElementById(id);
 
-  const dob =
-    document.getElementById(
-      "profileDOB"
-    );
+        element.value =
+            data.profile[key] || "";
 
+    });
 
-  if (dob) {
-
-    dob.addEventListener(
-      "change",
-      () => {
-
-        updateAge();
-
-      }
-    );
-
-  }
-
-}
-
-
-function loadProfile() {
-
-  const p =
-    appData.profile;
-
-
-  setValue(
-    "profileName",
-    p.name
-  );
-
-
-  setValue(
-    "profileDOB",
-    p.dob
-  );
-
-
-  setValue(
-    "profileMBTI",
-    p.mbti
-  );
-
-
-  setValue(
-    "profileHobbies",
-    p.hobbies
-  );
-
-
-  setValue(
-    "profileOccupation",
-    p.occupation
-  );
-
-
-  setValue(
-    "profileBusinessGoal",
-    p.businessGoal
-  );
-
-
-  setValue(
-    "profileColours",
-    p.favouriteColours
-  );
-
-
-  setValue(
-    "profileFood",
-    p.favouriteFood
-  );
-
-
-  setValue(
-    "profilePlaces",
-    p.favouritePlaces
-  );
-
-
-  setValue(
-    "profileMusic",
-    p.favouriteMusic
-  );
-
-
-  setValue(
-    "profileSkin",
-    p.skinType
-  );
-
-
-  setValue(
-    "profileBody",
-    p.bodyType
-  );
-
-
-  setValue(
-    "profileFamily",
-    p.familyMembers
-  );
-
-
-  setValue(
-    "profileHeight",
-    p.height
-  );
-
-
-  updateAge();
-
-  updateNameDisplays();
-
-  loadProfileImage();
-
-}
-
-
-function saveProfile() {
-
-  appData.profile.name =
-    getValue("profileName") ||
-    "Laya";
-
-
-  appData.profile.dob =
-    getValue("profileDOB");
-
-
-  appData.profile.mbti =
-    getValue("profileMBTI");
-
-
-  appData.profile.hobbies =
-    getValue("profileHobbies");
-
-
-  appData.profile.occupation =
-    getValue("profileOccupation");
-
-
-  appData.profile.businessGoal =
-    getValue("profileBusinessGoal");
-
-
-  appData.profile.favouriteColours =
-    getValue("profileColours");
-
-
-  appData.profile.favouriteFood =
-    getValue("profileFood");
-
-
-  appData.profile.favouritePlaces =
-    getValue("profilePlaces");
-
-
-  appData.profile.favouriteMusic =
-    getValue("profileMusic");
-
-
-  appData.profile.skinType =
-    getValue("profileSkin");
-
-
-  appData.profile.bodyType =
-    getValue("profileBody");
-
-
-  appData.profile.familyMembers =
-    getValue("profileFamily");
-
-
-  appData.profile.height =
-    getValue("profileHeight");
-
-
-  const saved =
-    saveData();
-
-
-  if (saved) {
-
-    updateNameDisplays();
 
     updateAge();
 
-    renderDashboard();
 
-    showToast(
-      "Profile saved successfully."
-    );
-
-  }
-
-}
+    document
+        .getElementById("profileDOB")
+        .addEventListener(
+            "change",
+            updateAge
+        );
 
 
-/* =========================================================
-   NAME DISPLAY
-   ========================================================= */
-
-function updateNameDisplays() {
-
-  const name =
-    appData.profile.name ||
-    "Laya";
+    document
+        .getElementById("saveProfile")
+        .addEventListener(
+            "click",
+            saveProfile
+        );
 
 
-  setText(
-    "profileHeadingName",
-    name
-  );
+    document
+        .getElementById("profilePictureInput")
+        .addEventListener(
+            "change",
+            handleProfilePicture
+        );
 
 
-  setText(
-    "profileCardName",
-    name
-  );
+    document
+        .getElementById("removeProfilePicture")
+        .addEventListener(
+            "click",
+            () => {
+
+                data.profilePicture = "";
+
+                saveData();
+
+                renderProfilePicture();
+
+            }
+        );
 
 
-  setText(
-    "dashboardName",
-    name
-  );
-
-
-  setText(
-    "sidebarUserName",
-    name
-  );
-
-
-  setText(
-    "profileInitial",
-    name.charAt(0).toUpperCase()
-  );
-
-
-  setText(
-    "miniAvatar",
-    name.charAt(0).toUpperCase()
-  );
-
-}
-
-
-/* =========================================================
-   AGE
-   ========================================================= */
-
-function calculateAge(dob) {
-
-  if (!dob) {
-    return "";
-  }
-
-
-  const birth =
-    new Date(dob);
-
-
-  if (isNaN(birth.getTime())) {
-    return "";
-  }
-
-
-  const today =
-    new Date();
-
-
-  let age =
-    today.getFullYear() -
-    birth.getFullYear();
-
-
-  const month =
-    today.getMonth() -
-    birth.getMonth();
-
-
-  if (
-    month < 0 ||
-    (
-      month === 0 &&
-      today.getDate() <
-        birth.getDate()
-    )
-  ) {
-
-    age--;
-
-  }
-
-
-  return age;
-
+    renderProfilePicture();
 }
 
 
 function updateAge() {
 
-  const age =
-    calculateAge(
-      getValue("profileDOB")
-    );
+    const dob =
+        document.getElementById("profileDOB").value;
 
+    const age =
+        calculateAge(dob);
 
-  setValue(
-    "profileAge",
-    age
-  );
-
-
-  setText(
-    "dashboardAge",
-    age
-  );
-
+    document.getElementById("profileAge").value =
+        age ? age + " years" : "";
 }
 
 
-/* =========================================================
-   PROFILE PICTURE
-   ========================================================= */
+function saveProfile() {
 
-function setupProfilePicture() {
+    const map = {
 
-  const input =
-    document.getElementById(
-      "profileImageInput"
-    );
+        profileName: "name",
+        profileDOB: "dob",
+        profileMBTI: "mbti",
+        profileOccupation: "occupation",
+        profileFamily: "family",
+        profileColors: "colors",
+        profileFood: "food",
+        profilePlaces: "places",
+        profileMusic: "music",
+        profileSkin: "skin",
+        profileBody: "body",
+        profileHeight: "height",
+        profileHobbies: "hobbies"
 
-
-  const remove =
-    document.getElementById(
-      "removeProfileImage"
-    );
-
-
-  if (input) {
-
-    input.addEventListener(
-      "change",
-      event => {
-
-        const file =
-          event.target.files?.[0];
+    };
 
 
-        if (!file) return;
+    Object.entries(map).forEach(([id, key]) => {
+
+        data.profile[key] =
+            document.getElementById(id).value.trim();
+
+    });
 
 
-        if (
-          !file.type.startsWith(
-            "image/"
-          )
-        ) {
+    saveData();
 
-          showToast(
-            "Please choose an image."
-          );
+    updateAge();
 
-          return;
-
-        }
+    updateDashboard();
 
 
-        const reader =
-          new FileReader();
+    const status =
+        document.getElementById(
+            "profileSaveStatus"
+        );
+
+    status.textContent = "Saved ✓";
+
+    setTimeout(() => {
+        status.textContent = "";
+    }, 2500);
+}
 
 
-        reader.onload =
-          event => {
+function handleProfilePicture(event) {
 
-            appData.profile.profileImage =
-              event.target.result;
+    const file =
+        event.target.files[0];
 
+    if (!file) {
+        return;
+    }
 
-            saveData();
-
-            loadProfileImage();
-
-            showToast(
-              "Profile picture saved."
-            );
-
-          };
+    const reader =
+        new FileReader();
 
 
-        reader.readAsDataURL(file);
+    reader.onload = function(e) {
 
-      }
-    );
-
-  }
-
-
-  if (remove) {
-
-    remove.addEventListener(
-      "click",
-      () => {
-
-        appData.profile.profileImage =
-          "";
+        data.profilePicture =
+            e.target.result;
 
         saveData();
 
-        loadProfileImage();
+        renderProfilePicture();
+    };
 
-        showToast(
-          "Profile picture removed."
-        );
 
-      }
-    );
-
-  }
-
+    reader.readAsDataURL(file);
 }
 
 
-function loadProfileImage() {
+function renderProfilePicture() {
 
-  const image =
-    document.getElementById(
-      "profileImage"
-    );
+    const images = [
+        document.getElementById("profilePicturePreview"),
+        document.getElementById("dashboardProfilePicture")
+    ];
 
-
-  const initial =
-    document.getElementById(
-      "profileInitial"
-    );
-
-
-  const avatar =
-    document.getElementById(
-      "miniAvatar"
-    );
+    const placeholders = [
+        document.getElementById("profilePlaceholder"),
+        document.getElementById("dashboardProfilePlaceholder")
+    ];
 
 
-  if (
-    appData.profile.profileImage
-  ) {
+    images.forEach(img => {
 
-    if (image) {
+        if (data.profilePicture) {
 
-      image.src =
-        appData.profile.profileImage;
+            img.src =
+                data.profilePicture;
 
-      image.classList.remove(
-        "hidden"
-      );
+            img.style.display =
+                "block";
 
-    }
+        } else {
 
+            img.removeAttribute("src");
 
-    if (initial) {
-
-      initial.classList.add(
-        "hidden"
-      );
-
-    }
+            img.style.display =
+                "none";
+        }
+    });
 
 
-    if (avatar) {
+    placeholders.forEach(placeholder => {
 
-      avatar.innerHTML = `
-        <img
-          src="${appData.profile.profileImage}"
-          alt="Profile"
-        >
-      `;
+        if (data.profilePicture) {
 
-    }
+            placeholder.style.display =
+                "none";
 
-  }
+        } else {
 
-  else {
+            placeholder.style.display =
+                "flex";
+        }
 
-    if (image) {
-
-      image.classList.add(
-        "hidden"
-      );
-
-      image.removeAttribute(
-        "src"
-      );
-
-    }
-
-
-    if (initial) {
-
-      initial.classList.remove(
-        "hidden"
-      );
-
-    }
-
-
-    if (avatar) {
-
-      avatar.textContent =
-        (
-          appData.profile.name ||
-          "L"
-        )
-        .charAt(0)
-        .toUpperCase();
-
-    }
-
-  }
-
+    });
 }
 
 
@@ -1045,86 +620,81 @@ function loadProfileImage() {
    DASHBOARD
    ========================================================= */
 
-function renderDashboard() {
+function updateDashboard() {
 
-  const p =
-    appData.profile;
-
-
-  setText(
-    "dashboardMBTI",
-    p.mbti
-  );
+    const name =
+        data.profile.name ||
+        "User";
 
 
-  setText(
-    "dashboardFamily",
-    p.familyMembers
-  );
+    document.getElementById(
+        "welcomeText"
+    ).textContent =
+        `Welcome Back, ${name}`;
 
 
-  setText(
-    "dashboardHeight",
-    p.height
-  );
+    document.getElementById(
+        "dashboardProfileName"
+    ).textContent =
+        name;
 
 
-  setText(
-    "dashboardOccupation",
-    p.occupation
-  );
+    document.getElementById(
+        "dashboardOccupation"
+    ).textContent =
+        data.profile.occupation ||
+        "Occupation not added";
 
 
-  setText(
-    "dashboardHobbies",
-    p.hobbies
-  );
+    const age =
+        calculateAge(data.profile.dob);
 
 
-  setText(
-    "dashboardColours",
-    p.favouriteColours
-  );
+    document.getElementById(
+        "dashboardAge"
+    ).textContent =
+        age
+            ? `Age: ${age}`
+            : "Age: --";
 
 
-  setText(
-    "dashboardFood",
-    p.favouriteFood
-  );
+    document.getElementById(
+        "dashboardMBTI"
+    ).textContent =
+        data.profile.mbti ||
+        "MBTI not added";
 
 
-  setText(
-    "dashboardPlaces",
-    p.favouritePlaces
-  );
+    document.getElementById(
+        "dashboardCharacterName"
+    ).textContent =
+        data.character.name ||
+        "Character";
 
 
-  setText(
-    "dashboardMusic",
-    p.favouriteMusic
-  );
+    document.getElementById(
+        "dashboardCharacterMessage"
+    ).textContent =
+        `${data.character.name || "Character"} is ready.`;
 
 
-  setText(
-    "dashboardSkin",
-    p.skinType
-  );
+    updateCharacterImages();
 
 
-  setText(
-    "dashboardBody",
-    p.bodyType
-  );
+    document.getElementById("statReminders").textContent =
+        data.reminders.length;
 
 
-  setText(
-    "dashboardBusinessGoal",
-    p.businessGoal
-  );
+    document.getElementById("statTasks").textContent =
+        data.todos.filter(item => !item.completed).length;
 
 
-  updateAge();
+    document.getElementById("statGoals").textContent =
+        data.goals.length;
 
+
+    document.getElementById("statNotes").textContent =
+        data.notes.length;
 }
 
 
@@ -1132,395 +702,334 @@ function renderDashboard() {
    REMINDERS
    ========================================================= */
 
-function setupReminders() {
+function initialiseReminders() {
 
-  const form =
-    document.getElementById(
-      "reminderForm"
-    );
-
-
-  if (!form) return;
-
-
-  form.addEventListener(
-    "submit",
-    event => {
-
-      event.preventDefault();
-
-
-      const title =
-        getValue(
-          "reminderTitle"
+    document
+        .getElementById("saveReminder")
+        .addEventListener(
+            "click",
+            addReminder
         );
 
 
-      const category =
-        getValue(
-          "reminderCategory"
+    document
+        .getElementById("enableNotifications")
+        .addEventListener(
+            "click",
+            requestNotificationPermission
         );
 
 
-      const due =
-        getValue(
-          "reminderDateTime"
+    document
+        .getElementById("closeCharacterReminder")
+        .addEventListener(
+            "click",
+            hideCharacterReminder
         );
+}
 
 
-      if (!title || !due) {
+function addReminder() {
 
-        showToast(
-          "Please complete the reminder."
+    const text =
+        document
+            .getElementById("reminderText")
+            .value
+            .trim();
+
+    const date =
+        document
+            .getElementById("reminderDate")
+            .value;
+
+    const time =
+        document
+            .getElementById("reminderTime")
+            .value;
+
+    const category =
+        document
+            .getElementById("reminderCategory")
+            .value;
+
+
+    if (!text || !date || !time) {
+
+        alert(
+            "Please enter the reminder, date and time."
         );
 
         return;
-
-      }
-
-
-      appData.reminders.push({
-
-        id:
-          Date.now(),
-
-        title,
-
-        category:
-          category || "Personal",
-
-        due,
-
-        notified:
-          false
-
-      });
-
-
-      saveData();
-
-      renderReminders();
-
-      form.reset();
-
-      requestNotificationPermission();
-
-      showToast(
-        "Reminder saved."
-      );
-
     }
-  );
 
-}
 
+    const reminder = {
 
-function renderReminders() {
+        id: createId(),
 
-  const container =
-    document.getElementById(
-      "remindersList"
-    );
+        text,
 
+        date,
 
-  if (!container) return;
+        time,
 
+        category,
 
-  container.innerHTML = "";
+        completed: false,
 
+        notified: false,
 
-  if (
-    appData.reminders.length === 0
-  ) {
+        createdAt: new Date().toISOString()
 
-    container.innerHTML =
-      `<div class="empty-state">
-        No reminders yet.
-      </div>`;
+    };
 
-    return;
 
-  }
-
-
-  const sorted =
-    [...appData.reminders]
-      .sort(
-        (a,b) =>
-          new Date(a.due) -
-          new Date(b.due)
-      );
-
-
-  sorted.forEach(
-    reminder => {
-
-      const item =
-        document.createElement(
-          "div"
-        );
-
-
-      item.className =
-        "reminder-item";
-
-
-      item.innerHTML = `
-
-        <div class="reminder-content">
-
-          <h4>
-            ${escapeHTML(
-              reminder.title
-            )}
-          </h4>
-
-          <span class="category-tag">
-            ${escapeHTML(
-              reminder.category
-            )}
-          </span>
-
-          <p>
-            ${formatDateTime(
-              reminder.due
-            )}
-          </p>
-
-        </div>
-
-
-        <div class="item-actions">
-
-          <button
-            class="edit-btn"
-            data-id="${reminder.id}"
-          >
-            Edit
-          </button>
-
-          <button
-            class="delete-btn"
-            data-id="${reminder.id}"
-          >
-            Delete
-          </button>
-
-        </div>
-
-      `;
-
-
-      container.appendChild(
-        item
-      );
-
-    }
-  );
-
-
-  container
-    .querySelectorAll(
-      ".delete-btn"
-    )
-    .forEach(button => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          const id =
-            Number(
-              button.dataset.id
-            );
-
-
-          appData.reminders =
-            appData.reminders.filter(
-              reminder =>
-                reminder.id !== id
-            );
-
-
-          saveData();
-
-          renderReminders();
-
-        }
-      );
-
-    });
-
-
-  container
-    .querySelectorAll(
-      ".edit-btn"
-    )
-    .forEach(button => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          editReminder(
-            Number(
-              button.dataset.id
-            )
-          );
-
-        }
-      );
-
-    });
-
-}
-
-
-function editReminder(id) {
-
-  const reminder =
-    appData.reminders.find(
-      item =>
-        item.id === id
-    );
-
-
-  if (!reminder) return;
-
-
-  const title =
-    prompt(
-      "Reminder",
-      reminder.title
-    );
-
-
-  if (title === null) {
-    return;
-  }
-
-
-  const due =
-    prompt(
-      "Date & Time\nUse format: YYYY-MM-DDTHH:MM",
-      reminder.due
-    );
-
-
-  if (due === null) {
-    return;
-  }
-
-
-  reminder.title =
-    title.trim() ||
-    reminder.title;
-
-
-  reminder.due =
-    due.trim() ||
-    reminder.due;
-
-
-  reminder.notified =
-    false;
-
-
-  saveData();
-
-  renderReminders();
-
-  showToast(
-    "Reminder updated."
-  );
-
-}
-
-
-/* =========================================================
-   REMINDER CHECKER
-   ========================================================= */
-
-function startReminderChecker() {
-
-  checkReminders();
-
-
-  setInterval(
-    checkReminders,
-    15000
-  );
-
-}
-
-
-function checkReminders() {
-
-  const now =
-    Date.now();
-
-
-  let changed =
-    false;
-
-
-  appData.reminders.forEach(
-    reminder => {
-
-      const due =
-        new Date(
-          reminder.due
-        ).getTime();
-
-
-      if (
-        !reminder.notified &&
-        !isNaN(due) &&
-        now >= due
-      ) {
-
-        reminder.notified =
-          true;
-
-
-        changed =
-          true;
-
-
-        triggerCharacterReminder(
-          reminder
-        );
-
-
-        addNotification(
-          `Reminder: ${reminder.title}`
-        );
-
-
-        sendBrowserNotification(
-          appData.profile.characterName ||
-            "Character",
-          reminder.title
-        );
-
-      }
-
-    }
-  );
-
-
-  if (changed) {
+    data.reminders.push(reminder);
 
     saveData();
 
     renderReminders();
 
-    renderNotifications();
+    updateDashboard();
 
-    updateNotificationDot();
 
-  }
+    document.getElementById("reminderText").value = "";
 
+    document.getElementById("reminderDate").value = "";
+
+    document.getElementById("reminderTime").value = "";
+
+
+    /*
+       Asking for notification permission here is intentional.
+       The user has just interacted with the page.
+    */
+
+    if (
+        "Notification" in window &&
+        Notification.permission === "default"
+    ) {
+
+        requestNotificationPermission();
+    }
+}
+
+
+function renderReminders() {
+
+    const container =
+        document.getElementById(
+            "reminderList"
+        );
+
+
+    if (data.reminders.length === 0) {
+
+        container.innerHTML =
+            `<div class="empty-state">
+                No reminders yet.
+             </div>`;
+
+        return;
+    }
+
+
+    const sorted =
+        [...data.reminders].sort(
+            (a, b) =>
+                new Date(
+                    `${a.date}T${a.time}`
+                ) -
+                new Date(
+                    `${b.date}T${b.time}`
+                )
+        );
+
+
+    container.innerHTML =
+        sorted.map(reminder => {
+
+            const due =
+                new Date(
+                    `${reminder.date}T${reminder.time}`
+                );
+
+
+            return `
+                <div class="item ${reminder.completed ? "completed" : ""}">
+
+                    <div class="item-main">
+
+                        <div class="item-title">
+                            ${escapeHTML(reminder.text)}
+                        </div>
+
+                        <div class="item-meta">
+                            ${formatDate(reminder.date)}
+                            ·
+                            ${escapeHTML(reminder.time)}
+                            ·
+                            ${escapeHTML(reminder.category)}
+                            ${reminder.notified ? " · Alerted" : ""}
+                        </div>
+
+                    </div>
+
+                    <div class="item-actions">
+
+                        <button
+                            class="icon-button"
+                            onclick="toggleReminder('${reminder.id}')"
+                            title="Complete"
+                        >
+                            ${reminder.completed ? "↶" : "✓"}
+                        </button>
+
+                        <button
+                            class="icon-button"
+                            onclick="deleteReminder('${reminder.id}')"
+                            title="Delete"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+
+window.toggleReminder = function(id) {
+
+    const reminder =
+        data.reminders.find(
+            item => item.id === id
+        );
+
+    if (!reminder) {
+        return;
+    }
+
+    reminder.completed =
+        !reminder.completed;
+
+    saveData();
+
+    renderReminders();
+
+    updateDashboard();
+};
+
+
+window.deleteReminder = function(id) {
+
+    data.reminders =
+        data.reminders.filter(
+            item => item.id !== id
+        );
+
+    saveData();
+
+    renderReminders();
+
+    updateDashboard();
+};
+
+
+/* =========================================================
+   REMINDER WATCHER
+   ========================================================= */
+
+function startReminderWatcher() {
+
+    checkReminders();
+
+    /*
+       Every 15 seconds.
+       This satisfies the intended LAYRAAZ reminder behaviour.
+    */
+
+    setInterval(
+        checkReminders,
+        15000
+    );
+}
+
+
+function checkReminders() {
+
+    const now =
+        new Date();
+
+
+    let changed = false;
+
+
+    data.reminders.forEach(reminder => {
+
+        if (
+            reminder.completed ||
+            reminder.notified
+        ) {
+            return;
+        }
+
+
+        const due =
+            new Date(
+                `${reminder.date}T${reminder.time}:00`
+            );
+
+
+        if (
+            !Number.isNaN(due.getTime()) &&
+            now >= due
+        ) {
+
+            triggerReminder(reminder);
+
+            reminder.notified = true;
+
+            changed = true;
+        }
+
+    });
+
+
+    if (changed) {
+
+        saveData();
+
+        renderReminders();
+
+        updateDashboard();
+
+    }
+}
+
+
+function triggerReminder(reminder) {
+
+    const message =
+        `${reminder.text}`;
+
+
+    showCharacterReminder(message);
+
+
+    addNotification(
+        `${data.character.name || "Character"} reminder`,
+        message
+    );
+
+
+    sendBrowserNotification(
+        `${data.character.name || "Character"} reminder`,
+        message
+    );
 }
 
 
@@ -1528,1641 +1037,63 @@ function checkReminders() {
    CHARACTER REMINDER
    ========================================================= */
 
-function triggerCharacterReminder(
-  reminder
-) {
+function showCharacterReminder(message) {
 
-  const container =
-    document.getElementById(
-      "characterReminder"
-    );
-
-
-  if (!container) return;
-
-
-  const image =
-    document.getElementById(
-      "reminderCharacterImage"
-    );
-
-
-  const placeholder =
-    document.getElementById(
-      "reminderCharacterPlaceholder"
-    );
-
-
-  const name =
-    document.getElementById(
-      "characterReminderName"
-    );
-
-
-  const title =
-    document.getElementById(
-      "characterReminderTitle"
-    );
-
-
-  const message =
-    document.getElementById(
-      "characterMessage"
-    );
-
-
-  if (name) {
-
-    name.textContent =
-      appData.profile.characterName ||
-      "Character";
-
-  }
-
-
-  if (title) {
-
-    title.textContent =
-      reminder.title;
-
-  }
-
-
-  if (message) {
-
-    message.textContent =
-      characterMessage(
-        reminder
-      );
-
-  }
-
-
-  if (
-    appData.profile.characterImage
-  ) {
-
-    image.src =
-      appData.profile.characterImage;
-
-    image.classList.remove(
-      "hidden"
-    );
-
-
-    if (placeholder) {
-
-      placeholder.classList.add(
-        "hidden"
-      );
-
-    }
-
-  }
-
-
-  container.classList.remove(
-    "hidden"
-  );
-
-
-  const movements = [
-
-    "character-float",
-
-    "character-shake",
-
-    "character-bounce"
-
-  ];
-
-
-  if (image) {
-
-    image.classList.remove(
-      ...movements
-    );
-
-
-    const movement =
-      movements[
-        Math.floor(
-          Math.random() *
-          movements.length
-        )
-      ];
-
-
-    void image.offsetWidth;
-
-
-    image.classList.add(
-      movement
-    );
-
-  }
-
-
-  clearTimeout(
-    window.characterReminderTimer
-  );
-
-
-  window.characterReminderTimer =
-    setTimeout(
-      () => {
-
-        container.classList.add(
-          "hidden"
-        );
-
-      },
-      12000
-    );
-
-}
-
-
-function characterMessage(
-  reminder
-) {
-
-  const personality =
-    (
-      appData.profile.characterPersonality ||
-      ""
-    ).toLowerCase();
-
-
-  if (
-    personality.includes(
-      "firm"
-    ) ||
-    personality.includes(
-      "strict"
-    )
-  ) {
-
-    return `Your reminder is due. Handle it now: "${reminder.title}".`;
-
-  }
-
-
-  if (
-    personality.includes(
-      "caring"
-    ) ||
-    personality.includes(
-      "gentle"
-    )
-  ) {
-
-    return `Your reminder is due. Take care of this now: "${reminder.title}".`;
-
-  }
-
-
-  return `It is time for "${reminder.title}".`;
-
-}
-
-
-/* =========================================================
-   CHARACTER SETTINGS
-   ========================================================= */
-
-function setupCharacter() {
-
-  const save =
-    document.getElementById(
-      "saveCharacterSettings"
-    );
-
-
-  const test =
-    document.getElementById(
-      "testCharacter"
-    );
-
-
-  const close =
-    document.getElementById(
-      "closeCharacterReminder"
-    );
-
-
-  const input =
-    document.getElementById(
-      "characterImageInput"
-    );
-
-
-  if (save) {
-
-    save.addEventListener(
-      "click",
-      saveCharacter
-    );
-
-  }
-
-
-  if (test) {
-
-    test.addEventListener(
-      "click",
-      () => {
-
-        const fakeReminder = {
-
-          title:
-            "This is your Character test.",
-
-          category:
-            "Personal",
-
-          due:
-            new Date().toISOString(),
-
-          notified:
-            true
-
-        };
-
-
-        triggerCharacterReminder(
-          fakeReminder
-        );
-
-      }
-    );
-
-  }
-
-
-  if (close) {
-
-    close.addEventListener(
-      "click",
-      () => {
-
-        document
-          .getElementById(
+    const popup =
+        document.getElementById(
             "characterReminder"
-          )
-          .classList.add(
-            "hidden"
-          );
+        );
 
-      }
+
+    document.getElementById(
+        "bubbleCharacterName"
+    ).textContent =
+        data.character.name ||
+        "Character";
+
+
+    document.getElementById(
+        "bubbleMessage"
+    ).textContent =
+        message;
+
+
+    updateReminderCharacterImage();
+
+
+    popup.classList.remove("show");
+
+
+    /*
+       Force reflow so animation can restart every time.
+    */
+
+    void popup.offsetWidth;
+
+
+    popup.classList.add("show");
+
+
+    clearTimeout(
+        window.characterPopupTimer
     );
 
-  }
 
-
-  if (input) {
-
-    input.addEventListener(
-      "change",
-      handleCharacterImage
-    );
-
-  }
-
+    window.characterPopupTimer =
+        setTimeout(
+            hideCharacterReminder,
+            12000
+        );
 }
 
 
-function loadCharacterSettings() {
-
-  setValue(
-    "characterName",
-    appData.profile.characterName
-  );
-
-
-  setValue(
-    "characterPersonality",
-    appData.profile.characterPersonality
-  );
-
-}
-
-
-function saveCharacter() {
-
-  appData.profile.characterName =
-    getValue(
-      "characterName"
-    ) ||
-    "Character";
-
-
-  appData.profile.characterPersonality =
-    getValue(
-      "characterPersonality"
-    ) ||
-    "Calm, intelligent, firm, caring";
-
-
-  saveData();
-
-  renderCharacter();
-
-  showToast(
-    "Character settings saved."
-  );
-
-}
-
-
-function renderCharacter() {
-
-  loadCharacterSettings();
-
-
-  const name =
-    appData.profile.characterName ||
-    "Character";
-
-
-  setText(
-    "characterPreviewName",
-    name
-  );
-
-
-  const image =
-    document.getElementById(
-      "characterPreviewImage"
-    );
-
-
-  const placeholder =
-    document.getElementById(
-      "characterPlaceholder"
-    );
-
-
-  if (
-    appData.profile.characterImage
-  ) {
-
-    image.src =
-      appData.profile.characterImage;
-
-    image.classList.remove(
-      "hidden"
-    );
-
-
-    placeholder.classList.add(
-      "hidden"
-    );
-
-  }
-
-  else {
-
-    image.classList.add(
-      "hidden"
-    );
-
-
-    placeholder.classList.remove(
-      "hidden"
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   CHARACTER IMAGE
-   ========================================================= */
-
-function handleCharacterImage(
-  event
-) {
-
-  const file =
-    event.target.files?.[0];
-
-
-  if (!file) return;
-
-
-  if (
-    !file.type.startsWith(
-      "image/"
-    )
-  ) {
-
-    showToast(
-      "Please choose an image."
-    );
-
-    return;
-
-  }
-
-
-  const reader =
-    new FileReader();
-
-
-  reader.onload =
-    event => {
-
-      appData.profile.characterImage =
-        event.target.result;
-
-
-      const saved =
-        saveData();
-
-
-      if (saved) {
-
-        renderCharacter();
-
-        showToast(
-          "Character picture saved."
-        );
-
-      }
-
-    };
-
-
-  reader.readAsDataURL(file);
-
-}
-
-
-/* =========================================================
-   TODO LIST
-   ========================================================= */
-
-function setupTodos() {
-
-  const form =
-    document.getElementById(
-      "todoForm"
-    );
-
-
-  if (!form) return;
-
-
-  form.addEventListener(
-    "submit",
-    event => {
-
-      event.preventDefault();
-
-
-      const title =
-        getValue(
-          "todoTitle"
-        );
-
-
-      const category =
-        getValue(
-          "todoCategory"
-        );
-
-
-      if (!title) {
-
-        showToast(
-          "Enter a task first."
-        );
-
-        return;
-
-      }
-
-
-      appData.todos.push({
-
-        id:
-          Date.now(),
-
-        title,
-
-        category:
-          category || "Personal",
-
-        completed:
-          false
-
-      });
-
-
-      saveData();
-
-      renderTodos();
-
-      form.reset();
-
-      showToast(
-        "Task saved."
-      );
-
-    }
-  );
-
-}
-
-
-function renderTodos() {
-
-  const container =
-    document.getElementById(
-      "todoList"
-    );
-
-
-  if (!container) return;
-
-
-  container.innerHTML = "";
-
-
-  if (
-    appData.todos.length === 0
-  ) {
-
-    container.innerHTML =
-      `<div class="empty-state">
-        No tasks yet.
-      </div>`;
-
-    return;
-
-  }
-
-
-  appData.todos.forEach(
-    todo => {
-
-      const item =
-        document.createElement(
-          "div"
-        );
-
-
-      item.className =
-        "todo-item" +
-        (
-          todo.completed
-            ? " completed"
-            : ""
-        );
-
-
-      item.innerHTML = `
-
-        <label class="todo-check">
-
-          <input
-            type="checkbox"
-            data-id="${todo.id}"
-            ${todo.completed ? "checked" : ""}
-          >
-
-          <span class="custom-checkbox"></span>
-
-        </label>
-
-
-        <div class="todo-content">
-
-          <span class="todo-title">
-            ${escapeHTML(todo.title)}
-          </span>
-
-          <span class="category-tag">
-            ${escapeHTML(todo.category)}
-          </span>
-
-        </div>
-
-
-        <button
-          class="delete-btn"
-          data-id="${todo.id}"
-        >
-          Delete
-        </button>
-
-      `;
-
-
-      container.appendChild(
-        item
-      );
-
-    }
-  );
-
-
-  container
-    .querySelectorAll(
-      'input[type="checkbox"]'
-    )
-    .forEach(input => {
-
-      input.addEventListener(
-        "change",
-        () => {
-
-          const todo =
-            appData.todos.find(
-              item =>
-                item.id ===
-                Number(
-                  input.dataset.id
-                )
-            );
-
-
-          if (!todo) return;
-
-
-          todo.completed =
-            input.checked;
-
-
-          saveData();
-
-          renderTodos();
-
-        }
-      );
-
-    });
-
-
-  container
-    .querySelectorAll(
-      ".delete-btn"
-    )
-    .forEach(button => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          appData.todos =
-            appData.todos.filter(
-              item =>
-                item.id !==
-                Number(
-                  button.dataset.id
-                )
-            );
-
-
-          saveData();
-
-          renderTodos();
-
-        }
-      );
-
-    });
-
-}
-
-
-/* =========================================================
-   GOALS
-   ========================================================= */
-
-function setupGoals() {
-
-  const form =
-    document.getElementById(
-      "goalForm"
-    );
-
-
-  if (!form) return;
-
-
-  form.addEventListener(
-    "submit",
-    event => {
-
-      event.preventDefault();
-
-
-      const title =
-        getValue(
-          "goalTitle"
-        );
-
-
-      const category =
-        getValue(
-          "goalCategory"
-        );
-
-
-      if (!title) {
-
-        showToast(
-          "Enter a goal first."
-        );
-
-        return;
-
-      }
-
-
-      appData.goals.push({
-
-        id:
-          Date.now(),
-
-        title,
-
-        category:
-          category || "Personal",
-
-        progress:
-          0,
-
-        created:
-          new Date().toISOString()
-
-      });
-
-
-      saveData();
-
-      renderGoals();
-
-      form.reset();
-
-      showToast(
-        "Goal saved."
-      );
-
-    }
-  );
-
-}
-
-
-function renderGoals() {
-
-  const container =
-    document.getElementById(
-      "goalsList"
-    );
-
-
-  if (!container) return;
-
-
-  container.innerHTML = "";
-
-
-  if (
-    appData.goals.length === 0
-  ) {
-
-    container.innerHTML =
-      `<div class="empty-state">
-        No goals yet.
-      </div>`;
-
-    return;
-
-  }
-
-
-  appData.goals.forEach(
-    goal => {
-
-      const item =
-        document.createElement(
-          "div"
-        );
-
-
-      item.className =
-        "goal-item";
-
-
-      item.innerHTML = `
-
-        <div class="goal-header">
-
-          <div>
-
-            <h4>
-              ${escapeHTML(
-                goal.title
-              )}
-            </h4>
-
-            <span class="category-tag">
-              ${escapeHTML(
-                goal.category
-              )}
-            </span>
-
-          </div>
-
-          <strong>
-            ${goal.progress}%
-          </strong>
-
-        </div>
-
-
-        <div class="goal-progress">
-
-          <div
-            class="goal-progress-bar"
-            style="
-              width:${goal.progress}%;
-            "
-          ></div>
-
-        </div>
-
-
-        <div class="goal-controls">
-
-          <input
-            type="range"
-            min="0"
-            max="100"
-            value="${goal.progress}"
-            data-id="${goal.id}"
-          >
-
-
-          <button
-            class="delete-btn"
-            data-id="${goal.id}"
-          >
-            Delete
-          </button>
-
-        </div>
-
-      `;
-
-
-      container.appendChild(
-        item
-      );
-
-    }
-  );
-
-
-  container
-    .querySelectorAll(
-      'input[type="range"]'
-    )
-    .forEach(range => {
-
-      range.addEventListener(
-        "input",
-        () => {
-
-          const goal =
-            appData.goals.find(
-              item =>
-                item.id ===
-                Number(
-                  range.dataset.id
-                )
-            );
-
-
-          if (!goal) return;
-
-
-          goal.progress =
-            Number(
-              range.value
-            );
-
-
-          saveData();
-
-          renderGoals();
-
-        }
-      );
-
-    });
-
-
-  container
-    .querySelectorAll(
-      ".delete-btn"
-    )
-    .forEach(button => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          appData.goals =
-            appData.goals.filter(
-              goal =>
-                goal.id !==
-                Number(
-                  button.dataset.id
-                )
-            );
-
-
-          saveData();
-
-          renderGoals();
-
-        }
-      );
-
-    });
-
-}
-
-
-/* =========================================================
-   NOTES
-   ========================================================= */
-
-function setupNotes() {
-
-  const form =
-    document.getElementById(
-      "noteForm"
-    );
-
-
-  if (!form) return;
-
-
-  form.addEventListener(
-    "submit",
-    event => {
-
-      event.preventDefault();
-
-
-      const title =
-        getValue(
-          "noteTitle"
-        );
-
-
-      const content =
-        getValue(
-          "noteContent"
-        );
-
-
-      if (!title && !content) {
-
-        showToast(
-          "Write something first."
-        );
-
-        return;
-
-      }
-
-
-      appData.notes.unshift({
-
-        id:
-          Date.now(),
-
-        title:
-          title ||
-          "Untitled Note",
-
-        content,
-
-        date:
-          new Date().toISOString()
-
-      });
-
-
-      saveData();
-
-      renderNotes();
-
-      form.reset();
-
-      showToast(
-        "Note saved."
-      );
-
-    }
-  );
-
-}
-
-
-function renderNotes() {
-
-  const container =
-    document.getElementById(
-      "notesList"
-    );
-
-
-  if (!container) return;
-
-
-  container.innerHTML = "";
-
-
-  if (
-    appData.notes.length === 0
-  ) {
-
-    container.innerHTML =
-      `<div class="empty-state">
-        No notes yet.
-      </div>`;
-
-    return;
-
-  }
-
-
-  appData.notes.forEach(
-    note => {
-
-      const item =
-        document.createElement(
-          "article"
-        );
-
-
-      item.className =
-        "note-item";
-
-
-      item.innerHTML = `
-
-        <div class="note-header">
-
-          <div>
-
-            <h4>
-              ${escapeHTML(
-                note.title
-              )}
-            </h4>
-
-            <small>
-              ${formatDateTime(
-                note.date
-              )}
-            </small>
-
-          </div>
-
-
-          <button
-            class="delete-btn"
-            data-id="${note.id}"
-          >
-            Delete
-          </button>
-
-        </div>
-
-
-        <p>
-          ${escapeHTML(
-            note.content
-          )}
-        </p>
-
-      `;
-
-
-      container.appendChild(
-        item
-      );
-
-    }
-  );
-
-
-  container
-    .querySelectorAll(
-      ".delete-btn"
-    )
-    .forEach(button => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          appData.notes =
-            appData.notes.filter(
-              note =>
-                note.id !==
-                Number(
-                  button.dataset.id
-                )
-            );
-
-
-          saveData();
-
-          renderNotes();
-
-        }
-      );
-
-    });
-
-}
-
-
-/* =========================================================
-   SEARCH
-   ========================================================= */
-
-function setupSearch() {
-
-  const button =
-    document.getElementById(
-      "searchButton"
-    );
-
-
-  const box =
-    document.getElementById(
-      "searchBox"
-    );
-
-
-  const input =
-    document.getElementById(
-      "globalSearch"
-    );
-
-
-  if (!button || !box || !input) {
-    return;
-  }
-
-
-  button.addEventListener(
-    "click",
-    event => {
-
-      event.stopPropagation();
-
-      box.classList.toggle(
-        "hidden"
-      );
-
-
-      if (
-        !box.classList.contains(
-          "hidden"
+function hideCharacterReminder() {
+
+    document
+        .getElementById(
+            "characterReminder"
         )
-      ) {
-
-        input.focus();
-
-      }
-
-    }
-  );
-
-
-  input.addEventListener(
-    "input",
-    () => {
-
-      performSearch(
-        input.value
-      );
-
-    }
-  );
-
-
-  document.addEventListener(
-    "click",
-    event => {
-
-      if (
-        !box.contains(event.target) &&
-        !button.contains(event.target)
-      ) {
-
-        box.classList.add(
-          "hidden"
-        );
-
-      }
-
-    }
-  );
-
-}
-
-
-function performSearch(
-  query
-) {
-
-  const container =
-    document.getElementById(
-      "searchResults"
-    );
-
-
-  if (!container) return;
-
-
-  const q =
-    query.trim().toLowerCase();
-
-
-  if (!q) {
-
-    container.innerHTML = "";
-
-    return;
-
-  }
-
-
-  const reminders =
-    appData.reminders.filter(
-      item =>
-        searchable(
-          item.title,
-          item.category
-        ).includes(q)
-    );
-
-
-  const todos =
-    appData.todos.filter(
-      item =>
-        searchable(
-          item.title,
-          item.category
-        ).includes(q)
-    );
-
-
-  const goals =
-    appData.goals.filter(
-      item =>
-        searchable(
-          item.title,
-          item.category
-        ).includes(q)
-    );
-
-
-  const notes =
-    appData.notes.filter(
-      item =>
-        searchable(
-          item.title,
-          item.content
-        ).includes(q)
-    );
-
-
-  let html = "";
-
-
-  if (reminders.length) {
-
-    html +=
-      searchGroup(
-        "Reminders",
-        reminders.map(
-          item =>
-            `<strong>${escapeHTML(item.title)}</strong>
-             <small>${formatDateTime(item.due)}</small>`
-        )
-      );
-
-  }
-
-
-  if (todos.length) {
-
-    html +=
-      searchGroup(
-        "To-Do",
-        todos.map(
-          item =>
-            `<strong>${escapeHTML(item.title)}</strong>
-             <small>${escapeHTML(item.category)}</small>`
-        )
-      );
-
-  }
-
-
-  if (goals.length) {
-
-    html +=
-      searchGroup(
-        "Goals",
-        goals.map(
-          item =>
-            `<strong>${escapeHTML(item.title)}</strong>
-             <small>${item.progress}% complete</small>`
-        )
-      );
-
-  }
-
-
-  if (notes.length) {
-
-    html +=
-      searchGroup(
-        "Notes",
-        notes.map(
-          item =>
-            `<strong>${escapeHTML(item.title)}</strong>
-             <small>${escapeHTML(item.content)}</small>`
-        )
-      );
-
-  }
-
-
-  if (!html) {
-
-    html =
-      `<div class="empty-state">
-        Nothing found.
-      </div>`;
-
-  }
-
-
-  container.innerHTML =
-    html;
-
-}
-
-
-function searchGroup(
-  title,
-  results
-) {
-
-  return `
-
-    <div class="search-group">
-
-      <h4>
-        ${title}
-      </h4>
-
-      ${results
-        .map(
-          result =>
-            `<div class="search-result">
-              ${result}
-            </div>`
-        )
-        .join("")
-      }
-
-    </div>
-
-  `;
-
-}
-
-
-/* =========================================================
-   NOTIFICATIONS
-   ========================================================= */
-
-function setupNotifications() {
-
-  const button =
-    document.getElementById(
-      "notificationButton"
-    );
-
-
-  if (button) {
-
-    button.addEventListener(
-      "click",
-      () => {
-
-        openSection(
-          "notifications"
-        );
-
-        updateNotificationDot();
-
-      }
-    );
-
-  }
-
-
-  const enable =
-    document.getElementById(
-      "enableNotifications"
-    );
-
-
-  if (enable) {
-
-    enable.addEventListener(
-      "click",
-      requestNotificationPermission
-    );
-
-  }
-
-
-  const clear =
-    document.getElementById(
-      "clearNotifications"
-    );
-
-
-  if (clear) {
-
-    clear.addEventListener(
-      "click",
-      () => {
-
-        appData.notifications =
-          [];
-
-        saveData();
-
-        renderNotifications();
-
-        updateNotificationDot();
-
-        showToast(
-          "Notifications cleared."
-        );
-
-      }
-    );
-
-  }
-
-}
-
-
-function addNotification(
-  message
-) {
-
-  appData.notifications.unshift({
-
-    id:
-      Date.now(),
-
-    message,
-
-    date:
-      new Date().toISOString()
-
-  });
-
-
-  appData.notifications =
-    appData.notifications.slice(
-      0,
-      100
-    );
-
-}
-
-
-function renderNotifications() {
-
-  const container =
-    document.getElementById(
-      "notificationsList"
-    );
-
-
-  if (!container) return;
-
-
-  container.innerHTML = "";
-
-
-  if (
-    appData.notifications.length === 0
-  ) {
-
-    container.innerHTML =
-      `<div class="empty-state">
-        No notifications yet.
-      </div>`;
-
-    return;
-
-  }
-
-
-  appData.notifications.forEach(
-    notification => {
-
-      const item =
-        document.createElement(
-          "div"
-        );
-
-
-      item.className =
-        "notification-item";
-
-
-      item.innerHTML = `
-
-        <strong>
-          ${escapeHTML(
-            notification.message
-          )}
-        </strong>
-
-        <small>
-          ${formatDateTime(
-            notification.date
-          )}
-        </small>
-
-      `;
-
-
-      container.appendChild(
-        item
-      );
-
-    }
-  );
-
-}
-
-
-function updateNotificationDot() {
-
-  const dot =
-    document.getElementById(
-      "notificationDot"
-    );
-
-
-  if (!dot) return;
-
-
-  if (
-    appData.notifications.length
-  ) {
-
-    dot.classList.remove(
-      "hidden"
-    );
-
-  }
-
-  else {
-
-    dot.classList.add(
-      "hidden"
-    );
-
-  }
-
+        .classList.remove("show");
 }
 
 
@@ -3170,88 +1101,1026 @@ function updateNotificationDot() {
    BROWSER NOTIFICATIONS
    ========================================================= */
 
-function requestNotificationPermission() {
+async function requestNotificationPermission() {
 
-  if (
-    !("Notification" in window)
-  ) {
+    if (!("Notification" in window)) {
 
-    showToast(
-      "This browser does not support notifications."
-    );
-
-    return;
-
-  }
-
-
-  Notification.requestPermission()
-    .then(permission => {
-
-      if (
-        permission ===
-        "granted"
-      ) {
-
-        showToast(
-          "Browser notifications enabled."
+        alert(
+            "This browser does not support browser notifications."
         );
 
-      }
+        return;
+    }
 
-      else {
 
-        showToast(
-          "Notification permission was not granted."
+    try {
+
+        const permission =
+            await Notification.requestPermission();
+
+
+        updateNotificationPermissionText();
+
+
+        if (permission === "granted") {
+
+            addNotification(
+                "Notifications enabled",
+                "Browser notifications are now enabled for LAYRAAZ."
+            );
+
+            sendBrowserNotification(
+                "LAYRAAZ",
+                "Browser notifications are now enabled."
+            );
+
+        } else if (permission === "denied") {
+
+            alert(
+                "Browser notifications were blocked. You can enable them from your browser's site permissions."
+            );
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Notification permission error:",
+            error
         );
-
-      }
-
-    });
-
+    }
 }
 
 
-function sendBrowserNotification(
-  title,
-  message
-) {
+function sendBrowserNotification(title, message) {
 
-  if (
-    !("Notification" in window)
-  ) {
-    return;
-  }
+    if (
+        "Notification" in window &&
+        Notification.permission === "granted"
+    ) {
+
+        try {
+
+            new Notification(
+                title,
+                {
+                    body: message,
+                    icon: data.character.picture || undefined
+                }
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Browser notification failed:",
+                error
+            );
+        }
+    }
+}
 
 
-  if (
-    Notification.permission !==
-    "granted"
-  ) {
-    return;
-  }
+function updateNotificationPermissionText() {
+
+    const elements = [
+        document.getElementById(
+            "notificationPermissionStatus"
+        ),
+        document.getElementById(
+            "notificationPageStatus"
+        )
+    ];
 
 
-  try {
+    let text;
 
-    new Notification(
-      title,
-      {
-        body: message
-      }
+
+    if (!("Notification" in window)) {
+
+        text =
+            "Browser notifications are not supported by this browser.";
+
+    } else if (
+        Notification.permission === "granted"
+    ) {
+
+        text =
+            "Browser notifications are enabled ✓";
+
+    } else if (
+        Notification.permission === "denied"
+    ) {
+
+        text =
+            "Browser notifications are blocked. Change the browser's site permission to enable them.";
+
+    } else {
+
+        text =
+            "Browser notification permission has not been granted yet.";
+    }
+
+
+    elements.forEach(element => {
+
+        if (element) {
+            element.textContent = text;
+        }
+
+    });
+}
+
+
+/* =========================================================
+   TODO
+   ========================================================= */
+
+function initialiseTodos() {
+
+    document
+        .getElementById("saveTodo")
+        .addEventListener(
+            "click",
+            addTodo
+        );
+}
+
+
+function addTodo() {
+
+    const text =
+        document
+            .getElementById("todoText")
+            .value
+            .trim();
+
+    const category =
+        document
+            .getElementById("todoCategory")
+            .value;
+
+
+    if (!text) {
+
+        alert("Please enter a task.");
+
+        return;
+    }
+
+
+    data.todos.push({
+
+        id: createId(),
+
+        text,
+
+        category,
+
+        completed: false,
+
+        createdAt: new Date().toISOString()
+
+    });
+
+
+    saveData();
+
+    renderTodos();
+
+    updateDashboard();
+
+
+    document.getElementById("todoText").value = "";
+}
+
+
+function renderTodos(filterCategory = null) {
+
+    const container =
+        document.getElementById("todoList");
+
+
+    let list =
+        [...data.todos];
+
+
+    if (filterCategory) {
+
+        list =
+            list.filter(
+                item =>
+                    item.category === filterCategory
+            );
+    }
+
+
+    if (list.length === 0) {
+
+        container.innerHTML =
+            `<div class="empty-state">
+                No tasks found.
+             </div>`;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        list.map(todo => {
+
+            return `
+                <div class="item ${todo.completed ? "completed" : ""}">
+
+                    <input
+                        class="item-checkbox"
+                        type="checkbox"
+                        ${todo.completed ? "checked" : ""}
+                        onchange="toggleTodo('${todo.id}')"
+                    >
+
+                    <div class="item-main">
+
+                        <div class="item-title">
+                            ${escapeHTML(todo.text)}
+                        </div>
+
+                        <div class="item-meta">
+                            ${escapeHTML(todo.category)}
+                        </div>
+
+                    </div>
+
+                    <div class="item-actions">
+
+                        <button
+                            class="icon-button"
+                            onclick="deleteTodo('${todo.id}')"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+
+window.toggleTodo = function(id) {
+
+    const todo =
+        data.todos.find(
+            item => item.id === id
+        );
+
+    if (!todo) {
+        return;
+    }
+
+    todo.completed =
+        !todo.completed;
+
+    saveData();
+
+    renderTodos();
+
+    updateDashboard();
+};
+
+
+window.deleteTodo = function(id) {
+
+    data.todos =
+        data.todos.filter(
+            item => item.id !== id
+        );
+
+    saveData();
+
+    renderTodos();
+
+    updateDashboard();
+};
+
+
+/* =========================================================
+   GOALS
+   ========================================================= */
+
+function initialiseGoals() {
+
+    document
+        .getElementById("saveGoal")
+        .addEventListener(
+            "click",
+            addGoal
+        );
+}
+
+
+function addGoal() {
+
+    const text =
+        document
+            .getElementById("goalText")
+            .value
+            .trim();
+
+    const category =
+        document
+            .getElementById("goalCategory")
+            .value;
+
+
+    if (!text) {
+
+        alert("Please enter a goal.");
+
+        return;
+    }
+
+
+    data.goals.push({
+
+        id: createId(),
+
+        text,
+
+        category,
+
+        createdAt: new Date().toISOString()
+
+    });
+
+
+    saveData();
+
+    renderGoals();
+
+    updateDashboard();
+
+
+    document.getElementById("goalText").value = "";
+}
+
+
+function renderGoals(filterCategory = null) {
+
+    const container =
+        document.getElementById("goalList");
+
+
+    let list =
+        [...data.goals];
+
+
+    if (filterCategory) {
+
+        list =
+            list.filter(
+                item =>
+                    item.category === filterCategory
+            );
+    }
+
+
+    if (list.length === 0) {
+
+        container.innerHTML =
+            `<div class="empty-state">
+                No goals found.
+             </div>`;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        list.map(goal => {
+
+            return `
+                <div class="item">
+
+                    <div class="item-main">
+
+                        <div class="item-title">
+                            ${escapeHTML(goal.text)}
+                        </div>
+
+                        <div class="item-meta">
+                            ${escapeHTML(goal.category)}
+                            ·
+                            Created ${formatDateTime(goal.createdAt)}
+                        </div>
+
+                    </div>
+
+                    <div class="item-actions">
+
+                        <button
+                            class="icon-button"
+                            onclick="deleteGoal('${goal.id}')"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+
+window.deleteGoal = function(id) {
+
+    data.goals =
+        data.goals.filter(
+            item => item.id !== id
+        );
+
+    saveData();
+
+    renderGoals();
+
+    updateDashboard();
+};
+
+
+/* =========================================================
+   NOTES
+   ========================================================= */
+
+function initialiseNotes() {
+
+    document
+        .getElementById("saveNote")
+        .addEventListener(
+            "click",
+            addNote
+        );
+}
+
+
+function addNote() {
+
+    const title =
+        document
+            .getElementById("noteTitle")
+            .value
+            .trim();
+
+    const content =
+        document
+            .getElementById("noteContent")
+            .value
+            .trim();
+
+
+    if (!title && !content) {
+
+        alert("Please enter something in the note.");
+
+        return;
+    }
+
+
+    data.notes.unshift({
+
+        id: createId(),
+
+        title:
+            title || "Untitled Note",
+
+        content,
+
+        createdAt:
+            new Date().toISOString()
+
+    });
+
+
+    saveData();
+
+    renderNotes();
+
+    updateDashboard();
+
+
+    document.getElementById("noteTitle").value = "";
+
+    document.getElementById("noteContent").value = "";
+}
+
+
+function renderNotes() {
+
+    const container =
+        document.getElementById("noteList");
+
+
+    if (data.notes.length === 0) {
+
+        container.innerHTML =
+            `<div class="empty-state">
+                No notes yet.
+             </div>`;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        data.notes.map(note => {
+
+            return `
+                <div class="item">
+
+                    <div class="item-main">
+
+                        <div class="item-title">
+                            ${escapeHTML(note.title)}
+                        </div>
+
+                        <div class="item-meta">
+                            ${formatDateTime(note.createdAt)}
+                        </div>
+
+                        <p style="margin:10px 0 0; color:var(--font-muted); line-height:1.5;">
+                            ${escapeHTML(note.content)}
+                        </p>
+
+                    </div>
+
+                    <div class="item-actions">
+
+                        <button
+                            class="icon-button"
+                            onclick="deleteNote('${note.id}')"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+
+window.deleteNote = function(id) {
+
+    data.notes =
+        data.notes.filter(
+            item => item.id !== id
+        );
+
+    saveData();
+
+    renderNotes();
+
+    updateDashboard();
+};
+
+
+/* =========================================================
+   NOTIFICATIONS
+   ========================================================= */
+
+function initialiseNotifications() {
+
+    document
+        .getElementById("notificationButton")
+        .addEventListener(
+            "click",
+            () => openSection("notifications")
+        );
+
+
+    document
+        .getElementById("pageEnableNotifications")
+        .addEventListener(
+            "click",
+            requestNotificationPermission
+        );
+}
+
+
+function addNotification(title, message) {
+
+    data.notifications.unshift({
+
+        id: createId(),
+
+        title,
+
+        message,
+
+        createdAt:
+            new Date().toISOString(),
+
+        read: false
+
+    });
+
+
+    /*
+       Keep the notification list from becoming enormous.
+    */
+
+    if (data.notifications.length > 100) {
+
+        data.notifications =
+            data.notifications.slice(0, 100);
+    }
+
+
+    saveData();
+
+    renderNotifications();
+
+    updateNotificationIndicators();
+}
+
+
+function renderNotifications() {
+
+    const container =
+        document.getElementById(
+            "notificationList"
+        );
+
+
+    if (data.notifications.length === 0) {
+
+        container.innerHTML =
+            `<div class="empty-state">
+                No notifications yet.
+             </div>`;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        data.notifications.map(notification => {
+
+            return `
+                <div class="item ${notification.read ? "completed" : ""}">
+
+                    <div class="item-main">
+
+                        <div class="item-title">
+                            ${escapeHTML(notification.title)}
+                        </div>
+
+                        <div class="item-meta">
+                            ${formatDateTime(notification.createdAt)}
+                        </div>
+
+                        <p style="margin:8px 0 0; color:var(--font-muted);">
+                            ${escapeHTML(notification.message)}
+                        </p>
+
+                    </div>
+
+                    <div class="item-actions">
+
+                        <button
+                            class="icon-button"
+                            onclick="readNotification('${notification.id}')"
+                        >
+                            ✓
+                        </button>
+
+                        <button
+                            class="icon-button"
+                            onclick="deleteNotification('${notification.id}')"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+
+window.readNotification = function(id) {
+
+    const notification =
+        data.notifications.find(
+            item => item.id === id
+        );
+
+    if (!notification) {
+        return;
+    }
+
+    notification.read = true;
+
+    saveData();
+
+    renderNotifications();
+
+    updateNotificationIndicators();
+};
+
+
+window.deleteNotification = function(id) {
+
+    data.notifications =
+        data.notifications.filter(
+            item => item.id !== id
+        );
+
+    saveData();
+
+    renderNotifications();
+
+    updateNotificationIndicators();
+};
+
+
+function updateNotificationIndicators() {
+
+    const unread =
+        data.notifications.filter(
+            item => !item.read
+        ).length;
+
+
+    const count =
+        document.getElementById(
+            "notificationCount"
+        );
+
+    const dot =
+        document.getElementById(
+            "topNotificationDot"
+        );
+
+
+    count.textContent =
+        unread;
+
+
+    count.classList.toggle(
+        "show",
+        unread > 0
     );
 
-  }
 
-  catch (error) {
+    dot.classList.toggle(
+        "show",
+        unread > 0
+    );
+}
 
-    console.error(
-      "Notification error:",
-      error
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+function initialiseSearch() {
+
+    const button =
+        document.getElementById(
+            "searchButton"
+        );
+
+    const panel =
+        document.getElementById(
+            "searchPanel"
+        );
+
+    const input =
+        document.getElementById(
+            "globalSearch"
+        );
+
+    const close =
+        document.getElementById(
+            "closeSearch"
+        );
+
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            panel.classList.toggle(
+                "open"
+            );
+
+            if (panel.classList.contains("open")) {
+
+                setTimeout(
+                    () => input.focus(),
+                    50
+                );
+            }
+
+        }
     );
 
-  }
 
+    close.addEventListener(
+        "click",
+        () => {
+
+            panel.classList.remove(
+                "open"
+            );
+
+        }
+    );
+
+
+    input.addEventListener(
+        "input",
+        performSearch
+    );
+}
+
+
+function performSearch() {
+
+    const query =
+        document
+            .getElementById("globalSearch")
+            .value
+            .trim()
+            .toLowerCase();
+
+
+    const container =
+        document.getElementById(
+            "searchResults"
+        );
+
+
+    if (!query) {
+
+        container.innerHTML = "";
+
+        return;
+    }
+
+
+    const results = [];
+
+
+    data.reminders.forEach(item => {
+
+        if (
+            item.text.toLowerCase().includes(query)
+        ) {
+
+            results.push({
+                type: "Reminder",
+                title: item.text,
+                meta: `${formatDate(item.date)} · ${item.time}`
+            });
+        }
+    });
+
+
+    data.todos.forEach(item => {
+
+        if (
+            item.text.toLowerCase().includes(query)
+        ) {
+
+            results.push({
+                type: "Task",
+                title: item.text,
+                meta: item.category
+            });
+        }
+    });
+
+
+    data.goals.forEach(item => {
+
+        if (
+            item.text.toLowerCase().includes(query)
+        ) {
+
+            results.push({
+                type: "Goal",
+                title: item.text,
+                meta: item.category
+            });
+        }
+    });
+
+
+    data.notes.forEach(item => {
+
+        if (
+            item.title.toLowerCase().includes(query) ||
+            item.content.toLowerCase().includes(query)
+        ) {
+
+            results.push({
+                type: "Note",
+                title: item.title,
+                meta: item.content.substring(0, 80)
+            });
+        }
+    });
+
+
+    if (results.length === 0) {
+
+        container.innerHTML =
+            `<div class="no-results">
+                Nothing found.
+             </div>`;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        results.map(result => {
+
+            return `
+                <div class="search-result">
+
+                    <strong>
+                        ${escapeHTML(result.title)}
+                    </strong>
+
+                    <small>
+                        ${escapeHTML(result.type)}
+                        ·
+                        ${escapeHTML(result.meta)}
+                    </small>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+
+/* =========================================================
+   CATEGORIES
+   ========================================================= */
+
+function initialiseCategories() {
+
+    document
+        .querySelectorAll(".category-button")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const category =
+                        button.dataset.category;
+
+                    openCategory(category);
+                }
+            );
+        });
+}
+
+
+function openCategory(category) {
+
+    /*
+       Clicking a category opens the To-do section
+       and displays tasks belonging to that category.
+    */
+
+    openSection("todos");
+
+    renderTodos(category);
+
+
+    /*
+       A small heading replacement tells the user
+       which category is being viewed.
+    */
+
+    const heading =
+        document.querySelector(
+            "#section-todos .page-heading h1"
+        );
+
+    heading.textContent =
+        `${category} Tasks`;
 }
 
 
@@ -3259,409 +2128,549 @@ function sendBrowserNotification(
    APPEARANCE
    ========================================================= */
 
-function setupAppearance() {
+const palettes = {
 
-  renderAppearance();
+    forest: {
+        name: "Deep Forest Green",
+        background: "#1d251c",
+        main: "#101411",
+        font: "#c7c9c4"
+    },
 
-}
+    butter: {
+        name: "Butter Yellow",
+        background: "#f4e7a1",
+        main: "#8fc7df",
+        font: "#5a351e"
+    },
 
+    almond: {
+        name: "Almond",
+        background: "#e8d8c3",
+        main: "#91cbb5",
+        font: "#9e2633"
+    },
 
-function renderAppearance() {
+    sage: {
+        name: "Misty Sage",
+        background: "#b8c4b1",
+        main: "#6f2025",
+        font: "#fff1c7"
+    },
 
-  const grid =
-    document.getElementById(
-      "paletteGrid"
-    );
+    navy: {
+        name: "Navy",
+        background: "#101c36",
+        main: "#c8a85c",
+        font: "#d9c7a4"
+    },
 
+    champagne: {
+        name: "Champagne",
+        background: "#f1dfc1",
+        main: "#777c32",
+        font: "#e9dfca"
+    },
 
-  if (!grid) return;
+    gunmetal: {
+        name: "Gunmetal",
+        background: "#343a40",
+        main: "#ece3d3",
+        font: "#eee5d5"
+    },
 
+    cadet: {
+        name: "Cadet Grey",
+        background: "#91a1a8",
+        main: "#eeeae3",
+        font: "#33251d"
+    },
 
-  grid.innerHTML = "";
+    pink: {
+        name: "Muted Pink",
+        background: "#c99aa0",
+        main: "#9d233b",
+        font: "#f2c5cc"
+    },
 
-
-  palettes.forEach(
-    (palette, index) => {
-
-      const card =
-        document.createElement(
-          "div"
-        );
-
-
-      card.className =
-        "palette-card";
-
-
-      if (
-        index ===
-        appData.appearance.palette
-      ) {
-
-        card.classList.add(
-          "selected"
-        );
-
-      }
-
-
-      card.style.background =
-        palette.background;
-
-
-      card.style.color =
-        palette.font;
-
-
-      card.innerHTML = `
-
-        <div class="palette-name">
-          ${palette.name}
-        </div>
-
-        <div class="palette-description">
-          Background · Main · Font
-        </div>
-
-        <div class="palette-swatches">
-
-          <span
-            class="palette-swatch"
-            style="background:${palette.background}"
-          ></span>
-
-          <span
-            class="palette-swatch"
-            style="background:${palette.main}"
-          ></span>
-
-          <span
-            class="palette-swatch"
-            style="background:${palette.font}"
-          ></span>
-
-        </div>
-
-      `;
-
-
-      card.addEventListener(
-        "click",
-        () => {
-
-          appData.appearance.palette =
-            index;
-
-
-          saveData();
-
-          applyPalette();
-
-          renderAppearance();
-
-          showToast(
-            `${palette.name} selected.`
-          );
-
-        }
-      );
-
-
-      grid.appendChild(
-        card
-      );
-
+    lavender: {
+        name: "Lavender Mist",
+        background: "#d9d0e5",
+        main: "#4a2f2a",
+        font: "#fff2d6"
     }
-  );
 
+};
+
+
+function initialiseAppearance() {
+
+    renderPalettes();
 }
 
 
-function applyPalette() {
-
-  const palette =
-    palettes[
-      appData.appearance.palette
-    ] ||
-    palettes[0];
-
-
-  document.documentElement
-    .style
-    .setProperty(
-      "--background",
-      palette.background
-    );
-
-
-  document.documentElement
-    .style
-    .setProperty(
-      "--main",
-      palette.main
-    );
-
-
-  document.documentElement
-    .style
-    .setProperty(
-      "--font",
-      palette.font
-    );
-
-}
-
-
-/* =========================================================
-   CATEGORY FILTERS
-   ========================================================= */
-
-function setupCategoryFilters() {
-
-  document
-    .querySelectorAll(
-      ".category-item"
-    )
-    .forEach(button => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          const category =
-            button.dataset.category;
-
-
-          showCategoryResults(
-            category
-          );
-
-        }
-      );
-
-    });
-
-}
-
-
-function showCategoryResults(
-  category
-) {
-
-  const matchingReminders =
-    appData.reminders.filter(
-      item =>
-        item.category ===
-        category
-    );
-
-
-  const matchingTodos =
-    appData.todos.filter(
-      item =>
-        item.category ===
-        category
-    );
-
-
-  const matchingGoals =
-    appData.goals.filter(
-      item =>
-        item.category ===
-        category
-    );
-
-
-  openSection(
-    "dashboard"
-  );
-
-
-  showToast(
-    `${category}: ${matchingReminders.length} reminders, ${matchingTodos.length} tasks, ${matchingGoals.length} goals.`
-  );
-
-}
-
-
-/* =========================================================
-   UTILITY FUNCTIONS
-   ========================================================= */
-
-function getValue(id) {
-
-  const element =
-    document.getElementById(
-      id
-    );
-
-
-  return element
-    ? element.value.trim()
-    : "";
-
-}
-
-
-function setValue(
-  id,
-  value
-) {
-
-  const element =
-    document.getElementById(
-      id
-    );
-
-
-  if (element) {
-
-    element.value =
-      value ?? "";
-
-  }
-
-}
-
-
-function setText(
-  id,
-  value
-) {
-
-  const element =
-    document.getElementById(
-      id
-    );
-
-
-  if (element) {
-
-    element.textContent =
-      value ?? "";
-
-  }
-
-}
-
-
-function formatDateTime(
-  value
-) {
-
-  const date =
-    new Date(value);
-
-
-  if (
-    isNaN(
-      date.getTime()
-    )
-  ) {
-
-    return value || "";
-
-  }
-
-
-  return date.toLocaleString(
-    [],
-    {
-      dateStyle:
-        "medium",
-
-      timeStyle:
-        "short"
-    }
-  );
-
-}
-
-
-function searchable(
-  ...values
-) {
-
-  return values
-    .filter(Boolean)
-    .join(" ")
-    .toLowerCase();
-
-}
-
-
-function escapeHTML(
-  value
-) {
-
-  return String(
-    value ?? ""
-  )
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
-
-}
-
-
-/* =========================================================
-   TOAST
-   ========================================================= */
-
-function showToast(
-  message
-) {
-
-  const toast =
-    document.getElementById(
-      "layraazToast"
-    );
-
-
-  if (!toast) return;
-
-
-  toast.textContent =
-    message;
-
-
-  toast.classList.add(
-    "show"
-  );
-
-
-  clearTimeout(
-    window.layraazToastTimeout
-  );
-
-
-  window.layraazToastTimeout =
-    setTimeout(
-      () => {
-
-        toast.classList.remove(
-          "show"
+function renderPalettes() {
+
+    const container =
+        document.getElementById(
+            "paletteGrid"
         );
 
-      },
-      2500
-    );
 
+    container.innerHTML =
+        Object.entries(palettes)
+            .map(([key, palette]) => {
+
+                return `
+                    <div
+                        class="palette-card ${data.appearance === key ? "selected" : ""}"
+                        data-palette="${key}"
+                    >
+
+                        <div class="palette-name">
+                            ${escapeHTML(palette.name)}
+                        </div>
+
+                        <div class="palette-preview">
+
+                            <div
+                                class="palette-colour"
+                                style="background:${palette.background}; color:${palette.font};"
+                            >
+                                Background
+                            </div>
+
+                            <div
+                                class="palette-colour"
+                                style="background:${palette.main}; color:${palette.font};"
+                            >
+                                Main
+                            </div>
+
+                            <div
+                                class="palette-colour"
+                                style="background:${palette.font}; color:${palette.main};"
+                            >
+                                Font
+                            </div>
+
+                        </div>
+
+                        <div class="palette-description">
+                            <span>${palette.background}</span>
+                            <span>${palette.main}</span>
+                            <span>${palette.font}</span>
+                        </div>
+
+                    </div>
+                `;
+
+            }).join("");
+
+
+    container
+        .querySelectorAll(".palette-card")
+        .forEach(card => {
+
+            card.addEventListener(
+                "click",
+                () => {
+
+                    data.appearance =
+                        card.dataset.palette;
+
+                    saveData();
+
+                    applyAppearance();
+
+                    renderPalettes();
+
+                }
+            );
+        });
+}
+
+
+function applyAppearance() {
+
+    const palette =
+        palettes[
+            data.appearance
+        ] || palettes.forest;
+
+
+    document.documentElement
+        .style
+        .setProperty(
+            "--background",
+            palette.background
+        );
+
+
+    document.documentElement
+        .style
+        .setProperty(
+            "--main",
+            palette.main
+        );
+
+
+    document.documentElement
+        .style
+        .setProperty(
+            "--font",
+            palette.font
+        );
+
+
+    /*
+       A muted version of the chosen font colour.
+    */
+
+    document.documentElement
+        .style
+        .setProperty(
+            "--font-muted",
+            palette.font
+        );
+}
+
+
+/* =========================================================
+   CHARACTER
+   ========================================================= */
+
+function initialiseCharacter() {
+
+    const nameInput =
+        document.getElementById(
+            "characterName"
+        );
+
+    const personalityInput =
+        document.getElementById(
+            "characterPersonality"
+        );
+
+
+    nameInput.value =
+        data.character.name;
+
+
+    personalityInput.value =
+        data.character.personality;
+
+
+    document
+        .getElementById("saveCharacter")
+        .addEventListener(
+            "click",
+            saveCharacter
+        );
+
+
+    document
+        .getElementById("testCharacter")
+        .addEventListener(
+            "click",
+            () => {
+
+                showCharacterReminder(
+                    "This is a character test. I'm here."
+                );
+
+            }
+        );
+
+
+    document
+        .getElementById("dashboardTestCharacter")
+        .addEventListener(
+            "click",
+            () => {
+
+                showCharacterReminder(
+                    "This is my dashboard test. Everything is working."
+                );
+
+            }
+        );
+
+
+    document
+        .getElementById("characterPictureInput")
+        .addEventListener(
+            "change",
+            handleCharacterPicture
+        );
+
+
+    document
+        .getElementById("removeCharacterPicture")
+        .addEventListener(
+            "click",
+            () => {
+
+                data.character.picture = "";
+
+                saveData();
+
+                updateCharacterImages();
+
+            }
+        );
+
+
+    updateCharacterImages();
+}
+
+
+function saveCharacter() {
+
+    const name =
+        document
+            .getElementById("characterName")
+            .value
+            .trim();
+
+
+    const personality =
+        document
+            .getElementById("characterPersonality")
+            .value
+            .trim();
+
+
+    data.character.name =
+        name || "Character";
+
+
+    data.character.personality =
+        personality ||
+        "Calm, intelligent, firm and caring.";
+
+
+    saveData();
+
+
+    updateCharacterImages();
+
+    updateDashboard();
+
+
+    const status =
+        document.getElementById(
+            "characterSaveStatus"
+        );
+
+    status.textContent =
+        "Saved ✓";
+
+
+    setTimeout(() => {
+
+        status.textContent = "";
+
+    }, 2500);
+}
+
+
+function handleCharacterPicture(event) {
+
+    const file =
+        event.target.files[0];
+
+    if (!file) {
+        return;
+    }
+
+
+    if (!file.type.startsWith("image/")) {
+
+        alert(
+            "Please choose an image file."
+        );
+
+        return;
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload = function(e) {
+
+        data.character.picture =
+            e.target.result;
+
+        saveData();
+
+        updateCharacterImages();
+
+    };
+
+
+    reader.onerror = function() {
+
+        alert(
+            "The character image could not be loaded."
+        );
+    };
+
+
+    reader.readAsDataURL(file);
+}
+
+
+function updateCharacterImages() {
+
+    const image =
+        data.character.picture;
+
+
+    const dashboardImg =
+        document.getElementById(
+            "dashboardCharacterImage"
+        );
+
+    const dashboardPlaceholder =
+        document.getElementById(
+            "dashboardCharacterPlaceholder"
+        );
+
+
+    const preview =
+        document.getElementById(
+            "characterPreview"
+        );
+
+    const previewPlaceholder =
+        document.getElementById(
+            "characterPreviewPlaceholder"
+        );
+
+
+    const reminderImg =
+        document.getElementById(
+            "reminderCharacterImage"
+        );
+
+    const reminderPlaceholder =
+        document.getElementById(
+            "reminderCharacterPlaceholder"
+        );
+
+
+    if (image) {
+
+        dashboardImg.src = image;
+        dashboardImg.style.display = "block";
+        dashboardPlaceholder.style.display = "none";
+
+
+        preview.src = image;
+        preview.style.display = "block";
+        previewPlaceholder.style.display = "none";
+
+
+        reminderImg.src = image;
+        reminderImg.style.display = "block";
+        reminderPlaceholder.style.display = "none";
+
+    } else {
+
+        dashboardImg.style.display = "none";
+        dashboardPlaceholder.style.display = "flex";
+
+
+        preview.style.display = "none";
+        previewPlaceholder.style.display = "flex";
+
+
+        reminderImg.style.display = "none";
+        reminderPlaceholder.style.display = "flex";
+    }
+
+
+    document.getElementById(
+        "dashboardCharacterName"
+    ).textContent =
+        data.character.name;
+
+
+    document.getElementById(
+        "characterPreviewName"
+    ).textContent =
+        data.character.name;
+
+
+    document.getElementById(
+        "characterPreviewPersonality"
+    ).textContent =
+        data.character.personality;
+}
+
+
+function updateReminderCharacterImage() {
+
+    const image =
+        data.character.picture;
+
+
+    const img =
+        document.getElementById(
+            "reminderCharacterImage"
+        );
+
+    const placeholder =
+        document.getElementById(
+            "reminderCharacterPlaceholder"
+        );
+
+
+    if (image) {
+
+        img.src = image;
+
+        img.style.display =
+            "block";
+
+        placeholder.style.display =
+            "none";
+
+    } else {
+
+        img.style.display =
+            "none";
+
+        placeholder.style.display =
+            "flex";
+    }
+}
+
+
+/* =========================================================
+   RENDER ALL
+   ========================================================= */
+
+function renderAll() {
+
+    renderProfilePicture();
+
+    renderReminders();
+
+    renderTodos();
+
+    renderGoals();
+
+    renderNotes();
+
+    renderNotifications();
+
+    renderPalettes();
+
+    updateCharacterImages();
+
+    updateDashboard();
 }
