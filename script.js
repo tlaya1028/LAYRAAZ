@@ -2,12 +2,12 @@
 
 
 /* =========================================================
-   LAYRAAZ DATA
+   STORAGE
 ========================================================= */
 
 const STORAGE_KEY = "LAYRAAZ_DATA_V4";
 
-const OLD_KEYS = [
+const OLD_STORAGE_KEYS = [
   "LAYRAAZ_DATA_V3",
   "LAYRAAZ_DATA_V2",
   "LAYRAAZ_DATA"
@@ -55,42 +55,43 @@ const palettes = {
     font: "#F5F1E8"
   },
 
+  /* USER UPDATED */
   champagne: {
     name: "Palette 6",
-    background: "#722F37",
-    main: "#70752F",
-    font: "#F3E6D0"
+    background: "#d54c15",
+    main: "#8db6c7",
+    font: "#f9e8d4"
   },
 
-  /* SOFT LEMON */
+  /* USER UPDATED */
   gunmetal: {
     name: "Palette 7",
-    background: "#FFF0A8",
-    main: "#8399B9",
-    font: "#475418"
+    background: "#1e1d1d",
+    main: "#5a4d41",
+    font: "#867c70"
   },
 
+  /* USER UPDATED */
   cadet: {
     name: "Palette 8",
-    background: "#919FA5",
-    main: "#EEEAE2",
-    font: "#30251F"
+    background: "#943131",
+    main: "#d9bda6",
+    font: "#bad2da"
   },
 
-  /* BLUSH PETAL */
+  /* USER UPDATED */
   pink: {
     name: "Palette 9",
-    background: "#E8B7B0",
-    main: "#722F37",
-    font: "#F7F2E7"
+    background: "#f6c8d1",
+    main: "#eadcd2",
+    font: "#f0eada"
   },
 
-  /* LAVENDER MIST + OFF WHITE */
   lavender: {
     name: "Palette 10",
     background: "#BCC2F4",
     main: "#B0BC68",
-    font: "#F7F3E8"
+    font: "#FFFecd"
   }
 
 };
@@ -102,51 +103,55 @@ const palettes = {
 
 const ICONS = {
 
-  menu:
-    `<svg viewBox="0 0 24 24"
+  menu: `
+    <svg viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       stroke-width="1.8"
       stroke-linecap="round">
       <path d="M5 7h14M5 12h14M5 17h14"/>
-    </svg>`,
+    </svg>
+  `,
 
-  home:
-    `<svg viewBox="0 0 24 24"
+  home: `
+    <svg viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       stroke-width="1.7"
       stroke-linecap="round"
       stroke-linejoin="round">
-      <path d="m3.5 10.5 8.5-7 8.5 7v9a1.5 1.5 0 0 1-1.5 1.5H5a1.5 1.5 0 0 1-1.5-1.5v-9Z"/>
+      <path d="m3.5 10.5 8.5-7 8.5 7v9a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 19.5v-9Z"/>
       <path d="M9 21v-6h6v6"/>
-    </svg>`,
+    </svg>
+  `,
 
-  profile:
-    `<svg viewBox="0 0 24 24"
+  profile: `
+    <svg viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       stroke-width="1.7"
       stroke-linecap="round">
       <circle cx="12" cy="8" r="3.5"/>
       <path d="M4.5 20c.8-3.3 3.3-5 7.5-5s6.7 1.7 7.5 5"/>
-    </svg>`,
+    </svg>
+  `,
 
-  character:
-    `<svg viewBox="0 0 24 24"
+  character: `
+    <svg viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       stroke-width="1.7"
       stroke-linecap="round"
       stroke-linejoin="round">
-      <path d="M5 9.5C5 6.5 8 4 12 4s7 2.5 7 5.5V17a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V9.5Z"/>
-      <circle cx="9" cy="11" r=".8" fill="currentColor"/>
-      <circle cx="15" cy="11" r=".8" fill="currentColor"/>
-      <path d="M9 15c1.8 1.2 4.2 1.2 6 0"/>
-    </svg>`,
+      <circle cx="12" cy="12" r="8.5"/>
+      <circle cx="9" cy="11" r=".7" fill="currentColor"/>
+      <circle cx="15" cy="11" r=".7" fill="currentColor"/>
+      <path d="M9 15c1.8 1.4 4.2 1.4 6 0"/>
+    </svg>
+  `,
 
-  bell:
-    `<svg viewBox="0 0 24 24"
+  bell: `
+    <svg viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       stroke-width="1.7"
@@ -154,10 +159,11 @@ const ICONS = {
       stroke-linejoin="round">
       <path d="M6 9a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9Z"/>
       <path d="M10 21h4"/>
-    </svg>`,
+    </svg>
+  `,
 
-  check:
-    `<svg viewBox="0 0 24 24"
+  check: `
+    <svg viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       stroke-width="1.7"
@@ -165,20 +171,26 @@ const ICONS = {
       stroke-linejoin="round">
       <rect x="4" y="3.5" width="16" height="17" rx="2"/>
       <path d="m8 12 2.5 2.5L16 9"/>
-    </svg>`,
+    </svg>
+  `,
 
-  target:
-    `<svg viewBox="0 0 24 24"
+  target: `
+    <svg viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="1.7">
+      stroke-width="1.7"
+      stroke-linecap="round"
+      stroke-linejoin="round">
       <circle cx="12" cy="12" r="8.5"/>
       <circle cx="12" cy="12" r="4.5"/>
-      <circle cx="12" cy="12" r="1.2" fill="currentColor"/>
-    </svg>`,
+      <circle cx="12" cy="12" r="1.2"
+        fill="currentColor"/>
+      <path d="m15.5 8.5 4-4M16.5 4.5h3v3"/>
+    </svg>
+  `,
 
-  note:
-    `<svg viewBox="0 0 24 24"
+  note: `
+    <svg viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       stroke-width="1.7"
@@ -186,10 +198,11 @@ const ICONS = {
       stroke-linejoin="round">
       <path d="M6 3.5h9l3 3V20a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z"/>
       <path d="M14 3.5V7h4M8 11h8M8 15h8M8 18h5"/>
-    </svg>`,
+    </svg>
+  `,
 
-  notification:
-    `<svg viewBox="0 0 24 24"
+  notification: `
+    <svg viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       stroke-width="1.7"
@@ -197,10 +210,11 @@ const ICONS = {
       stroke-linejoin="round">
       <path d="M6 9a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9Z"/>
       <path d="M10 21h4"/>
-    </svg>`,
+    </svg>
+  `,
 
-  palette:
-    `<svg viewBox="0 0 24 24"
+  palette: `
+    <svg viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       stroke-width="1.7"
@@ -210,20 +224,23 @@ const ICONS = {
       <circle cx="7.5" cy="10" r=".8"/>
       <circle cx="10" cy="7.5" r=".8"/>
       <circle cx="14" cy="7.5" r=".8"/>
-    </svg>`,
+      <circle cx="17" cy="10" r=".8"/>
+    </svg>
+  `,
 
-  search:
-    `<svg viewBox="0 0 24 24"
+  search: `
+    <svg viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       stroke-width="1.8"
       stroke-linecap="round">
       <circle cx="10.8" cy="10.8" r="6.8"/>
       <path d="m16 16 5 5"/>
-    </svg>`,
+    </svg>
+  `,
 
-  edit:
-    `<svg viewBox="0 0 24 24"
+  edit: `
+    <svg viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       stroke-width="1.7"
@@ -231,52 +248,53 @@ const ICONS = {
       stroke-linejoin="round">
       <path d="m4 16.5-.8 4.3 4.3-.8L19 8.5 15.5 5 4 16.5Z"/>
       <path d="m13.8 6.7 3.5 3.5"/>
-    </svg>`,
+    </svg>
+  `,
 
-  trash:
-    `<svg viewBox="0 0 24 24"
+  trash: `
+    <svg viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       stroke-width="1.7"
       stroke-linecap="round">
-      <path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5M14 11v5"/>
-    </svg>`,
+      <path d="M4 7h16"/>
+      <path d="M9 7V4h6v3"/>
+      <path d="M7 7l1 13h8l1-13"/>
+      <path d="M10 11v5M14 11v5"/>
+    </svg>
+  `,
 
-  plus:
-    `<svg viewBox="0 0 24 24"
+  plus: `
+    <svg viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       stroke-width="1.8"
       stroke-linecap="round">
       <path d="M12 5v14M5 12h14"/>
-    </svg>`,
+    </svg>
+  `,
 
-  tick:
-    `<svg viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round">
-      <path d="m5 12 4 4L19 7"/>
-    </svg>`,
-
-  circle:
-    `<svg viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="1.7">
-      <circle cx="12" cy="12" r="8"/>
-    </svg>`,
-
-  star:
-    `<svg viewBox="0 0 24 24"
+  spark: `
+    <svg viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       stroke-width="1.7"
+      stroke-linecap="round"
       stroke-linejoin="round">
-      <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-2.9-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"/>
-    </svg>`
+      <path d="m12 3 1.2 5.8L19 10l-5.8 1.2L12 17l-1.2-5.8L5 10l5.8-1.2L12 3Z"/>
+    </svg>
+  `,
+
+  heart: `
+    <svg viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round">
+      <path d="M20.5 8.7c0 5.2-8.5 10-8.5 10s-8.5-4.8-8.5-10A4.3 4.3 0 0 1 12 6.2a4.3 4.3 0 0 1 8.5 2.5Z"/>
+    </svg>
+  `
 
 };
 
@@ -326,10 +344,10 @@ const defaultData = {
       "4",
 
     strengths:
-      "Ambitious, self-motivated, hard-working",
+      "Ambitious, self-motivated, hardworking",
 
     weaknesses:
-      "Socialising, procrastination",
+      "Socialising, procrastination, overthinking",
 
     favoriteBeverages:
       "Buttermilk",
@@ -338,7 +356,7 @@ const defaultData = {
       "",
 
     favoriteAnimal:
-      "Dog",
+      "Dogs",
 
     favoriteBird:
       "",
@@ -372,18 +390,27 @@ const defaultData = {
   appearance:
     "forest",
 
-  reminders: [],
+  reminders:
+    [],
 
-  todos: [],
+  todos:
+    [],
 
-  goals: [],
+  goals:
+    [],
 
-  notes: [],
+  notes:
+    [],
 
-  notifications: []
+  notifications:
+    []
 
 };
 
+
+/* =========================================================
+   STATE
+========================================================= */
 
 let data = loadData();
 
@@ -393,11 +420,13 @@ let reminderTimer = null;
 
 let toastTimer = null;
 
-let companionTimer = null;
+let dueCompanionId = null;
+
+let usedDashboardPoses = new Set();
 
 
 /* =========================================================
-   STORAGE
+   DATA HELPERS
 ========================================================= */
 
 function clone(value) {
@@ -472,10 +501,14 @@ function loadData() {
 
   if (!raw) {
 
-    for (const key of OLD_KEYS) {
+    for (
+      const key of OLD_STORAGE_KEYS
+    ) {
 
       raw =
-        localStorage.getItem(key);
+        localStorage.getItem(
+          key
+        );
 
       if (raw) break;
 
@@ -483,22 +516,23 @@ function loadData() {
 
   }
 
-
   try {
-
-    const parsed =
-      raw
-        ? JSON.parse(raw)
-        : null;
 
     const result =
       mergeData(
         defaultData,
-        parsed
+        raw
+          ? JSON.parse(raw)
+          : null
       );
 
 
-    const appearanceMigration = {
+    /*
+      Preserve compatibility
+      with old palette names.
+    */
+
+    const paletteMap = {
 
       palette1: "forest",
       palette2: "butter",
@@ -515,13 +549,13 @@ function loadData() {
 
 
     if (
-      appearanceMigration[
+      paletteMap[
         result.appearance
       ]
     ) {
 
       result.appearance =
-        appearanceMigration[
+        paletteMap[
           result.appearance
         ];
 
@@ -543,36 +577,21 @@ function loadData() {
 
 function saveData() {
 
-  try {
-
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(data)
-    );
-
-  } catch {
-
-    toast(
-      "Browser storage is full. Try a smaller image."
-    );
-
-  }
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(data)
+  );
 
 }
 
 
-/* =========================================================
-   HELPERS
-========================================================= */
-
 function uid(prefix = "id") {
 
-  return (
-    `${prefix}_${Date.now()}_` +
-    Math.random()
+  return `
+    ${prefix}_${Date.now()}_${Math.random()
       .toString(36)
-      .slice(2, 8)
-  );
+      .slice(2,8)}
+  `.trim();
 
 }
 
@@ -583,23 +602,15 @@ function esc(value) {
     value ?? ""
   ).replace(
     /[&<>'"]/g,
-    char => ({
+    character => ({
+
       "&": "&amp;",
       "<": "&lt;",
       ">": "&gt;",
       "'": "&#39;",
-      '"': "&quot;"
-    }[char])
-  );
+      "\"": "&quot;"
 
-}
-
-
-function isSameDay(a, b) {
-
-  return (
-    a.toDateString() ===
-    b.toDateString()
+    }[character])
   );
 
 }
@@ -617,7 +628,7 @@ function formatDateTime(value) {
       date.getTime()
     )
   ) {
-    return value;
+    return String(value);
   }
 
   return date.toLocaleString(
@@ -625,6 +636,7 @@ function formatDateTime(value) {
     {
       month: "short",
       day: "numeric",
+      year: "numeric",
       hour: "2-digit",
       minute: "2-digit"
     }
@@ -642,9 +654,6 @@ function calculateAge(dob) {
       `${dob}T00:00:00`
     );
 
-  const now =
-    new Date();
-
   if (
     Number.isNaN(
       birth.getTime()
@@ -653,6 +662,9 @@ function calculateAge(dob) {
     return "";
   }
 
+  const now =
+    new Date();
+
   let age =
     now.getFullYear() -
     birth.getFullYear();
@@ -660,11 +672,13 @@ function calculateAge(dob) {
   const beforeBirthday =
     now.getMonth() <
       birth.getMonth() ||
+
     (
       now.getMonth() ===
-        birth.getMonth() &&
+      birth.getMonth() &&
+
       now.getDate() <
-        birth.getDate()
+      birth.getDate()
     );
 
   if (beforeBirthday) {
@@ -676,14 +690,38 @@ function calculateAge(dob) {
 }
 
 
+function isSameDay(a, b) {
+
+  return (
+    a.toDateString() ===
+    b.toDateString()
+  );
+
+}
+
+
+function todayISO() {
+
+  const date =
+    new Date();
+
+  return `
+    ${date.getFullYear()}-
+    ${String(date.getMonth()+1).padStart(2,"0")}-
+    ${String(date.getDate()).padStart(2,"0")}
+  `.replace(/\s/g,"");
+
+}
+
+
 /* =========================================================
-   APPEARANCE
+   COLOUR FUNCTIONS
 ========================================================= */
 
 function hexToRgb(hex) {
 
   const h =
-    hex.replace("#", "");
+    hex.replace("#","");
 
   if (h.length !== 6) {
     return null;
@@ -692,17 +730,17 @@ function hexToRgb(hex) {
   return {
 
     r: parseInt(
-      h.slice(0, 2),
+      h.slice(0,2),
       16
     ),
 
     g: parseInt(
-      h.slice(2, 4),
+      h.slice(2,4),
       16
     ),
 
     b: parseInt(
-      h.slice(4, 6),
+      h.slice(4,6),
       16
     )
 
@@ -711,26 +749,7 @@ function hexToRgb(hex) {
 }
 
 
-function isLight(hex) {
-
-  const rgb =
-    hexToRgb(hex);
-
-  if (!rgb) return true;
-
-  const luminance =
-    (
-      0.2126 * rgb.r +
-      0.7152 * rgb.g +
-      0.0722 * rgb.b
-    ) / 255;
-
-  return luminance > 0.62;
-
-}
-
-
-function mix(a, b, amount) {
+function mix(a,b,t) {
 
   const x =
     hexToRgb(a);
@@ -742,29 +761,45 @@ function mix(a, b, amount) {
     return a;
   }
 
-  const t =
-    Math.max(
-      0,
-      Math.min(
-        1,
-        amount
-      )
-    );
+  return `
+    rgb(
+      ${Math.round(x.r*(1-t)+y.r*t)},
+      ${Math.round(x.g*(1-t)+y.g*t)},
+      ${Math.round(x.b*(1-t)+y.b*t)}
+    )
+  `.replace(/\s/g,"");
 
-  return `rgb(
-    ${Math.round(
-      x.r * (1 - t) +
-      y.r * t
-    )},
-    ${Math.round(
-      x.g * (1 - t) +
-      y.g * t
-    )},
-    ${Math.round(
-      x.b * (1 - t) +
-      y.b * t
-    )}
-  )`;
+}
+
+
+function isLight(hex) {
+
+  const rgb =
+    hexToRgb(hex);
+
+  if (!rgb) {
+    return true;
+  }
+
+  const luminance =
+    (
+      0.2126 * rgb.r +
+      0.7152 * rgb.g +
+      0.0722 * rgb.b
+    ) / 255;
+
+  return luminance > .62;
+
+}
+
+
+function shade(hex, amount) {
+
+  return mix(
+    hex,
+    "#000000",
+    amount
+  );
 
 }
 
@@ -777,37 +812,49 @@ function applyAppearance() {
     ] ||
     palettes.forest;
 
-  document.documentElement.style.setProperty(
-    "--bg",
-    palette.background
-  );
+  document.documentElement
+    .style
+    .setProperty(
+      "--bg",
+      palette.background
+    );
 
-  document.documentElement.style.setProperty(
-    "--main",
-    palette.main
-  );
+  document.documentElement
+    .style
+    .setProperty(
+      "--main",
+      palette.main
+    );
 
-  document.documentElement.style.setProperty(
-    "--font",
-    palette.font
-  );
+  document.documentElement
+    .style
+    .setProperty(
+      "--font",
+      palette.font
+    );
 
-  document.documentElement.style.setProperty(
-    "--font-muted",
+  const muted =
     isLight(
       palette.background
     )
-      ? mix(
+
+      ? shade(
           palette.font,
-          "#000000",
-          .45
+          .55
         )
+
       : mix(
           palette.font,
           palette.background,
           .25
-        )
-  );
+        );
+
+  document.documentElement
+    .style
+    .setProperty(
+      "--font-muted",
+      muted
+    );
 
   document
     .querySelector(
@@ -825,55 +872,67 @@ function applyAppearance() {
    ICONS
 ========================================================= */
 
-function setIcons() {
+function setIconElements() {
 
   document
-    .querySelectorAll(".nav-icon")
-    .forEach(element => {
+    .querySelectorAll(
+      ".nav-icon"
+    )
+    .forEach(
+      element => {
 
-      const className =
-        [
-          ...element.classList
-        ].find(
-          item =>
-            item.startsWith(
-              "icon-"
-            )
-        );
+        const className =
+          [
+            ...element.classList
+          ].find(
+            c =>
+              c.startsWith(
+                "icon-"
+              ) &&
+              c !==
+                "icon-button"
+          );
 
-      if (!className) {
-        return;
+        if (!className) {
+          return;
+        }
+
+        const key =
+          className.slice(
+            5
+          );
+
+        if (
+          ICONS[key]
+        ) {
+          element.innerHTML =
+            ICONS[key];
+        }
+
       }
+    );
 
-      const key =
-        className.slice(5);
 
-      if (ICONS[key]) {
-
+  document
+    .querySelectorAll(
+      ".icon-search"
+    )
+    .forEach(
+      element =>
         element.innerHTML =
-          ICONS[key];
-
-      }
-
-    });
+          ICONS.search
+    );
 
 
-  document.getElementById(
-    "menuIcon"
-  ).innerHTML =
-    ICONS.menu;
-
-
-  document.getElementById(
-    "searchIcon"
-  ).innerHTML =
-    ICONS.search;
-
-
-  document.getElementById(
-    "notificationIcon"
-  ).innerHTML =
-    ICONS.notification;
+  document
+    .querySelectorAll(
+      ".icon-menu"
+    )
+    .forEach(
+      element =>
+        element.innerHTML =
+          ICONS.menu
+    );
 
 }
 
@@ -887,24 +946,132 @@ function setAvatar(
   source
 ) {
 
-  if (!element) return;
+  if (!element) {
+    return;
+  }
 
   if (source) {
 
-    element.style.backgroundImage =
+    element.style
+      .backgroundImage =
       `url("${source}")`;
 
-    element.textContent = "";
+    element.textContent =
+      "";
 
   } else {
 
-    element.style.backgroundImage =
+    element.style
+      .backgroundImage =
       "";
 
     element.textContent =
       "";
 
   }
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function navigate(section) {
+
+  if (
+    !document.getElementById(
+      section
+    )
+  ) {
+    return;
+  }
+
+  activeSection =
+    section;
+
+  document
+    .querySelectorAll(
+      ".page-section"
+    )
+    .forEach(
+      element =>
+        element.classList.toggle(
+          "active-section",
+          element.id === section
+        )
+    );
+
+  document
+    .querySelectorAll(
+      ".nav-item"
+    )
+    .forEach(
+      element =>
+        element.classList.toggle(
+          "active",
+          element.dataset.section ===
+            section
+        )
+    );
+
+  renderSection(
+    section
+  );
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+function renderSection(
+  section
+) {
+
+  const functions = {
+
+    dashboard:
+      renderDashboard,
+
+    profile:
+      renderProfile,
+
+    reminders:
+      renderReminders,
+
+    todos:
+      renderTodos,
+
+    goals:
+      renderGoals,
+
+    notes:
+      renderNotes,
+
+    notifications:
+      renderNotifications,
+
+    appearance:
+      renderAppearance,
+
+    character:
+      renderCharacter
+
+  };
+
+  const renderer =
+    functions[
+      section
+    ];
+
+  if (renderer) {
+    renderer();
+  }
+
+  updateTopbar();
 
 }
 
@@ -925,34 +1092,63 @@ function updateTopbar() {
     name;
 
 
+  let title;
+
+  if (
+    activeSection ===
+    "dashboard"
+  ) {
+
+    title =
+      `Welcome back, ${esc(name)}`;
+
+  } else {
+
+    title =
+      activeSection
+        .charAt(0)
+        .toUpperCase() +
+      activeSection.slice(1);
+
+  }
+
+
   document.getElementById(
     "pageTitle"
   ).innerHTML =
-    `Welcome back, ${esc(name)}
-     <span class="sparkles">✦</span>`;
+    `${title}
+     <span class="sparkles">
+       ✦
+     </span>`;
 
 
   document.getElementById(
     "pageSubtitle"
   ).innerHTML =
-    `Take a deep breath.
-     You've got this.
-     <span>♡</span>`;
+
+    activeSection ===
+    "dashboard"
+
+      ? `A small space for everything that matters.
+         <span>♡</span>`
+
+      : `Everything here can be edited and kept locally
+         in your browser.`;
 
 
   const unread =
     data.notifications
       .filter(
-        notification =>
-          !notification.read
+        n => !n.read
       )
       .length;
-
 
   document.getElementById(
     "notificationCount"
   ).textContent =
-    unread || "";
+    unread
+      ? String(unread)
+      : "";
 
 
   setAvatar(
@@ -966,118 +1162,85 @@ function updateTopbar() {
 
 
 /* =========================================================
-   NAVIGATION
+   DECORATIONS
 ========================================================= */
 
-function navigate(section) {
+function svgDoodle(
+  type,
+  className
+) {
 
-  activeSection =
-    section;
-
-
-  document
-    .querySelectorAll(
-      ".page-section"
-    )
-    .forEach(element => {
-
-      element.classList.toggle(
-        "active-section",
-        element.id === section
-      );
-
-    });
-
-
-  document
-    .querySelectorAll(
-      ".nav-item"
-    )
-    .forEach(element => {
-
-      element.classList.toggle(
-        "active",
-        element.dataset.section ===
-          section
-      );
-
-    });
-
-
-  renderSection(section);
-
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
-}
-
-
-function renderSection(section) {
-
-  const renderers = {
-
-    dashboard:
-      renderDashboard,
-
-    profile:
-      renderProfile,
-
-    character:
-      renderCharacter,
-
-    reminders:
-      renderReminders,
-
-    todos:
-      renderTodos,
-
-    goals:
-      renderGoals,
-
-    notes:
-      renderNotes,
-
-    notifications:
-      renderNotifications,
-
-    appearance:
-      renderAppearance
-
-  };
-
-
-  const renderer =
-    renderers[section];
-
-  if (renderer) {
-    renderer();
-  }
-
-  updateTopbar();
+  return `
+    <span class="doodle ${className}">
+      ${ICONS[type] || ICONS.spark}
+    </span>
+  `;
 
 }
 
 
 /* =========================================================
-   CHARACTER STICKER HELPERS
+   CHARACTER POSES
 ========================================================= */
 
-function stickerTag(
-  className = "mini-sticker"
+function pickPose(
+  preferred
 ) {
 
-  if (!data.character.sticker) {
-    return "";
+  const available =
+    preferred.filter(
+      pose =>
+        !usedDashboardPoses
+          .has(pose)
+    );
+
+  const choices =
+    available.length
+      ? available
+      : preferred;
+
+  const pose =
+    choices[
+      Math.floor(
+        Math.random() *
+        choices.length
+      )
+    ];
+
+  usedDashboardPoses.add(
+    pose
+  );
+
+  return pose;
+
+}
+
+
+function characterImg(
+  pose = "normal",
+  extra = ""
+) {
+
+  if (
+    !data.character.sticker
+  ) {
+
+    return `
+      <div class="character-empty-message">
+        Your little companion is waiting.
+      </div>
+    `;
+
   }
 
   return `
     <img
-      class="${className}"
+      class="character-sticker ${extra} pose-${pose}"
       src="${data.character.sticker}"
-      alt="Character sticker"
+      alt="${esc(
+        data.character.name ||
+        "Character"
+      )}"
     >
   `;
 
@@ -1103,35 +1266,55 @@ function renderDashboard() {
     "Laya";
 
 
-  const pendingTasks =
-    data.todos.filter(
-      task =>
-        !task.done
-    ).length;
+  usedDashboardPoses =
+    new Set();
+
+
+  const pending =
+    data.todos
+      .filter(
+        todo => !todo.done
+      )
+      .length;
 
 
   const activeGoals =
-    data.goals.filter(
-      goal =>
-        Number(
-          goal.progress || 0
-        ) < 100
-    ).length;
+    data.goals
+      .filter(
+        goal =>
+          Number(
+            goal.progress || 0
+          ) < 100
+      )
+      .length;
 
 
   const todayReminders =
-    data.reminders.filter(
-      reminder =>
-        !reminder.completed &&
-        isSameDay(
-          new Date(reminder.when),
-          new Date()
-        )
-    ).length;
+    data.reminders
+      .filter(
+        reminder =>
+          !reminder.completed &&
+          isSameDay(
+            new Date(
+              reminder.when
+            ),
+            new Date()
+          )
+      )
+      .length;
+
+
+  const todayTodos =
+    data.todos
+      .filter(
+        todo => !todo.done
+      )
+      .slice(0,4);
 
 
   const upcoming =
     data.reminders
+
       .filter(
         reminder =>
           !reminder.completed &&
@@ -1139,23 +1322,16 @@ function renderDashboard() {
             reminder.when
           ).getTime() >=
             Date.now() -
-              86400000
+            86400000
       )
+
       .sort(
-        (a, b) =>
+        (a,b) =>
           new Date(a.when) -
           new Date(b.when)
       )
-      .slice(0, 2);
 
-
-  const tasks =
-    data.todos
-      .filter(
-        task =>
-          !task.done
-      )
-      .slice(0, 4);
+      .slice(0,3);
 
 
   const latestNote =
@@ -1163,7 +1339,7 @@ function renderDashboard() {
       ...data.notes
     ]
       .sort(
-        (a, b) =>
+        (a,b) =>
           new Date(
             b.createdAt
           ) -
@@ -1173,33 +1349,87 @@ function renderDashboard() {
       )[0];
 
 
+  const heroPose =
+    pickPose([
+      "small",
+      "lean",
+      "peek",
+      "flip"
+    ]);
+
+
+  const characterPose =
+    pickPose([
+      "normal",
+      "tilt",
+      "flip",
+      "small"
+    ]);
+
+
+  const reminderPose =
+    pickPose([
+      "peek",
+      "lean",
+      "small"
+    ]);
+
+
+  const planPose =
+    pickPose([
+      "tilt",
+      "flip",
+      "small"
+    ]);
+
+
   element.innerHTML = `
+
+    <div class="section-heading">
+
+      <div>
+
+        <h2>
+          Dashboard
+        </h2>
+
+        <p>
+          A small space for everything that matters.
+        </p>
+
+      </div>
+
+    </div>
+
 
     <div class="dashboard-grid">
 
-      <!-- HERO -->
 
-      <article
-        class="card soft hero-card"
-      >
+      <!-- WELCOME -->
+
+      <article class="card hero-card soft">
+
+        ${svgDoodle(
+          "spark",
+          "doodle-star"
+        )}
 
         <div class="hero-copy">
 
           <div class="script-title">
-            a little space for you ✦
+            Welcome back,
+            ${esc(name)}.
           </div>
 
           <h2>
-            Welcome back,
-            ${esc(name)}.
+            Small steps every day<br>
+            lead to big changes.
           </h2>
 
           <p>
-            Plan your day,
-            keep your thoughts,
-            track your goals
-            and remember the
-            little things.
+            Plan your day, keep your thoughts,
+            track your goals and let LAYRAAZ
+            remember the little things.
           </p>
 
           <div class="button-row">
@@ -1207,6 +1437,7 @@ function renderDashboard() {
             <button
               class="small-action"
               data-nav="todos"
+              type="button"
             >
               See my tasks
             </button>
@@ -1214,6 +1445,7 @@ function renderDashboard() {
             <button
               class="small-action"
               data-nav="reminders"
+              type="button"
             >
               My reminders
             </button>
@@ -1222,28 +1454,36 @@ function renderDashboard() {
 
         </div>
 
-        ${stickerTag(
-          "hero-sticker"
-        )}
+
+        ${
+          data.character.sticker
+
+            ? `
+              <div class="hero-character">
+                ${characterImg(heroPose)}
+              </div>
+            `
+
+            : ""
+        }
 
       </article>
 
 
       <!-- PROFILE -->
 
-      <article
-        class="card profile-card"
-      >
+      <article class="card profile-card">
+
+        ${svgDoodle(
+          "heart",
+          "doodle-heart"
+        )}
 
         <div class="card-title">
 
           <h3>
             About Me
           </h3>
-
-          <span>
-            ♧
-          </span>
 
         </div>
 
@@ -1267,14 +1507,11 @@ function renderDashboard() {
                 profile.mbti ||
                 "MBTI"
               )}
-
               ·
-
               ${esc(
                 calculateAge(
                   profile.dob
-                ) ||
-                "Age"
+                ) || "-"
               )}
             </div>
 
@@ -1294,8 +1531,9 @@ function renderDashboard() {
         <button
           class="small-action"
           data-nav="profile"
+          type="button"
         >
-          View profile
+          View profile →
         </button>
 
       </article>
@@ -1303,9 +1541,12 @@ function renderDashboard() {
 
       <!-- CHARACTER -->
 
-      <article
-        class="card character-card"
-      >
+      <article class="card character-card">
+
+        ${svgDoodle(
+          "spark",
+          "doodle-spark"
+        )}
 
         <div class="card-title">
 
@@ -1316,33 +1557,18 @@ function renderDashboard() {
             )}
           </h3>
 
-          <span>
-            ✦
-          </span>
+          <small>
+            companion
+          </small>
 
         </div>
 
 
         <div class="character-stage">
 
-          ${
-            data.character.sticker
-
-              ? `
-                <img
-                  class="character-sticker sitting"
-                  src="${data.character.sticker}"
-                  alt="Character sticker"
-                >
-              `
-
-              : `
-                <div class="character-placeholder">
-                  Upload your character
-                  in Character.
-                </div>
-              `
-          }
+          ${characterImg(
+            characterPose
+          )}
 
         </div>
 
@@ -1358,7 +1584,8 @@ function renderDashboard() {
 
         <div class="character-mood">
           ${esc(
-            shortPersonality()
+            data.character.personality ||
+            "Your companion is ready."
           )}
         </div>
 
@@ -1367,50 +1594,66 @@ function renderDashboard() {
     </div>
 
 
-    <!-- STATISTICS -->
+    <!-- STATS -->
 
     <div class="stats-row">
 
       ${statCard(
         "check",
-        pendingTasks,
-        "Open tasks"
+        pending,
+        "Open tasks",
+        "Pending"
       )}
 
       ${statCard(
         "bell",
         todayReminders,
-        "Reminders"
+        "Reminders",
+        "Due today"
       )}
 
       ${statCard(
         "target",
         activeGoals,
-        "Goals"
+        "Goals",
+        "In progress"
       )}
 
       ${statCard(
         "note",
         data.notes.length,
-        "Notes"
+        "Notes",
+        "Saved"
       )}
 
       ${statCard(
-        "star",
-        data.goals.length,
-        "Plans"
+        "spark",
+        data.goals.filter(
+          goal =>
+            Number(
+              goal.progress || 0
+            ) === 100
+        ).length,
+        "Plans",
+        "Completed"
       )}
 
     </div>
 
 
-    <!-- FIRST LOWER ROW -->
+    <!-- LOWER ROW -->
 
     <div class="lower-grid">
 
-      <!-- REMINDER -->
+
+      <!-- REMINDERS -->
 
       <article class="card">
+
+        ${svgDoodle(
+          "heart",
+          "doodle-heart"
+        )}
 
         <div class="card-title">
 
@@ -1418,9 +1661,13 @@ function renderDashboard() {
             Next Reminder
           </h3>
 
-          <span>
-            ♡
-          </span>
+          <button
+            class="small-action"
+            data-nav="reminders"
+            type="button"
+          >
+            View all
+          </button>
 
         </div>
 
@@ -1434,19 +1681,33 @@ function renderDashboard() {
                 )
                 .join("")
 
-            : empty(
-                "Nothing pressing. The little bell is resting."
-              )
+            : `
+              <div class="empty">
+                Nothing pressing.
+                The little bell is resting.
+              </div>
+            `
         }
 
 
-        ${
-          upcoming.length
-            ? stickerTag(
-                "mini-sticker"
-              )
-            : ""
-        }
+        <div class="planner-character bottom-character">
+
+          ${characterImg(
+            reminderPose,
+            "small-character"
+          )}
+
+        </div>
+
+
+        <button
+          class="small-action"
+          data-add="reminder"
+          type="button"
+        >
+          ${ICONS.plus}
+          Add reminder
+        </button>
 
       </article>
 
@@ -1463,35 +1724,52 @@ function renderDashboard() {
 
           <button
             class="small-action"
-            data-add="todo"
+            data-nav="todos"
             type="button"
           >
-            ${ICONS.plus}
+            View all
           </button>
 
         </div>
 
 
         ${
-          tasks.length
+          todayTodos.length
 
-            ? tasks
-                .map(todoMini)
+            ? todayTodos
+                .map(
+                  todoMini
+                )
                 .join("")
 
-            : empty(
-                "Your list is clear."
-              )
+            : `
+              <div class="empty">
+                Your list is clear.
+              </div>
+            `
         }
+
+
+        <button
+          class="small-action"
+          data-add="todo"
+          type="button"
+        >
+          ${ICONS.plus}
+          Add task
+        </button>
 
       </article>
 
 
       <!-- PLANS -->
 
-      <article
-        class="card plans-card"
-      >
+      <article class="card">
+
+        ${svgDoodle(
+          "spark",
+          "doodle-spark"
+        )}
 
         <div class="card-title">
 
@@ -1499,47 +1777,23 @@ function renderDashboard() {
             Little Plans
           </h3>
 
-          <span>
-            ✦
-          </span>
-
         </div>
 
 
-        ${
-          data.goals
-            .slice(0, 3)
-            .map(
-              goal => `
-                <div class="plan-line">
-
-                  <span>
-                    ♥
-                  </span>
-
-                  ${esc(
-                    goal.title
-                  )}
-
-                </div>
-              `
-            )
-            .join("")
-
-          ||
-
-          `
-            <div class="empty">
-              Small plans.<br>
-              Big direction.
-            </div>
-          `
-        }
+        <div class="note-paper">
+          Small plans.<br>
+          Big direction.
+        </div>
 
 
-        ${stickerTag(
-          "mini-sticker"
-        )}
+        <div class="planner-character right-character">
+
+          ${characterImg(
+            planPose,
+            "tiny-character"
+          )}
+
+        </div>
 
       </article>
 
@@ -1550,11 +1804,8 @@ function renderDashboard() {
 
     <div class="lower-grid">
 
-      <!-- NOTE -->
 
-      <article
-        class="card dashboard-note"
-      >
+      <article class="card">
 
         <div class="card-title">
 
@@ -1562,9 +1813,7 @@ function renderDashboard() {
             Little Note
           </h3>
 
-          <span>
-            ✿
-          </span>
+          ${ICONS.note}
 
         </div>
 
@@ -1581,8 +1830,6 @@ function renderDashboard() {
       </article>
 
 
-      <!-- TODAY -->
-
       <article class="card">
 
         <div class="card-title">
@@ -1591,87 +1838,55 @@ function renderDashboard() {
             Today
           </h3>
 
-          <span>
-            ☼
-          </span>
+          <small>
+            ${
+              new Date()
+                .toLocaleDateString(
+                  [],
+                  {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric"
+                  }
+                )
+            }
+          </small>
 
         </div>
 
 
         <div class="quote-box">
 
-          One step at a time.
+          One step at a time.<br>
 
-          <br>
-
-          <span
-            style="font-size:14px"
-          >
-            You've got this,
-            ${esc(name)}.
-          </span>
+          Keep moving toward
+          the life you want.
 
         </div>
 
-
-        <div
-          class="dotted"
-          style="margin-top:15px"
-        ></div>
-
-
-        <p
-          style="
-            font-size:11px;
-            opacity:.62;
-          "
-        >
-
-          ${todayReminders}
-          reminder${
-            todayReminders === 1
-              ? ""
-              : "s"
-          }
-          due today.
-
-        </p>
-
       </article>
 
-
-      <!-- CHARACTER CAMEO -->
 
       <article class="card">
 
         <div class="card-title">
 
           <h3>
-            A little reminder
+            A Little Reminder
           </h3>
-
-          <span>
-            ♡
-          </span>
 
         </div>
 
 
-        <p
-          style="
-            font-family:'Patrick Hand';
-            font-size:20px;
-            line-height:1.3;
-          "
-        >
-          Progress,
-          not perfection.
-        </p>
+        <div class="note-paper">
 
+          You do not need to finish
+          everything today.
 
-        ${stickerTag(
-          "mini-sticker"
-        )}
+          Just choose the next
+          useful thing.
+
+        </div>
 
       </article>
 
@@ -1682,8 +1897,7 @@ function renderDashboard() {
 
       ✦
       &nbsp;
-      Discipline today,
-      freedom tomorrow.
+      I am becoming the best version of myself.
       &nbsp;
       ♡
 
@@ -1702,27 +1916,21 @@ function renderDashboard() {
 }
 
 
+/* Dashboard helpers */
+
 function statCard(
   icon,
   number,
-  label
+  label,
+  sub
 ) {
 
   return `
-
-    <article
-      class="card stat-card"
-    >
+    <article class="card stat-card">
 
       <div class="stat-icon">
-
-        ${
-          ICONS[icon] ||
-          ICONS.target
-        }
-
+        ${ICONS[icon]}
       </div>
-
 
       <div>
 
@@ -1731,33 +1939,23 @@ function statCard(
         </div>
 
         <div class="stat-label">
-          ${esc(label)}
+          ${esc(label)}<br>
+          ${esc(sub)}
         </div>
 
       </div>
 
     </article>
-
   `;
 
 }
 
 
-function empty(text) {
+function reminderMini(
+  reminder
+) {
 
   return `
-    <div class="empty">
-      ${esc(text)}
-    </div>
-  `;
-
-}
-
-
-function reminderMini(reminder) {
-
-  return `
-
     <div class="list-item">
 
       <div class="item-row">
@@ -1767,18 +1965,14 @@ function reminderMini(reminder) {
         <div class="item-main">
 
           <div class="item-title">
-            ${esc(
-              reminder.title
-            )}
+            ${esc(reminder.title)}
           </div>
 
           <div class="item-meta">
             ${formatDateTime(
               reminder.when
             )}
-
             ·
-
             ${esc(
               reminder.category ||
               "Personal"
@@ -1790,44 +1984,37 @@ function reminderMini(reminder) {
       </div>
 
     </div>
-
   `;
 
 }
 
 
-function todoMini(task) {
+function todoMini(todo) {
 
   return `
-
     <div class="list-item">
 
       <div class="item-row">
 
-        <span class="todo-check">
-
-          ${
-            task.done
-              ? ICONS.tick
-              : ICONS.circle
-          }
-
-        </span>
-
+        <span class="dot"></span>
 
         <div class="item-main">
 
           <div class="item-title">
-            ${esc(
-              task.title
-            )}
+            ${esc(todo.title)}
           </div>
 
           <div class="item-meta">
             ${esc(
-              task.category ||
+              todo.category ||
               "Personal"
             )}
+
+            ${
+              todo.due
+                ? ` · ${esc(todo.due)}`
+                : ""
+            }
           </div>
 
         </div>
@@ -1835,7 +2022,6 @@ function todoMini(task) {
       </div>
 
     </div>
-
   `;
 
 }
@@ -1867,9 +2053,8 @@ function renderProfile() {
         </h2>
 
         <p>
-          Your details,
-          preferences and
-          personal reference sheet.
+          Your details, preferences
+          and personality.
         </p>
 
       </div>
@@ -1880,23 +2065,36 @@ function renderProfile() {
     <div class="profile-layout">
 
 
-      <article
-        class="card profile-preview soft"
-      >
+      <!-- PROFILE PREVIEW -->
 
-        <div
-          class="large-avatar"
-          id="profileLargeAvatar"
-        ></div>
+      <article class="card profile-preview soft">
+
+        <div class="profile-photo-frame">
+
+          ${
+            profile.image
+
+              ? `
+                <img
+                  class="profile-photo"
+                  id="profilePhoto"
+                  src="${profile.image}"
+                  alt="Profile picture"
+                >
+              `
+
+              : `
+                <div class="profile-photo-placeholder">
+                  Your picture<br>
+                  will appear here.
+                </div>
+              `
+          }
+
+        </div>
 
 
-        <h3
-          style="
-            font-family:'Patrick Hand';
-            font-size:30px;
-            font-weight:400;
-          "
-        >
+        <h3>
           ${esc(
             profile.name ||
             "Laya"
@@ -1904,12 +2102,7 @@ function renderProfile() {
         </h3>
 
 
-        <p
-          style="
-            font-size:11px;
-            opacity:.62;
-          "
-        >
+        <p>
           ${esc(
             profile.occupation ||
             "Occupation not set"
@@ -1929,10 +2122,32 @@ function renderProfile() {
 
         </label>
 
+
+        <div class="dotted-divider"></div>
+
+
+        <div
+          style="
+            font-size:10px;
+            opacity:.58;
+            line-height:1.5;
+          "
+        >
+          The picture stays in this browser.
+          It is not uploaded to a server by LAYRAAZ.
+        </div>
+
       </article>
 
 
-      <article class="card">
+      <!-- PROFILE FORM -->
+
+      <article class="card profile-form-card">
+
+        <h3 class="profile-form-section-title">
+          Personal Details
+        </h3>
+
 
         <form
           id="profileForm"
@@ -1952,24 +2167,13 @@ function renderProfile() {
             "date"
           )}
 
-
-          <div class="field">
-
-            <label>
-              Age (automatic)
-            </label>
-
-            <input
-              value="${esc(
-                calculateAge(
-                  profile.dob
-                )
-              )}"
-              readonly
-            >
-
-          </div>
-
+          ${field(
+            "age",
+            "Age (automatic)",
+            calculateAge(
+              profile.dob
+            )
+          )}
 
           ${field(
             "mbti",
@@ -1986,7 +2190,6 @@ function renderProfile() {
             true
           )}
 
-
           ${field(
             "occupation",
             "Occupation",
@@ -1994,7 +2197,6 @@ function renderProfile() {
             "text",
             true
           )}
-
 
           ${field(
             "goal",
@@ -2011,20 +2213,17 @@ function renderProfile() {
             profile.favoriteColors
           )}
 
-
           ${field(
             "favoriteFood",
             "Favourite Food",
             profile.favoriteFood
           )}
 
-
           ${field(
             "favoritePlaces",
             "Favourite Places",
             profile.favoritePlaces
           )}
-
 
           ${field(
             "favoriteMusic",
@@ -2039,13 +2238,11 @@ function renderProfile() {
             profile.skinType
           )}
 
-
           ${field(
             "bodyType",
             "Body Type",
             profile.bodyType
           )}
-
 
           ${field(
             "familyMembers",
@@ -2058,16 +2255,18 @@ function renderProfile() {
           ${field(
             "strengths",
             "Strengths",
-            profile.strengths
+            profile.strengths,
+            "text",
+            true
           )}
-
 
           ${field(
             "weaknesses",
             "Weaknesses",
-            profile.weaknesses
+            profile.weaknesses,
+            "text",
+            true
           )}
-
 
           ${field(
             "favoriteBeverages",
@@ -2075,20 +2274,17 @@ function renderProfile() {
             profile.favoriteBeverages
           )}
 
-
           ${field(
             "bloodGroup",
             "Blood Group",
             profile.bloodGroup
           )}
 
-
           ${field(
             "favoriteAnimal",
             "Favourite Animal",
             profile.favoriteAnimal
           )}
-
 
           ${field(
             "favoriteBird",
@@ -2121,12 +2317,14 @@ function renderProfile() {
   `;
 
 
-  setAvatar(
+  const age =
     document.getElementById(
-      "profileLargeAvatar"
-    ),
-    profile.image
-  );
+      "age"
+    );
+
+  if (age) {
+    age.readOnly = true;
+  }
 
 
   document
@@ -2135,7 +2333,42 @@ function renderProfile() {
     )
     .addEventListener(
       "submit",
-      saveProfile
+      event => {
+
+        event.preventDefault();
+
+        const form =
+          new FormData(
+            event.currentTarget
+          );
+
+        for (
+          const [key,value]
+          of form.entries()
+        ) {
+
+          if (
+            key !== "age"
+          ) {
+
+            data.profile[key] =
+              value;
+
+          }
+
+        }
+
+        saveData();
+
+        renderProfile();
+        renderDashboard();
+        updateTopbar();
+
+        toast(
+          "Profile saved."
+        );
+
+      }
     );
 
 
@@ -2150,27 +2383,13 @@ function renderProfile() {
         const file =
           event.target.files?.[0];
 
-        if (!file) return;
-
-
-        if (
-          !file.type.startsWith(
-            "image/"
-          )
-        ) {
-
-          toast(
-            "Please choose an image file."
-          );
-
+        if (!file) {
           return;
-
         }
-
 
         try {
 
-          profile.image =
+          data.profile.image =
             await fileToDataURL(
               file
             );
@@ -2178,9 +2397,7 @@ function renderProfile() {
           saveData();
 
           renderProfile();
-
           renderDashboard();
-
           updateTopbar();
 
           toast(
@@ -2190,7 +2407,7 @@ function renderProfile() {
         } catch {
 
           toast(
-            "I couldn't upload that picture."
+            "I couldn't read that picture."
           );
 
         }
@@ -2201,42 +2418,7 @@ function renderProfile() {
 }
 
 
-function saveProfile(event) {
-
-  event.preventDefault();
-
-
-  const form =
-    new FormData(
-      event.currentTarget
-    );
-
-
-  for (
-    const [key, value]
-    of form.entries()
-  ) {
-
-    data.profile[key] =
-      value;
-
-  }
-
-
-  saveData();
-
-  renderProfile();
-
-  renderDashboard();
-
-  updateTopbar();
-
-  toast(
-    "Profile saved."
-  );
-
-}
-
+/* Generic form field */
 
 function field(
   name,
@@ -2247,30 +2429,22 @@ function field(
 ) {
 
   return `
-
-    <div
-      class="field ${
-        full
-          ? "full"
-          : ""
-      }"
-    >
+    <div class="field ${full ? "full" : ""}">
 
       <label
-        for="${name}"
+        for="${esc(name)}"
       >
         ${esc(label)}
       </label>
 
       <input
-        id="${name}"
-        name="${name}"
-        type="${type}"
+        id="${esc(name)}"
+        name="${esc(name)}"
+        type="${esc(type)}"
         value="${esc(value)}"
       >
 
     </div>
-
   `;
 
 }
@@ -2302,8 +2476,10 @@ function renderCharacter() {
         </h2>
 
         <p>
-          Your companion is kept
-          as a transparent sticker.
+          Upload one character image.
+          LAYRAAZ turns it into a transparent
+          sticker and varies its placement
+          across the dashboard.
         </p>
 
       </div>
@@ -2314,65 +2490,112 @@ function renderCharacter() {
     <div class="character-layout">
 
 
+      <!-- IMAGE -->
+
       <article
-        class="
-          card
-          character-upload-card
-          soft
-        "
+        class="card
+               character-upload-card
+               soft"
       >
 
-        <div class="sticker-preview">
+        <div>
 
-          ${
-            character.sticker
+          <div class="sticker-preview">
 
-              ? `
-                <img
-                  src="${character.sticker}"
-                  alt="Character sticker"
-                >
-              `
+            ${
+              character.sticker
 
-              : `
-                <div class="character-placeholder">
-                  No sticker yet
-                </div>
-              `
-          }
+                ? `
+                  <img
+                    src="${character.sticker}"
+                    alt="Character sticker"
+                  >
+                `
+
+                : `
+                  <div class="character-placeholder">
+                    No sticker yet.
+                  </div>
+                `
+            }
+
+          </div>
+
+
+          <label class="upload-label">
+
+            Upload character image
+
+            <input
+              id="characterImageInput"
+              type="file"
+              accept="image/*"
+            >
+
+          </label>
+
+
+          <p class="sticker-help">
+
+            For the white-background character
+            you provided, the processor removes
+            only connected near-white background
+            pixels, crops the transparent space
+            and adds a subtle sticker edge.
+
+            The original rectangle is not used
+            in dashboard reminders.
+
+          </p>
+
+
+          <div class="dotted-divider"></div>
+
+
+          <div class="character-poses-preview">
+
+            ${
+              character.sticker
+
+                ? `
+
+                  <img
+                    class="pose-sample pose-1"
+                    src="${character.sticker}"
+                    alt="Character pose sample"
+                  >
+
+                  <img
+                    class="pose-sample pose-2"
+                    src="${character.sticker}"
+                    alt="Character pose sample"
+                  >
+
+                  <img
+                    class="pose-sample pose-3"
+                    src="${character.sticker}"
+                    alt="Character pose sample"
+                  >
+
+                  <img
+                    class="pose-sample pose-4"
+                    src="${character.sticker}"
+                    alt="Character pose sample"
+                  >
+
+                `
+
+                : ""
+            }
+
+          </div>
 
         </div>
 
-
-        <label class="upload-label">
-
-          Upload character image
-
-          <input
-            id="characterImageInput"
-            type="file"
-            accept="image/*"
-          >
-
-        </label>
-
-
-        <p class="sticker-help">
-
-          The white connected
-          background is removed,
-          the artwork is cropped
-          and a small sticker edge
-          is added.
-
-          The original rectangular
-          image is not used in
-          notifications.
-
-        </p>
-
       </article>
 
+
+      <!-- SETTINGS -->
 
       <article class="card">
 
@@ -2390,11 +2613,11 @@ function renderCharacter() {
             true
           )}
 
-
           ${field(
             "characterPersonality",
             "Personality",
-            character.personality,
+            character.personality ||
+              "Calm, intelligent, firm and caring.",
             "text",
             true
           )}
@@ -2403,25 +2626,26 @@ function renderCharacter() {
           <div class="field full">
 
             <label>
-              How the companion works
+              How the character is used
             </label>
 
-            <div
-              class="card soft"
+
+            <div class="card soft"
               style="
                 font-size:11px;
                 line-height:1.55;
               "
             >
 
-              Your personality text
-              changes reminder dialogue.
+              The same sticker is not simply
+              pasted into every card.
 
-              The same character sticker
-              can appear in different
-              sizes, corners and
-              orientations throughout
-              the dashboard.
+              Dashboard placements use different
+              scale, rotation, mirroring and
+              peeking treatments.
+
+              Genuine new body poses require
+              separate artwork later.
 
             </div>
 
@@ -2445,7 +2669,7 @@ function renderCharacter() {
                 id="testCharacter"
                 type="button"
               >
-                Test Character
+                Test Notification
               </button>
 
 
@@ -2454,7 +2678,7 @@ function renderCharacter() {
                 id="requestNotifications"
                 type="button"
               >
-                Enable Browser Notifications
+                Enable Notifications
               </button>
 
             </div>
@@ -2480,25 +2704,27 @@ function renderCharacter() {
 
         event.preventDefault();
 
-
-        character.name =
-          document.getElementById(
-            "characterName"
-          ).value.trim() ||
+        data.character.name =
+          document
+            .getElementById(
+              "characterName"
+            )
+            .value
+            .trim() ||
           "Character";
 
-
-        character.personality =
-          document.getElementById(
-            "characterPersonality"
-          ).value.trim() ||
+        data.character.personality =
+          document
+            .getElementById(
+              "characterPersonality"
+            )
+            .value
+            .trim() ||
           "Calm, intelligent, firm and caring.";
-
 
         saveData();
 
         renderCharacter();
-
         renderDashboard();
 
         toast(
@@ -2520,36 +2746,35 @@ function renderCharacter() {
         const file =
           event.target.files?.[0];
 
-        if (!file) return;
+        if (!file) {
+          return;
+        }
 
+        toast(
+          "Making your sticker..."
+        );
 
         try {
-
-          toast(
-            "Making the sticker..."
-          );
-
 
           const source =
             await fileToDataURL(
               file
             );
 
-
-          character.image =
-            source;
-
-
-          character.sticker =
+          const sticker =
             await makeSticker(
               source
             );
 
+          data.character.image =
+            source;
+
+          data.character.sticker =
+            sticker;
 
           saveData();
 
           renderCharacter();
-
           renderDashboard();
 
           toast(
@@ -2563,7 +2788,7 @@ function renderCharacter() {
           );
 
           toast(
-            "I couldn't process that image."
+            "I couldn't process that image. Try the original image again."
           );
 
         }
@@ -2595,122 +2820,15 @@ function renderCharacter() {
 
 
 /* =========================================================
-   PERSONALITY
+   IMAGE / STICKER PROCESSING
 ========================================================= */
 
-function shortPersonality() {
-
-  const text =
-    data.character.personality ||
-    "Calm, intelligent, firm and caring.";
-
-  if (
-    text.length <= 55
-  ) {
-    return text;
-  }
-
-  return (
-    text.slice(0, 52) +
-    "…"
-  );
-
-}
-
-
-function dialogue(title) {
-
-  const personality =
-    (
-      data.character.personality ||
-      ""
-    ).toLowerCase();
-
-  const name =
-    data.profile.name ||
-    "Laya";
-
-
-  if (
-    personality.includes(
-      "firm"
-    ) &&
-    personality.includes(
-      "caring"
-    )
-  ) {
-
-    return (
-      `${name}, ${title} is due. ` +
-      `Handle it now. ` +
-      `I'll be reasonable about it.`
-    );
-
-  }
-
-
-  if (
-    personality.includes(
-      "firm"
-    )
-  ) {
-
-    return (
-      `${name}. ${title} is due. ` +
-      `Do it now.`
-    );
-
-  }
-
-
-  if (
-    personality.includes(
-      "caring"
-    )
-  ) {
-
-    return (
-      `Tiny reminder, ${name}. ` +
-      `You wanted to do ${title}. ` +
-      `Shall we take care of it now?`
-    );
-
-  }
-
-
-  if (
-    personality.includes(
-      "intelligent"
-    ) ||
-    personality.includes(
-      "calm"
-    )
-  ) {
-
-    return (
-      `A gentle nudge, ${name}. ` +
-      `${title} is due now.`
-    );
-
-  }
-
-
-  return (
-    `${name}, ${title} is due. ` +
-    `Let's take care of it.`
-  );
-
-}
-
-
-/* =========================================================
-   FILE / IMAGE HELPERS
-========================================================= */
-
-function fileToDataURL(file) {
+function fileToDataURL(
+  file
+) {
 
   return new Promise(
-    (resolve, reject) => {
+    (resolve,reject) => {
 
       const reader =
         new FileReader();
@@ -2734,10 +2852,12 @@ function fileToDataURL(file) {
 }
 
 
-function loadImage(source) {
+function loadImage(
+  source
+) {
 
   return new Promise(
-    (resolve, reject) => {
+    (resolve,reject) => {
 
       const image =
         new Image();
@@ -2760,315 +2880,71 @@ function loadImage(source) {
 }
 
 
-/* =========================================================
-   CHARACTER STICKER PROCESSOR
-========================================================= */
-
-async function makeSticker(source) {
-
-  const image =
-    await loadImage(
-      source
-    );
-
-
-  const max = 700;
-
-
-  const scale =
-    Math.min(
-      1,
-      max /
-        Math.max(
-          image.naturalWidth,
-          image.naturalHeight
-        )
-    );
-
-
-  const width =
-    Math.max(
-      1,
-      Math.round(
-        image.naturalWidth *
-        scale
-      )
-    );
-
-
-  const height =
-    Math.max(
-      1,
-      Math.round(
-        image.naturalHeight *
-        scale
-      )
-    );
-
-
-  const canvas =
-    document.createElement(
-      "canvas"
-    );
-
-
-  canvas.width =
-    width;
-
-  canvas.height =
-    height;
-
-
-  const context =
-    canvas.getContext(
-      "2d",
-      {
-        willReadFrequently:
-          true
-      }
-    );
-
-
-  context.drawImage(
-    image,
-    0,
-    0,
-    width,
-    height
-  );
-
-
-  const imageData =
-    context.getImageData(
-      0,
-      0,
-      width,
-      height
-    );
-
-
-  const pixels =
-    imageData.data;
-
-
-  /*
-    The uploaded character
-    has a clean white background.
-
-    Only WHITE pixels connected
-    to the outside edges are
-    removed.
-
-    This prevents the old
-    flood-fill problem where
-    the character itself could
-    disappear.
-  */
-
-  const nearWhite =
-    (
-      r,
-      g,
-      b
-    ) =>
-      r > 242 &&
-      g > 242 &&
-      b > 242;
-
-
-  const visited =
-    new Uint8Array(
-      width * height
-    );
-
-
-  const queue = [];
-
-
-  const push =
-    (
-      x,
-      y
-    ) => {
-
-      const index =
-        y * width +
-        x;
-
-      if (
-        visited[index]
-      ) {
-        return;
-      }
-
-      visited[index] = 1;
-
-      queue.push(index);
-
-    };
-
-
-  for (
-    let x = 0;
-    x < width;
-    x++
-  ) {
-
-    push(x, 0);
-
-    if (height > 1) {
-      push(
-        x,
-        height - 1
-      );
-    }
-
-  }
-
-
-  for (
-    let y = 0;
-    y < height;
-    y++
-  ) {
-
-    push(0, y);
-
-    if (width > 1) {
-      push(
-        width - 1,
-        y
-      );
-    }
-
-  }
-
-
-  let head = 0;
-
-
-  while (
-    head <
-    queue.length
-  ) {
-
-    const index =
-      queue[head++];
-
-
-    const x =
-      index % width;
-
-    const y =
-      Math.floor(
-        index / width
-      );
-
-
-    const pixel =
-      index * 4;
-
-
-    if (
-      !nearWhite(
-        pixels[pixel],
-        pixels[pixel + 1],
-        pixels[pixel + 2]
-      )
-    ) {
-      continue;
-    }
-
-
-    pixels[pixel + 3] =
-      0;
-
-
-    const directions = [
-      [1, 0],
-      [-1, 0],
-      [0, 1],
-      [0, -1]
-    ];
-
-
-    for (
-      const [dx, dy]
-      of directions
-    ) {
-
-      const nextX =
-        x + dx;
-
-      const nextY =
-        y + dy;
-
-
-      if (
-        nextX >= 0 &&
-        nextX < width &&
-        nextY >= 0 &&
-        nextY < height
-      ) {
-
-        push(
-          nextX,
-          nextY
-        );
-
-      }
-
-    }
-
-  }
-
-
-  context.putImageData(
-    imageData,
-    0,
-    0
-  );
-
-
-  const cropped =
-    cropTransparent(
-      canvas
-    );
-
-
-  const padding = 10;
-
-
-  const output =
-    document.createElement(
-      "canvas"
-    );
-
-
-  output.width =
-    cropped.width +
-    padding * 2;
-
-  output.height =
-    cropped.height +
-    padding * 2;
-
-
-  const outputContext =
-    output.getContext(
-      "2d"
-    );
-
-
-  outputContext.drawImage(
-    cropped,
-    padding,
-    padding
-  );
-
-
-  return output.toDataURL(
-    "image/png"
+function samplePixel(
+  pixels,
+  width,
+  x,
+  y
+) {
+
+  const index =
+    (y * width + x) * 4;
+
+  return {
+
+    r: pixels[index],
+    g: pixels[index + 1],
+    b: pixels[index + 2]
+
+  };
+
+}
+
+
+function averagePixels(
+  samples
+) {
+
+  return {
+
+    r: Math.round(
+      samples.reduce(
+        (sum,pixel) =>
+          sum + pixel.r,
+        0
+      ) / samples.length
+    ),
+
+    g: Math.round(
+      samples.reduce(
+        (sum,pixel) =>
+          sum + pixel.g,
+        0
+      ) / samples.length
+    ),
+
+    b: Math.round(
+      samples.reduce(
+        (sum,pixel) =>
+          sum + pixel.b,
+        0
+      ) / samples.length
+    )
+
+  };
+
+}
+
+
+function colorDistance(
+  r,g,b,
+  R,G,B
+) {
+
+  return Math.sqrt(
+    (r-R)**2 +
+    (g-G)**2 +
+    (b-B)**2
   );
 
 }
@@ -3087,8 +2963,7 @@ function cropTransparent(
       }
     );
 
-
-  const image =
+  const imageData =
     context.getImageData(
       0,
       0,
@@ -3096,9 +2971,8 @@ function cropTransparent(
       canvas.height
     );
 
-
   const pixels =
-    image.data;
+    imageData.data;
 
 
   let minX =
@@ -3128,19 +3002,11 @@ function cropTransparent(
 
       const alpha =
         pixels[
-          (
-            y *
-            canvas.width +
-            x
-          ) *
-            4 +
+          (y * canvas.width + x) * 4 +
           3
         ];
 
-
-      if (
-        alpha > 8
-      ) {
+      if (alpha > 8) {
 
         minX =
           Math.min(
@@ -3187,28 +3053,27 @@ function cropTransparent(
       "canvas"
     );
 
-
   output.width =
-    maxX -
-    minX +
-    1;
+    maxX - minX + 1;
 
   output.height =
-    maxY -
-    minY +
-    1;
+    maxY - minY + 1;
 
 
   output
     .getContext("2d")
     .drawImage(
       canvas,
+
       minX,
       minY,
+
       output.width,
       output.height,
+
       0,
       0,
+
       output.width,
       output.height
     );
@@ -3219,9 +3084,571 @@ function cropTransparent(
 }
 
 
+/*
+  White-background-specific
+  sticker processing.
+
+  The important difference from
+  the previous version is that
+  the algorithm only removes
+  near-white pixels that are
+  CONNECTED to the outside.
+
+  Dark character pixels therefore
+  cannot be accidentally swallowed
+  simply because they differ from
+  the corner colour.
+*/
+
+async function makeSticker(
+  source
+) {
+
+  const image =
+    await loadImage(
+      source
+    );
+
+
+  const max =
+    620;
+
+
+  const scale =
+    Math.min(
+      1,
+      max /
+        Math.max(
+          image.naturalWidth,
+          image.naturalHeight
+        )
+    );
+
+
+  const width =
+    Math.max(
+      1,
+      Math.round(
+        image.naturalWidth *
+        scale
+      )
+    );
+
+
+  const height =
+    Math.max(
+      1,
+      Math.round(
+        image.naturalHeight *
+        scale
+      )
+    );
+
+
+  const canvas =
+    document.createElement(
+      "canvas"
+    );
+
+  canvas.width =
+    width;
+
+  canvas.height =
+    height;
+
+
+  const context =
+    canvas.getContext(
+      "2d",
+      {
+        willReadFrequently:
+          true
+      }
+    );
+
+
+  context.drawImage(
+    image,
+    0,
+    0,
+    width,
+    height
+  );
+
+
+  const imageData =
+    context.getImageData(
+      0,
+      0,
+      width,
+      height
+    );
+
+
+  const pixels =
+    imageData.data;
+
+
+  const corners = [
+
+    samplePixel(
+      pixels,
+      width,
+      0,
+      0
+    ),
+
+    samplePixel(
+      pixels,
+      width,
+      width - 1,
+      0
+    ),
+
+    samplePixel(
+      pixels,
+      width,
+      0,
+      height - 1
+    ),
+
+    samplePixel(
+      pixels,
+      width,
+      width - 1,
+      height - 1
+    )
+
+  ];
+
+
+  const background =
+    averagePixels(
+      corners
+    );
+
+
+  const visited =
+    new Uint8Array(
+      width * height
+    );
+
+
+  const queue = [];
+
+
+  function push(
+    x,
+    y
+  ) {
+
+    if (
+      x < 0 ||
+      x >= width ||
+      y < 0 ||
+      y >= height
+    ) {
+
+      return;
+
+    }
+
+
+    const index =
+      y * width + x;
+
+
+    if (
+      !visited[index]
+    ) {
+
+      visited[index] =
+        1;
+
+      queue.push(
+        index
+      );
+
+    }
+
+  }
+
+
+  for (
+    let x = 0;
+    x < width;
+    x++
+  ) {
+
+    push(x,0);
+    push(
+      x,
+      height - 1
+    );
+
+  }
+
+
+  for (
+    let y = 0;
+    y < height;
+    y++
+  ) {
+
+    push(0,y);
+    push(
+      width - 1,
+      y
+    );
+
+  }
+
+
+  const directions = [
+
+    [1,0],
+    [-1,0],
+    [0,1],
+    [0,-1]
+
+  ];
+
+
+  let head =
+    0;
+
+
+  while (
+    head <
+    queue.length
+  ) {
+
+    const index =
+      queue[head++];
+
+
+    const x =
+      index %
+      width;
+
+
+    const y =
+      Math.floor(
+        index /
+        width
+      );
+
+
+    const pixelIndex =
+      index * 4;
+
+
+    const distance =
+      colorDistance(
+        pixels[pixelIndex],
+        pixels[pixelIndex + 1],
+        pixels[pixelIndex + 2],
+
+        background.r,
+        background.g,
+        background.b
+      );
+
+
+    if (
+      distance > 48
+    ) {
+
+      continue;
+
+    }
+
+
+    pixels[
+      pixelIndex + 3
+    ] = 0;
+
+
+    for (
+      const [
+        dx,
+        dy
+      ]
+      of directions
+    ) {
+
+      push(
+        x + dx,
+        y + dy
+      );
+
+    }
+
+  }
+
+
+  context.putImageData(
+    imageData,
+    0,
+    0
+  );
+
+
+  const cropped =
+    cropTransparent(
+      canvas
+    );
+
+
+  const padding =
+    16;
+
+
+  const output =
+    document.createElement(
+      "canvas"
+    );
+
+
+  output.width =
+    cropped.width +
+    padding * 2;
+
+  output.height =
+    cropped.height +
+    padding * 2;
+
+
+  const outputContext =
+    output.getContext(
+      "2d"
+    );
+
+
+  /*
+    Build a clean sticker border.
+  */
+
+  const mask =
+    document.createElement(
+      "canvas"
+    );
+
+  mask.width =
+    output.width;
+
+  mask.height =
+    output.height;
+
+
+  mask
+    .getContext("2d")
+    .drawImage(
+      cropped,
+      padding,
+      padding
+    );
+
+
+  const border =
+    document.createElement(
+      "canvas"
+    );
+
+  border.width =
+    output.width;
+
+  border.height =
+    output.height;
+
+
+  const borderContext =
+    border.getContext(
+      "2d"
+    );
+
+
+  borderContext.fillStyle =
+    isLight(
+      (
+        palettes[
+          data.appearance
+        ] ||
+        palettes.forest
+      ).background
+    )
+
+      ? "#FFFDF8"
+
+      : "#F6F0E7";
+
+
+  borderContext.fillRect(
+    0,
+    0,
+    border.width,
+    border.height
+  );
+
+
+  borderContext.globalCompositeOperation =
+    "destination-in";
+
+
+  borderContext.drawImage(
+    mask,
+    0,
+    0
+  );
+
+
+  borderContext.globalCompositeOperation =
+    "source-over";
+
+
+  const radius =
+    4;
+
+
+  for (
+    let y = -radius;
+    y <= radius;
+    y++
+  ) {
+
+    for (
+      let x = -radius;
+      x <= radius;
+      x++
+    ) {
+
+      if (
+        x*x +
+        y*y <=
+        radius*radius
+      ) {
+
+        outputContext.drawImage(
+          border,
+          x,
+          y
+        );
+
+      }
+
+    }
+
+  }
+
+
+  outputContext.drawImage(
+    cropped,
+    padding,
+    padding
+  );
+
+
+  return output.toDataURL(
+    "image/png"
+  );
+
+}
+
+
 /* =========================================================
    REMINDERS
 ========================================================= */
+
+function categoryField(
+  value = "Personal"
+) {
+
+  const categories = [
+    "Work",
+    "Personal",
+    "Finance",
+    "Learning"
+  ];
+
+
+  return `
+    <div class="field">
+
+      <label for="category">
+        Category
+      </label>
+
+      <select
+        id="category"
+        name="category"
+      >
+
+        ${
+          categories
+            .map(
+              category =>
+                `
+                <option
+                  ${
+                    category ===
+                    value
+                      ? "selected"
+                      : ""
+                  }
+                >
+                  ${category}
+                </option>
+                `
+            )
+            .join("")
+        }
+
+      </select>
+
+    </div>
+  `;
+
+}
+
+
+function toDateTimeLocal(
+  iso
+) {
+
+  if (!iso) {
+    return "";
+  }
+
+  const date =
+    new Date(iso);
+
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
+    return "";
+  }
+
+  const pad =
+    number =>
+      String(number)
+        .padStart(
+          2,
+          "0"
+        );
+
+
+  return `
+    ${date.getFullYear()}-
+    ${pad(date.getMonth()+1)}-
+    ${pad(date.getDate())}T
+    ${pad(date.getHours())}:
+    ${pad(date.getMinutes())}
+  `.replace(/\s/g,"");
+
+}
+
 
 function renderReminders() {
 
@@ -3231,15 +3658,14 @@ function renderReminders() {
     );
 
 
-  const list =
+  const sorted =
     [
       ...data.reminders
-    ]
-      .sort(
-        (a, b) =>
-          new Date(a.when) -
-          new Date(b.when)
-      );
+    ].sort(
+      (a,b) =>
+        new Date(a.when) -
+        new Date(b.when)
+    );
 
 
   element.innerHTML = `
@@ -3253,8 +3679,8 @@ function renderReminders() {
         </h2>
 
         <p>
-          Checked while
-          LAYRAAZ is open.
+          Your reminders stay in this browser.
+          The watcher checks while LAYRAAZ is open.
         </p>
 
       </div>
@@ -3274,17 +3700,20 @@ function renderReminders() {
     <div class="records-grid">
 
       ${
-        list.length
+        sorted.length
 
-          ? list
+          ? sorted
               .map(
                 reminderRecord
               )
               .join("")
 
-          : empty(
-              "No reminders yet. Add one and let the little bell keep watch."
-            )
+          : `
+            <article class="card empty">
+              No reminders yet.
+              Add one and let the little bell keep watch.
+            </article>
+          `
       }
 
     </div>
@@ -3352,11 +3781,32 @@ function reminderRecord(
 
       <div class="record-actions">
 
+
+        <button
+          class="icon-action"
+          data-done-reminder="${esc(
+            reminder.id
+          )}"
+          title="Done"
+          type="button"
+        >
+
+          ${
+            reminder.completed
+              ? ICONS.check
+              : ICONS.spark
+          }
+
+        </button>
+
+
         <button
           class="icon-action"
           data-edit-reminder="${esc(
             reminder.id
           )}"
+          title="Edit"
+          type="button"
         >
           ${ICONS.edit}
         </button>
@@ -3367,6 +3817,8 @@ function reminderRecord(
           data-delete-reminder="${esc(
             reminder.id
           )}"
+          title="Delete"
+          type="button"
         >
           ${ICONS.trash}
         </button>
@@ -3381,7 +3833,7 @@ function reminderRecord(
 
 
 /* =========================================================
-   TODOS
+   TO-DOS
 ========================================================= */
 
 function renderTodos() {
@@ -3403,8 +3855,8 @@ function renderTodos() {
         </h2>
 
         <p>
-          Work, Personal,
-          Finance and Learning.
+          Only four categories:
+          Work, Personal, Finance and Learning.
         </p>
 
       </div>
@@ -3413,6 +3865,7 @@ function renderTodos() {
       <button
         class="primary-button"
         data-add="todo"
+        type="button"
       >
         + Add To-do
       </button>
@@ -3426,12 +3879,17 @@ function renderTodos() {
         data.todos.length
 
           ? data.todos
-              .map(todoRecord)
+              .map(
+                todoRecord
+              )
               .join("")
 
-          : empty(
-              "No tasks yet. Empty checkboxes can be surprisingly persuasive."
-            )
+          : `
+            <article class="card empty">
+              No tasks yet.
+              Empty checkboxes are waiting patiently.
+            </article>
+          `
       }
 
     </div>
@@ -3441,7 +3899,9 @@ function renderTodos() {
 }
 
 
-function todoRecord(task) {
+function todoRecord(
+  todo
+) {
 
   return `
 
@@ -3450,7 +3910,7 @@ function todoRecord(task) {
         card
         record
         ${
-          task.done
+          todo.done
             ? "completed"
             : ""
         }
@@ -3460,21 +3920,30 @@ function todoRecord(task) {
       <div class="record-left">
 
 
-        <!-- CHECKBOX IS LEFT OF TEXT -->
-
         <button
-          class="todo-check"
+          class="
+            todo-check
+            ${
+              todo.done
+                ? "checked"
+                : ""
+            }
+          "
           data-toggle-todo="${esc(
-            task.id
+            todo.id
           )}"
-          title="Complete task"
+          title="${
+            todo.done
+              ? "Mark incomplete"
+              : "Mark complete"
+          }"
           type="button"
         >
 
           ${
-            task.done
-              ? ICONS.tick
-              : ICONS.circle
+            todo.done
+              ? ICONS.check
+              : ""
           }
 
         </button>
@@ -3484,21 +3953,20 @@ function todoRecord(task) {
 
           <div class="record-title">
             ${esc(
-              task.title
+              todo.title
             )}
           </div>
 
           <div class="record-desc">
 
             ${esc(
-              task.category ||
+              todo.category ||
               "Personal"
             )}
 
             ${
-              task.due
-                ? " · " +
-                  esc(task.due)
+              todo.due
+                ? ` · ${esc(todo.due)}`
                 : ""
             }
 
@@ -3514,8 +3982,9 @@ function todoRecord(task) {
         <button
           class="icon-action"
           data-edit-todo="${esc(
-            task.id
+            todo.id
           )}"
+          title="Edit"
           type="button"
         >
           ${ICONS.edit}
@@ -3525,8 +3994,9 @@ function todoRecord(task) {
         <button
           class="icon-action"
           data-delete-todo="${esc(
-            task.id
+            todo.id
           )}"
+          title="Delete"
           type="button"
         >
           ${ICONS.trash}
@@ -3564,9 +4034,8 @@ function renderGoals() {
         </h2>
 
         <p>
-          Keep the destination
-          visible, then move
-          the percentage.
+          Keep the destination visible,
+          then move the percentage.
         </p>
 
       </div>
@@ -3575,6 +4044,7 @@ function renderGoals() {
       <button
         class="primary-button"
         data-add="goal"
+        type="button"
       >
         + Add Goal
       </button>
@@ -3588,12 +4058,20 @@ function renderGoals() {
         data.goals.length
 
           ? data.goals
-              .map(goalRecord)
+              .map(
+                goalRecord
+              )
               .join("")
 
-          : empty(
-              "No goals yet. Give the empty space a target."
-            )
+          : `
+            <article
+              class="card empty"
+              style="grid-column:1/-1"
+            >
+              No goals yet.
+              Give the empty space a target.
+            </article>
+          `
       }
 
     </div>
@@ -3603,7 +4081,9 @@ function renderGoals() {
 }
 
 
-function goalRecord(goal) {
+function goalRecord(
+  goal
+) {
 
   const progress =
     Math.max(
@@ -3637,6 +4117,7 @@ function goalRecord(goal) {
             data-edit-goal="${esc(
               goal.id
             )}"
+            type="button"
           >
             ${ICONS.edit}
           </button>
@@ -3647,6 +4128,7 @@ function goalRecord(goal) {
             data-delete-goal="${esc(
               goal.id
             )}"
+            type="button"
           >
             ${ICONS.trash}
           </button>
@@ -3659,7 +4141,7 @@ function goalRecord(goal) {
       <div
         style="
           font-size:11px;
-          opacity:.62;
+          opacity:.6;
         "
       >
         ${esc(
@@ -3681,10 +4163,7 @@ function goalRecord(goal) {
 
 
       <div class="goal-percent">
-
-        ${progress}%
-        complete
-
+        ${progress}% complete
       </div>
 
     </article>
@@ -3709,16 +4188,15 @@ function renderNotes() {
   const notes =
     [
       ...data.notes
-    ]
-      .sort(
-        (a, b) =>
-          new Date(
-            b.createdAt
-          ) -
-          new Date(
-            a.createdAt
-          )
-      );
+    ].sort(
+      (a,b) =>
+        new Date(
+          b.createdAt
+        ) -
+        new Date(
+          a.createdAt
+        )
+    );
 
 
   element.innerHTML = `
@@ -3732,8 +4210,8 @@ function renderNotes() {
         </h2>
 
         <p>
-          Your thoughts,
-          ideas and tiny epiphanies.
+          Your thoughts, ideas,
+          reminders and tiny epiphanies.
         </p>
 
       </div>
@@ -3742,6 +4220,7 @@ function renderNotes() {
       <button
         class="primary-button"
         data-add="note"
+        type="button"
       >
         + New Note
       </button>
@@ -3755,12 +4234,20 @@ function renderNotes() {
         notes.length
 
           ? notes
-              .map(noteRecord)
+              .map(
+                noteRecord
+              )
               .join("")
 
-          : empty(
-              "No notes yet. The page is blank on purpose."
-            )
+          : `
+            <article
+              class="card empty"
+              style="grid-column:1/-1"
+            >
+              No notes yet.
+              The page is blank on purpose.
+            </article>
+          `
       }
 
     </div>
@@ -3770,16 +4257,13 @@ function renderNotes() {
 }
 
 
-function noteRecord(note) {
+function noteRecord(
+  note
+) {
 
   return `
 
-    <article
-      class="
-        card
-        note-card
-      "
-    >
+    <article class="card note-card">
 
       <div class="card-title">
 
@@ -3793,11 +4277,9 @@ function noteRecord(note) {
           </h3>
 
           <div class="note-date">
-
             ${formatDateTime(
               note.createdAt
             )}
-
           </div>
 
         </div>
@@ -3810,6 +4292,7 @@ function noteRecord(note) {
             data-edit-note="${esc(
               note.id
             )}"
+            type="button"
           >
             ${ICONS.edit}
           </button>
@@ -3820,6 +4303,7 @@ function noteRecord(note) {
             data-delete-note="${esc(
               note.id
             )}"
+            type="button"
           >
             ${ICONS.trash}
           </button>
@@ -3856,19 +4340,18 @@ function renderNotifications() {
     );
 
 
-  const notifications =
+  const list =
     [
       ...data.notifications
-    ]
-      .sort(
-        (a, b) =>
-          new Date(
-            b.createdAt
-          ) -
-          new Date(
-            a.createdAt
-          )
-      );
+    ].sort(
+      (a,b) =>
+        new Date(
+          b.createdAt
+        ) -
+        new Date(
+          a.createdAt
+        )
+    );
 
 
   element.innerHTML = `
@@ -3882,8 +4365,8 @@ function renderNotifications() {
         </h2>
 
         <p>
-          App history and
-          browser notification controls.
+          Notification history
+          and browser permission controls.
         </p>
 
       </div>
@@ -3892,6 +4375,7 @@ function renderNotifications() {
       <button
         class="secondary-button"
         id="enableNotificationsPage"
+        type="button"
       >
         Enable Browser Notifications
       </button>
@@ -3902,9 +4386,9 @@ function renderNotifications() {
     <div class="records-grid">
 
       ${
-        notifications.length
+        list.length
 
-          ? notifications
+          ? list
               .map(
                 notification => `
 
@@ -3927,15 +4411,12 @@ function renderNotifications() {
                       <div>
 
                         <div class="record-title">
-
                           ${esc(
                             notification.title
                           )}
-
                         </div>
 
                         <div class="record-desc">
-
                           ${esc(
                             notification.body
                           )}
@@ -3945,7 +4426,6 @@ function renderNotifications() {
                           ${formatDateTime(
                             notification.createdAt
                           )}
-
                         </div>
 
                       </div>
@@ -3958,6 +4438,7 @@ function renderNotifications() {
                       data-read-notification="${esc(
                         notification.id
                       )}"
+                      type="button"
                     >
 
                       ${
@@ -3974,9 +4455,11 @@ function renderNotifications() {
               )
               .join("")
 
-          : empty(
-              "No notifications yet."
-            )
+          : `
+            <article class="card empty">
+              No notifications yet.
+            </article>
+          `
       }
 
     </div>
@@ -3997,7 +4480,7 @@ function renderNotifications() {
 
 
 /* =========================================================
-   APPEARANCE PAGE
+   APPEARANCE
 ========================================================= */
 
 function renderAppearance() {
@@ -4020,8 +4503,8 @@ function renderAppearance() {
 
         <p>
           Ten fixed palettes.
-          Only Background,
-          Main and Font change.
+          Each uses only Background,
+          Main and Font.
         </p>
 
       </div>
@@ -4038,25 +4521,24 @@ function renderAppearance() {
             palettes
           )
           .map(
-            ([key, palette]) => `
+            ([key,palette]) => `
 
               <button
                 class="
                   palette-card
                   ${
-                    data.appearance ===
-                    key
+                    data.appearance === key
                       ? "selected"
                       : ""
                   }
                 "
                 data-palette="${key}"
+                type="button"
                 style="
                   --swatch-bg:${palette.background};
                   --swatch-main:${palette.main};
                   --swatch-font:${palette.font};
                 "
-                type="button"
               >
 
                 <div class="swatches">
@@ -4100,7 +4582,7 @@ function renderAppearance() {
 
 
 /* =========================================================
-   APP NOTIFICATION HISTORY
+   NOTIFICATION SYSTEM
 ========================================================= */
 
 function addNotification(
@@ -4153,10 +4635,6 @@ function addNotification(
 }
 
 
-/* =========================================================
-   BROWSER NOTIFICATIONS
-========================================================= */
-
 function requestNotificationPermission() {
 
   if (
@@ -4164,7 +4642,7 @@ function requestNotificationPermission() {
   ) {
 
     toast(
-      "This browser does not support browser notifications."
+      "This browser does not support notifications."
     );
 
     return Promise.resolve(
@@ -4213,13 +4691,12 @@ function requestNotificationPermission() {
 
         toast(
           permission ===
-            "granted"
+          "granted"
 
             ? "Browser notifications enabled."
 
-            : "Browser notifications were not enabled."
+            : "Notifications were not enabled."
         );
-
 
         return (
           permission ===
@@ -4232,39 +4709,10 @@ function requestNotificationPermission() {
 }
 
 
-function sendTestNotification() {
-
-  requestNotificationPermission()
-    .then(
-      allowed => {
-
-        if (!allowed) {
-          return;
-        }
-
-
-        showBrowserNotification(
-          "LAYRAAZ",
-          dialogue(
-            "your test reminder"
-          )
-        );
-
-
-        addNotification(
-          "Character test",
-          "A browser notification was sent with your character sticker."
-        );
-
-      }
-    );
-
-}
-
-
 function showBrowserNotification(
   title,
-  body
+  body,
+  sticker
 ) {
 
   if (
@@ -4288,11 +4736,11 @@ function showBrowserNotification(
           body,
 
           icon:
-            data.character.sticker ||
+            sticker ||
             undefined,
 
           badge:
-            data.character.sticker ||
+            sticker ||
             undefined,
 
           tag:
@@ -4306,16 +4754,14 @@ function showBrowserNotification(
 
 
     notification.onclick =
-      () => {
-
+      () =>
         window.focus();
 
-      };
-
-  } catch (error) {
+  } catch (
+    error
+  ) {
 
     console.warn(
-      "Browser notification failed:",
       error
     );
 
@@ -4325,10 +4771,167 @@ function showBrowserNotification(
 
 
 /* =========================================================
-   FLOATING CHARACTER REMINDER
+   PERSONALITY
 ========================================================= */
 
-function showCompanion(
+function personalityMessage(
+  reminder
+) {
+
+  const personality =
+    (
+      data.character
+        .personality ||
+      ""
+    ).toLowerCase();
+
+
+  const name =
+    esc(
+      data.profile.name ||
+      "there"
+    );
+
+
+  const task =
+    esc(
+      reminder.title
+    );
+
+
+  /*
+    Firm + caring
+  */
+
+  if (
+    /firm|strict|command/
+      .test(
+        personality
+      ) &&
+
+    /caring|sweet|kind/
+      .test(
+        personality
+      )
+  ) {
+
+    return `
+      ${name},
+      ${task} is due.
+      Handle it now.
+      I'll be nice about it,
+      but I am still watching.
+    `;
+
+  }
+
+
+  /*
+    Firm
+  */
+
+  if (
+    /firm|strict|command/
+      .test(
+        personality
+      )
+  ) {
+
+    return `
+      ${name}.
+      ${task} is due.
+      Do it now.
+    `;
+
+  }
+
+
+  /*
+    Caring
+  */
+
+  if (
+    /caring|sweet|kind/
+      .test(
+        personality
+      )
+  ) {
+
+    return `
+      Tiny reminder,
+      ${name}.
+      You wanted to do
+      ${task}.
+      Let's take care of it now. ♡
+    `;
+
+  }
+
+
+  /*
+    Intelligent
+  */
+
+  if (
+    /intelligent|smart|logical/
+      .test(
+        personality
+      )
+  ) {
+
+    return `
+      A concise nudge,
+      ${name}:
+      ${task} is due.
+      One action now keeps
+      the rest of the day cleaner.
+    `;
+
+  }
+
+
+  /*
+    Romantic
+  */
+
+  if (
+    /romantic/
+      .test(
+        personality
+      )
+  ) {
+
+    return `
+      ${name},
+      your little reminder
+      has arrived:
+      ${task}.
+
+      Come on,
+      let's get it done. ♡
+    `;
+
+  }
+
+
+  /*
+    Default
+  */
+
+  return `
+    A gentle nudge,
+    ${name}.
+    ${task} is due now.
+  `;
+
+}
+
+
+/* =========================================================
+   FLOATING REMINDER COMPANION
+========================================================= */
+
+function showReminderCompanion(
   reminder
 ) {
 
@@ -4341,60 +4944,171 @@ function showCompanion(
   }
 
 
-  const container =
+  const root =
     document.getElementById(
       "reminderCompanion"
     );
 
 
-  const image =
-    document.getElementById(
-      "companionSticker"
-    );
+  dueCompanionId =
+    reminder.id;
 
 
-  const bubble =
-    document.getElementById(
-      "companionBubble"
-    );
-
-
-  bubble.textContent =
-    dialogue(
-      reminder.title
-    );
-
-
-  image.src =
-    data.character.sticker;
-
-
-  container.classList.remove(
+  root.classList.remove(
     "hidden"
   );
 
 
-  container.classList.add(
-    "show"
-  );
+  root.innerHTML = `
+
+    <img
+      class="
+        companion-sticker
+        pose-peek
+      "
+      src="${data.character.sticker}"
+      alt="Character"
+    >
 
 
-  clearTimeout(
-    companionTimer
-  );
+    <div class="speech-bubble">
+
+      <div>
+
+        ${personalityMessage(
+          reminder
+        )}
+
+      </div>
 
 
-  companionTimer =
-    setTimeout(
-      () => {
+      <div class="speech-actions">
 
-        container.classList.add(
-          "hidden"
-        );
+        <button
+          type="button"
+          data-companion-done="${esc(
+            reminder.id
+          )}"
+        >
+          DONE
+        </button>
 
-      },
-      12000
+
+        <button
+          type="button"
+          data-companion-snooze="${esc(
+            reminder.id
+          )}"
+        >
+          SNOOZE 5 MIN
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+function hideReminderCompanion() {
+
+  dueCompanionId =
+    null;
+
+  document
+    .getElementById(
+      "reminderCompanion"
+    )
+    .classList.add(
+      "hidden"
     );
+
+}
+
+
+/* =========================================================
+   REMINDER ACTIONS
+========================================================= */
+
+function completeReminder(
+  id
+) {
+
+  const reminder =
+    data.reminders.find(
+      item =>
+        item.id === id
+    );
+
+
+  if (!reminder) {
+    return;
+  }
+
+
+  reminder.completed =
+    true;
+
+
+  saveData();
+
+  hideReminderCompanion();
+
+  renderReminders();
+
+  renderDashboard();
+
+  toast(
+    "Reminder marked done."
+  );
+
+}
+
+
+function snoozeReminder(
+  id
+) {
+
+  const reminder =
+    data.reminders.find(
+      item =>
+        item.id === id
+    );
+
+
+  if (!reminder) {
+    return;
+  }
+
+
+  reminder.when =
+    new Date(
+      Date.now() +
+      5 * 60 * 1000
+    ).toISOString();
+
+
+  reminder.completed =
+    false;
+
+
+  reminder.lastNotifiedAt =
+    null;
+
+
+  saveData();
+
+  hideReminderCompanion();
+
+  renderReminders();
+
+  renderDashboard();
+
+  toast(
+    "Snoozed for 5 minutes."
+  );
 
 }
 
@@ -4407,9 +5121,6 @@ function checkDueReminders() {
 
   const now =
     Date.now();
-
-  let changed =
-    false;
 
 
   for (
@@ -4436,18 +5147,22 @@ function checkDueReminders() {
 
     const last =
       reminder.lastNotifiedAt
+
         ? new Date(
             reminder.lastNotifiedAt
           ).getTime()
+
         : 0;
 
 
+    /*
+      Do not repeatedly fire the
+      same reminder every 15 seconds.
+    */
+
     if (
       now - last <
-      12 *
-        60 *
-        60 *
-        1000
+      12 * 60 * 60 * 1000
     ) {
 
       continue;
@@ -4456,19 +5171,14 @@ function checkDueReminders() {
 
 
     const body =
-      dialogue(
-        reminder.title
-      );
+      `${reminder.title} is due now.
+       · ${reminder.category || "Personal"}`;
 
 
     showBrowserNotification(
       "LAYRAAZ Reminder",
-      body
-    );
-
-
-    showCompanion(
-      reminder
+      body,
+      data.character.sticker
     );
 
 
@@ -4483,30 +5193,27 @@ function checkDueReminders() {
         .toISOString();
 
 
-    changed =
-      true;
+    showReminderCompanion(
+      reminder
+    );
 
   }
 
 
-  if (changed) {
-
-    saveData();
-
-    renderDashboard();
-
-  }
+  saveData();
 
 
   if (
-    changed &&
     activeSection ===
-      "reminders"
+    "reminders"
   ) {
 
     renderReminders();
 
   }
+
+
+  renderDashboard();
 
 }
 
@@ -4533,110 +5240,6 @@ function startReminderWatcher() {
 /* =========================================================
    MODALS
 ========================================================= */
-
-function categoryField(
-  selected = "Personal"
-) {
-
-  const categories = [
-    "Work",
-    "Personal",
-    "Finance",
-    "Learning"
-  ];
-
-
-  return `
-
-    <div class="field">
-
-      <label>
-        Category
-      </label>
-
-      <select
-        name="category"
-      >
-
-        ${
-          categories
-            .map(
-              category => `
-                <option
-                  ${
-                    category ===
-                    selected
-                      ? "selected"
-                      : ""
-                  }
-                >
-                  ${category}
-                </option>
-              `
-            )
-            .join("")
-        }
-
-      </select>
-
-    </div>
-
-  `;
-
-}
-
-
-function toDateTimeLocal(
-  value
-) {
-
-  if (!value) {
-    return "";
-  }
-
-
-  const date =
-    new Date(value);
-
-
-  if (
-    Number.isNaN(
-      date.getTime()
-    )
-  ) {
-
-    return "";
-
-  }
-
-
-  const pad =
-    number =>
-      String(number)
-        .padStart(
-          2,
-          "0"
-        );
-
-
-  return (
-    `${date.getFullYear()}-` +
-    `${pad(
-      date.getMonth() + 1
-    )}-` +
-    `${pad(
-      date.getDate()
-    )}T` +
-    `${pad(
-      date.getHours()
-    )}:` +
-    `${pad(
-      date.getMinutes()
-    )}`
-  );
-
-}
-
 
 function showModal(
   title,
@@ -4690,15 +5293,18 @@ function showModal(
     .getElementById(
       "closeModal"
     )
-    .onclick =
-      closeModal;
+    .addEventListener(
+      "click",
+      closeModal
+    );
 
 
   document
     .getElementById(
       "modalBackdrop"
     )
-    .onclick =
+    .addEventListener(
+      "click",
       event => {
 
         if (
@@ -4710,7 +5316,8 @@ function showModal(
 
         }
 
-      };
+      }
+    );
 
 
   const form =
@@ -4721,7 +5328,8 @@ function showModal(
 
   if (form) {
 
-    form.onsubmit =
+    form.addEventListener(
+      "submit",
       event => {
 
         event.preventDefault();
@@ -4732,7 +5340,8 @@ function showModal(
           )
         );
 
-      };
+      }
+    );
 
   }
 
@@ -4776,6 +5385,7 @@ function openAdd(
         ? "Edit Reminder"
         : "Add Reminder",
 
+
       `
 
         <form
@@ -4795,11 +5405,14 @@ function openAdd(
 
           <div class="field">
 
-            <label>
+            <label
+              for="when"
+            >
               Date & time
             </label>
 
             <input
+              id="when"
               name="when"
               type="datetime-local"
               value="${toDateTimeLocal(
@@ -4835,6 +5448,7 @@ function openAdd(
 
       `,
 
+
       form => {
 
         const title =
@@ -4865,38 +5479,34 @@ function openAdd(
         }
 
 
-        const object = {
-
-          title,
-
-          when:
-            new Date(
-              when
-            ).toISOString(),
-
-          category:
-            String(
-              form.get(
-                "category"
-              ) ||
-              "Personal"
-            ),
-
-          completed:
-            false,
-
-          lastNotifiedAt:
-            existing?.lastNotifiedAt ||
-            null
-
-        };
-
-
         if (existing) {
 
           Object.assign(
             existing,
-            object
+            {
+
+              title,
+
+              when:
+                new Date(
+                  when
+                ).toISOString(),
+
+              category:
+                String(
+                  form.get(
+                    "category"
+                  ) ||
+                  "Personal"
+                ),
+
+              completed:
+                false,
+
+              lastNotifiedAt:
+                null
+
+            }
           );
 
         } else {
@@ -4904,9 +5514,30 @@ function openAdd(
           data.reminders.push({
 
             id:
-              uid("reminder"),
+              uid(
+                "reminder"
+              ),
 
-            ...object
+            title,
+
+            when:
+              new Date(
+                when
+              ).toISOString(),
+
+            category:
+              String(
+                form.get(
+                  "category"
+                ) ||
+                "Personal"
+              ),
+
+            completed:
+              false,
+
+            lastNotifiedAt:
+              null
 
           });
 
@@ -4936,12 +5567,12 @@ function openAdd(
 
   /* TODO */
 
-  else if (
+  if (
     type ===
     "todo"
   ) {
 
-    const task =
+    const todo =
       existing || {};
 
 
@@ -4950,6 +5581,7 @@ function openAdd(
       existing
         ? "Edit To-do"
         : "Add To-do",
+
 
       `
 
@@ -4961,7 +5593,7 @@ function openAdd(
           ${field(
             "title",
             "Task",
-            task.title ||
+            todo.title ||
               "",
             "text",
             true
@@ -4969,14 +5601,14 @@ function openAdd(
 
 
           ${categoryField(
-            task.category
+            todo.category
           )}
 
 
           ${field(
             "due",
             "Due date",
-            task.due ||
+            todo.due ||
               "",
             "date"
           )}
@@ -5000,6 +5632,7 @@ function openAdd(
         </form>
 
       `,
+
 
       form => {
 
@@ -5061,7 +5694,9 @@ function openAdd(
           data.todos.push({
 
             id:
-              uid("todo"),
+              uid(
+                "todo"
+              ),
 
             ...object
 
@@ -5091,7 +5726,7 @@ function openAdd(
 
   /* GOAL */
 
-  else if (
+  if (
     type ===
     "goal"
   ) {
@@ -5105,6 +5740,7 @@ function openAdd(
       existing
         ? "Edit Goal"
         : "Add Goal",
+
 
       `
 
@@ -5130,11 +5766,14 @@ function openAdd(
 
           <div class="field">
 
-            <label>
+            <label
+              for="progress"
+            >
               Progress %
             </label>
 
             <input
+              id="progress"
               name="progress"
               type="number"
               min="0"
@@ -5167,6 +5806,7 @@ function openAdd(
         </form>
 
       `,
+
 
       form => {
 
@@ -5228,7 +5868,9 @@ function openAdd(
           data.goals.push({
 
             id:
-              uid("goal"),
+              uid(
+                "goal"
+              ),
 
             ...object
 
@@ -5258,7 +5900,7 @@ function openAdd(
 
   /* NOTE */
 
-  else if (
+  if (
     type ===
     "note"
   ) {
@@ -5272,6 +5914,7 @@ function openAdd(
       existing
         ? "Edit Note"
         : "New Note",
+
 
       `
 
@@ -5292,11 +5935,14 @@ function openAdd(
 
           <div class="field full">
 
-            <label>
+            <label
+              for="content"
+            >
               Note
             </label>
 
             <textarea
+              id="content"
               name="content"
               required
             >${esc(
@@ -5325,6 +5971,7 @@ function openAdd(
         </form>
 
       `,
+
 
       form => {
 
@@ -5382,7 +6029,9 @@ function openAdd(
           data.notes.push({
 
             id:
-              uid("note"),
+              uid(
+                "note"
+              ),
 
             ...object
 
@@ -5423,27 +6072,27 @@ function deleteById(
 ) {
 
   const index =
-    data[
-      collection
-    ].findIndex(
-      item =>
-        item.id === id
-    );
+    data[collection]
+      .findIndex(
+        item =>
+          item.id === id
+      );
 
 
   if (
     index < 0
   ) {
+
     return;
+
   }
 
 
-  data[
-    collection
-  ].splice(
-    index,
-    1
-  );
+  data[collection]
+    .splice(
+      index,
+      1
+    );
 
 
   saveData();
@@ -5533,12 +6182,12 @@ function searchAll(
 
 
   for (
-    const task
+    const todo
     of data.todos
   ) {
 
     if (
-      `${task.title} ${task.category}`
+      `${todo.title} ${todo.category}`
         .toLowerCase()
         .includes(search)
     ) {
@@ -5549,10 +6198,10 @@ function searchAll(
           "To-do",
 
         title:
-          task.title,
+          todo.title,
 
         meta:
-          task.category,
+          todo.category,
 
         section:
           "todos"
@@ -5618,7 +6267,7 @@ function searchAll(
         meta:
           note.content.slice(
             0,
-            60
+            70
           ),
 
         section:
@@ -5636,7 +6285,10 @@ function searchAll(
     results.length
 
       ? results
-          .slice(0, 12)
+          .slice(
+            0,
+            12
+          )
           .map(
             result => `
 
@@ -5655,9 +6307,7 @@ function searchAll(
                   ${esc(
                     result.type
                   )}
-
                   ·
-
                   ${esc(
                     result.meta
                   )}
@@ -5669,9 +6319,11 @@ function searchAll(
           )
           .join("")
 
-      : empty(
-          "Nothing found."
-        );
+      : `
+        <div class="empty">
+          Nothing found.
+        </div>
+      `;
 
 
   box.classList.remove(
@@ -5681,11 +6333,25 @@ function searchAll(
 }
 
 
+function paletteName(
+  key
+) {
+
+  return (
+    palettes[key]?.name ||
+    "Palette"
+  );
+
+}
+
+
 /* =========================================================
    TOAST
 ========================================================= */
 
-function toast(message) {
+function toast(
+  message
+) {
 
   const element =
     document.getElementById(
@@ -5709,15 +6375,66 @@ function toast(message) {
 
   toastTimer =
     setTimeout(
-      () => {
-
+      () =>
         element.classList.remove(
           "show"
-        );
-
-      },
-      2200
+        ),
+      2300
     );
+
+}
+
+
+/* =========================================================
+   TEST CHARACTER
+========================================================= */
+
+async function sendTestNotification() {
+
+  const allowed =
+    await requestNotificationPermission();
+
+
+  if (!allowed) {
+    return;
+  }
+
+
+  showBrowserNotification(
+
+    "LAYRAAZ",
+
+    `${data.character.name || "Character"} is here. ✦`,
+
+    data.character.sticker
+
+  );
+
+
+  /*
+    Also show the in-page companion
+    so you can test the character's
+    dialogue and buttons.
+  */
+
+  showReminderCompanion({
+
+    id:
+      "test",
+
+    title:
+      "a tiny test reminder",
+
+    category:
+      "Character"
+
+  });
+
+
+  addNotification(
+    "Character test",
+    "Browser notification sent with the sticker icon."
+  );
 
 }
 
@@ -5728,7 +6445,10 @@ function toast(message) {
 
 function bindEvents() {
 
-  /* SIDEBAR */
+  setIconElements();
+
+
+  /* Sidebar */
 
   document
     .getElementById(
@@ -5744,9 +6464,20 @@ function bindEvents() {
           );
 
 
-        sidebar.classList.toggle(
-          "collapsed"
-        );
+        const collapsed =
+          sidebar.classList.toggle(
+            "collapsed"
+          );
+
+
+        document
+          .getElementById(
+            "sidebarToggle"
+          )
+          .setAttribute(
+            "aria-expanded",
+            String(!collapsed)
+          );
 
 
         document
@@ -5755,9 +6486,7 @@ function bindEvents() {
           )
           .setAttribute(
             "aria-label",
-            sidebar.classList.contains(
-              "collapsed"
-            )
+            collapsed
               ? "Open sidebar"
               : "Close sidebar"
           );
@@ -5766,7 +6495,7 @@ function bindEvents() {
     );
 
 
-  /* NAV */
+  /* Sidebar navigation */
 
   document
     .querySelectorAll(
@@ -5787,73 +6516,69 @@ function bindEvents() {
     );
 
 
-  /* TOP NOTIFICATIONS */
+  /* Top notifications */
 
   document
     .getElementById(
       "topNotificationButton"
     )
-    .onclick =
+    .addEventListener(
+      "click",
       () =>
         navigate(
           "notifications"
-        );
+        )
+    );
 
 
-  /* PROFILE BUTTON */
+  /* Top profile */
 
   document
     .getElementById(
       "profileMiniButton"
     )
-    .onclick =
+    .addEventListener(
+      "click",
       () =>
         navigate(
           "profile"
-        );
+        )
+    );
 
 
-  /* SEARCH */
+  /* Search */
 
   document
     .getElementById(
       "globalSearch"
     )
-    .oninput =
+    .addEventListener(
+      "input",
       event =>
         searchAll(
           event.target.value
-        );
+        )
+    );
 
 
-  /* REMINDER COMPANION */
-
-  document
-    .getElementById(
-      "companionClose"
-    )
-    .onclick =
-      () =>
-        document
-          .getElementById(
-            "reminderCompanion"
-          )
-          .classList.add(
-            "hidden"
-          );
-
-
-  /* GLOBAL CLICK HANDLER */
+  /*
+    One global click handler.
+    This prevents each re-render
+    from creating another copy
+    of the same event listeners.
+  */
 
   document.addEventListener(
     "click",
     event => {
 
+
+      /* Navigation */
+
       const nav =
         event.target.closest(
           "[data-nav]"
         );
-
 
       if (nav) {
 
@@ -5866,11 +6591,12 @@ function bindEvents() {
       }
 
 
+      /* Add */
+
       const add =
         event.target.closest(
           "[data-add]"
         );
-
 
       if (add) {
 
@@ -5883,11 +6609,12 @@ function bindEvents() {
       }
 
 
+      /* Palette */
+
       const palette =
         event.target.closest(
           "[data-palette]"
         );
-
 
       if (palette) {
 
@@ -5900,8 +6627,12 @@ function bindEvents() {
 
         renderAppearance();
 
+        renderDashboard();
+
         toast(
-          `${palettes[data.appearance].name} selected.`
+          `${paletteName(
+            data.appearance
+          )} selected.`
         );
 
         return;
@@ -5909,21 +6640,19 @@ function bindEvents() {
       }
 
 
-      const searchResult =
+      /* Search */
+
+      const search =
         event.target.closest(
           "[data-search-section]"
         );
 
+      if (search) {
 
-      if (searchResult) {
-
-        document
-          .getElementById(
-            "globalSearch"
-          )
-          .value =
+        document.getElementById(
+          "globalSearch"
+        ).value =
           "";
-
 
         document
           .getElementById(
@@ -5933,9 +6662,8 @@ function bindEvents() {
             "hidden"
           );
 
-
         navigate(
-          searchResult.dataset
+          search.dataset
             .searchSection
         );
 
@@ -5944,19 +6672,60 @@ function bindEvents() {
       }
 
 
+      /* Read notification */
+
+      const read =
+        event.target.closest(
+          "[data-read-notification]"
+        );
+
+      if (read) {
+
+        const notification =
+          data.notifications.find(
+            item =>
+              item.id ===
+              read.dataset
+                .readNotification
+          );
+
+
+        if (notification) {
+
+          notification.read =
+            true;
+
+          saveData();
+
+          renderNotifications();
+
+          updateTopbar();
+
+        }
+
+        return;
+
+      }
+
+
+      /* Delete reminder */
+
       const deleteReminder =
         event.target.closest(
           "[data-delete-reminder]"
         );
 
-
       if (deleteReminder) {
 
         deleteById(
+
           "reminders",
+
           deleteReminder.dataset
             .deleteReminder,
+
           "Reminder deleted."
+
         );
 
         return;
@@ -5964,11 +6733,12 @@ function bindEvents() {
       }
 
 
+      /* Edit reminder */
+
       const editReminder =
         event.target.closest(
           "[data-edit-reminder]"
         );
-
 
       if (editReminder) {
 
@@ -5995,19 +6765,18 @@ function bindEvents() {
       }
 
 
-      const deleteTodo =
+      /* Done reminder */
+
+      const doneReminder =
         event.target.closest(
-          "[data-delete-todo]"
+          "[data-done-reminder]"
         );
 
+      if (doneReminder) {
 
-      if (deleteTodo) {
-
-        deleteById(
-          "todos",
-          deleteTodo.dataset
-            .deleteTodo,
-          "To-do deleted."
+        completeReminder(
+          doneReminder.dataset
+            .doneReminder
         );
 
         return;
@@ -6015,15 +6784,41 @@ function bindEvents() {
       }
 
 
+      /* Delete todo */
+
+      const deleteTodo =
+        event.target.closest(
+          "[data-delete-todo]"
+        );
+
+      if (deleteTodo) {
+
+        deleteById(
+
+          "todos",
+
+          deleteTodo.dataset
+            .deleteTodo,
+
+          "To-do deleted."
+
+        );
+
+        return;
+
+      }
+
+
+      /* Edit todo */
+
       const editTodo =
         event.target.closest(
           "[data-edit-todo]"
         );
 
-
       if (editTodo) {
 
-        const task =
+        const todo =
           data.todos.find(
             item =>
               item.id ===
@@ -6032,11 +6827,11 @@ function bindEvents() {
           );
 
 
-        if (task) {
+        if (todo) {
 
           openAdd(
             "todo",
-            task
+            todo
           );
 
         }
@@ -6046,15 +6841,16 @@ function bindEvents() {
       }
 
 
+      /* Toggle todo */
+
       const toggleTodo =
         event.target.closest(
           "[data-toggle-todo]"
         );
 
-
       if (toggleTodo) {
 
-        const task =
+        const todo =
           data.todos.find(
             item =>
               item.id ===
@@ -6063,10 +6859,10 @@ function bindEvents() {
           );
 
 
-        if (task) {
+        if (todo) {
 
-          task.done =
-            !task.done;
+          todo.done =
+            !todo.done;
 
           saveData();
 
@@ -6081,19 +6877,24 @@ function bindEvents() {
       }
 
 
+      /* Delete goal */
+
       const deleteGoal =
         event.target.closest(
           "[data-delete-goal]"
         );
 
-
       if (deleteGoal) {
 
         deleteById(
+
           "goals",
+
           deleteGoal.dataset
             .deleteGoal,
+
           "Goal deleted."
+
         );
 
         return;
@@ -6101,11 +6902,12 @@ function bindEvents() {
       }
 
 
+      /* Edit goal */
+
       const editGoal =
         event.target.closest(
           "[data-edit-goal]"
         );
-
 
       if (editGoal) {
 
@@ -6132,19 +6934,24 @@ function bindEvents() {
       }
 
 
+      /* Delete note */
+
       const deleteNote =
         event.target.closest(
           "[data-delete-note]"
         );
 
-
       if (deleteNote) {
 
         deleteById(
+
           "notes",
+
           deleteNote.dataset
             .deleteNote,
+
           "Note deleted."
+
         );
 
         return;
@@ -6152,11 +6959,12 @@ function bindEvents() {
       }
 
 
+      /* Edit note */
+
       const editNote =
         event.target.closest(
           "[data-edit-note]"
         );
-
 
       if (editNote) {
 
@@ -6183,35 +6991,60 @@ function bindEvents() {
       }
 
 
-      const readNotification =
+      /* Companion DONE */
+
+      const companionDone =
         event.target.closest(
-          "[data-read-notification]"
+          "[data-companion-done]"
         );
 
+      if (companionDone) {
 
-      if (readNotification) {
+        completeReminder(
+          companionDone.dataset
+            .companionDone
+        );
 
-        const notification =
-          data.notifications.find(
-            item =>
-              item.id ===
-              readNotification.dataset
-                .readNotification
+        return;
+
+      }
+
+
+      /* Companion SNOOZE */
+
+      const companionSnooze =
+        event.target.closest(
+          "[data-companion-snooze]"
+        );
+
+      if (companionSnooze) {
+
+        /*
+          Test notification is not
+          a real reminder.
+        */
+
+        if (
+          companionSnooze.dataset
+            .companionSnooze ===
+          "test"
+        ) {
+
+          hideReminderCompanion();
+
+          toast(
+            "Test notification closed."
           );
 
-
-        if (notification) {
-
-          notification.read =
-            true;
-
-          saveData();
-
-          renderNotifications();
-
-          updateTopbar();
+          return;
 
         }
+
+
+        snoozeReminder(
+          companionSnooze.dataset
+            .companionSnooze
+        );
 
       }
 
@@ -6222,14 +7055,14 @@ function bindEvents() {
 
 
 /* =========================================================
-   INITIALIZATION
+   INIT
 ========================================================= */
 
 function init() {
 
   applyAppearance();
 
-  setIcons();
+  setIconElements();
 
   bindEvents();
 
@@ -6241,10 +7074,9 @@ function init() {
 
 
   /*
-    If an older version has
-    the original character image
-    but no sticker, convert it
-    once.
+    If an older version stored
+    only the full character image,
+    convert it once.
   */
 
   if (
