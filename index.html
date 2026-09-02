@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="theme-color" content="#1D251C">
+<meta name="theme-color" content="#1D251C">
+<meta name="description" content="LAYRAAZ - your little digital space">
 
-    <title>LAYRAAZ</title>
+<title>LAYRAAZ</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Patrick+Hand&display=swap"
-        rel="stylesheet"
-    >
+<link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Patrick+Hand&display=swap"
+    rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -25,31 +25,38 @@
 
 <div class="app-shell">
 
-    <!-- SIDEBAR -->
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
     <aside class="sidebar collapsed" id="sidebar">
 
         <div class="brand-block">
+
             <div class="brand">
-                LAYRAAZ
-                <span class="brand-sparkle">✦</span>
+                LAYRAAZ<span>✦</span>
             </div>
 
             <div class="brand-sub">
-                your little digital space<br>
-                for the version you're becoming
+                for the version of you<br>
+                you're becoming
             </div>
+
         </div>
 
         <button
             class="sidebar-toggle"
             id="sidebarToggle"
-            type="button"
-            aria-label="Open sidebar">
+            aria-label="Open or close sidebar"
+            type="button">
+
             <span class="icon icon-menu"></span>
+
         </button>
 
         <nav class="nav-list">
 
+            <!-- PROFILE FIRST -->
             <button class="nav-item" data-section="profile" type="button">
                 <span class="nav-icon icon-profile"></span>
                 <span>Profile</span>
@@ -98,27 +105,29 @@
         </nav>
 
         <div class="sidebar-footer">
-            A little progress is still progress.
+            You are doing better than you think you are.
             <span>♡</span>
         </div>
 
     </aside>
 
 
-    <!-- MAIN -->
+    <!-- =========================
+         MAIN
+    ========================== -->
+
     <main class="main-content">
 
         <header class="topbar">
 
-            <div class="top-copy">
+            <div class="top-heading">
 
                 <div class="eyebrow">
                     YOUR LITTLE DIGITAL SPACE
                 </div>
 
                 <h1 id="pageTitle">
-                    Welcome back, Laya
-                    <span class="title-sparkle">✦</span>
+                    Welcome back, Laya ✦
                 </h1>
 
                 <p id="pageSubtitle">
@@ -127,9 +136,11 @@
 
             </div>
 
+
             <div class="top-actions">
 
                 <div class="search">
+
                     <input
                         id="globalSearch"
                         type="search"
@@ -137,18 +148,22 @@
                         autocomplete="off">
 
                     <span class="icon icon-search"></span>
+
                 </div>
+
 
                 <button
                     class="round-btn"
                     id="notificationBtn"
-                    type="button"
-                    aria-label="Notifications">
+                    aria-label="Open notifications"
+                    type="button">
 
                     <span class="nav-icon icon-notification"></span>
+
                     <b id="notificationCount"></b>
 
                 </button>
+
 
                 <button
                     class="profile-mini"
@@ -160,9 +175,11 @@
                         id="topAvatar">
                     </span>
 
-                    <span id="topName">Laya</span>
+                    <span id="topName">
+                        Laya
+                    </span>
 
-                    <span class="profile-arrow">⌄</span>
+                    <span class="chevron">⌄</span>
 
                 </button>
 
@@ -171,31 +188,62 @@
         </header>
 
 
-        <!-- SEARCH -->
+        <!-- SEARCH RESULTS -->
+
         <div
             id="searchResults"
             class="search-results hidden">
         </div>
 
 
-        <!-- PAGES -->
-        <section id="profile" class="page-section"></section>
+        <!-- =========================
+             PAGES
+        ========================== -->
 
-        <section id="dashboard" class="page-section active"></section>
+        <section
+            id="profile"
+            class="page-section">
+        </section>
 
-        <section id="character" class="page-section"></section>
+        <section
+            id="dashboard"
+            class="page-section active">
+        </section>
 
-        <section id="reminders" class="page-section"></section>
+        <section
+            id="character"
+            class="page-section">
+        </section>
 
-        <section id="todos" class="page-section"></section>
+        <section
+            id="reminders"
+            class="page-section">
+        </section>
 
-        <section id="goals" class="page-section"></section>
+        <section
+            id="todos"
+            class="page-section">
+        </section>
 
-        <section id="notes" class="page-section"></section>
+        <section
+            id="goals"
+            class="page-section">
+        </section>
 
-        <section id="notifications" class="page-section"></section>
+        <section
+            id="notes"
+            class="page-section">
+        </section>
 
-        <section id="appearance" class="page-section"></section>
+        <section
+            id="notifications"
+            class="page-section">
+        </section>
+
+        <section
+            id="appearance"
+            class="page-section">
+        </section>
 
     </main>
 
@@ -203,37 +251,8 @@
 
 
 <!-- MODALS -->
+
 <div id="modalRoot"></div>
-
-
-<!-- FLOATING CHARACTER -->
-<div
-    id="companionReminder"
-    class="companion-reminder hidden"
-    aria-live="assertive">
-
-    <div class="companion-sticker-wrap">
-        <img id="companionSticker" alt="Character">
-    </div>
-
-    <div class="companion-bubble">
-        <button
-            id="closeCompanion"
-            class="companion-close"
-            type="button">
-            ×
-        </button>
-
-        <strong id="companionTitle">
-            Reminder
-        </strong>
-
-        <span id="companionMessage">
-            Something needs your attention.
-        </span>
-    </div>
-
-</div>
 
 
 <script src="script.js"></script>
