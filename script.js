@@ -1,45 +1,73 @@
 /* =========================================================
    LAYRAAZ
-   Main JavaScript
+   Complete Application JavaScript
    ========================================================= */
+
 
 /* =========================================================
-   1. STORAGE
+   STORAGE
    ========================================================= */
 
-const STORAGE_KEY = "layraazData";
+const STORAGE_KEY = "LAYRAAZ_V2";
+
 
 const defaultData = {
+
   profile: {
+
     name: "Laya",
+
     dob: "2002-08-28",
+
     mbti: "INTJ",
-    hobbies: [
-      "Singer",
-      "Crochets",
-      "Travelling",
-      "Poet",
-      "Kuchipudi Dancer",
-      "Playback Singer"
-    ],
-    occupation: "Executive Assistant to Terminal Head",
-    goals: "Start an Edible Cutlery Business in 2 years",
-    favouriteColours: "Forest Green, Charcoal Black, Silver",
-    favouriteFood: "Dahi Puri",
-    favouritePlaces: "Hill Stations",
-    favouriteMusic: "Melody",
-    skinType: "Sensitive Skin",
-    bodyType: "Rectangular Body",
-    familyMembers: "4",
-    height: "5'1\"",
-    characterName: "Character",
-    characterPersonality: "Calm, intelligent, firm, caring",
-    characterImage: ""
+
+    hobbies:
+      "Singer, Crochets, Loves travelling, Poet, Kuchipudi dancer, Playback singer",
+
+    occupation:
+      "Executive Assistant to Terminal Head in a container terminal",
+
+    businessGoal:
+      "Start an Edible Cutlery Business in 2 years",
+
+    favouriteColours:
+      "Forest Green, Charcoal Black, Silver",
+
+    favouriteFood:
+      "Dahi Puri",
+
+    favouritePlaces:
+      "Hill Stations",
+
+    favouriteMusic:
+      "Melody",
+
+    skinType:
+      "Sensitive Skin",
+
+    bodyType:
+      "Rectangular Body",
+
+    familyMembers:
+      "4",
+
+    height:
+      "5'1\"",
+
+    profileImage:
+      "",
+
+    characterName:
+      "Character",
+
+    characterPersonality:
+      "Calm, intelligent, firm, caring",
+
+    characterImage:
+      ""
+
   },
 
-  appearance: {
-    palette: 0
-  },
 
   reminders: [],
 
@@ -49,65 +77,176 @@ const defaultData = {
 
   notes: [],
 
-  notifications: []
+  notifications: [],
+
+
+  appearance: {
+
+    palette: 0
+
+  }
+
 };
 
 
+let appData = loadData();
+
+
 /* =========================================================
-   2. LOAD / SAVE DATA
+   LOAD DATA
    ========================================================= */
 
-let data = loadData();
-
 function loadData() {
+
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
+
+    const saved =
+      localStorage.getItem(
+        STORAGE_KEY
+      );
+
 
     if (!saved) {
-      return structuredClone(defaultData);
+
+      return JSON.parse(
+        JSON.stringify(
+          defaultData
+        )
+      );
+
     }
 
-    const parsed = JSON.parse(saved);
+
+    const parsed =
+      JSON.parse(saved);
+
 
     return {
-      ...structuredClone(defaultData),
+
+      ...JSON.parse(
+        JSON.stringify(
+          defaultData
+        )
+      ),
+
       ...parsed,
+
+
       profile: {
-        ...structuredClone(defaultData.profile),
+
+        ...defaultData.profile,
+
         ...(parsed.profile || {})
+
       },
+
+
       appearance: {
-        ...structuredClone(defaultData.appearance),
+
+        ...defaultData.appearance,
+
         ...(parsed.appearance || {})
+
       },
-      reminders: parsed.reminders || [],
-      todos: parsed.todos || [],
-      goals: parsed.goals || [],
-      notes: parsed.notes || [],
-      notifications: parsed.notifications || []
+
+
+      reminders:
+        Array.isArray(parsed.reminders)
+          ? parsed.reminders
+          : [],
+
+
+      todos:
+        Array.isArray(parsed.todos)
+          ? parsed.todos
+          : [],
+
+
+      goals:
+        Array.isArray(parsed.goals)
+          ? parsed.goals
+          : [],
+
+
+      notes:
+        Array.isArray(parsed.notes)
+          ? parsed.notes
+          : [],
+
+
+      notifications:
+        Array.isArray(parsed.notifications)
+          ? parsed.notifications
+          : []
+
     };
 
-  } catch (error) {
-    console.error("Could not load LAYRAAZ data:", error);
-    return structuredClone(defaultData);
   }
-}
 
-function saveData() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  catch (error) {
+
+    console.error(
+      "LAYRAAZ storage error:",
+      error
+    );
+
+    return JSON.parse(
+      JSON.stringify(
+        defaultData
+      )
+    );
+
+  }
+
 }
 
 
 /* =========================================================
-   3. PALETTES
+   SAVE DATA
+   ========================================================= */
+
+function saveData() {
+
+  try {
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(appData)
+    );
+
+    return true;
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Could not save LAYRAAZ data:",
+      error
+    );
+
+    showToast(
+      "Could not save. Browser storage may be full."
+    );
+
+    return false;
+
+  }
+
+}
+
+
+/* =========================================================
+   PALETTES
    ========================================================= */
 
 const palettes = [
+
   {
     name: "Deep Forest Green",
     background: "#1d251c",
     main: "#111111",
-    font: "#C0C0C0"
+    font: "#c0c0c0"
   },
 
   {
@@ -172,446 +311,906 @@ const palettes = [
     main: "#4B2E2A",
     font: "#FFFDD0"
   }
+
 ];
 
 
 /* =========================================================
-   4. INITIALISE WEBSITE
+   START APPLICATION
    ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    initialise();
+
+  }
+);
+
+
+function initialise() {
 
   applyPalette();
-  calculateAge();
-  loadProfileIntoForm();
+
+  loadProfile();
 
   renderDashboard();
+
   renderReminders();
+
   renderTodos();
+
   renderGoals();
+
   renderNotes();
+
   renderNotifications();
+
   renderAppearance();
 
+  renderCharacter();
+
   setupNavigation();
+
   setupSidebar();
-  setupSearch();
+
   setupProfile();
-  setupReminderForm();
-  setupTodoForm();
-  setupGoalForm();
-  setupNoteForm();
+
+  setupProfilePicture();
+
+  setupReminders();
+
+  setupTodos();
+
+  setupGoals();
+
+  setupNotes();
+
+  setupSearch();
+
+  setupNotifications();
+
   setupAppearance();
+
   setupCharacter();
+
+  setupCategoryFilters();
 
   startReminderChecker();
 
-  updateClock();
+  updateNotificationDot();
 
-  setInterval(updateClock, 1000);
-});
+}
 
 
 /* =========================================================
-   5. NAVIGATION
+   NAVIGATION
    ========================================================= */
 
 function setupNavigation() {
 
-  document.querySelectorAll("[data-section]").forEach(button => {
+  document
+    .querySelectorAll(
+      ".nav-item[data-section]"
+    )
+    .forEach(button => {
 
-    button.addEventListener("click", () => {
+      button.addEventListener(
+        "click",
+        () => {
 
-      const sectionName = button.dataset.section;
+          openSection(
+            button.dataset.section
+          );
 
-      showSection(sectionName);
+        }
+      );
 
     });
-
-  });
 
 }
 
 
-function showSection(sectionName) {
+function openSection(sectionId) {
 
-  document.querySelectorAll(".section").forEach(section => {
-    section.classList.remove("active");
-  });
+  document
+    .querySelectorAll(".section")
+    .forEach(section => {
 
-  const target = document.getElementById(sectionName);
+      section.classList.remove(
+        "active"
+      );
 
-  if (target) {
-    target.classList.add("active");
-  }
+    });
 
-  document.querySelectorAll("[data-section]").forEach(button => {
 
-    button.classList.toggle(
-      "active",
-      button.dataset.section === sectionName
+  const target =
+    document.getElementById(
+      sectionId
     );
 
-  });
+
+  if (target) {
+
+    target.classList.add(
+      "active"
+    );
+
+  }
+
+
+  document
+    .querySelectorAll(
+      ".nav-item[data-section]"
+    )
+    .forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.section ===
+          sectionId
+      );
+
+    });
 
 }
 
 
 /* =========================================================
-   6. SIDEBAR
+   SIDEBAR
    ========================================================= */
 
 function setupSidebar() {
 
-  const sidebar = document.querySelector(".sidebar");
-  const toggle = document.querySelector(".sidebar-toggle");
-
-  if (!sidebar || !toggle) return;
-
-  toggle.addEventListener("click", () => {
-
-    sidebar.classList.toggle("collapsed");
-
-  });
-
-}
+  const sidebar =
+    document.getElementById(
+      "sidebar"
+    );
 
 
-/* =========================================================
-   7. AGE CALCULATION
-   ========================================================= */
+  const toggle =
+    document.getElementById(
+      "sidebarToggle"
+    );
 
-function calculateAge() {
 
-  const dob = data.profile.dob;
-
-  if (!dob) return 0;
-
-  const birthDate = new Date(dob);
-  const today = new Date();
-
-  let age = today.getFullYear() - birthDate.getFullYear();
-
-  const monthDifference =
-    today.getMonth() - birthDate.getMonth();
-
-  if (
-    monthDifference < 0 ||
-    (
-      monthDifference === 0 &&
-      today.getDate() < birthDate.getDate()
-    )
-  ) {
-    age--;
+  if (!sidebar || !toggle) {
+    return;
   }
 
-  const ageElements = document.querySelectorAll(".age-value");
 
-  ageElements.forEach(element => {
-    element.textContent = age;
-  });
+  toggle.addEventListener(
+    "click",
+    () => {
 
-  return age;
+      sidebar.classList.toggle(
+        "collapsed"
+      );
+
+    }
+  );
+
 }
 
 
 /* =========================================================
-   8. PROFILE
+   PROFILE
    ========================================================= */
-
-function loadProfileIntoForm() {
-
-  const profile = data.profile;
-
-  const fields = {
-    profileName: profile.name,
-    profileDOB: profile.dob,
-    profileMBTI: profile.mbti,
-    profileHobbies: profile.hobbies.join(", "),
-    profileOccupation: profile.occupation,
-    profileBusinessGoal: profile.goals,
-    profileColours: profile.favouriteColours,
-    profileFood: profile.favouriteFood,
-    profilePlaces: profile.favouritePlaces,
-    profileMusic: profile.favouriteMusic,
-    profileSkin: profile.skinType,
-    profileBody: profile.bodyType,
-    profileFamily: profile.familyMembers,
-    profileHeight: profile.height,
-    characterName: profile.characterName,
-    characterPersonality: profile.characterPersonality
-  };
-
-  Object.entries(fields).forEach(([id, value]) => {
-
-    const element = document.getElementById(id);
-
-    if (element) {
-      element.value = value;
-    }
-
-  });
-
-  calculateAge();
-
-  updateCharacterNameDisplay();
-
-  loadCharacterImage();
-}
-
 
 function setupProfile() {
 
   const saveButton =
-    document.getElementById("saveProfile");
+    document.getElementById(
+      "saveProfile"
+    );
+
 
   if (saveButton) {
 
-    saveButton.addEventListener("click", saveProfile);
+    saveButton.addEventListener(
+      "click",
+      saveProfile
+    );
 
   }
 
-  const dobInput =
-    document.getElementById("profileDOB");
 
-  if (dobInput) {
+  const dob =
+    document.getElementById(
+      "profileDOB"
+    );
 
-    dobInput.addEventListener("change", () => {
 
-      data.profile.dob = dobInput.value;
+  if (dob) {
 
-      saveData();
+    dob.addEventListener(
+      "change",
+      () => {
 
-      calculateAge();
+        updateAge();
 
-    });
+      }
+    );
 
   }
+
+}
+
+
+function loadProfile() {
+
+  const p =
+    appData.profile;
+
+
+  setValue(
+    "profileName",
+    p.name
+  );
+
+
+  setValue(
+    "profileDOB",
+    p.dob
+  );
+
+
+  setValue(
+    "profileMBTI",
+    p.mbti
+  );
+
+
+  setValue(
+    "profileHobbies",
+    p.hobbies
+  );
+
+
+  setValue(
+    "profileOccupation",
+    p.occupation
+  );
+
+
+  setValue(
+    "profileBusinessGoal",
+    p.businessGoal
+  );
+
+
+  setValue(
+    "profileColours",
+    p.favouriteColours
+  );
+
+
+  setValue(
+    "profileFood",
+    p.favouriteFood
+  );
+
+
+  setValue(
+    "profilePlaces",
+    p.favouritePlaces
+  );
+
+
+  setValue(
+    "profileMusic",
+    p.favouriteMusic
+  );
+
+
+  setValue(
+    "profileSkin",
+    p.skinType
+  );
+
+
+  setValue(
+    "profileBody",
+    p.bodyType
+  );
+
+
+  setValue(
+    "profileFamily",
+    p.familyMembers
+  );
+
+
+  setValue(
+    "profileHeight",
+    p.height
+  );
+
+
+  updateAge();
+
+  updateNameDisplays();
+
+  loadProfileImage();
 
 }
 
 
 function saveProfile() {
 
-  const getValue = id => {
+  appData.profile.name =
+    getValue("profileName") ||
+    "Laya";
 
-    const element = document.getElementById(id);
 
-    return element ? element.value.trim() : "";
-
-  };
-
-  data.profile.name =
-    getValue("profileName") || "Laya";
-
-  data.profile.dob =
+  appData.profile.dob =
     getValue("profileDOB");
 
-  data.profile.mbti =
+
+  appData.profile.mbti =
     getValue("profileMBTI");
 
-  data.profile.hobbies =
-    getValue("profileHobbies")
-      .split(",")
-      .map(item => item.trim())
-      .filter(Boolean);
 
-  data.profile.occupation =
+  appData.profile.hobbies =
+    getValue("profileHobbies");
+
+
+  appData.profile.occupation =
     getValue("profileOccupation");
 
-  data.profile.goals =
+
+  appData.profile.businessGoal =
     getValue("profileBusinessGoal");
 
-  data.profile.favouriteColours =
+
+  appData.profile.favouriteColours =
     getValue("profileColours");
 
-  data.profile.favouriteFood =
+
+  appData.profile.favouriteFood =
     getValue("profileFood");
 
-  data.profile.favouritePlaces =
+
+  appData.profile.favouritePlaces =
     getValue("profilePlaces");
 
-  data.profile.favouriteMusic =
+
+  appData.profile.favouriteMusic =
     getValue("profileMusic");
 
-  data.profile.skinType =
+
+  appData.profile.skinType =
     getValue("profileSkin");
 
-  data.profile.bodyType =
+
+  appData.profile.bodyType =
     getValue("profileBody");
 
-  data.profile.familyMembers =
+
+  appData.profile.familyMembers =
     getValue("profileFamily");
 
-  data.profile.height =
+
+  appData.profile.height =
     getValue("profileHeight");
 
-  data.profile.characterName =
-    getValue("characterName") || "Character";
 
-  data.profile.characterPersonality =
-    getValue("characterPersonality") ||
-    "Calm, intelligent, firm, caring";
+  const saved =
+    saveData();
 
-  saveData();
 
-  calculateAge();
+  if (saved) {
 
-  updateCharacterNameDisplay();
+    updateNameDisplays();
 
-  renderDashboard();
+    updateAge();
 
-  showTemporaryMessage("Profile saved.");
+    renderDashboard();
+
+    showToast(
+      "Profile saved successfully."
+    );
+
+  }
 
 }
 
 
 /* =========================================================
-   9. CHARACTER NAME
+   NAME DISPLAY
    ========================================================= */
 
-function updateCharacterNameDisplay() {
+function updateNameDisplays() {
 
   const name =
-    data.profile.characterName || "Character";
+    appData.profile.name ||
+    "Laya";
 
-  document.querySelectorAll(".character-name").forEach(element => {
 
-    element.textContent = name;
+  setText(
+    "profileHeadingName",
+    name
+  );
 
-  });
+
+  setText(
+    "profileCardName",
+    name
+  );
+
+
+  setText(
+    "dashboardName",
+    name
+  );
+
+
+  setText(
+    "sidebarUserName",
+    name
+  );
+
+
+  setText(
+    "profileInitial",
+    name.charAt(0).toUpperCase()
+  );
+
+
+  setText(
+    "miniAvatar",
+    name.charAt(0).toUpperCase()
+  );
 
 }
 
 
 /* =========================================================
-   10. DASHBOARD
+   AGE
+   ========================================================= */
+
+function calculateAge(dob) {
+
+  if (!dob) {
+    return "";
+  }
+
+
+  const birth =
+    new Date(dob);
+
+
+  if (isNaN(birth.getTime())) {
+    return "";
+  }
+
+
+  const today =
+    new Date();
+
+
+  let age =
+    today.getFullYear() -
+    birth.getFullYear();
+
+
+  const month =
+    today.getMonth() -
+    birth.getMonth();
+
+
+  if (
+    month < 0 ||
+    (
+      month === 0 &&
+      today.getDate() <
+        birth.getDate()
+    )
+  ) {
+
+    age--;
+
+  }
+
+
+  return age;
+
+}
+
+
+function updateAge() {
+
+  const age =
+    calculateAge(
+      getValue("profileDOB")
+    );
+
+
+  setValue(
+    "profileAge",
+    age
+  );
+
+
+  setText(
+    "dashboardAge",
+    age
+  );
+
+}
+
+
+/* =========================================================
+   PROFILE PICTURE
+   ========================================================= */
+
+function setupProfilePicture() {
+
+  const input =
+    document.getElementById(
+      "profileImageInput"
+    );
+
+
+  const remove =
+    document.getElementById(
+      "removeProfileImage"
+    );
+
+
+  if (input) {
+
+    input.addEventListener(
+      "change",
+      event => {
+
+        const file =
+          event.target.files?.[0];
+
+
+        if (!file) return;
+
+
+        if (
+          !file.type.startsWith(
+            "image/"
+          )
+        ) {
+
+          showToast(
+            "Please choose an image."
+          );
+
+          return;
+
+        }
+
+
+        const reader =
+          new FileReader();
+
+
+        reader.onload =
+          event => {
+
+            appData.profile.profileImage =
+              event.target.result;
+
+
+            saveData();
+
+            loadProfileImage();
+
+            showToast(
+              "Profile picture saved."
+            );
+
+          };
+
+
+        reader.readAsDataURL(file);
+
+      }
+    );
+
+  }
+
+
+  if (remove) {
+
+    remove.addEventListener(
+      "click",
+      () => {
+
+        appData.profile.profileImage =
+          "";
+
+        saveData();
+
+        loadProfileImage();
+
+        showToast(
+          "Profile picture removed."
+        );
+
+      }
+    );
+
+  }
+
+}
+
+
+function loadProfileImage() {
+
+  const image =
+    document.getElementById(
+      "profileImage"
+    );
+
+
+  const initial =
+    document.getElementById(
+      "profileInitial"
+    );
+
+
+  const avatar =
+    document.getElementById(
+      "miniAvatar"
+    );
+
+
+  if (
+    appData.profile.profileImage
+  ) {
+
+    if (image) {
+
+      image.src =
+        appData.profile.profileImage;
+
+      image.classList.remove(
+        "hidden"
+      );
+
+    }
+
+
+    if (initial) {
+
+      initial.classList.add(
+        "hidden"
+      );
+
+    }
+
+
+    if (avatar) {
+
+      avatar.innerHTML = `
+        <img
+          src="${appData.profile.profileImage}"
+          alt="Profile"
+        >
+      `;
+
+    }
+
+  }
+
+  else {
+
+    if (image) {
+
+      image.classList.add(
+        "hidden"
+      );
+
+      image.removeAttribute(
+        "src"
+      );
+
+    }
+
+
+    if (initial) {
+
+      initial.classList.remove(
+        "hidden"
+      );
+
+    }
+
+
+    if (avatar) {
+
+      avatar.textContent =
+        (
+          appData.profile.name ||
+          "L"
+        )
+        .charAt(0)
+        .toUpperCase();
+
+    }
+
+  }
+
+}
+
+
+/* =========================================================
+   DASHBOARD
    ========================================================= */
 
 function renderDashboard() {
 
-  const profile = data.profile;
+  const p =
+    appData.profile;
 
-  const mappings = {
 
-    dashboardName: profile.name,
+  setText(
+    "dashboardMBTI",
+    p.mbti
+  );
 
-    dashboardMBTI: profile.mbti,
 
-    dashboardColours:
-      profile.favouriteColours,
+  setText(
+    "dashboardFamily",
+    p.familyMembers
+  );
 
-    dashboardFood:
-      profile.favouriteFood,
 
-    dashboardPlaces:
-      profile.favouritePlaces,
+  setText(
+    "dashboardHeight",
+    p.height
+  );
 
-    dashboardMusic:
-      profile.favouriteMusic,
 
-    dashboardSkin:
-      profile.skinType,
+  setText(
+    "dashboardOccupation",
+    p.occupation
+  );
 
-    dashboardBody:
-      profile.bodyType,
 
-    dashboardFamily:
-      profile.familyMembers,
+  setText(
+    "dashboardHobbies",
+    p.hobbies
+  );
 
-    dashboardHeight:
-      profile.height,
 
-    dashboardOccupation:
-      profile.occupation,
+  setText(
+    "dashboardColours",
+    p.favouriteColours
+  );
 
-    dashboardBusinessGoal:
-      profile.goals,
 
-    dashboardHobbies:
-      profile.hobbies.join(", ")
+  setText(
+    "dashboardFood",
+    p.favouriteFood
+  );
 
-  };
 
-  Object.entries(mappings).forEach(([id, value]) => {
+  setText(
+    "dashboardPlaces",
+    p.favouritePlaces
+  );
 
-    const element = document.getElementById(id);
 
-    if (element) {
-      element.textContent = value || "Not set";
-    }
+  setText(
+    "dashboardMusic",
+    p.favouriteMusic
+  );
 
-  });
 
-  calculateAge();
+  setText(
+    "dashboardSkin",
+    p.skinType
+  );
+
+
+  setText(
+    "dashboardBody",
+    p.bodyType
+  );
+
+
+  setText(
+    "dashboardBusinessGoal",
+    p.businessGoal
+  );
+
+
+  updateAge();
 
 }
 
 
 /* =========================================================
-   11. REMINDERS
+   REMINDERS
    ========================================================= */
 
-function setupReminderForm() {
+function setupReminders() {
 
   const form =
-    document.getElementById("reminderForm");
+    document.getElementById(
+      "reminderForm"
+    );
+
 
   if (!form) return;
 
-  form.addEventListener("submit", event => {
 
-    event.preventDefault();
+  form.addEventListener(
+    "submit",
+    event => {
 
-    const title =
-      document.getElementById("reminderTitle")?.value.trim();
+      event.preventDefault();
 
-    const category =
-      document.getElementById("reminderCategory")?.value;
 
-    const due =
-      document.getElementById("reminderDateTime")?.value;
+      const title =
+        getValue(
+          "reminderTitle"
+        );
 
-    if (!title || !due) {
 
-      showTemporaryMessage(
-        "Please enter a reminder and date/time."
+      const category =
+        getValue(
+          "reminderCategory"
+        );
+
+
+      const due =
+        getValue(
+          "reminderDateTime"
+        );
+
+
+      if (!title || !due) {
+
+        showToast(
+          "Please complete the reminder."
+        );
+
+        return;
+
+      }
+
+
+      appData.reminders.push({
+
+        id:
+          Date.now(),
+
+        title,
+
+        category:
+          category || "Personal",
+
+        due,
+
+        notified:
+          false
+
+      });
+
+
+      saveData();
+
+      renderReminders();
+
+      form.reset();
+
+      requestNotificationPermission();
+
+      showToast(
+        "Reminder saved."
       );
 
-      return;
-
     }
-
-    const reminder = {
-
-      id: Date.now(),
-
-      title,
-
-      category:
-        category || "Personal",
-
-      due,
-
-      notified: false
-
-    };
-
-    data.reminders.push(reminder);
-
-    saveData();
-
-    renderReminders();
-
-    form.reset();
-
-    requestNotificationPermission();
-
-    showTemporaryMessage(
-      "Reminder saved."
-    );
-
-  });
+  );
 
 }
 
@@ -619,13 +1218,20 @@ function setupReminderForm() {
 function renderReminders() {
 
   const container =
-    document.getElementById("remindersList");
+    document.getElementById(
+      "remindersList"
+    );
+
 
   if (!container) return;
 
+
   container.innerHTML = "";
 
-  if (data.reminders.length === 0) {
+
+  if (
+    appData.reminders.length === 0
+  ) {
 
     container.innerHTML =
       `<div class="empty-state">
@@ -636,100 +1242,136 @@ function renderReminders() {
 
   }
 
+
   const sorted =
-    [...data.reminders]
-      .sort((a, b) =>
-        new Date(a.due) - new Date(b.due)
+    [...appData.reminders]
+      .sort(
+        (a,b) =>
+          new Date(a.due) -
+          new Date(b.due)
       );
 
-  sorted.forEach(reminder => {
 
-    const item =
-      document.createElement("div");
+  sorted.forEach(
+    reminder => {
 
-    item.className = "reminder-item";
-
-    const dateText =
-      formatDateTime(reminder.due);
-
-    item.innerHTML = `
-
-      <div class="reminder-content">
-
-        <h4>${escapeHTML(reminder.title)}</h4>
-
-        <span class="category-tag">
-          ${escapeHTML(reminder.category)}
-        </span>
-
-        <p>${dateText}</p>
-
-      </div>
-
-      <div class="item-actions">
-
-        <button
-          type="button"
-          class="edit-btn"
-          data-id="${reminder.id}">
-          Edit
-        </button>
-
-        <button
-          type="button"
-          class="delete-btn"
-          data-id="${reminder.id}">
-          Delete
-        </button>
-
-      </div>
-    `;
-
-    container.appendChild(item);
-
-  });
-
-  container
-    .querySelectorAll(".delete-btn")
-    .forEach(button => {
-
-      button.addEventListener("click", () => {
-
-        deleteReminder(
-          Number(button.dataset.id)
+      const item =
+        document.createElement(
+          "div"
         );
 
-      });
+
+      item.className =
+        "reminder-item";
+
+
+      item.innerHTML = `
+
+        <div class="reminder-content">
+
+          <h4>
+            ${escapeHTML(
+              reminder.title
+            )}
+          </h4>
+
+          <span class="category-tag">
+            ${escapeHTML(
+              reminder.category
+            )}
+          </span>
+
+          <p>
+            ${formatDateTime(
+              reminder.due
+            )}
+          </p>
+
+        </div>
+
+
+        <div class="item-actions">
+
+          <button
+            class="edit-btn"
+            data-id="${reminder.id}"
+          >
+            Edit
+          </button>
+
+          <button
+            class="delete-btn"
+            data-id="${reminder.id}"
+          >
+            Delete
+          </button>
+
+        </div>
+
+      `;
+
+
+      container.appendChild(
+        item
+      );
+
+    }
+  );
+
+
+  container
+    .querySelectorAll(
+      ".delete-btn"
+    )
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const id =
+            Number(
+              button.dataset.id
+            );
+
+
+          appData.reminders =
+            appData.reminders.filter(
+              reminder =>
+                reminder.id !== id
+            );
+
+
+          saveData();
+
+          renderReminders();
+
+        }
+      );
 
     });
 
+
   container
-    .querySelectorAll(".edit-btn")
+    .querySelectorAll(
+      ".edit-btn"
+    )
     .forEach(button => {
 
-      button.addEventListener("click", () => {
+      button.addEventListener(
+        "click",
+        () => {
 
-        editReminder(
-          Number(button.dataset.id)
-        );
+          editReminder(
+            Number(
+              button.dataset.id
+            )
+          );
 
-      });
+        }
+      );
 
     });
-
-}
-
-
-function deleteReminder(id) {
-
-  data.reminders =
-    data.reminders.filter(
-      reminder => reminder.id !== id
-    );
-
-  saveData();
-
-  renderReminders();
 
 }
 
@@ -737,51 +1379,72 @@ function deleteReminder(id) {
 function editReminder(id) {
 
   const reminder =
-    data.reminders.find(
-      item => item.id === id
+    appData.reminders.find(
+      item =>
+        item.id === id
     );
+
 
   if (!reminder) return;
 
+
   const title =
     prompt(
-      "Reminder:",
+      "Reminder",
       reminder.title
     );
 
-  if (title === null) return;
+
+  if (title === null) {
+    return;
+  }
+
 
   const due =
     prompt(
-      "Date and time (YYYY-MM-DDTHH:MM):",
+      "Date & Time\nUse format: YYYY-MM-DDTHH:MM",
       reminder.due
     );
 
-  if (due === null) return;
+
+  if (due === null) {
+    return;
+  }
+
 
   reminder.title =
-    title.trim() || reminder.title;
+    title.trim() ||
+    reminder.title;
+
 
   reminder.due =
-    due;
+    due.trim() ||
+    reminder.due;
+
 
   reminder.notified =
     false;
+
 
   saveData();
 
   renderReminders();
 
+  showToast(
+    "Reminder updated."
+  );
+
 }
 
 
 /* =========================================================
-   12. REMINDER CHECKER
+   REMINDER CHECKER
    ========================================================= */
 
 function startReminderChecker() {
 
   checkReminders();
+
 
   setInterval(
     checkReminders,
@@ -796,37 +1459,55 @@ function checkReminders() {
   const now =
     Date.now();
 
-  let changed = false;
 
-  data.reminders.forEach(reminder => {
+  let changed =
+    false;
 
-    const due =
-      new Date(reminder.due).getTime();
 
-    if (
-      !reminder.notified &&
-      !isNaN(due) &&
-      now >= due
-    ) {
+  appData.reminders.forEach(
+    reminder => {
 
-      reminder.notified = true;
+      const due =
+        new Date(
+          reminder.due
+        ).getTime();
 
-      changed = true;
 
-      triggerCharacterReminder(reminder);
+      if (
+        !reminder.notified &&
+        !isNaN(due) &&
+        now >= due
+      ) {
 
-      addNotification(
-        `Reminder: ${reminder.title}`
-      );
+        reminder.notified =
+          true;
 
-      sendBrowserNotification(
-        data.profile.characterName || "Character",
-        reminder.title
-      );
+
+        changed =
+          true;
+
+
+        triggerCharacterReminder(
+          reminder
+        );
+
+
+        addNotification(
+          `Reminder: ${reminder.title}`
+        );
+
+
+        sendBrowserNotification(
+          appData.profile.characterName ||
+            "Character",
+          reminder.title
+        );
+
+      }
 
     }
+  );
 
-  });
 
   if (changed) {
 
@@ -836,43 +1517,68 @@ function checkReminders() {
 
     renderNotifications();
 
+    updateNotificationDot();
+
   }
 
 }
 
 
 /* =========================================================
-   13. CHARACTER REMINDER
+   CHARACTER REMINDER
    ========================================================= */
 
-function triggerCharacterReminder(reminder) {
+function triggerCharacterReminder(
+  reminder
+) {
 
   const container =
     document.getElementById(
       "characterReminder"
     );
 
+
   if (!container) return;
 
-  const character =
-    container.querySelector(
-      ".character-sticker"
+
+  const image =
+    document.getElementById(
+      "reminderCharacterImage"
     );
 
-  const bubble =
-    container.querySelector(
-      ".character-bubble"
+
+  const placeholder =
+    document.getElementById(
+      "reminderCharacterPlaceholder"
     );
 
-  const message =
-    container.querySelector(
-      ".character-message"
+
+  const name =
+    document.getElementById(
+      "characterReminderName"
     );
+
 
   const title =
-    container.querySelector(
-      ".character-reminder-title"
+    document.getElementById(
+      "characterReminderTitle"
     );
+
+
+  const message =
+    document.getElementById(
+      "characterMessage"
+    );
+
+
+  if (name) {
+
+    name.textContent =
+      appData.profile.characterName ||
+      "Character";
+
+  }
+
 
   if (title) {
 
@@ -881,709 +1587,433 @@ function triggerCharacterReminder(reminder) {
 
   }
 
+
   if (message) {
 
     message.textContent =
-      getCharacterMessage(reminder);
+      characterMessage(
+        reminder
+      );
 
   }
 
-  container.classList.remove("hidden");
+
+  if (
+    appData.profile.characterImage
+  ) {
+
+    image.src =
+      appData.profile.characterImage;
+
+    image.classList.remove(
+      "hidden"
+    );
+
+
+    if (placeholder) {
+
+      placeholder.classList.add(
+        "hidden"
+      );
+
+    }
+
+  }
+
 
   container.classList.remove(
-    "character-animation"
+    "hidden"
   );
 
-  void container.offsetWidth;
 
-  container.classList.add(
-    "character-animation"
-  );
+  const movements = [
 
-  if (character) {
+    "character-float",
 
-    const movements = [
-      "character-float",
-      "character-shake",
-      "character-nod",
-      "character-bounce"
-    ];
+    "character-shake",
 
-    const randomMovement =
-      movements[
-        Math.floor(
-          Math.random() * movements.length
-        )
-      ];
+    "character-bounce"
 
-    character.classList.remove(
+  ];
+
+
+  if (image) {
+
+    image.classList.remove(
       ...movements
     );
 
-    character.classList.add(
-      randomMovement
+
+    const movement =
+      movements[
+        Math.floor(
+          Math.random() *
+          movements.length
+        )
+      ];
+
+
+    void image.offsetWidth;
+
+
+    image.classList.add(
+      movement
     );
 
   }
 
-  setTimeout(() => {
 
-    container.classList.add("hidden");
+  clearTimeout(
+    window.characterReminderTimer
+  );
 
-  }, 12000);
+
+  window.characterReminderTimer =
+    setTimeout(
+      () => {
+
+        container.classList.add(
+          "hidden"
+        );
+
+      },
+      12000
+    );
 
 }
 
 
-function getCharacterMessage(reminder) {
+function characterMessage(
+  reminder
+) {
 
   const personality =
     (
-      data.profile.characterPersonality ||
+      appData.profile.characterPersonality ||
       ""
     ).toLowerCase();
 
+
   if (
-    personality.includes("firm") ||
-    personality.includes("strict")
+    personality.includes(
+      "firm"
+    ) ||
+    personality.includes(
+      "strict"
+    )
   ) {
 
     return `Your reminder is due. Handle it now: "${reminder.title}".`;
 
   }
 
+
   if (
-    personality.includes("caring") ||
-    personality.includes("gentle")
+    personality.includes(
+      "caring"
+    ) ||
+    personality.includes(
+      "gentle"
+    )
   ) {
 
     return `Your reminder is due. Take care of this now: "${reminder.title}".`;
 
   }
 
-  if (
-    personality.includes("calm")
-  ) {
 
-    return `It's time for "${reminder.title}".`;
-
-  }
-
-  return `Reminder due: "${reminder.title}".`;
+  return `It is time for "${reminder.title}".`;
 
 }
 
 
 /* =========================================================
-   14. CHARACTER CLOSE BUTTON
+   CHARACTER SETTINGS
    ========================================================= */
 
 function setupCharacter() {
 
-  const closeButton =
+  const save =
+    document.getElementById(
+      "saveCharacterSettings"
+    );
+
+
+  const test =
+    document.getElementById(
+      "testCharacter"
+    );
+
+
+  const close =
     document.getElementById(
       "closeCharacterReminder"
     );
 
-  if (closeButton) {
 
-    closeButton.addEventListener(
+  const input =
+    document.getElementById(
+      "characterImageInput"
+    );
+
+
+  if (save) {
+
+    save.addEventListener(
+      "click",
+      saveCharacter
+    );
+
+  }
+
+
+  if (test) {
+
+    test.addEventListener(
       "click",
       () => {
 
-        const container =
-          document.getElementById(
-            "characterReminder"
-          );
+        const fakeReminder = {
 
-        if (container) {
+          title:
+            "This is your Character test.",
 
-          container.classList.add(
-            "hidden"
-          );
+          category:
+            "Personal",
 
-        }
+          due:
+            new Date().toISOString(),
+
+          notified:
+            true
+
+        };
+
+
+        triggerCharacterReminder(
+          fakeReminder
+        );
 
       }
     );
 
   }
 
-  const imageInput =
-    document.getElementById(
-      "characterImageInput"
+
+  if (close) {
+
+    close.addEventListener(
+      "click",
+      () => {
+
+        document
+          .getElementById(
+            "characterReminder"
+          )
+          .classList.add(
+            "hidden"
+          );
+
+      }
     );
 
-  if (imageInput) {
+  }
 
-    imageInput.addEventListener(
+
+  if (input) {
+
+    input.addEventListener(
       "change",
       handleCharacterImage
     );
 
   }
 
-  loadCharacterImage();
+}
+
+
+function loadCharacterSettings() {
+
+  setValue(
+    "characterName",
+    appData.profile.characterName
+  );
+
+
+  setValue(
+    "characterPersonality",
+    appData.profile.characterPersonality
+  );
+
+}
+
+
+function saveCharacter() {
+
+  appData.profile.characterName =
+    getValue(
+      "characterName"
+    ) ||
+    "Character";
+
+
+  appData.profile.characterPersonality =
+    getValue(
+      "characterPersonality"
+    ) ||
+    "Calm, intelligent, firm, caring";
+
+
+  saveData();
+
+  renderCharacter();
+
+  showToast(
+    "Character settings saved."
+  );
+
+}
+
+
+function renderCharacter() {
+
+  loadCharacterSettings();
+
+
+  const name =
+    appData.profile.characterName ||
+    "Character";
+
+
+  setText(
+    "characterPreviewName",
+    name
+  );
+
+
+  const image =
+    document.getElementById(
+      "characterPreviewImage"
+    );
+
+
+  const placeholder =
+    document.getElementById(
+      "characterPlaceholder"
+    );
+
+
+  if (
+    appData.profile.characterImage
+  ) {
+
+    image.src =
+      appData.profile.characterImage;
+
+    image.classList.remove(
+      "hidden"
+    );
+
+
+    placeholder.classList.add(
+      "hidden"
+    );
+
+  }
+
+  else {
+
+    image.classList.add(
+      "hidden"
+    );
+
+
+    placeholder.classList.remove(
+      "hidden"
+    );
+
+  }
 
 }
 
 
 /* =========================================================
-   15. CHARACTER IMAGE UPLOAD
+   CHARACTER IMAGE
    ========================================================= */
 
-function handleCharacterImage(event) {
+function handleCharacterImage(
+  event
+) {
 
   const file =
     event.target.files?.[0];
 
+
   if (!file) return;
 
-  if (!file.type.startsWith("image/")) {
 
-    showTemporaryMessage(
-      "Please choose an image file."
+  if (
+    !file.type.startsWith(
+      "image/"
+    )
+  ) {
+
+    showToast(
+      "Please choose an image."
     );
 
     return;
 
   }
 
+
   const reader =
     new FileReader();
 
-  reader.onload = function(e) {
 
-    processCharacterImage(
-      e.target.result
-    );
+  reader.onload =
+    event => {
 
-  };
+      appData.profile.characterImage =
+        event.target.result;
+
+
+      const saved =
+        saveData();
+
+
+      if (saved) {
+
+        renderCharacter();
+
+        showToast(
+          "Character picture saved."
+        );
+
+      }
+
+    };
+
 
   reader.readAsDataURL(file);
 
 }
 
 
-function processCharacterImage(src) {
-
-  const image =
-    new Image();
-
-  image.onload = function() {
-
-    const maxSize = 700;
-
-    let width =
-      image.naturalWidth;
-
-    let height =
-      image.naturalHeight;
-
-    const scale =
-      Math.min(
-        1,
-        maxSize /
-        Math.max(width, height)
-      );
-
-    width =
-      Math.round(width * scale);
-
-    height =
-      Math.round(height * scale);
-
-    const canvas =
-      document.createElement("canvas");
-
-    canvas.width = width;
-    canvas.height = height;
-
-    const ctx =
-      canvas.getContext("2d");
-
-    ctx.drawImage(
-      image,
-      0,
-      0,
-      width,
-      height
-    );
-
-    removeBackground(
-      ctx,
-      width,
-      height
-    );
-
-    const cropped =
-      cropTransparentArea(
-        canvas
-      );
-
-    const finalCanvas =
-      cropped || canvas;
-
-    const dataURL =
-      finalCanvas.toDataURL(
-        "image/png"
-      );
-
-    data.profile.characterImage =
-      dataURL;
-
-    saveData();
-
-    loadCharacterImage();
-
-    showTemporaryMessage(
-      "Character image saved."
-    );
-
-  };
-
-  image.src = src;
-
-}
-
-
 /* =========================================================
-   16. BACKGROUND REMOVAL
+   TODO LIST
    ========================================================= */
 
-function removeBackground(
-  ctx,
-  width,
-  height
-) {
-
-  const imageData =
-    ctx.getImageData(
-      0,
-      0,
-      width,
-      height
-    );
-
-  const pixels =
-    imageData.data;
-
-  const visited =
-    new Uint8Array(
-      width * height
-    );
-
-  const queue = [];
-
-  const addPixel =
-    (x, y) => {
-
-      if (
-        x < 0 ||
-        y < 0 ||
-        x >= width ||
-        y >= height
-      ) {
-        return;
-      }
-
-      const index =
-        y * width + x;
-
-      if (visited[index]) return;
-
-      visited[index] = 1;
-
-      queue.push([x, y]);
-
-    };
-
-  for (let x = 0; x < width; x++) {
-
-    addPixel(x, 0);
-    addPixel(x, height - 1);
-
-  }
-
-  for (let y = 0; y < height; y++) {
-
-    addPixel(0, y);
-    addPixel(width - 1, y);
-
-  }
-
-  const tolerance = 55;
-
-  while (queue.length) {
-
-    const [x, y] =
-      queue.shift();
-
-    const index =
-      (y * width + x) * 4;
-
-    const r =
-      pixels[index];
-
-    const g =
-      pixels[index + 1];
-
-    const b =
-      pixels[index + 2];
-
-    const isBackground =
-      r < tolerance &&
-      g < tolerance &&
-      b < tolerance;
-
-    if (!isBackground) {
-      continue;
-    }
-
-    pixels[index + 3] = 0;
-
-    addPixel(x + 1, y);
-    addPixel(x - 1, y);
-    addPixel(x, y + 1);
-    addPixel(x, y - 1);
-
-  }
-
-  ctx.putImageData(
-    imageData,
-    0,
-    0
-  );
-
-}
-
-
-/* =========================================================
-   17. CROP TRANSPARENT AREA
-   ========================================================= */
-
-function cropTransparentArea(canvas) {
-
-  const ctx =
-    canvas.getContext("2d");
-
-  const width =
-    canvas.width;
-
-  const height =
-    canvas.height;
-
-  const imageData =
-    ctx.getImageData(
-      0,
-      0,
-      width,
-      height
-    );
-
-  const pixels =
-    imageData.data;
-
-  let minX = width;
-  let minY = height;
-  let maxX = -1;
-  let maxY = -1;
-
-  for (
-    let y = 0;
-    y < height;
-    y++
-  ) {
-
-    for (
-      let x = 0;
-      x < width;
-      x++
-    ) {
-
-      const alpha =
-        pixels[
-          (y * width + x) * 4 + 3
-        ];
-
-      if (alpha > 10) {
-
-        minX =
-          Math.min(minX, x);
-
-        minY =
-          Math.min(minY, y);
-
-        maxX =
-          Math.max(maxX, x);
-
-        maxY =
-          Math.max(maxY, y);
-
-      }
-
-    }
-
-  }
-
-  if (maxX === -1) {
-    return null;
-  }
-
-  const padding = 10;
-
-  minX =
-    Math.max(
-      0,
-      minX - padding
-    );
-
-  minY =
-    Math.max(
-      0,
-      minY - padding
-    );
-
-  maxX =
-    Math.min(
-      width - 1,
-      maxX + padding
-    );
-
-  maxY =
-    Math.min(
-      height - 1,
-      maxY + padding
-    );
-
-  const cropWidth =
-    maxX - minX + 1;
-
-  const cropHeight =
-    maxY - minY + 1;
-
-  const output =
-    document.createElement(
-      "canvas"
-    );
-
-  output.width =
-    cropWidth;
-
-  output.height =
-    cropHeight;
-
-  const outputCtx =
-    output.getContext("2d");
-
-  outputCtx.drawImage(
-    canvas,
-    minX,
-    minY,
-    cropWidth,
-    cropHeight,
-    0,
-    0,
-    cropWidth,
-    cropHeight
-  );
-
-  return output;
-
-}
-
-
-/* =========================================================
-   18. LOAD CHARACTER IMAGE
-   ========================================================= */
-
-function loadCharacterImage() {
-
-  const image =
-    data.profile.characterImage;
-
-  document
-    .querySelectorAll(
-      ".character-sticker"
-    )
-    .forEach(element => {
-
-      if (image) {
-
-        element.src = image;
-
-        element.style.display =
-          "block";
-
-      } else {
-
-        element.style.display =
-          "none";
-
-      }
-
-    });
-
-}
-
-
-/* =========================================================
-   19. BROWSER NOTIFICATIONS
-   ========================================================= */
-
-function requestNotificationPermission() {
-
-  if (!("Notification" in window)) {
-
-    return;
-
-  }
-
-  if (
-    Notification.permission ===
-    "default"
-  ) {
-
-    Notification.requestPermission();
-
-  }
-
-}
-
-
-function sendBrowserNotification(
-  title,
-  message
-) {
-
-  if (!("Notification" in window)) {
-    return;
-  }
-
-  if (
-    Notification.permission ===
-    "granted"
-  ) {
-
-    new Notification(
-      title,
-      {
-        body: message,
-        icon:
-          data.profile.characterImage ||
-          undefined
-      }
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   20. NOTIFICATIONS
-   ========================================================= */
-
-function addNotification(message) {
-
-  data.notifications.unshift({
-
-    id: Date.now(),
-
-    message,
-
-    date: new Date().toISOString(),
-
-    read: false
-
-  });
-
-  if (
-    data.notifications.length > 100
-  ) {
-
-    data.notifications =
-      data.notifications.slice(
-        0,
-        100
-      );
-
-  }
-
-}
-
-
-function renderNotifications() {
-
-  const container =
-    document.getElementById(
-      "notificationsList"
-    );
-
-  if (!container) return;
-
-  container.innerHTML = "";
-
-  if (
-    data.notifications.length === 0
-  ) {
-
-    container.innerHTML =
-      `<div class="empty-state">
-        No notifications yet.
-      </div>`;
-
-    return;
-
-  }
-
-  data.notifications.forEach(
-    notification => {
-
-      const item =
-        document.createElement("div");
-
-      item.className =
-        "notification-item";
-
-      item.innerHTML = `
-
-        <div>
-          <strong>
-            ${escapeHTML(
-              notification.message
-            )}
-          </strong>
-
-          <small>
-            ${formatDateTime(
-              notification.date
-            )}
-          </small>
-        </div>
-
-      `;
-
-      container.appendChild(item);
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   21. TO-DO LIST
-   ========================================================= */
-
-function setupTodoForm() {
+function setupTodos() {
 
   const form =
     document.getElementById(
       "todoForm"
     );
 
+
   if (!form) return;
+
 
   form.addEventListener(
     "submit",
@@ -1591,23 +2021,22 @@ function setupTodoForm() {
 
       event.preventDefault();
 
+
       const title =
-        document
-          .getElementById(
-            "todoTitle"
-          )
-          ?.value.trim();
+        getValue(
+          "todoTitle"
+        );
+
 
       const category =
-        document
-          .getElementById(
-            "todoCategory"
-          )
-          ?.value;
+        getValue(
+          "todoCategory"
+        );
+
 
       if (!title) {
 
-        showTemporaryMessage(
+        showToast(
           "Enter a task first."
         );
 
@@ -1615,27 +2044,32 @@ function setupTodoForm() {
 
       }
 
-      data.todos.push({
 
-        id: Date.now(),
+      appData.todos.push({
+
+        id:
+          Date.now(),
 
         title,
 
         category:
           category || "Personal",
 
-        completed: false,
-
-        created:
-          new Date().toISOString()
+        completed:
+          false
 
       });
+
 
       saveData();
 
       renderTodos();
 
       form.reset();
+
+      showToast(
+        "Task saved."
+      );
 
     }
   );
@@ -1650,11 +2084,16 @@ function renderTodos() {
       "todoList"
     );
 
+
   if (!container) return;
+
 
   container.innerHTML = "";
 
-  if (data.todos.length === 0) {
+
+  if (
+    appData.todos.length === 0
+  ) {
 
     container.innerHTML =
       `<div class="empty-state">
@@ -1665,60 +2104,70 @@ function renderTodos() {
 
   }
 
-  data.todos.forEach(todo => {
 
-    const item =
-      document.createElement("div");
+  appData.todos.forEach(
+    todo => {
 
-    item.className =
-      "todo-item";
+      const item =
+        document.createElement(
+          "div"
+        );
 
-    if (todo.completed) {
 
-      item.classList.add(
-        "completed"
+      item.className =
+        "todo-item" +
+        (
+          todo.completed
+            ? " completed"
+            : ""
+        );
+
+
+      item.innerHTML = `
+
+        <label class="todo-check">
+
+          <input
+            type="checkbox"
+            data-id="${todo.id}"
+            ${todo.completed ? "checked" : ""}
+          >
+
+          <span class="custom-checkbox"></span>
+
+        </label>
+
+
+        <div class="todo-content">
+
+          <span class="todo-title">
+            ${escapeHTML(todo.title)}
+          </span>
+
+          <span class="category-tag">
+            ${escapeHTML(todo.category)}
+          </span>
+
+        </div>
+
+
+        <button
+          class="delete-btn"
+          data-id="${todo.id}"
+        >
+          Delete
+        </button>
+
+      `;
+
+
+      container.appendChild(
+        item
       );
 
     }
+  );
 
-    item.innerHTML = `
-
-      <label class="todo-check">
-
-        <input
-          type="checkbox"
-          ${todo.completed ? "checked" : ""}
-          data-id="${todo.id}"
-        >
-
-        <span class="custom-checkbox"></span>
-
-      </label>
-
-      <div class="todo-content">
-
-        <span class="todo-title">
-          ${escapeHTML(todo.title)}
-        </span>
-
-        <span class="category-tag">
-          ${escapeHTML(todo.category)}
-        </span>
-
-      </div>
-
-      <button
-        type="button"
-        class="delete-btn"
-        data-id="${todo.id}">
-        Delete
-      </button>
-
-    `;
-
-    container.appendChild(item);
-
-  });
 
   container
     .querySelectorAll(
@@ -1730,19 +2179,22 @@ function renderTodos() {
         "change",
         () => {
 
-          const id =
-            Number(input.dataset.id);
-
           const todo =
-            data.todos.find(
+            appData.todos.find(
               item =>
-                item.id === id
+                item.id ===
+                Number(
+                  input.dataset.id
+                )
             );
+
 
           if (!todo) return;
 
+
           todo.completed =
             input.checked;
+
 
           saveData();
 
@@ -1753,24 +2205,26 @@ function renderTodos() {
 
     });
 
+
   container
-    .querySelectorAll(".delete-btn")
+    .querySelectorAll(
+      ".delete-btn"
+    )
     .forEach(button => {
 
       button.addEventListener(
         "click",
         () => {
 
-          const id =
-            Number(
-              button.dataset.id
+          appData.todos =
+            appData.todos.filter(
+              item =>
+                item.id !==
+                Number(
+                  button.dataset.id
+                )
             );
 
-          data.todos =
-            data.todos.filter(
-              item =>
-                item.id !== id
-            );
 
           saveData();
 
@@ -1785,17 +2239,19 @@ function renderTodos() {
 
 
 /* =========================================================
-   22. GOALS
+   GOALS
    ========================================================= */
 
-function setupGoalForm() {
+function setupGoals() {
 
   const form =
     document.getElementById(
       "goalForm"
     );
 
+
   if (!form) return;
+
 
   form.addEventListener(
     "submit",
@@ -1803,43 +2259,58 @@ function setupGoalForm() {
 
       event.preventDefault();
 
+
       const title =
-        document
-          .getElementById(
-            "goalTitle"
-          )
-          ?.value.trim();
+        getValue(
+          "goalTitle"
+        );
+
 
       const category =
-        document
-          .getElementById(
-            "goalCategory"
-          )
-          ?.value;
+        getValue(
+          "goalCategory"
+        );
 
-      if (!title) return;
 
-      data.goals.push({
+      if (!title) {
 
-        id: Date.now(),
+        showToast(
+          "Enter a goal first."
+        );
+
+        return;
+
+      }
+
+
+      appData.goals.push({
+
+        id:
+          Date.now(),
 
         title,
 
         category:
           category || "Personal",
 
-        progress: 0,
+        progress:
+          0,
 
         created:
           new Date().toISOString()
 
       });
 
+
       saveData();
 
       renderGoals();
 
       form.reset();
+
+      showToast(
+        "Goal saved."
+      );
 
     }
   );
@@ -1854,11 +2325,16 @@ function renderGoals() {
       "goalsList"
     );
 
+
   if (!container) return;
+
 
   container.innerHTML = "";
 
-  if (data.goals.length === 0) {
+
+  if (
+    appData.goals.length === 0
+  ) {
 
     container.innerHTML =
       `<div class="empty-state">
@@ -1869,69 +2345,89 @@ function renderGoals() {
 
   }
 
-  data.goals.forEach(goal => {
 
-    const item =
-      document.createElement("div");
+  appData.goals.forEach(
+    goal => {
 
-    item.className =
-      "goal-item";
+      const item =
+        document.createElement(
+          "div"
+        );
 
-    item.innerHTML = `
 
-      <div class="goal-header">
+      item.className =
+        "goal-item";
 
-        <div>
 
-          <h4>
-            ${escapeHTML(goal.title)}
-          </h4>
+      item.innerHTML = `
 
-          <span class="category-tag">
-            ${escapeHTML(goal.category)}
-          </span>
+        <div class="goal-header">
+
+          <div>
+
+            <h4>
+              ${escapeHTML(
+                goal.title
+              )}
+            </h4>
+
+            <span class="category-tag">
+              ${escapeHTML(
+                goal.category
+              )}
+            </span>
+
+          </div>
+
+          <strong>
+            ${goal.progress}%
+          </strong>
 
         </div>
 
-        <strong>
-          ${goal.progress}%
-        </strong>
 
-      </div>
+        <div class="goal-progress">
 
-      <div class="goal-progress">
+          <div
+            class="goal-progress-bar"
+            style="
+              width:${goal.progress}%;
+            "
+          ></div>
 
-        <div
-          class="goal-progress-bar"
-          style="width:${goal.progress}%">
         </div>
 
-      </div>
 
-      <div class="goal-controls">
+        <div class="goal-controls">
 
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value="${goal.progress}"
-          data-id="${goal.id}"
-        >
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value="${goal.progress}"
+            data-id="${goal.id}"
+          >
 
-        <button
-          type="button"
-          class="delete-btn"
-          data-id="${goal.id}">
-          Delete
-        </button>
 
-      </div>
+          <button
+            class="delete-btn"
+            data-id="${goal.id}"
+          >
+            Delete
+          </button>
 
-    `;
+        </div>
 
-    container.appendChild(item);
+      `;
 
-  });
+
+      container.appendChild(
+        item
+      );
+
+    }
+  );
+
 
   container
     .querySelectorAll(
@@ -1944,16 +2440,23 @@ function renderGoals() {
         () => {
 
           const goal =
-            data.goals.find(
+            appData.goals.find(
               item =>
                 item.id ===
-                Number(range.dataset.id)
+                Number(
+                  range.dataset.id
+                )
             );
+
 
           if (!goal) return;
 
+
           goal.progress =
-            Number(range.value);
+            Number(
+              range.value
+            );
+
 
           saveData();
 
@@ -1964,22 +2467,26 @@ function renderGoals() {
 
     });
 
+
   container
-    .querySelectorAll(".delete-btn")
+    .querySelectorAll(
+      ".delete-btn"
+    )
     .forEach(button => {
 
       button.addEventListener(
         "click",
         () => {
 
-          data.goals =
-            data.goals.filter(
+          appData.goals =
+            appData.goals.filter(
               goal =>
                 goal.id !==
                 Number(
                   button.dataset.id
                 )
             );
+
 
           saveData();
 
@@ -1994,17 +2501,19 @@ function renderGoals() {
 
 
 /* =========================================================
-   23. NOTES
+   NOTES
    ========================================================= */
 
-function setupNoteForm() {
+function setupNotes() {
 
   const form =
     document.getElementById(
       "noteForm"
     );
 
+
   if (!form) return;
+
 
   form.addEventListener(
     "submit",
@@ -2012,23 +2521,22 @@ function setupNoteForm() {
 
       event.preventDefault();
 
+
       const title =
-        document
-          .getElementById(
-            "noteTitle"
-          )
-          ?.value.trim();
+        getValue(
+          "noteTitle"
+        );
+
 
       const content =
-        document
-          .getElementById(
-            "noteContent"
-          )
-          ?.value.trim();
+        getValue(
+          "noteContent"
+        );
+
 
       if (!title && !content) {
 
-        showTemporaryMessage(
+        showToast(
           "Write something first."
         );
 
@@ -2036,27 +2544,33 @@ function setupNoteForm() {
 
       }
 
-      data.notes.unshift({
 
-        id: Date.now(),
+      appData.notes.unshift({
+
+        id:
+          Date.now(),
 
         title:
-          title || "Untitled Note",
+          title ||
+          "Untitled Note",
 
-        content:
-
-          content || "",
+        content,
 
         date:
           new Date().toISOString()
 
       });
 
+
       saveData();
 
       renderNotes();
 
       form.reset();
+
+      showToast(
+        "Note saved."
+      );
 
     }
   );
@@ -2071,11 +2585,16 @@ function renderNotes() {
       "notesList"
     );
 
+
   if (!container) return;
+
 
   container.innerHTML = "";
 
-  if (data.notes.length === 0) {
+
+  if (
+    appData.notes.length === 0
+  ) {
 
     container.innerHTML =
       `<div class="empty-state">
@@ -2086,65 +2605,87 @@ function renderNotes() {
 
   }
 
-  data.notes.forEach(note => {
 
-    const item =
-      document.createElement("article");
+  appData.notes.forEach(
+    note => {
 
-    item.className =
-      "note-item";
+      const item =
+        document.createElement(
+          "article"
+        );
 
-    item.innerHTML = `
 
-      <div class="note-header">
+      item.className =
+        "note-item";
 
-        <div>
 
-          <h4>
-            ${escapeHTML(note.title)}
-          </h4>
+      item.innerHTML = `
 
-          <small>
-            ${formatDateTime(note.date)}
-          </small>
+        <div class="note-header">
+
+          <div>
+
+            <h4>
+              ${escapeHTML(
+                note.title
+              )}
+            </h4>
+
+            <small>
+              ${formatDateTime(
+                note.date
+              )}
+            </small>
+
+          </div>
+
+
+          <button
+            class="delete-btn"
+            data-id="${note.id}"
+          >
+            Delete
+          </button>
 
         </div>
 
-        <button
-          type="button"
-          class="delete-btn"
-          data-id="${note.id}">
-          Delete
-        </button>
 
-      </div>
+        <p>
+          ${escapeHTML(
+            note.content
+          )}
+        </p>
 
-      <p>
-        ${escapeHTML(note.content)}
-      </p>
+      `;
 
-    `;
 
-    container.appendChild(item);
+      container.appendChild(
+        item
+      );
 
-  });
+    }
+  );
+
 
   container
-    .querySelectorAll(".delete-btn")
+    .querySelectorAll(
+      ".delete-btn"
+    )
     .forEach(button => {
 
       button.addEventListener(
         "click",
         () => {
 
-          data.notes =
-            data.notes.filter(
+          appData.notes =
+            appData.notes.filter(
               note =>
                 note.id !==
                 Number(
                   button.dataset.id
                 )
             );
+
 
           saveData();
 
@@ -2159,24 +2700,432 @@ function renderNotes() {
 
 
 /* =========================================================
-   24. SEARCH
+   SEARCH
    ========================================================= */
 
 function setupSearch() {
 
-  const search =
+  const button =
+    document.getElementById(
+      "searchButton"
+    );
+
+
+  const box =
+    document.getElementById(
+      "searchBox"
+    );
+
+
+  const input =
     document.getElementById(
       "globalSearch"
     );
 
-  if (!search) return;
 
-  search.addEventListener(
+  if (!button || !box || !input) {
+    return;
+  }
+
+
+  button.addEventListener(
+    "click",
+    event => {
+
+      event.stopPropagation();
+
+      box.classList.toggle(
+        "hidden"
+      );
+
+
+      if (
+        !box.classList.contains(
+          "hidden"
+        )
+      ) {
+
+        input.focus();
+
+      }
+
+    }
+  );
+
+
+  input.addEventListener(
     "input",
     () => {
 
       performSearch(
-        search.value.trim()
+        input.value
+      );
+
+    }
+  );
+
+
+  document.addEventListener(
+    "click",
+    event => {
+
+      if (
+        !box.contains(event.target) &&
+        !button.contains(event.target)
+      ) {
+
+        box.classList.add(
+          "hidden"
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+function performSearch(
+  query
+) {
+
+  const container =
+    document.getElementById(
+      "searchResults"
+    );
+
+
+  if (!container) return;
+
+
+  const q =
+    query.trim().toLowerCase();
+
+
+  if (!q) {
+
+    container.innerHTML = "";
+
+    return;
+
+  }
+
+
+  const reminders =
+    appData.reminders.filter(
+      item =>
+        searchable(
+          item.title,
+          item.category
+        ).includes(q)
+    );
+
+
+  const todos =
+    appData.todos.filter(
+      item =>
+        searchable(
+          item.title,
+          item.category
+        ).includes(q)
+    );
+
+
+  const goals =
+    appData.goals.filter(
+      item =>
+        searchable(
+          item.title,
+          item.category
+        ).includes(q)
+    );
+
+
+  const notes =
+    appData.notes.filter(
+      item =>
+        searchable(
+          item.title,
+          item.content
+        ).includes(q)
+    );
+
+
+  let html = "";
+
+
+  if (reminders.length) {
+
+    html +=
+      searchGroup(
+        "Reminders",
+        reminders.map(
+          item =>
+            `<strong>${escapeHTML(item.title)}</strong>
+             <small>${formatDateTime(item.due)}</small>`
+        )
+      );
+
+  }
+
+
+  if (todos.length) {
+
+    html +=
+      searchGroup(
+        "To-Do",
+        todos.map(
+          item =>
+            `<strong>${escapeHTML(item.title)}</strong>
+             <small>${escapeHTML(item.category)}</small>`
+        )
+      );
+
+  }
+
+
+  if (goals.length) {
+
+    html +=
+      searchGroup(
+        "Goals",
+        goals.map(
+          item =>
+            `<strong>${escapeHTML(item.title)}</strong>
+             <small>${item.progress}% complete</small>`
+        )
+      );
+
+  }
+
+
+  if (notes.length) {
+
+    html +=
+      searchGroup(
+        "Notes",
+        notes.map(
+          item =>
+            `<strong>${escapeHTML(item.title)}</strong>
+             <small>${escapeHTML(item.content)}</small>`
+        )
+      );
+
+  }
+
+
+  if (!html) {
+
+    html =
+      `<div class="empty-state">
+        Nothing found.
+      </div>`;
+
+  }
+
+
+  container.innerHTML =
+    html;
+
+}
+
+
+function searchGroup(
+  title,
+  results
+) {
+
+  return `
+
+    <div class="search-group">
+
+      <h4>
+        ${title}
+      </h4>
+
+      ${results
+        .map(
+          result =>
+            `<div class="search-result">
+              ${result}
+            </div>`
+        )
+        .join("")
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   NOTIFICATIONS
+   ========================================================= */
+
+function setupNotifications() {
+
+  const button =
+    document.getElementById(
+      "notificationButton"
+    );
+
+
+  if (button) {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        openSection(
+          "notifications"
+        );
+
+        updateNotificationDot();
+
+      }
+    );
+
+  }
+
+
+  const enable =
+    document.getElementById(
+      "enableNotifications"
+    );
+
+
+  if (enable) {
+
+    enable.addEventListener(
+      "click",
+      requestNotificationPermission
+    );
+
+  }
+
+
+  const clear =
+    document.getElementById(
+      "clearNotifications"
+    );
+
+
+  if (clear) {
+
+    clear.addEventListener(
+      "click",
+      () => {
+
+        appData.notifications =
+          [];
+
+        saveData();
+
+        renderNotifications();
+
+        updateNotificationDot();
+
+        showToast(
+          "Notifications cleared."
+        );
+
+      }
+    );
+
+  }
+
+}
+
+
+function addNotification(
+  message
+) {
+
+  appData.notifications.unshift({
+
+    id:
+      Date.now(),
+
+    message,
+
+    date:
+      new Date().toISOString()
+
+  });
+
+
+  appData.notifications =
+    appData.notifications.slice(
+      0,
+      100
+    );
+
+}
+
+
+function renderNotifications() {
+
+  const container =
+    document.getElementById(
+      "notificationsList"
+    );
+
+
+  if (!container) return;
+
+
+  container.innerHTML = "";
+
+
+  if (
+    appData.notifications.length === 0
+  ) {
+
+    container.innerHTML =
+      `<div class="empty-state">
+        No notifications yet.
+      </div>`;
+
+    return;
+
+  }
+
+
+  appData.notifications.forEach(
+    notification => {
+
+      const item =
+        document.createElement(
+          "div"
+        );
+
+
+      item.className =
+        "notification-item";
+
+
+      item.innerHTML = `
+
+        <strong>
+          ${escapeHTML(
+            notification.message
+          )}
+        </strong>
+
+        <small>
+          ${formatDateTime(
+            notification.date
+          )}
+        </small>
+
+      `;
+
+
+      container.appendChild(
+        item
       );
 
     }
@@ -2185,186 +3134,293 @@ function setupSearch() {
 }
 
 
-function performSearch(query) {
+function updateNotificationDot() {
 
-  if (!query) {
-
-    renderReminders();
-    renderTodos();
-    renderGoals();
-    renderNotes();
-
-    return;
-
-  }
-
-  const lower =
-    query.toLowerCase();
-
-  const reminderResults =
-    data.reminders.filter(
-      item =>
-        item.title
-          .toLowerCase()
-          .includes(lower) ||
-        item.category
-          .toLowerCase()
-          .includes(lower)
-    );
-
-  const todoResults =
-    data.todos.filter(
-      item =>
-        item.title
-          .toLowerCase()
-          .includes(lower) ||
-        item.category
-          .toLowerCase()
-          .includes(lower)
-    );
-
-  const goalResults =
-    data.goals.filter(
-      item =>
-        item.title
-          .toLowerCase()
-          .includes(lower) ||
-        item.category
-          .toLowerCase()
-          .includes(lower)
-    );
-
-  const noteResults =
-    data.notes.filter(
-      item =>
-        item.title
-          .toLowerCase()
-          .includes(lower) ||
-        item.content
-          .toLowerCase()
-          .includes(lower)
-    );
-
-  renderSearchResults(
-    reminderResults,
-    todoResults,
-    goalResults,
-    noteResults
-  );
-
-}
-
-
-function renderSearchResults(
-  reminders,
-  todos,
-  goals,
-  notes
-) {
-
-  const container =
+  const dot =
     document.getElementById(
-      "searchResults"
+      "notificationDot"
     );
 
-  if (!container) return;
 
-  container.innerHTML = "";
+  if (!dot) return;
 
-  const total =
-    reminders.length +
-    todos.length +
-    goals.length +
-    notes.length;
 
-  if (total === 0) {
+  if (
+    appData.notifications.length
+  ) {
 
-    container.innerHTML =
-      `<div class="empty-state">
-        Nothing found.
-      </div>`;
-
-    return;
+    dot.classList.remove(
+      "hidden"
+    );
 
   }
 
-  const addGroup =
-    (title, items, formatter) => {
+  else {
 
-      if (!items.length) return;
+    dot.classList.add(
+      "hidden"
+    );
 
-      const group =
-        document.createElement("div");
-
-      group.className =
-        "search-group";
-
-      group.innerHTML =
-        `<h3>${title}</h3>`;
-
-      items.forEach(item => {
-
-        const result =
-          document.createElement("div");
-
-        result.className =
-          "search-result";
-
-        result.innerHTML =
-          formatter(item);
-
-        group.appendChild(result);
-
-      });
-
-      container.appendChild(group);
-
-    };
-
-  addGroup(
-    "Reminders",
-    reminders,
-    item =>
-      `<strong>${escapeHTML(item.title)}</strong>
-       <small>${formatDateTime(item.due)}</small>`
-  );
-
-  addGroup(
-    "To-Do",
-    todos,
-    item =>
-      `<strong>${escapeHTML(item.title)}</strong>
-       <small>${escapeHTML(item.category)}</small>`
-  );
-
-  addGroup(
-    "Goals",
-    goals,
-    item =>
-      `<strong>${escapeHTML(item.title)}</strong>
-       <small>${item.progress}% complete</small>`
-  );
-
-  addGroup(
-    "Notes",
-    notes,
-    item =>
-      `<strong>${escapeHTML(item.title)}</strong>
-       <small>${escapeHTML(item.content)}</small>`
-  );
+  }
 
 }
 
 
 /* =========================================================
-   25. APPEARANCE
+   BROWSER NOTIFICATIONS
+   ========================================================= */
+
+function requestNotificationPermission() {
+
+  if (
+    !("Notification" in window)
+  ) {
+
+    showToast(
+      "This browser does not support notifications."
+    );
+
+    return;
+
+  }
+
+
+  Notification.requestPermission()
+    .then(permission => {
+
+      if (
+        permission ===
+        "granted"
+      ) {
+
+        showToast(
+          "Browser notifications enabled."
+        );
+
+      }
+
+      else {
+
+        showToast(
+          "Notification permission was not granted."
+        );
+
+      }
+
+    });
+
+}
+
+
+function sendBrowserNotification(
+  title,
+  message
+) {
+
+  if (
+    !("Notification" in window)
+  ) {
+    return;
+  }
+
+
+  if (
+    Notification.permission !==
+    "granted"
+  ) {
+    return;
+  }
+
+
+  try {
+
+    new Notification(
+      title,
+      {
+        body: message
+      }
+    );
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Notification error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   APPEARANCE
    ========================================================= */
 
 function setupAppearance() {
 
+  renderAppearance();
+
+}
+
+
+function renderAppearance() {
+
+  const grid =
+    document.getElementById(
+      "paletteGrid"
+    );
+
+
+  if (!grid) return;
+
+
+  grid.innerHTML = "";
+
+
+  palettes.forEach(
+    (palette, index) => {
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+
+      card.className =
+        "palette-card";
+
+
+      if (
+        index ===
+        appData.appearance.palette
+      ) {
+
+        card.classList.add(
+          "selected"
+        );
+
+      }
+
+
+      card.style.background =
+        palette.background;
+
+
+      card.style.color =
+        palette.font;
+
+
+      card.innerHTML = `
+
+        <div class="palette-name">
+          ${palette.name}
+        </div>
+
+        <div class="palette-description">
+          Background · Main · Font
+        </div>
+
+        <div class="palette-swatches">
+
+          <span
+            class="palette-swatch"
+            style="background:${palette.background}"
+          ></span>
+
+          <span
+            class="palette-swatch"
+            style="background:${palette.main}"
+          ></span>
+
+          <span
+            class="palette-swatch"
+            style="background:${palette.font}"
+          ></span>
+
+        </div>
+
+      `;
+
+
+      card.addEventListener(
+        "click",
+        () => {
+
+          appData.appearance.palette =
+            index;
+
+
+          saveData();
+
+          applyPalette();
+
+          renderAppearance();
+
+          showToast(
+            `${palette.name} selected.`
+          );
+
+        }
+      );
+
+
+      grid.appendChild(
+        card
+      );
+
+    }
+  );
+
+}
+
+
+function applyPalette() {
+
+  const palette =
+    palettes[
+      appData.appearance.palette
+    ] ||
+    palettes[0];
+
+
+  document.documentElement
+    .style
+    .setProperty(
+      "--background",
+      palette.background
+    );
+
+
+  document.documentElement
+    .style
+    .setProperty(
+      "--main",
+      palette.main
+    );
+
+
+  document.documentElement
+    .style
+    .setProperty(
+      "--font",
+      palette.font
+    );
+
+}
+
+
+/* =========================================================
+   CATEGORY FILTERS
+   ========================================================= */
+
+function setupCategoryFilters() {
+
   document
     .querySelectorAll(
-      "[data-palette]"
+      ".category-item"
     )
     .forEach(button => {
 
@@ -2372,26 +3428,13 @@ function setupAppearance() {
         "click",
         () => {
 
-          const index =
-            Number(
-              button.dataset.palette
-            );
+          const category =
+            button.dataset.category;
 
-          if (
-            Number.isNaN(index) ||
-            !palettes[index]
-          ) {
-            return;
-          }
 
-          data.appearance.palette =
-            index;
-
-          saveData();
-
-          applyPalette();
-
-          renderAppearance();
+          showCategoryResults(
+            category
+          );
 
         }
       );
@@ -2401,356 +3444,224 @@ function setupAppearance() {
 }
 
 
-function applyPalette() {
+function showCategoryResults(
+  category
+) {
 
-  const palette =
-    palettes[
-      data.appearance.palette
-    ] || palettes[0];
+  const matchingReminders =
+    appData.reminders.filter(
+      item =>
+        item.category ===
+        category
+    );
 
-  document.documentElement.style.setProperty(
-    "--background",
-    palette.background
+
+  const matchingTodos =
+    appData.todos.filter(
+      item =>
+        item.category ===
+        category
+    );
+
+
+  const matchingGoals =
+    appData.goals.filter(
+      item =>
+        item.category ===
+        category
+    );
+
+
+  openSection(
+    "dashboard"
   );
 
-  document.documentElement.style.setProperty(
-    "--main",
-    palette.main
+
+  showToast(
+    `${category}: ${matchingReminders.length} reminders, ${matchingTodos.length} tasks, ${matchingGoals.length} goals.`
   );
-
-  document.documentElement.style.setProperty(
-    "--font",
-    palette.font
-  );
-
-  document.documentElement.style.setProperty(
-    "--accent",
-    palette.main
-  );
-
-}
-
-
-function renderAppearance() {
-
-  document
-    .querySelectorAll(
-      "[data-palette]"
-    )
-    .forEach(button => {
-
-      const index =
-        Number(
-          button.dataset.palette
-        );
-
-      button.classList.toggle(
-        "selected",
-        index ===
-          data.appearance.palette
-      );
-
-    });
 
 }
 
 
 /* =========================================================
-   26. CHARACTER SETTINGS
+   UTILITY FUNCTIONS
    ========================================================= */
 
-function setupCharacterSettings() {
+function getValue(id) {
 
-  const saveButton =
+  const element =
     document.getElementById(
-      "saveCharacterSettings"
+      id
     );
 
-  if (!saveButton) return;
 
-  saveButton.addEventListener(
-    "click",
-    () => {
-
-      const name =
-        document
-          .getElementById(
-            "characterName"
-          )
-          ?.value.trim();
-
-      const personality =
-        document
-          .getElementById(
-            "characterPersonality"
-          )
-          ?.value.trim();
-
-      data.profile.characterName =
-        name || "Character";
-
-      data.profile.characterPersonality =
-        personality ||
-        "Calm, intelligent, firm, caring";
-
-      saveData();
-
-      updateCharacterNameDisplay();
-
-      showTemporaryMessage(
-        "Character settings saved."
-      );
-
-    }
-  );
+  return element
+    ? element.value.trim()
+    : "";
 
 }
 
 
-/* =========================================================
-   27. CLOCK
-   ========================================================= */
+function setValue(
+  id,
+  value
+) {
 
-function updateClock() {
-
-  const elements =
-    document.querySelectorAll(
-      ".current-time"
+  const element =
+    document.getElementById(
+      id
     );
 
-  const now =
-    new Date();
 
-  const time =
-    now.toLocaleTimeString(
-      [],
-      {
-        hour: "2-digit",
-        minute: "2-digit"
-      }
+  if (element) {
+
+    element.value =
+      value ?? "";
+
+  }
+
+}
+
+
+function setText(
+  id,
+  value
+) {
+
+  const element =
+    document.getElementById(
+      id
     );
 
-  elements.forEach(element => {
+
+  if (element) {
 
     element.textContent =
-      time;
+      value ?? "";
 
-  });
+  }
 
 }
 
 
-/* =========================================================
-   28. DATE / TIME FORMAT
-   ========================================================= */
-
-function formatDateTime(value) {
-
-  if (!value) return "";
+function formatDateTime(
+  value
+) {
 
   const date =
     new Date(value);
 
-  if (isNaN(date.getTime())) {
 
-    return value;
+  if (
+    isNaN(
+      date.getTime()
+    )
+  ) {
+
+    return value || "";
 
   }
+
 
   return date.toLocaleString(
     [],
     {
-      dateStyle: "medium",
-      timeStyle: "short"
+      dateStyle:
+        "medium",
+
+      timeStyle:
+        "short"
     }
   );
 
 }
 
 
-/* =========================================================
-   29. HTML SECURITY
-   ========================================================= */
+function searchable(
+  ...values
+) {
 
-function escapeHTML(value) {
+  return values
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
 
-  if (value === null ||
-      value === undefined) {
+}
 
-    return "";
 
-  }
+function escapeHTML(
+  value
+) {
 
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+  return String(
+    value ?? ""
+  )
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
 
 }
 
 
 /* =========================================================
-   30. TEMPORARY MESSAGE
+   TOAST
    ========================================================= */
 
-function showTemporaryMessage(message) {
+function showToast(
+  message
+) {
 
-  let box =
+  const toast =
     document.getElementById(
       "layraazToast"
     );
 
-  if (!box) {
 
-    box =
-      document.createElement(
-        "div"
-      );
+  if (!toast) return;
 
-    box.id =
-      "layraazToast";
 
-    box.className =
-      "layraaz-toast";
-
-    document.body.appendChild(box);
-
-  }
-
-  box.textContent =
+  toast.textContent =
     message;
 
-  box.classList.add("show");
 
-  clearTimeout(
-    window.layraazToastTimer
+  toast.classList.add(
+    "show"
   );
 
-  window.layraazToastTimer =
-    setTimeout(() => {
 
-      box.classList.remove(
-        "show"
-      );
+  clearTimeout(
+    window.layraazToastTimeout
+  );
 
-    }, 2500);
+
+  window.layraazToastTimeout =
+    setTimeout(
+      () => {
+
+        toast.classList.remove(
+          "show"
+        );
+
+      },
+      2500
+    );
 
 }
-
-
-/* =========================================================
-   31. CHARACTER SETTINGS INIT
-   ========================================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-
-    setupCharacterSettings();
-
-  }
-);
-
-
-/* =========================================================
-   32. NOTIFICATION PERMISSION BUTTON
-   ========================================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-
-    const button =
-      document.getElementById(
-        "enableNotifications"
-      );
-
-    if (!button) return;
-
-    button.addEventListener(
-      "click",
-      () => {
-
-        requestNotificationPermission();
-
-      }
-    );
-
-  }
-);
-
-
-/* =========================================================
-   33. CLEAR NOTIFICATIONS
-   ========================================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-
-    const button =
-      document.getElementById(
-        "clearNotifications"
-      );
-
-    if (!button) return;
-
-    button.addEventListener(
-      "click",
-      () => {
-
-        data.notifications = [];
-
-        saveData();
-
-        renderNotifications();
-
-      }
-    );
-
-  }
-);
-
-
-/* =========================================================
-   34. RESET WEBSITE DATA
-   ========================================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-
-    const button =
-      document.getElementById(
-        "resetData"
-      );
-
-    if (!button) return;
-
-    button.addEventListener(
-      "click",
-      () => {
-
-        const confirmed =
-          confirm(
-            "Reset all LAYRAAZ data?"
-          );
-
-        if (!confirmed) return;
-
-        data =
-          structuredClone(
-            defaultData
-          );
-
-        saveData();
-
-        location.reload();
-
-      }
-    );
-
-  }
-);
