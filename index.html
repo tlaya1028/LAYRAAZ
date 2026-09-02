@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#1D251C">
-
   <title>LAYRAAZ</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,274 +19,292 @@
 
 <body>
 
-<div class="app-shell">
+  <div id="toast" class="toast" aria-live="polite"></div>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar collapsed" id="sidebar">
+  <div class="app-shell">
 
-    <button
-      class="sidebar-toggle"
-      id="sidebarToggle"
-      type="button"
-      aria-label="Open sidebar"
-    >
-      <span id="menuIcon"></span>
-    </button>
+    <!-- SIDEBAR -->
+    <aside class="sidebar collapsed" id="sidebar">
 
-    <div class="brand-block">
-      <div class="brand">
-        LAYRAAZ <span>✦</span>
-      </div>
-
-      <div class="brand-sub">
-        for the version of you<br>
-        you're becoming ♡
-      </div>
-    </div>
-
-    <nav class="nav-list" aria-label="Main navigation">
-
-      <button class="nav-item active" data-section="dashboard" type="button">
-        <span class="nav-icon icon-home"></span>
-        <span class="nav-label">Dashboard</span>
-      </button>
-
-      <button class="nav-item" data-section="profile" type="button">
-        <span class="nav-icon icon-profile"></span>
-        <span class="nav-label">Profile</span>
-      </button>
-
-      <button class="nav-item" data-section="character" type="button">
-        <span class="nav-icon icon-character"></span>
-        <span class="nav-label">Character</span>
-      </button>
-
-      <button class="nav-item" data-section="reminders" type="button">
-        <span class="nav-icon icon-bell"></span>
-        <span class="nav-label">Reminders</span>
-      </button>
-
-      <button class="nav-item" data-section="todos" type="button">
-        <span class="nav-icon icon-check"></span>
-        <span class="nav-label">To-do List</span>
-      </button>
-
-      <button class="nav-item" data-section="goals" type="button">
-        <span class="nav-icon icon-target"></span>
-        <span class="nav-label">Goals</span>
-      </button>
-
-      <button class="nav-item" data-section="notes" type="button">
-        <span class="nav-icon icon-note"></span>
-        <span class="nav-label">Notes</span>
-      </button>
-
-      <button class="nav-item" data-section="notifications" type="button">
-        <span class="nav-icon icon-notification"></span>
-        <span class="nav-label">Notifications</span>
-      </button>
-
-      <button class="nav-item" data-section="appearance" type="button">
-        <span class="nav-icon icon-palette"></span>
-        <span class="nav-label">Appearance</span>
-      </button>
-
-    </nav>
-
-    <div class="sidebar-footer">
-      <div class="tiny-quote">
-        Make space for the life you want.
-        <span>♡</span>
-      </div>
-    </div>
-
-  </aside>
-
-
-  <!-- MAIN -->
-  <main class="main-content">
-
-    <header class="topbar">
-
-      <div class="topbar-copy">
-
-        <div class="eyebrow">
-          YOUR LITTLE DIGITAL SPACE
+      <div class="brand-block">
+        <div class="brand">
+          LAYRAAZ<span class="brand-spark">✦</span>
         </div>
 
-        <h1 id="pageTitle">
-          Welcome back, Laya
-          <span class="sparkles">✦</span>
-        </h1>
-
-        <p id="pageSubtitle">
-          Take a deep breath. You've got this.
-          <span>♡</span>
-        </p>
-
+        <div class="brand-sub">
+          for the version of you<br>
+          you're becoming
+        </div>
       </div>
 
+      <button
+        class="sidebar-toggle"
+        id="sidebarToggle"
+        type="button"
+        aria-label="Open sidebar"
+        aria-expanded="false"
+      >
+        <span class="icon icon-menu"></span>
+      </button>
 
-      <div class="topbar-actions">
+      <nav class="nav-list" aria-label="Main navigation">
 
-        <div class="search-wrap">
+        <button
+          class="nav-item"
+          data-section="profile"
+          type="button"
+          title="Profile"
+        >
+          <span class="nav-icon icon-profile"></span>
+          <span class="nav-label">Profile</span>
+        </button>
 
-          <input
-            id="globalSearch"
-            type="search"
-            placeholder="Search anything..."
-            autocomplete="off"
+        <button
+          class="nav-item active"
+          data-section="dashboard"
+          type="button"
+          title="Dashboard"
+        >
+          <span class="nav-icon icon-home"></span>
+          <span class="nav-label">Dashboard</span>
+        </button>
+
+        <button
+          class="nav-item"
+          data-section="reminders"
+          type="button"
+          title="Reminders"
+        >
+          <span class="nav-icon icon-bell"></span>
+          <span class="nav-label">Reminders</span>
+        </button>
+
+        <button
+          class="nav-item"
+          data-section="todos"
+          type="button"
+          title="To-do List"
+        >
+          <span class="nav-icon icon-check"></span>
+          <span class="nav-label">To-do List</span>
+        </button>
+
+        <button
+          class="nav-item"
+          data-section="goals"
+          type="button"
+          title="Goals"
+        >
+          <span class="nav-icon icon-target"></span>
+          <span class="nav-label">Goals</span>
+        </button>
+
+        <button
+          class="nav-item"
+          data-section="notes"
+          type="button"
+          title="Notes"
+        >
+          <span class="nav-icon icon-note"></span>
+          <span class="nav-label">Notes</span>
+        </button>
+
+        <button
+          class="nav-item"
+          data-section="notifications"
+          type="button"
+          title="Notifications"
+        >
+          <span class="nav-icon icon-notification"></span>
+          <span class="nav-label">Notifications</span>
+        </button>
+
+        <button
+          class="nav-item"
+          data-section="appearance"
+          type="button"
+          title="Appearance"
+        >
+          <span class="nav-icon icon-palette"></span>
+          <span class="nav-label">Appearance</span>
+        </button>
+
+        <button
+          class="nav-item"
+          data-section="character"
+          type="button"
+          title="Character"
+        >
+          <span class="nav-icon icon-character"></span>
+          <span class="nav-label">Character</span>
+        </button>
+
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="tiny-quote">
+          You are doing better than you think you are.
+          <span>♡</span>
+        </div>
+      </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+      <header class="topbar">
+
+        <div class="topbar-copy">
+
+          <div class="eyebrow">
+            YOUR LITTLE DIGITAL SPACE
+          </div>
+
+          <h1 id="pageTitle">
+            Welcome back, Laya
+            <span class="sparkles">✦</span>
+          </h1>
+
+          <p id="pageSubtitle">
+            A small space for everything that matters.
+            <span>♡</span>
+          </p>
+
+        </div>
+
+
+        <div class="topbar-actions">
+
+          <div class="search-wrap">
+
+            <input
+              id="globalSearch"
+              type="search"
+              placeholder="Search anything..."
+              autocomplete="off"
+            >
+
+            <span class="search-icon icon-search"></span>
+
+          </div>
+
+
+          <button
+            class="icon-button notification-button"
+            id="topNotificationButton"
+            type="button"
+            aria-label="Notifications"
           >
 
-          <span
-            class="search-icon"
-            id="searchIcon"
-          ></span>
+            <span class="nav-icon icon-notification"></span>
+
+            <span
+              class="notification-count"
+              id="notificationCount"
+            ></span>
+
+          </button>
+
+
+          <button
+            class="profile-mini"
+            id="profileMiniButton"
+            type="button"
+          >
+
+            <span
+              class="avatar"
+              id="topAvatar"
+            ></span>
+
+            <span id="topName">
+              Laya
+            </span>
+
+            <span class="chevron">
+              ⌄
+            </span>
+
+          </button>
 
         </div>
 
-
-        <button
-          class="icon-button"
-          id="topNotificationButton"
-          type="button"
-          aria-label="Notifications"
-        >
-          <span
-            class="top-icon"
-            id="notificationIcon"
-          ></span>
-
-          <span
-            class="notification-count"
-            id="notificationCount"
-          ></span>
-        </button>
+      </header>
 
 
-        <button
-          class="profile-mini"
-          id="profileMiniButton"
-          type="button"
-        >
-          <span
-            class="avatar"
-            id="topAvatar"
-          ></span>
-
-          <span id="topName">
-            Laya
-          </span>
-
-          <span class="chevron">
-            ⌄
-          </span>
-
-        </button>
-
-      </div>
-
-    </header>
+      <!-- SEARCH -->
+      <div
+        id="searchResults"
+        class="search-results hidden"
+      ></div>
 
 
-    <div
-      id="searchResults"
-      class="search-results hidden"
-    ></div>
+      <!-- SECTIONS -->
+      <section
+        id="profile"
+        class="page-section"
+      ></section>
+
+      <section
+        id="dashboard"
+        class="page-section active-section"
+      ></section>
+
+      <section
+        id="reminders"
+        class="page-section"
+      ></section>
+
+      <section
+        id="todos"
+        class="page-section"
+      ></section>
+
+      <section
+        id="goals"
+        class="page-section"
+      ></section>
+
+      <section
+        id="notes"
+        class="page-section"
+      ></section>
+
+      <section
+        id="notifications"
+        class="page-section"
+      ></section>
+
+      <section
+        id="appearance"
+        class="page-section"
+      ></section>
+
+      <section
+        id="character"
+        class="page-section"
+      ></section>
+
+    </main>
+
+  </div>
 
 
-    <!-- SECTIONS -->
-
-    <section
-      id="dashboard"
-      class="page-section active-section"
-    ></section>
-
-    <section
-      id="profile"
-      class="page-section"
-    ></section>
-
-    <section
-      id="character"
-      class="page-section"
-    ></section>
-
-    <section
-      id="reminders"
-      class="page-section"
-    ></section>
-
-    <section
-      id="todos"
-      class="page-section"
-    ></section>
-
-    <section
-      id="goals"
-      class="page-section"
-    ></section>
-
-    <section
-      id="notes"
-      class="page-section"
-    ></section>
-
-    <section
-      id="notifications"
-      class="page-section"
-    ></section>
-
-    <section
-      id="appearance"
-      class="page-section"
-    ></section>
-
-  </main>
-
-</div>
-
-
-<!-- TEMPORARY CHARACTER REMINDER COMPANION -->
-
-<div
-  id="reminderCompanion"
-  class="reminder-companion hidden"
-  aria-live="polite"
->
-
-  <button
-    class="companion-close"
-    id="companionClose"
-    type="button"
-    aria-label="Close reminder"
-  >
-    ×
-  </button>
-
+  <!-- FLOATING REMINDER CHARACTER -->
   <div
-    class="companion-bubble"
-    id="companionBubble"
+    id="reminderCompanion"
+    class="reminder-companion hidden"
+    aria-live="polite"
   ></div>
 
-  <img
-    id="companionSticker"
-    class="companion-sticker"
-    alt="Character sticker"
-  >
 
-</div>
+  <!-- MODALS -->
+  <div id="modalRoot"></div>
 
 
-<div id="modalRoot"></div>
-
-<div
-  id="toast"
-  class="toast"
-></div>
-
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>
