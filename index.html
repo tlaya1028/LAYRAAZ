@@ -1,107 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1D251C">
+<title>LAYRAAZ</title>
 
-    <title>LAYRAAZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div id="app">
+<div id="toast" class="toast" aria-live="polite"></div>
 
-    <!-- ================= SIDEBAR ================= -->
+<div class="app-shell">
 
-    <aside class="sidebar" id="sidebar">
+    <!-- SIDEBAR -->
+    <aside class="sidebar collapsed" id="sidebar">
 
-        <div class="brand">
-            <div class="brand-mark">L</div>
-            <span>LAYRAAZ</span>
+        <div class="brand-block">
+            <div class="brand">
+                LAYRAAZ<span>✦</span>
+            </div>
+
+            <div class="brand-sub">
+                for the version of you<br>
+                you're becoming
+            </div>
         </div>
 
-        <button class="collapse-btn" id="collapseSidebar">☰</button>
+        <button
+            class="sidebar-toggle"
+            id="sidebarToggle"
+            aria-label="Open or close sidebar"
+            type="button">
+            <span class="icon icon-menu"></span>
+        </button>
 
-        <nav class="navigation">
+        <nav class="nav-list">
 
-            <button class="nav-item active" data-section="dashboard">
-                <span class="nav-icon">⌂</span>
-                <span class="nav-text">Dashboard</span>
+            <button class="nav-item active" data-section="dashboard" type="button">
+                <span class="nav-icon icon-home"></span>
+                <span>Dashboard</span>
             </button>
 
-            <button class="nav-item" data-section="profile">
-                <span class="nav-icon">♙</span>
-                <span class="nav-text">Profile</span>
+            <button class="nav-item" data-section="profile" type="button">
+                <span class="nav-icon icon-profile"></span>
+                <span>Profile</span>
             </button>
 
-            <button class="nav-item" data-section="reminders">
-                <span class="nav-icon">◷</span>
-                <span class="nav-text">Reminders</span>
+            <button class="nav-item" data-section="character" type="button">
+                <span class="nav-icon icon-character"></span>
+                <span>Character</span>
             </button>
 
-            <button class="nav-item" data-section="todos">
-                <span class="nav-icon">✓</span>
-                <span class="nav-text">To-do List</span>
+            <button class="nav-item" data-section="reminders" type="button">
+                <span class="nav-icon icon-bell"></span>
+                <span>Reminders</span>
             </button>
 
-            <button class="nav-item" data-section="goals">
-                <span class="nav-icon">◇</span>
-                <span class="nav-text">Goals</span>
+            <button class="nav-item" data-section="todos" type="button">
+                <span class="nav-icon icon-check"></span>
+                <span>To-do List</span>
             </button>
 
-            <button class="nav-item" data-section="notes">
-                <span class="nav-icon">▤</span>
-                <span class="nav-text">Notes</span>
+            <button class="nav-item" data-section="goals" type="button">
+                <span class="nav-icon icon-target"></span>
+                <span>Goals</span>
             </button>
 
-            <div class="nav-divider"></div>
-
-            <button class="nav-item" data-section="notifications">
-                <span class="nav-icon">♢</span>
-                <span class="nav-text">Notifications</span>
-                <span class="notification-count" id="notificationCount">0</span>
+            <button class="nav-item" data-section="notes" type="button">
+                <span class="nav-icon icon-note"></span>
+                <span>Notes</span>
             </button>
 
-            <button class="nav-item" data-section="appearance">
-                <span class="nav-icon">◐</span>
-                <span class="nav-text">Appearance</span>
+            <button class="nav-item" data-section="notifications" type="button">
+                <span class="nav-icon icon-notification"></span>
+                <span>Notifications</span>
             </button>
 
-            <button class="nav-item" data-section="character">
-                <span class="nav-icon">✦</span>
-                <span class="nav-text">Character</span>
+            <button class="nav-item" data-section="appearance" type="button">
+                <span class="nav-icon icon-palette"></span>
+                <span>Appearance</span>
             </button>
 
         </nav>
 
+        <div class="sidebar-footer">
+            You are doing better than you think you are.
+            <span>♡</span>
+        </div>
+
     </aside>
 
 
-    <!-- ================= MAIN ================= -->
-
-    <main class="main">
-
-        <!-- TOP BAR -->
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
 
         <header class="topbar">
 
-            <div class="mobile-brand">LAYRAAZ</div>
+            <div>
+
+                <div class="eyebrow">
+                    YOUR LITTLE DIGITAL SPACE
+                </div>
+
+                <h1 id="pageTitle">
+                    Welcome back, Laya ✦
+                </h1>
+
+                <p id="pageSubtitle">
+                    Take a deep breath. You've got this. ♡
+                </p>
+
+            </div>
+
 
             <div class="top-actions">
 
-                <button class="top-button" id="searchButton" title="Search">
-                    ⌕
+                <div class="search">
+
+                    <input
+                        id="globalSearch"
+                        type="search"
+                        placeholder="Search anything..."
+                        autocomplete="off">
+
+                    <span class="icon icon-search"></span>
+
+                </div>
+
+
+                <button
+                    class="round-btn"
+                    id="notificationBtn"
+                    aria-label="Open notifications"
+                    type="button">
+
+                    <span class="nav-icon icon-notification"></span>
+
+                    <b id="notificationCount"></b>
+
                 </button>
 
-                <button class="top-button notification-top" id="notificationButton" title="Notifications">
-                    ♢
-                    <span id="topNotificationDot"></span>
+
+                <button
+                    class="profile-mini"
+                    id="profileBtn"
+                    type="button">
+
+                    <span
+                        class="avatar"
+                        id="topAvatar">
+                    </span>
+
+                    <span id="topName">
+                        Laya
+                    </span>
+
+                    <span>⌄</span>
+
                 </button>
 
             </div>
@@ -109,676 +171,66 @@
         </header>
 
 
-        <!-- ================= SEARCH ================= -->
-
-        <div class="search-panel" id="searchPanel">
-
-            <div class="search-box">
-                <span>⌕</span>
-                <input
-                    type="text"
-                    id="globalSearch"
-                    placeholder="Search reminders, tasks, goals and notes..."
-                >
-                <button id="closeSearch">×</button>
-            </div>
-
-            <div id="searchResults" class="search-results"></div>
-
+        <!-- SEARCH RESULTS -->
+        <div
+            id="searchResults"
+            class="search-results hidden">
         </div>
 
 
-        <!-- ================= CONTENT ================= -->
-
-        <div class="content">
-
-
-            <!-- ================= DASHBOARD ================= -->
-
-            <section class="section active" id="section-dashboard">
-
-                <div class="welcome-row">
-
-                    <div>
-                        <p class="eyebrow">YOUR PERSONAL SPACE</p>
-                        <h1 id="welcomeText">Welcome Back, Laya</h1>
-                        <p class="subtitle" id="welcomeSubtitle">
-                            Let's see what today looks like.
-                        </p>
-                    </div>
-
-                    <div class="today-card">
-                        <span id="todayDay"></span>
-                        <strong id="todayDate"></strong>
-                    </div>
-
-                </div>
-
-
-                <div class="dashboard-grid">
-
-                    <!-- PROFILE SUMMARY -->
-
-                    <div class="card profile-summary">
-
-                        <div class="card-title">
-                            <div>
-                                <p class="eyebrow">PROFILE</p>
-                                <h2 id="dashboardProfileName">Laya</h2>
-                            </div>
-
-                            <button class="small-button" data-open-section="profile">
-                                Edit
-                            </button>
-                        </div>
-
-                        <div class="profile-mini">
-
-                            <div class="profile-picture-wrap">
-                                <img id="dashboardProfilePicture" alt="Profile">
-                                <div class="profile-placeholder" id="dashboardProfilePlaceholder">
-                                    L
-                                </div>
-                            </div>
-
-                            <div class="profile-details">
-                                <p id="dashboardOccupation">Executive Assistant</p>
-                                <p id="dashboardAge">Age: --</p>
-                                <p id="dashboardMBTI">INTJ</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- CHARACTER -->
-
-                    <div class="card character-dashboard-card">
-
-                        <div class="card-title">
-                            <div>
-                                <p class="eyebrow">COMPANION</p>
-                                <h2 id="dashboardCharacterName">Character</h2>
-                            </div>
-
-                            <button class="small-button" data-open-section="character">
-                                Settings
-                            </button>
-                        </div>
-
-                        <div class="dashboard-character">
-
-                            <div class="character-image-container">
-                                <img
-                                    id="dashboardCharacterImage"
-                                    alt="Character"
-                                >
-
-                                <div
-                                    class="character-placeholder"
-                                    id="dashboardCharacterPlaceholder"
-                                >
-                                    ✦
-                                </div>
-                            </div>
-
-                            <div class="character-info">
-                                <p id="dashboardCharacterMessage">
-                                    Your companion is ready.
-                                </p>
-
-                                <button class="outline-button" id="dashboardTestCharacter">
-                                    Test Character
-                                </button>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- QUICK STATS -->
-
-                    <div class="card stats-card">
-
-                        <div class="card-title">
-                            <div>
-                                <p class="eyebrow">TODAY</p>
-                                <h2>Quick Overview</h2>
-                            </div>
-                        </div>
-
-                        <div class="stats-grid">
-
-                            <div class="stat">
-                                <span>Reminders</span>
-                                <strong id="statReminders">0</strong>
-                            </div>
-
-                            <div class="stat">
-                                <span>Tasks</span>
-                                <strong id="statTasks">0</strong>
-                            </div>
-
-                            <div class="stat">
-                                <span>Goals</span>
-                                <strong id="statGoals">0</strong>
-                            </div>
-
-                            <div class="stat">
-                                <span>Notes</span>
-                                <strong id="statNotes">0</strong>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- CATEGORIES -->
-
-                    <div class="card categories-card">
-
-                        <div class="card-title">
-                            <div>
-                                <p class="eyebrow">ORGANISE</p>
-                                <h2>Categories</h2>
-                            </div>
-                        </div>
-
-                        <div class="category-grid">
-
-                            <button class="category-button" data-category="Work">
-                                <span class="category-icon work">▣</span>
-                                <span>Work</span>
-                            </button>
-
-                            <button class="category-button" data-category="Personal">
-                                <span class="category-icon personal">♡</span>
-                                <span>Personal</span>
-                            </button>
-
-                            <button class="category-button" data-category="Finance">
-                                <span class="category-icon finance">◇</span>
-                                <span>Finance</span>
-                            </button>
-
-                            <button class="category-button" data-category="Learning">
-                                <span class="category-icon learning">✦</span>
-                                <span>Learning</span>
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- ================= PROFILE ================= -->
-
-            <section class="section" id="section-profile">
-
-                <div class="page-heading">
-                    <p class="eyebrow">PERSONAL INFORMATION</p>
-                    <h1>My Profile</h1>
-                    <p>Edit your information. Everything is saved on this device.</p>
-                </div>
-
-                <div class="form-card">
-
-                    <div class="profile-upload">
-
-                        <div class="large-profile-picture">
-                            <img id="profilePicturePreview" alt="Profile picture">
-                            <div class="profile-placeholder large" id="profilePlaceholder">
-                                L
-                            </div>
-                        </div>
-
-                        <div>
-                            <h3>Profile Picture</h3>
-                            <p>Choose an image from your device.</p>
-
-                            <label class="upload-button">
-                                Upload Picture
-                                <input type="file" id="profilePictureInput" accept="image/*">
-                            </label>
-
-                            <button class="text-button" id="removeProfilePicture">
-                                Remove
-                            </button>
-                        </div>
-
-                    </div>
-
-
-                    <div class="form-grid">
-
-                        <label>
-                            Name
-                            <input type="text" id="profileName" placeholder="Your name">
-                        </label>
-
-                        <label>
-                            Date of Birth
-                            <input type="date" id="profileDOB">
-                        </label>
-
-                        <label>
-                            Age
-                            <input type="text" id="profileAge" readonly placeholder="Calculated automatically">
-                        </label>
-
-                        <label>
-                            MBTI
-                            <input type="text" id="profileMBTI" placeholder="INTJ">
-                        </label>
-
-                        <label>
-                            Occupation
-                            <input type="text" id="profileOccupation">
-                        </label>
-
-                        <label>
-                            Family Members
-                            <input type="text" id="profileFamily">
-                        </label>
-
-                        <label>
-                            Favourite Colours
-                            <input type="text" id="profileColors">
-                        </label>
-
-                        <label>
-                            Favourite Food
-                            <input type="text" id="profileFood">
-                        </label>
-
-                        <label>
-                            Favourite Places
-                            <input type="text" id="profilePlaces">
-                        </label>
-
-                        <label>
-                            Favourite Music Genres
-                            <input type="text" id="profileMusic">
-                        </label>
-
-                        <label>
-                            Skin Type
-                            <input type="text" id="profileSkin">
-                        </label>
-
-                        <label>
-                            Body Type
-                            <input type="text" id="profileBody">
-                        </label>
-
-                        <label>
-                            Height
-                            <input type="text" id="profileHeight">
-                        </label>
-
-                        <label class="full-width">
-                            Hobbies
-                            <textarea id="profileHobbies"></textarea>
-                        </label>
-
-                    </div>
-
-                    <button class="primary-button" id="saveProfile">
-                        Save Profile
-                    </button>
-
-                    <span class="save-status" id="profileSaveStatus"></span>
-
-                </div>
-
-            </section>
-
-
-            <!-- ================= REMINDERS ================= -->
-
-            <section class="section" id="section-reminders">
-
-                <div class="page-heading">
-                    <p class="eyebrow">TIME MANAGEMENT</p>
-                    <h1>Reminders</h1>
-                    <p>Create reminders and let your character alert you when they are due.</p>
-                </div>
-
-                <div class="form-card">
-
-                    <div class="form-grid">
-
-                        <label>
-                            Reminder
-                            <input type="text" id="reminderText" placeholder="What should I remember?">
-                        </label>
-
-                        <label>
-                            Date
-                            <input type="date" id="reminderDate">
-                        </label>
-
-                        <label>
-                            Time
-                            <input type="time" id="reminderTime">
-                        </label>
-
-                        <label>
-                            Category
-                            <select id="reminderCategory">
-                                <option>Work</option>
-                                <option>Personal</option>
-                                <option>Finance</option>
-                                <option>Learning</option>
-                            </select>
-                        </label>
-
-                    </div>
-
-                    <div class="form-actions">
-                        <button class="primary-button" id="saveReminder">
-                            Add Reminder
-                        </button>
-
-                        <button class="secondary-button" id="enableNotifications">
-                            Enable Browser Notifications
-                        </button>
-                    </div>
-
-                    <p class="permission-note" id="notificationPermissionStatus"></p>
-
-                </div>
-
-                <div id="reminderList" class="item-list"></div>
-
-            </section>
-
-
-            <!-- ================= TODO ================= -->
-
-            <section class="section" id="section-todos">
-
-                <div class="page-heading">
-                    <p class="eyebrow">PRODUCTIVITY</p>
-                    <h1>To-do List</h1>
-                    <p>Keep your daily work organised.</p>
-                </div>
-
-                <div class="form-card">
-
-                    <div class="form-grid">
-
-                        <label>
-                            Task
-                            <input type="text" id="todoText" placeholder="Add a task">
-                        </label>
-
-                        <label>
-                            Category
-                            <select id="todoCategory">
-                                <option>Work</option>
-                                <option>Personal</option>
-                                <option>Finance</option>
-                                <option>Learning</option>
-                            </select>
-                        </label>
-
-                    </div>
-
-                    <button class="primary-button" id="saveTodo">
-                        Add Task
-                    </button>
-
-                </div>
-
-                <div id="todoList" class="item-list"></div>
-
-            </section>
-
-
-            <!-- ================= GOALS ================= -->
-
-            <section class="section" id="section-goals">
-
-                <div class="page-heading">
-                    <p class="eyebrow">AMBITION</p>
-                    <h1>Goals</h1>
-                    <p>Turn long-term plans into visible progress.</p>
-                </div>
-
-                <div class="form-card">
-
-                    <div class="form-grid">
-
-                        <label>
-                            Goal
-                            <input type="text" id="goalText" placeholder="What do you want to achieve?">
-                        </label>
-
-                        <label>
-                            Category
-                            <select id="goalCategory">
-                                <option>Work</option>
-                                <option>Personal</option>
-                                <option>Finance</option>
-                                <option>Learning</option>
-                            </select>
-                        </label>
-
-                    </div>
-
-                    <button class="primary-button" id="saveGoal">
-                        Add Goal
-                    </button>
-
-                </div>
-
-                <div id="goalList" class="item-list"></div>
-
-            </section>
-
-
-            <!-- ================= NOTES ================= -->
-
-            <section class="section" id="section-notes">
-
-                <div class="page-heading">
-                    <p class="eyebrow">THOUGHTS</p>
-                    <h1>Notes</h1>
-                    <p>Keep ideas, plans and important thoughts in one place.</p>
-                </div>
-
-                <div class="form-card">
-
-                    <label>
-                        Note Title
-                        <input type="text" id="noteTitle" placeholder="Title">
-                    </label>
-
-                    <label>
-                        Note
-                        <textarea id="noteContent" rows="6" placeholder="Write your note..."></textarea>
-                    </label>
-
-                    <button class="primary-button" id="saveNote">
-                        Save Note
-                    </button>
-
-                </div>
-
-                <div id="noteList" class="item-list"></div>
-
-            </section>
-
-
-            <!-- ================= NOTIFICATIONS ================= -->
-
-            <section class="section" id="section-notifications">
-
-                <div class="page-heading">
-                    <p class="eyebrow">ALERT CENTRE</p>
-                    <h1>Notifications</h1>
-                    <p>Reminder alerts and character interactions appear here.</p>
-                </div>
-
-                <div class="form-card notification-settings-card">
-
-                    <h3>Browser Notifications</h3>
-
-                    <p id="notificationPageStatus">
-                        Checking notification permission...
-                    </p>
-
-                    <button class="primary-button" id="pageEnableNotifications">
-                        Enable Notifications
-                    </button>
-
-                </div>
-
-                <div id="notificationList" class="item-list"></div>
-
-            </section>
-
-
-            <!-- ================= APPEARANCE ================= -->
-
-            <section class="section" id="section-appearance">
-
-                <div class="page-heading">
-                    <p class="eyebrow">VISUAL STYLE</p>
-                    <h1>Appearance</h1>
-                    <p>Choose one of the ten LAYRAAZ palettes.</p>
-                </div>
-
-                <div class="palette-grid" id="paletteGrid"></div>
-
-            </section>
-
-
-            <!-- ================= CHARACTER ================= -->
-
-            <section class="section" id="section-character">
-
-                <div class="page-heading">
-                    <p class="eyebrow">YOUR COMPANION</p>
-                    <h1>Character</h1>
-                    <p>Customise the character that appears when you need a reminder.</p>
-                </div>
-
-                <div class="form-card">
-
-                    <div class="character-settings-preview">
-
-                        <div class="character-large-preview">
-                            <img id="characterPreview" alt="Character">
-                            <div id="characterPreviewPlaceholder">
-                                ✦
-                            </div>
-                        </div>
-
-                        <div>
-                            <h2 id="characterPreviewName">Character</h2>
-                            <p id="characterPreviewPersonality">
-                                Calm, intelligent, firm and caring.
-                            </p>
-                        </div>
-
-                    </div>
-
-
-                    <div class="form-grid">
-
-                        <label>
-                            Character Name
-                            <input type="text" id="characterName">
-                        </label>
-
-                        <label class="full-width">
-                            Personality
-                            <textarea
-                                id="characterPersonality"
-                                placeholder="Example: calm, intelligent, firm, caring"
-                            ></textarea>
-                        </label>
-
-                    </div>
-
-
-                    <div class="character-upload-row">
-
-                        <label class="upload-button">
-                            Upload Character Picture
-                            <input type="file" id="characterPictureInput" accept="image/*">
-                        </label>
-
-                        <button class="text-button" id="removeCharacterPicture">
-                            Remove Picture
-                        </button>
-
-                    </div>
-
-
-                    <div class="form-actions">
-
-                        <button class="primary-button" id="saveCharacter">
-                            Save Character
-                        </button>
-
-                        <button class="secondary-button" id="testCharacter">
-                            Test Character
-                        </button>
-
-                    </div>
-
-                    <span class="save-status" id="characterSaveStatus"></span>
-
-                </div>
-
-            </section>
-
-        </div>
+        <!-- PAGES -->
+        <section
+            id="dashboard"
+            class="page-section active">
+        </section>
+
+        <section
+            id="profile"
+            class="page-section">
+        </section>
+
+        <section
+            id="character"
+            class="page-section">
+        </section>
+
+        <section
+            id="reminders"
+            class="page-section">
+        </section>
+
+        <section
+            id="todos"
+            class="page-section">
+        </section>
+
+        <section
+            id="goals"
+            class="page-section">
+        </section>
+
+        <section
+            id="notes"
+            class="page-section">
+        </section>
+
+        <section
+            id="notifications"
+            class="page-section">
+        </section>
+
+        <section
+            id="appearance"
+            class="page-section">
+        </section>
 
     </main>
 
 </div>
 
 
-<!-- ================= CHARACTER REMINDER POPUP ================= -->
-
-<div id="characterReminder" class="character-reminder">
-
-    <div class="reminder-character">
-
-        <img id="reminderCharacterImage" alt="Character">
-
-        <div id="reminderCharacterPlaceholder">
-            ✦
-        </div>
-
-    </div>
-
-    <div class="character-bubble">
-
-        <button class="bubble-close" id="closeCharacterReminder">
-            ×
-        </button>
-
-        <strong id="bubbleCharacterName">Character</strong>
-
-        <p id="bubbleMessage">
-            You have a reminder.
-        </p>
-
-    </div>
-
-</div>
+<!-- MODALS -->
+<div id="modalRoot"></div>
 
 
 <script src="script.js"></script>
