@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <meta name="theme-color" content="#1D251C">
-<meta name="description" content="LAYRAAZ - your little digital space">
 
 <title>LAYRAAZ</title>
 
@@ -25,14 +24,10 @@
 
 <div class="app-shell">
 
-    <!-- =========================
-         SIDEBAR
-    ========================== -->
-
+    <!-- SIDEBAR -->
     <aside class="sidebar collapsed" id="sidebar">
 
         <div class="brand-block">
-
             <div class="brand">
                 LAYRAAZ<span>✦</span>
             </div>
@@ -41,7 +36,6 @@
                 for the version of you<br>
                 you're becoming
             </div>
-
         </div>
 
         <button
@@ -49,22 +43,19 @@
             id="sidebarToggle"
             aria-label="Open or close sidebar"
             type="button">
-
             <span class="icon icon-menu"></span>
-
         </button>
 
         <nav class="nav-list">
 
-            <!-- PROFILE FIRST -->
-            <button class="nav-item" data-section="profile" type="button">
-                <span class="nav-icon icon-profile"></span>
-                <span>Profile</span>
-            </button>
-
             <button class="nav-item active" data-section="dashboard" type="button">
                 <span class="nav-icon icon-home"></span>
                 <span>Dashboard</span>
+            </button>
+
+            <button class="nav-item" data-section="profile" type="button">
+                <span class="nav-icon icon-profile"></span>
+                <span>Profile</span>
             </button>
 
             <button class="nav-item" data-section="character" type="button">
@@ -112,15 +103,12 @@
     </aside>
 
 
-    <!-- =========================
-         MAIN
-    ========================== -->
-
+    <!-- MAIN -->
     <main class="main-content">
 
         <header class="topbar">
 
-            <div class="top-heading">
+            <div>
 
                 <div class="eyebrow">
                     YOUR LITTLE DIGITAL SPACE
@@ -179,7 +167,7 @@
                         Laya
                     </span>
 
-                    <span class="chevron">⌄</span>
+                    <span>⌄</span>
 
                 </button>
 
@@ -188,69 +176,36 @@
         </header>
 
 
-        <!-- SEARCH RESULTS -->
-
+        <!-- SEARCH -->
         <div
             id="searchResults"
             class="search-results hidden">
         </div>
 
 
-        <!-- =========================
-             PAGES
-        ========================== -->
+        <!-- PAGES -->
+        <section id="dashboard" class="page-section active"></section>
 
-        <section
-            id="profile"
-            class="page-section">
-        </section>
+        <section id="profile" class="page-section"></section>
 
-        <section
-            id="dashboard"
-            class="page-section active">
-        </section>
+        <section id="character" class="page-section"></section>
 
-        <section
-            id="character"
-            class="page-section">
-        </section>
+        <section id="reminders" class="page-section"></section>
 
-        <section
-            id="reminders"
-            class="page-section">
-        </section>
+        <section id="todos" class="page-section"></section>
 
-        <section
-            id="todos"
-            class="page-section">
-        </section>
+        <section id="goals" class="page-section"></section>
 
-        <section
-            id="goals"
-            class="page-section">
-        </section>
+        <section id="notes" class="page-section"></section>
 
-        <section
-            id="notes"
-            class="page-section">
-        </section>
+        <section id="notifications" class="page-section"></section>
 
-        <section
-            id="notifications"
-            class="page-section">
-        </section>
-
-        <section
-            id="appearance"
-            class="page-section">
-        </section>
+        <section id="appearance" class="page-section"></section>
 
     </main>
 
 </div>
 
-
-<!-- MODALS -->
 
 <div id="modalRoot"></div>
 
