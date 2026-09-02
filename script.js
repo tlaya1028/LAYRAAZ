@@ -1,6 +1,6 @@
 /* =========================================================
    LAYRAAZ
-   Main Application
+   Main JavaScript
    ========================================================= */
 
 
@@ -11,24 +11,44 @@
 const STORAGE_KEY = "LAYRAAZ_DATA_V2";
 
 
+/* =========================================================
+   DEFAULT DATA
+   ========================================================= */
+
 const defaultData = {
     profile: {
         name: "Laya",
         dob: "2002-08-28",
         mbti: "INTJ",
         occupation: "Executive Assistant to Terminal Head",
-        family: "4",
-        colors: "Forest Green, Charcoal Black, Silver",
-        food: "Dahi Puri",
-        places: "Hill Stations",
-        music: "Melody",
-        skin: "Sensitive Skin",
-        body: "Rectangular Body",
+        hobbies: [
+            "Singer",
+            "Crochets",
+            "Travelling",
+            "Poet",
+            "Kuchipudi Dancer",
+            "Playback Singer"
+        ],
+        favouriteColours: "Forest Green, Charcoal Black, Silver",
+        favouriteFood: "Dahi Puri",
+        favouritePlaces: "Hill Stations",
+        favouriteMusic: "Melody",
+        skinType: "Sensitive Skin",
+        bodyType: "Rectangular",
+        familyMembers: "4",
         height: "5'1\"",
-        hobbies: "Singing, Crocheting, Travelling, Poetry, Kuchipudi Dancing, Playback Singing"
+        jewellery: "Silver Jewellery",
+        businessGoal: "Start an Edible Cutlery Business in 2 years",
+        image: ""
     },
 
-    profilePicture: "",
+    character: {
+        name: "Character",
+        personality: "Calm, intelligent, firm and caring.",
+        image: ""
+    },
+
+    appearance: "forest",
 
     reminders: [],
 
@@ -38,27 +58,19 @@ const defaultData = {
 
     notes: [],
 
-    notifications: [],
-
-    character: {
-        name: "Character",
-        personality: "Calm, intelligent, firm and caring.",
-        picture: ""
-    },
-
-    appearance: "forest",
-
-    sidebarCollapsed: false
+    notifications: []
 };
 
+
+/* =========================================================
+   LOAD DATA
+   ========================================================= */
 
 let data = loadData();
 
 
 function loadData() {
-
     try {
-
         const saved = localStorage.getItem(STORAGE_KEY);
 
         if (!saved) {
@@ -70,14 +82,17 @@ function loadData() {
         return {
             ...structuredClone(defaultData),
             ...parsed,
+
             profile: {
-                ...defaultData.profile,
+                ...structuredClone(defaultData.profile),
                 ...(parsed.profile || {})
             },
+
             character: {
-                ...defaultData.character,
+                ...structuredClone(defaultData.character),
                 ...(parsed.character || {})
             },
+
             reminders: Array.isArray(parsed.reminders) ? parsed.reminders : [],
             todos: Array.isArray(parsed.todos) ? parsed.todos : [],
             goals: Array.isArray(parsed.goals) ? parsed.goals : [],
@@ -88,42 +103,166 @@ function loadData() {
         };
 
     } catch (error) {
-
         console.error("Could not load LAYRAAZ data:", error);
-
         return structuredClone(defaultData);
     }
 }
 
 
 function saveData() {
-
-    try {
-
-        localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(data)
-        );
-
-    } catch (error) {
-
-        console.error("Could not save LAYRAAZ data:", error);
-
-        alert(
-            "LAYRAAZ could not save this information. Your browser may have blocked local storage."
-        );
-    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
 
 /* =========================================================
-   UTILITY
+   APPEARANCE PALETTES
+   Exactly 10 palettes
    ========================================================= */
 
-function createId() {
+const palettes = {
 
-    return Date.now().toString(36) +
-        Math.random().toString(36).substring(2);
+    forest: {
+        name: "Deep Forest Green",
+        background: "#1d251c",
+        main: "#101411",
+        font: "#D0D4CE"
+    },
+
+    butter: {
+        name: "Butter Yellow",
+        background: "#F3E7A3",
+        main: "#8CB8D0",
+        font: "#4A2C20"
+    },
+
+    almond: {
+        name: "Almond",
+        background: "#E8D8C3",
+        main: "#8DBFA9",
+        font: "#8E2636"
+    },
+
+    sage: {
+        name: "Misty Sage",
+        background: "#B8C5B1",
+        main: "#6D2026",
+        font: "#3B2922"
+    },
+
+    navy: {
+        name: "Navy",
+        background: "#111D38",
+        main: "#C8A85C",
+        font: "#E5D5B8"
+    },
+
+    champagne: {
+        name: "Champagne",
+        background: "#F0DFC3",
+        main: "#70752F",
+        font: "#403A25"
+    },
+
+    gunmetal: {
+        name: "Gunmetal",
+        background: "#353B40",
+        main: "#E9E0D0",
+        font: "#F4EBDD"
+    },
+
+    cadet: {
+        name: "Cadet Grey",
+        background: "#919FA5",
+        main: "#EEEAE2",
+        font: "#30251F"
+    },
+
+    pink: {
+        name: "Muted Pink",
+        background: "#C99BA1",
+        main: "#9D233B",
+        font: "#681D2B"
+    },
+
+    lavender: {
+        name: "Lavender Mist",
+        background: "#DAD1E6",
+        main: "#4A302A",
+        font: "#39243A"
+    }
+};
+
+
+/* =========================================================
+   APPEARANCE
+   ========================================================= */
+
+function applyAppearance() {
+
+    const palette =
+        palettes[data.appearance] || palettes.forest;
+
+    document.documentElement.style.setProperty(
+        "--background",
+        palette.background
+    );
+
+    document.documentElement.style.setProperty(
+        "--main",
+        palette.main
+    );
+
+    document.documentElement.style.setProperty(
+        "--font",
+        palette.font
+    );
+
+    document.documentElement.style.setProperty(
+        "--font-muted",
+        palette.font
+    );
+}
+
+
+/* =========================================================
+   AGE CALCULATION
+   ========================================================= */
+
+function calculateAge(dob) {
+
+    if (!dob) return "";
+
+    const birthDate = new Date(dob);
+    const today = new Date();
+
+    let age =
+        today.getFullYear() -
+        birthDate.getFullYear();
+
+    const monthDifference =
+        today.getMonth() -
+        birthDate.getMonth();
+
+    if (
+        monthDifference < 0 ||
+        (
+            monthDifference === 0 &&
+            today.getDate() < birthDate.getDate()
+        )
+    ) {
+        age--;
+    }
+
+    return age;
+}
+
+
+/* =========================================================
+   ELEMENT HELPERS
+   ========================================================= */
+
+function get(id) {
+    return document.getElementById(id);
 }
 
 
@@ -134,193 +273,40 @@ function escapeHTML(value) {
     }
 
     return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
-
-
-function calculateAge(dob) {
-
-    if (!dob) {
-        return "";
-    }
-
-    const birth = new Date(dob + "T00:00:00");
-
-    if (Number.isNaN(birth.getTime())) {
-        return "";
-    }
-
-    const today = new Date();
-
-    let age =
-        today.getFullYear() -
-        birth.getFullYear();
-
-    const monthDifference =
-        today.getMonth() -
-        birth.getMonth();
-
-    if (
-        monthDifference < 0 ||
-        (
-            monthDifference === 0 &&
-            today.getDate() < birth.getDate()
-        )
-    ) {
-        age--;
-    }
-
-    return age >= 0 ? age : "";
-}
-
-
-function formatDate(dateString) {
-
-    if (!dateString) {
-        return "";
-    }
-
-    const date = new Date(dateString + "T00:00:00");
-
-    return date.toLocaleDateString(
-        undefined,
-        {
-            day: "numeric",
-            month: "short",
-            year: "numeric"
-        }
-    );
-}
-
-
-function formatDateTime(dateString) {
-
-    const date = new Date(dateString);
-
-    if (Number.isNaN(date.getTime())) {
-        return "";
-    }
-
-    return date.toLocaleString(
-        undefined,
-        {
-            day: "numeric",
-            month: "short",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit"
-        }
-    );
-}
-
-
-/* =========================================================
-   DOM READY
-   ========================================================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    initialiseNavigation();
-
-    initialiseSidebar();
-
-    initialiseSearch();
-
-    initialiseProfile();
-
-    initialiseReminders();
-
-    initialiseTodos();
-
-    initialiseGoals();
-
-    initialiseNotes();
-
-    initialiseNotifications();
-
-    initialiseAppearance();
-
-    initialiseCharacter();
-
-    initialiseCategories();
-
-    updateDashboard();
-
-    updateToday();
-
-    renderAll();
-
-    updateNotificationIndicators();
-
-    updateNotificationPermissionText();
-
-    applyAppearance();
-
-    startReminderWatcher();
-
-});
 
 
 /* =========================================================
    NAVIGATION
    ========================================================= */
 
-function initialiseNavigation() {
+function showSection(sectionId) {
 
-    document.querySelectorAll(".nav-item").forEach(button => {
-
-        button.addEventListener("click", () => {
-
-            const section =
-                button.dataset.section;
-
-            openSection(section);
-        });
+    document.querySelectorAll(".section").forEach(section => {
+        section.classList.remove("active");
     });
 
-
-    document.querySelectorAll("[data-open-section]").forEach(button => {
-
-        button.addEventListener("click", () => {
-
-            openSection(button.dataset.openSection);
-        });
-    });
-}
-
-
-function openSection(sectionName) {
-
-    document.querySelectorAll(".section")
-        .forEach(section => {
-            section.classList.remove("active");
-        });
-
-
-    const target =
-        document.getElementById(
-            "section-" + sectionName
-        );
+    const target = get(sectionId);
 
     if (target) {
         target.classList.add("active");
     }
 
+    document.querySelectorAll(".nav-item").forEach(item => {
+        item.classList.remove("active");
+    });
 
-    document.querySelectorAll(".nav-item")
-        .forEach(button => {
+    const navItem =
+        document.querySelector(`[data-section="${sectionId}"]`);
 
-            button.classList.toggle(
-                "active",
-                button.dataset.section === sectionName
-            );
-
-        });
-
+    if (navItem) {
+        navItem.classList.add("active");
+    }
 
     window.scrollTo({
         top: 0,
@@ -333,63 +319,30 @@ function openSection(sectionName) {
    SIDEBAR
    ========================================================= */
 
-function initialiseSidebar() {
+function setupSidebar() {
 
-    const sidebar =
-        document.getElementById("sidebar");
+    const sidebar = get("sidebar");
+    const toggle = get("sidebarToggle");
 
-    const collapse =
-        document.getElementById("collapseSidebar");
+    if (!sidebar || !toggle) return;
 
-
-    if (data.sidebarCollapsed) {
-        sidebar.classList.add("collapsed");
-    }
-
-
-    collapse.addEventListener("click", () => {
-
-        data.sidebarCollapsed =
-            !sidebar.classList.contains("collapsed");
-
-        sidebar.classList.toggle(
-            "collapsed"
-        );
-
-        saveData();
+    toggle.addEventListener("click", () => {
+        sidebar.classList.toggle("collapsed");
     });
-}
 
+    document.querySelectorAll(".nav-item").forEach(item => {
 
-/* =========================================================
-   TODAY
-   ========================================================= */
+        item.addEventListener("click", () => {
 
-function updateToday() {
+            const section =
+                item.getAttribute("data-section");
 
-    const now = new Date();
-
-    const day =
-        now.toLocaleDateString(
-            undefined,
-            { weekday: "long" }
-        );
-
-    const date =
-        now.toLocaleDateString(
-            undefined,
-            {
-                day: "numeric",
-                month: "long",
-                year: "numeric"
+            if (section) {
+                showSection(section);
             }
-        );
+        });
 
-    document.getElementById("todayDay").textContent =
-        day;
-
-    document.getElementById("todayDate").textContent =
-        date;
+    });
 }
 
 
@@ -397,222 +350,197 @@ function updateToday() {
    PROFILE
    ========================================================= */
 
-function initialiseProfile() {
+function renderProfile() {
 
-    const fields = {
+    const profile = data.profile;
 
-        profileName: "name",
-        profileDOB: "dob",
-        profileMBTI: "mbti",
-        profileOccupation: "occupation",
-        profileFamily: "family",
-        profileColors: "colors",
-        profileFood: "food",
-        profilePlaces: "places",
-        profileMusic: "music",
-        profileSkin: "skin",
-        profileBody: "body",
-        profileHeight: "height",
-        profileHobbies: "hobbies"
+    const nameInput = get("profileName");
+    const dobInput = get("profileDob");
+    const mbtiInput = get("profileMbti");
+    const occupationInput = get("profileOccupation");
+    const hobbiesInput = get("profileHobbies");
+    const coloursInput = get("profileColours");
+    const foodInput = get("profileFood");
+    const placesInput = get("profilePlaces");
+    const musicInput = get("profileMusic");
+    const skinInput = get("profileSkin");
+    const bodyInput = get("profileBody");
+    const familyInput = get("profileFamily");
+    const heightInput = get("profileHeight");
+    const jewelleryInput = get("profileJewellery");
+    const businessInput = get("profileBusiness");
 
-    };
+    if (nameInput) nameInput.value = profile.name || "";
+    if (dobInput) dobInput.value = profile.dob || "";
+    if (mbtiInput) mbtiInput.value = profile.mbti || "";
+    if (occupationInput) occupationInput.value = profile.occupation || "";
 
+    if (hobbiesInput) {
+        hobbiesInput.value =
+            Array.isArray(profile.hobbies)
+                ? profile.hobbies.join(", ")
+                : profile.hobbies || "";
+    }
 
-    Object.entries(fields).forEach(([id, key]) => {
+    if (coloursInput) {
+        coloursInput.value = profile.favouriteColours || "";
+    }
 
-        const element =
-            document.getElementById(id);
+    if (foodInput) {
+        foodInput.value = profile.favouriteFood || "";
+    }
 
-        element.value =
-            data.profile[key] || "";
+    if (placesInput) {
+        placesInput.value = profile.favouritePlaces || "";
+    }
 
-    });
+    if (musicInput) {
+        musicInput.value = profile.favouriteMusic || "";
+    }
 
+    if (skinInput) {
+        skinInput.value = profile.skinType || "";
+    }
 
-    updateAge();
+    if (bodyInput) {
+        bodyInput.value = profile.bodyType || "";
+    }
 
+    if (familyInput) {
+        familyInput.value = profile.familyMembers || "";
+    }
 
-    document
-        .getElementById("profileDOB")
-        .addEventListener(
-            "change",
-            updateAge
-        );
+    if (heightInput) {
+        heightInput.value = profile.height || "";
+    }
 
+    if (jewelleryInput) {
+        jewelleryInput.value = profile.jewellery || "";
+    }
 
-    document
-        .getElementById("saveProfile")
-        .addEventListener(
-            "click",
-            saveProfile
-        );
+    if (businessInput) {
+        businessInput.value = profile.businessGoal || "";
+    }
 
+    const ageElement = get("profileAge");
 
-    document
-        .getElementById("profilePictureInput")
-        .addEventListener(
-            "change",
-            handleProfilePicture
-        );
+    if (ageElement) {
+        ageElement.textContent =
+            calculateAge(profile.dob);
+    }
 
-
-    document
-        .getElementById("removeProfilePicture")
-        .addEventListener(
-            "click",
-            () => {
-
-                data.profilePicture = "";
-
-                saveData();
-
-                renderProfilePicture();
-
-            }
-        );
-
-
-    renderProfilePicture();
-}
-
-
-function updateAge() {
-
-    const dob =
-        document.getElementById("profileDOB").value;
-
-    const age =
-        calculateAge(dob);
-
-    document.getElementById("profileAge").value =
-        age ? age + " years" : "";
+    updateProfileImages();
 }
 
 
 function saveProfile() {
 
-    const map = {
+    const profile = data.profile;
 
-        profileName: "name",
-        profileDOB: "dob",
-        profileMBTI: "mbti",
-        profileOccupation: "occupation",
-        profileFamily: "family",
-        profileColors: "colors",
-        profileFood: "food",
-        profilePlaces: "places",
-        profileMusic: "music",
-        profileSkin: "skin",
-        profileBody: "body",
-        profileHeight: "height",
-        profileHobbies: "hobbies"
+    profile.name =
+        get("profileName")?.value.trim() || "";
 
-    };
+    profile.dob =
+        get("profileDob")?.value || "";
 
+    profile.mbti =
+        get("profileMbti")?.value.trim() || "";
 
-    Object.entries(map).forEach(([id, key]) => {
+    profile.occupation =
+        get("profileOccupation")?.value.trim() || "";
 
-        data.profile[key] =
-            document.getElementById(id).value.trim();
+    const hobbies =
+        get("profileHobbies")?.value || "";
 
-    });
+    profile.hobbies =
+        hobbies
+            .split(",")
+            .map(item => item.trim())
+            .filter(Boolean);
 
+    profile.favouriteColours =
+        get("profileColours")?.value.trim() || "";
+
+    profile.favouriteFood =
+        get("profileFood")?.value.trim() || "";
+
+    profile.favouritePlaces =
+        get("profilePlaces")?.value.trim() || "";
+
+    profile.favouriteMusic =
+        get("profileMusic")?.value.trim() || "";
+
+    profile.skinType =
+        get("profileSkin")?.value.trim() || "";
+
+    profile.bodyType =
+        get("profileBody")?.value.trim() || "";
+
+    profile.familyMembers =
+        get("profileFamily")?.value.trim() || "";
+
+    profile.height =
+        get("profileHeight")?.value.trim() || "";
+
+    profile.jewellery =
+        get("profileJewellery")?.value.trim() || "";
+
+    profile.businessGoal =
+        get("profileBusiness")?.value.trim() || "";
 
     saveData();
 
-    updateAge();
+    renderProfile();
+    renderDashboard();
 
-    updateDashboard();
-
-
-    const status =
-        document.getElementById(
-            "profileSaveStatus"
-        );
-
-    status.textContent = "Saved ✓";
-
-    setTimeout(() => {
-        status.textContent = "";
-    }, 2500);
+    showToast("Profile saved.");
 }
 
 
-function handleProfilePicture(event) {
+/* =========================================================
+   PROFILE IMAGE
+   ========================================================= */
 
-    const file =
-        event.target.files[0];
+function setupProfileImageUpload() {
 
-    if (!file) {
-        return;
-    }
+    const input = get("profileImageUpload");
 
-    const reader =
-        new FileReader();
+    if (!input) return;
 
+    input.addEventListener("change", event => {
 
-    reader.onload = function(e) {
+        const file = event.target.files[0];
 
-        data.profilePicture =
-            e.target.result;
+        if (!file) return;
 
-        saveData();
+        const reader = new FileReader();
 
-        renderProfilePicture();
-    };
+        reader.onload = function(e) {
 
+            data.profile.image = e.target.result;
 
-    reader.readAsDataURL(file);
+            saveData();
+            updateProfileImages();
+
+            showToast("Profile picture updated.");
+        };
+
+        reader.readAsDataURL(file);
+    });
 }
 
 
-function renderProfilePicture() {
+function updateProfileImages() {
 
-    const images = [
-        document.getElementById("profilePicturePreview"),
-        document.getElementById("dashboardProfilePicture")
-    ];
+    document
+        .querySelectorAll(".profile-image")
+        .forEach(img => {
 
-    const placeholders = [
-        document.getElementById("profilePlaceholder"),
-        document.getElementById("dashboardProfilePlaceholder")
-    ];
+            if (data.profile.image) {
+                img.src = data.profile.image;
+            }
 
-
-    images.forEach(img => {
-
-        if (data.profilePicture) {
-
-            img.src =
-                data.profilePicture;
-
-            img.style.display =
-                "block";
-
-        } else {
-
-            img.removeAttribute("src");
-
-            img.style.display =
-                "none";
-        }
-    });
-
-
-    placeholders.forEach(placeholder => {
-
-        if (data.profilePicture) {
-
-            placeholder.style.display =
-                "none";
-
-        } else {
-
-            placeholder.style.display =
-                "flex";
-        }
-
-    });
+        });
 }
 
 
@@ -620,81 +548,319 @@ function renderProfilePicture() {
    DASHBOARD
    ========================================================= */
 
-function updateDashboard() {
+function renderDashboard() {
 
-    const name =
-        data.profile.name ||
-        "User";
+    const profile = data.profile;
+
+    const welcome =
+        get("welcomeMessage");
+
+    if (welcome) {
+
+        const name =
+            profile.name || "there";
+
+        welcome.textContent =
+            `Welcome Back, ${name}`;
+    }
+
+    const dashboardName =
+        get("dashboardName");
+
+    if (dashboardName) {
+        dashboardName.textContent =
+            profile.name || "Laya";
+    }
+
+    const dashboardAge =
+        get("dashboardAge");
+
+    if (dashboardAge) {
+        dashboardAge.textContent =
+            calculateAge(profile.dob) || "—";
+    }
+
+    const dashboardMbti =
+        get("dashboardMbti");
+
+    if (dashboardMbti) {
+        dashboardMbti.textContent =
+            profile.mbti || "—";
+    }
+
+    const dashboardOccupation =
+        get("dashboardOccupation");
+
+    if (dashboardOccupation) {
+        dashboardOccupation.textContent =
+            profile.occupation || "—";
+    }
+
+    const dashboardHobbies =
+        get("dashboardHobbies");
+
+    if (dashboardHobbies) {
+
+        dashboardHobbies.textContent =
+            Array.isArray(profile.hobbies)
+                ? profile.hobbies.join(", ")
+                : profile.hobbies || "—";
+    }
+
+    const dashboardFood =
+        get("dashboardFood");
+
+    if (dashboardFood) {
+        dashboardFood.textContent =
+            profile.favouriteFood || "—";
+    }
+
+    const dashboardPlaces =
+        get("dashboardPlaces");
+
+    if (dashboardPlaces) {
+        dashboardPlaces.textContent =
+            profile.favouritePlaces || "—";
+    }
+
+    const dashboardMusic =
+        get("dashboardMusic");
+
+    if (dashboardMusic) {
+        dashboardMusic.textContent =
+            profile.favouriteMusic || "—";
+    }
+
+    const dashboardColours =
+        get("dashboardColours");
+
+    if (dashboardColours) {
+        dashboardColours.textContent =
+            profile.favouriteColours || "—";
+    }
+
+    const dashboardSkin =
+        get("dashboardSkin");
+
+    if (dashboardSkin) {
+        dashboardSkin.textContent =
+            profile.skinType || "—";
+    }
+
+    const dashboardBody =
+        get("dashboardBody");
+
+    if (dashboardBody) {
+        dashboardBody.textContent =
+            profile.bodyType || "—";
+    }
+
+    const dashboardFamily =
+        get("dashboardFamily");
+
+    if (dashboardFamily) {
+        dashboardFamily.textContent =
+            profile.familyMembers || "—";
+    }
+
+    updateDashboardCharacter();
+}
 
 
-    document.getElementById(
-        "welcomeText"
-    ).textContent =
-        `Welcome Back, ${name}`;
+function updateDashboardCharacter() {
+
+    const image =
+        get("dashboardCharacterImage");
+
+    if (!image) return;
+
+    if (data.character.image) {
+        image.src = data.character.image;
+        image.style.display = "block";
+    }
+}
 
 
-    document.getElementById(
-        "dashboardProfileName"
-    ).textContent =
-        name;
+/* =========================================================
+   CHARACTER
+   ========================================================= */
 
+function renderCharacterSettings() {
 
-    document.getElementById(
-        "dashboardOccupation"
-    ).textContent =
-        data.profile.occupation ||
-        "Occupation not added";
+    const nameInput =
+        get("characterName");
 
+    const personalityInput =
+        get("characterPersonality");
 
-    const age =
-        calculateAge(data.profile.dob);
+    if (nameInput) {
+        nameInput.value =
+            data.character.name || "Character";
+    }
 
-
-    document.getElementById(
-        "dashboardAge"
-    ).textContent =
-        age
-            ? `Age: ${age}`
-            : "Age: --";
-
-
-    document.getElementById(
-        "dashboardMBTI"
-    ).textContent =
-        data.profile.mbti ||
-        "MBTI not added";
-
-
-    document.getElementById(
-        "dashboardCharacterName"
-    ).textContent =
-        data.character.name ||
-        "Character";
-
-
-    document.getElementById(
-        "dashboardCharacterMessage"
-    ).textContent =
-        `${data.character.name || "Character"} is ready.`;
-
+    if (personalityInput) {
+        personalityInput.value =
+            data.character.personality || "";
+    }
 
     updateCharacterImages();
+}
 
 
-    document.getElementById("statReminders").textContent =
-        data.reminders.length;
+function saveCharacterSettings() {
+
+    data.character.name =
+        get("characterName")?.value.trim() ||
+        "Character";
+
+    data.character.personality =
+        get("characterPersonality")?.value.trim() ||
+        "Calm, intelligent, firm and caring.";
+
+    saveData();
+
+    renderCharacterSettings();
+    renderDashboard();
+
+    showToast("Character settings saved.");
+}
 
 
-    document.getElementById("statTasks").textContent =
-        data.todos.filter(item => !item.completed).length;
+/* =========================================================
+   CHARACTER IMAGE UPLOAD
+   ========================================================= */
+
+function setupCharacterImageUpload() {
+
+    const input =
+        get("characterImageUpload");
+
+    if (!input) return;
+
+    input.addEventListener("change", event => {
+
+        const file =
+            event.target.files[0];
+
+        if (!file) return;
+
+        const reader =
+            new FileReader();
+
+        reader.onload = function(e) {
+
+            data.character.image =
+                e.target.result;
+
+            saveData();
+
+            updateCharacterImages();
+            updateDashboardCharacter();
+
+            showToast("Character picture updated.");
+        };
+
+        reader.readAsDataURL(file);
+    });
+}
 
 
-    document.getElementById("statGoals").textContent =
-        data.goals.length;
+function updateCharacterImages() {
+
+    document
+        .querySelectorAll(".character-image")
+        .forEach(img => {
+
+            if (data.character.image) {
+                img.src =
+                    data.character.image;
+            }
+
+        });
+
+    const dashboardImage =
+        get("dashboardCharacterImage");
+
+    if (
+        dashboardImage &&
+        data.character.image
+    ) {
+        dashboardImage.src =
+            data.character.image;
+    }
+}
 
 
-    document.getElementById("statNotes").textContent =
-        data.notes.length;
+/* =========================================================
+   CHARACTER TEST
+   ========================================================= */
+
+function testCharacter() {
+
+    showCharacterReminder(
+        "This is a character test. I am here."
+    );
+}
+
+
+/* =========================================================
+   CHARACTER REMINDER
+   ========================================================= */
+
+function showCharacterReminder(message) {
+
+    let container =
+        get("characterReminder");
+
+    if (!container) {
+
+        container =
+            document.createElement("div");
+
+        container.id =
+            "characterReminder";
+
+        container.className =
+            "character-reminder";
+
+        document.body.appendChild(container);
+    }
+
+    const characterName =
+        data.character.name || "Character";
+
+    const imageHTML =
+        data.character.image
+            ? `<img src="${data.character.image}" class="character-reminder-image">`
+            : `<div class="character-placeholder">✦</div>`;
+
+    container.innerHTML = `
+        <div class="character-reminder-inner">
+
+            <div class="character-reminder-figure">
+                ${imageHTML}
+            </div>
+
+            <div class="character-bubble">
+
+                <div class="character-bubble-name">
+                    ${escapeHTML(characterName)}
+                </div>
+
+                <div class="character-bubble-text">
+                    ${escapeHTML(message)}
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+    container.classList.add("show");
+
+    setTimeout(() => {
+        container.classList.remove("show");
+    }, 10000);
 }
 
 
@@ -702,195 +868,66 @@ function updateDashboard() {
    REMINDERS
    ========================================================= */
 
-function initialiseReminders() {
-
-    document
-        .getElementById("saveReminder")
-        .addEventListener(
-            "click",
-            addReminder
-        );
-
-
-    document
-        .getElementById("enableNotifications")
-        .addEventListener(
-            "click",
-            requestNotificationPermission
-        );
-
-
-    document
-        .getElementById("closeCharacterReminder")
-        .addEventListener(
-            "click",
-            hideCharacterReminder
-        );
-}
-
-
-function addReminder() {
-
-    const text =
-        document
-            .getElementById("reminderText")
-            .value
-            .trim();
-
-    const date =
-        document
-            .getElementById("reminderDate")
-            .value;
-
-    const time =
-        document
-            .getElementById("reminderTime")
-            .value;
-
-    const category =
-        document
-            .getElementById("reminderCategory")
-            .value;
-
-
-    if (!text || !date || !time) {
-
-        alert(
-            "Please enter the reminder, date and time."
-        );
-
-        return;
-    }
-
-
-    const reminder = {
-
-        id: createId(),
-
-        text,
-
-        date,
-
-        time,
-
-        category,
-
-        completed: false,
-
-        notified: false,
-
-        createdAt: new Date().toISOString()
-
-    };
-
-
-    data.reminders.push(reminder);
-
-    saveData();
-
-    renderReminders();
-
-    updateDashboard();
-
-
-    document.getElementById("reminderText").value = "";
-
-    document.getElementById("reminderDate").value = "";
-
-    document.getElementById("reminderTime").value = "";
-
-
-    /*
-       Asking for notification permission here is intentional.
-       The user has just interacted with the page.
-    */
-
-    if (
-        "Notification" in window &&
-        Notification.permission === "default"
-    ) {
-
-        requestNotificationPermission();
-    }
-}
-
-
 function renderReminders() {
 
     const container =
-        document.getElementById(
-            "reminderList"
-        );
+        get("reminderList");
 
+    if (!container) return;
 
-    if (data.reminders.length === 0) {
+    if (!data.reminders.length) {
 
         container.innerHTML =
-            `<div class="empty-state">
-                No reminders yet.
-             </div>`;
+            `<div class="empty-state">No reminders yet.</div>`;
 
         return;
     }
 
-
     const sorted =
-        [...data.reminders].sort(
-            (a, b) =>
-                new Date(
-                    `${a.date}T${a.time}`
-                ) -
-                new Date(
-                    `${b.date}T${b.time}`
-                )
-        );
-
+        [...data.reminders]
+            .sort(
+                (a, b) =>
+                    new Date(a.datetime) -
+                    new Date(b.datetime)
+            );
 
     container.innerHTML =
         sorted.map(reminder => {
 
-            const due =
-                new Date(
-                    `${reminder.date}T${reminder.time}`
-                );
-
+            const date =
+                new Date(reminder.datetime);
 
             return `
-                <div class="item ${reminder.completed ? "completed" : ""}">
+                <div class="reminder-item">
 
-                    <div class="item-main">
+                    <div>
+                        <strong>
+                            ${escapeHTML(reminder.title)}
+                        </strong>
 
-                        <div class="item-title">
-                            ${escapeHTML(reminder.text)}
+                        <div class="muted">
+                            ${date.toLocaleString()}
                         </div>
 
-                        <div class="item-meta">
-                            ${formatDate(reminder.date)}
-                            ·
-                            ${escapeHTML(reminder.time)}
-                            ·
-                            ${escapeHTML(reminder.category)}
-                            ${reminder.notified ? " · Alerted" : ""}
-                        </div>
-
+                        ${
+                            reminder.description
+                                ? `<div>
+                                    ${escapeHTML(reminder.description)}
+                                   </div>`
+                                : ""
+                        }
                     </div>
 
                     <div class="item-actions">
 
                         <button
-                            class="icon-button"
-                            onclick="toggleReminder('${reminder.id}')"
-                            title="Complete"
-                        >
-                            ${reminder.completed ? "↶" : "✓"}
+                            onclick="editReminder('${reminder.id}')">
+                            Edit
                         </button>
 
                         <button
-                            class="icon-button"
-                            onclick="deleteReminder('${reminder.id}')"
-                            title="Delete"
-                        >
-                            ×
+                            onclick="deleteReminder('${reminder.id}')">
+                            Delete
                         </button>
 
                     </div>
@@ -902,41 +939,138 @@ function renderReminders() {
 }
 
 
-window.toggleReminder = function(id) {
+function saveReminder() {
+
+    const title =
+        get("reminderTitle")?.value.trim();
+
+    const datetime =
+        get("reminderDateTime")?.value;
+
+    const description =
+        get("reminderDescription")?.value.trim() || "";
+
+    if (!title || !datetime) {
+
+        showToast(
+            "Please enter a reminder title and date/time."
+        );
+
+        return;
+    }
+
+    const editingId =
+        get("editingReminderId")?.value;
+
+    if (editingId) {
+
+        const reminder =
+            data.reminders.find(
+                item => item.id === editingId
+            );
+
+        if (reminder) {
+
+            reminder.title = title;
+            reminder.datetime = datetime;
+            reminder.description = description;
+            reminder.notified = false;
+        }
+
+    } else {
+
+        data.reminders.push({
+
+            id:
+                Date.now().toString(),
+
+            title,
+
+            datetime,
+
+            description,
+
+            notified: false
+        });
+    }
+
+    saveData();
+
+    renderReminders();
+
+    clearReminderForm();
+
+    showToast("Reminder saved.");
+}
+
+
+function editReminder(id) {
 
     const reminder =
         data.reminders.find(
             item => item.id === id
         );
 
-    if (!reminder) {
-        return;
+    if (!reminder) return;
+
+    if (get("reminderTitle")) {
+        get("reminderTitle").value =
+            reminder.title;
     }
 
-    reminder.completed =
-        !reminder.completed;
+    if (get("reminderDateTime")) {
+        get("reminderDateTime").value =
+            reminder.datetime;
+    }
 
-    saveData();
+    if (get("reminderDescription")) {
+        get("reminderDescription").value =
+            reminder.description || "";
+    }
 
-    renderReminders();
+    if (get("editingReminderId")) {
+        get("editingReminderId").value =
+            reminder.id;
+    }
 
-    updateDashboard();
-};
+    showSection("reminders");
+}
 
 
-window.deleteReminder = function(id) {
+function deleteReminder(id) {
 
     data.reminders =
         data.reminders.filter(
-            item => item.id !== id
+            reminder =>
+                reminder.id !== id
         );
 
     saveData();
 
     renderReminders();
 
-    updateDashboard();
-};
+    showToast("Reminder deleted.");
+}
+
+
+function clearReminderForm() {
+
+    if (get("reminderTitle")) {
+        get("reminderTitle").value = "";
+    }
+
+    if (get("reminderDateTime")) {
+        get("reminderDateTime").value = "";
+    }
+
+    if (get("reminderDescription")) {
+        get("reminderDescription").value = "";
+    }
+
+    if (get("editingReminderId")) {
+        get("editingReminderId").value = "";
+    }
+}
 
 
 /* =========================================================
@@ -946,11 +1080,6 @@ window.deleteReminder = function(id) {
 function startReminderWatcher() {
 
     checkReminders();
-
-    /*
-       Every 15 seconds.
-       This satisfies the intended LAYRAAZ reminder behaviour.
-    */
 
     setInterval(
         checkReminders,
@@ -964,136 +1093,49 @@ function checkReminders() {
     const now =
         new Date();
 
-
     let changed = false;
-
 
     data.reminders.forEach(reminder => {
 
-        if (
-            reminder.completed ||
-            reminder.notified
-        ) {
+        if (reminder.notified) {
             return;
         }
 
-
-        const due =
-            new Date(
-                `${reminder.date}T${reminder.time}:00`
-            );
-
+        const reminderTime =
+            new Date(reminder.datetime);
 
         if (
-            !Number.isNaN(due.getTime()) &&
-            now >= due
+            !isNaN(reminderTime.getTime()) &&
+            reminderTime <= now
         ) {
 
-            triggerReminder(reminder);
-
             reminder.notified = true;
-
             changed = true;
+
+            const message =
+                reminder.description
+                    ? `${reminder.title}: ${reminder.description}`
+                    : reminder.title;
+
+            showCharacterReminder(message);
+
+            sendBrowserNotification(
+                reminder.title,
+                message
+            );
+
+            addNotification(
+                reminder.title,
+                message
+            );
         }
 
     });
 
-
     if (changed) {
-
         saveData();
-
-        renderReminders();
-
-        updateDashboard();
-
+        renderNotifications();
     }
-}
-
-
-function triggerReminder(reminder) {
-
-    const message =
-        `${reminder.text}`;
-
-
-    showCharacterReminder(message);
-
-
-    addNotification(
-        `${data.character.name || "Character"} reminder`,
-        message
-    );
-
-
-    sendBrowserNotification(
-        `${data.character.name || "Character"} reminder`,
-        message
-    );
-}
-
-
-/* =========================================================
-   CHARACTER REMINDER
-   ========================================================= */
-
-function showCharacterReminder(message) {
-
-    const popup =
-        document.getElementById(
-            "characterReminder"
-        );
-
-
-    document.getElementById(
-        "bubbleCharacterName"
-    ).textContent =
-        data.character.name ||
-        "Character";
-
-
-    document.getElementById(
-        "bubbleMessage"
-    ).textContent =
-        message;
-
-
-    updateReminderCharacterImage();
-
-
-    popup.classList.remove("show");
-
-
-    /*
-       Force reflow so animation can restart every time.
-    */
-
-    void popup.offsetWidth;
-
-
-    popup.classList.add("show");
-
-
-    clearTimeout(
-        window.characterPopupTimer
-    );
-
-
-    window.characterPopupTimer =
-        setTimeout(
-            hideCharacterReminder,
-            12000
-        );
-}
-
-
-function hideCharacterReminder() {
-
-    document
-        .getElementById(
-            "characterReminder"
-        )
-        .classList.remove("show");
 }
 
 
@@ -1103,41 +1145,31 @@ function hideCharacterReminder() {
 
 async function requestNotificationPermission() {
 
-    if (!("Notification" in window)) {
-
-        alert(
-            "This browser does not support browser notifications."
+    if (
+        typeof Notification === "undefined"
+    ) {
+        showToast(
+            "Browser notifications are not supported here."
         );
 
         return;
     }
-
 
     try {
 
         const permission =
             await Notification.requestPermission();
 
-
-        updateNotificationPermissionText();
-
-
         if (permission === "granted") {
 
-            addNotification(
-                "Notifications enabled",
-                "Browser notifications are now enabled for LAYRAAZ."
+            showToast(
+                "Browser notifications enabled."
             );
 
-            sendBrowserNotification(
-                "LAYRAAZ",
-                "Browser notifications are now enabled."
-            );
+        } else {
 
-        } else if (permission === "denied") {
-
-            alert(
-                "Browser notifications were blocked. You can enable them from your browser's site permissions."
+            showToast(
+                "Browser notification permission was not granted."
             );
         }
 
@@ -1151,611 +1183,81 @@ async function requestNotificationPermission() {
 }
 
 
-function sendBrowserNotification(title, message) {
+function sendBrowserNotification(title, body) {
 
     if (
-        "Notification" in window &&
-        Notification.permission === "granted"
+        typeof Notification === "undefined"
     ) {
-
-        try {
-
-            new Notification(
-                title,
-                {
-                    body: message,
-                    icon: data.character.picture || undefined
-                }
-            );
-
-        } catch (error) {
-
-            console.error(
-                "Browser notification failed:",
-                error
-            );
-        }
+        return;
     }
-}
 
-
-function updateNotificationPermissionText() {
-
-    const elements = [
-        document.getElementById(
-            "notificationPermissionStatus"
-        ),
-        document.getElementById(
-            "notificationPageStatus"
-        )
-    ];
-
-
-    let text;
-
-
-    if (!("Notification" in window)) {
-
-        text =
-            "Browser notifications are not supported by this browser.";
-
-    } else if (
-        Notification.permission === "granted"
+    if (
+        Notification.permission !== "granted"
     ) {
-
-        text =
-            "Browser notifications are enabled ✓";
-
-    } else if (
-        Notification.permission === "denied"
-    ) {
-
-        text =
-            "Browser notifications are blocked. Change the browser's site permission to enable them.";
-
-    } else {
-
-        text =
-            "Browser notification permission has not been granted yet.";
+        return;
     }
 
+    try {
 
-    elements.forEach(element => {
+        new Notification(
+            title || "LAYRAAZ Reminder",
+            {
+                body:
+                    body ||
+                    "You have a reminder."
+            }
+        );
 
-        if (element) {
-            element.textContent = text;
-        }
+    } catch (error) {
 
-    });
+        console.error(
+            "Could not send notification:",
+            error
+        );
+    }
 }
 
 
 /* =========================================================
-   TODO
+   NOTIFICATIONS SECTION
    ========================================================= */
-
-function initialiseTodos() {
-
-    document
-        .getElementById("saveTodo")
-        .addEventListener(
-            "click",
-            addTodo
-        );
-}
-
-
-function addTodo() {
-
-    const text =
-        document
-            .getElementById("todoText")
-            .value
-            .trim();
-
-    const category =
-        document
-            .getElementById("todoCategory")
-            .value;
-
-
-    if (!text) {
-
-        alert("Please enter a task.");
-
-        return;
-    }
-
-
-    data.todos.push({
-
-        id: createId(),
-
-        text,
-
-        category,
-
-        completed: false,
-
-        createdAt: new Date().toISOString()
-
-    });
-
-
-    saveData();
-
-    renderTodos();
-
-    updateDashboard();
-
-
-    document.getElementById("todoText").value = "";
-}
-
-
-function renderTodos(filterCategory = null) {
-
-    const container =
-        document.getElementById("todoList");
-
-
-    let list =
-        [...data.todos];
-
-
-    if (filterCategory) {
-
-        list =
-            list.filter(
-                item =>
-                    item.category === filterCategory
-            );
-    }
-
-
-    if (list.length === 0) {
-
-        container.innerHTML =
-            `<div class="empty-state">
-                No tasks found.
-             </div>`;
-
-        return;
-    }
-
-
-    container.innerHTML =
-        list.map(todo => {
-
-            return `
-                <div class="item ${todo.completed ? "completed" : ""}">
-
-                    <input
-                        class="item-checkbox"
-                        type="checkbox"
-                        ${todo.completed ? "checked" : ""}
-                        onchange="toggleTodo('${todo.id}')"
-                    >
-
-                    <div class="item-main">
-
-                        <div class="item-title">
-                            ${escapeHTML(todo.text)}
-                        </div>
-
-                        <div class="item-meta">
-                            ${escapeHTML(todo.category)}
-                        </div>
-
-                    </div>
-
-                    <div class="item-actions">
-
-                        <button
-                            class="icon-button"
-                            onclick="deleteTodo('${todo.id}')"
-                        >
-                            ×
-                        </button>
-
-                    </div>
-
-                </div>
-            `;
-
-        }).join("");
-}
-
-
-window.toggleTodo = function(id) {
-
-    const todo =
-        data.todos.find(
-            item => item.id === id
-        );
-
-    if (!todo) {
-        return;
-    }
-
-    todo.completed =
-        !todo.completed;
-
-    saveData();
-
-    renderTodos();
-
-    updateDashboard();
-};
-
-
-window.deleteTodo = function(id) {
-
-    data.todos =
-        data.todos.filter(
-            item => item.id !== id
-        );
-
-    saveData();
-
-    renderTodos();
-
-    updateDashboard();
-};
-
-
-/* =========================================================
-   GOALS
-   ========================================================= */
-
-function initialiseGoals() {
-
-    document
-        .getElementById("saveGoal")
-        .addEventListener(
-            "click",
-            addGoal
-        );
-}
-
-
-function addGoal() {
-
-    const text =
-        document
-            .getElementById("goalText")
-            .value
-            .trim();
-
-    const category =
-        document
-            .getElementById("goalCategory")
-            .value;
-
-
-    if (!text) {
-
-        alert("Please enter a goal.");
-
-        return;
-    }
-
-
-    data.goals.push({
-
-        id: createId(),
-
-        text,
-
-        category,
-
-        createdAt: new Date().toISOString()
-
-    });
-
-
-    saveData();
-
-    renderGoals();
-
-    updateDashboard();
-
-
-    document.getElementById("goalText").value = "";
-}
-
-
-function renderGoals(filterCategory = null) {
-
-    const container =
-        document.getElementById("goalList");
-
-
-    let list =
-        [...data.goals];
-
-
-    if (filterCategory) {
-
-        list =
-            list.filter(
-                item =>
-                    item.category === filterCategory
-            );
-    }
-
-
-    if (list.length === 0) {
-
-        container.innerHTML =
-            `<div class="empty-state">
-                No goals found.
-             </div>`;
-
-        return;
-    }
-
-
-    container.innerHTML =
-        list.map(goal => {
-
-            return `
-                <div class="item">
-
-                    <div class="item-main">
-
-                        <div class="item-title">
-                            ${escapeHTML(goal.text)}
-                        </div>
-
-                        <div class="item-meta">
-                            ${escapeHTML(goal.category)}
-                            ·
-                            Created ${formatDateTime(goal.createdAt)}
-                        </div>
-
-                    </div>
-
-                    <div class="item-actions">
-
-                        <button
-                            class="icon-button"
-                            onclick="deleteGoal('${goal.id}')"
-                        >
-                            ×
-                        </button>
-
-                    </div>
-
-                </div>
-            `;
-
-        }).join("");
-}
-
-
-window.deleteGoal = function(id) {
-
-    data.goals =
-        data.goals.filter(
-            item => item.id !== id
-        );
-
-    saveData();
-
-    renderGoals();
-
-    updateDashboard();
-};
-
-
-/* =========================================================
-   NOTES
-   ========================================================= */
-
-function initialiseNotes() {
-
-    document
-        .getElementById("saveNote")
-        .addEventListener(
-            "click",
-            addNote
-        );
-}
-
-
-function addNote() {
-
-    const title =
-        document
-            .getElementById("noteTitle")
-            .value
-            .trim();
-
-    const content =
-        document
-            .getElementById("noteContent")
-            .value
-            .trim();
-
-
-    if (!title && !content) {
-
-        alert("Please enter something in the note.");
-
-        return;
-    }
-
-
-    data.notes.unshift({
-
-        id: createId(),
-
-        title:
-            title || "Untitled Note",
-
-        content,
-
-        createdAt:
-            new Date().toISOString()
-
-    });
-
-
-    saveData();
-
-    renderNotes();
-
-    updateDashboard();
-
-
-    document.getElementById("noteTitle").value = "";
-
-    document.getElementById("noteContent").value = "";
-}
-
-
-function renderNotes() {
-
-    const container =
-        document.getElementById("noteList");
-
-
-    if (data.notes.length === 0) {
-
-        container.innerHTML =
-            `<div class="empty-state">
-                No notes yet.
-             </div>`;
-
-        return;
-    }
-
-
-    container.innerHTML =
-        data.notes.map(note => {
-
-            return `
-                <div class="item">
-
-                    <div class="item-main">
-
-                        <div class="item-title">
-                            ${escapeHTML(note.title)}
-                        </div>
-
-                        <div class="item-meta">
-                            ${formatDateTime(note.createdAt)}
-                        </div>
-
-                        <p style="margin:10px 0 0; color:var(--font-muted); line-height:1.5;">
-                            ${escapeHTML(note.content)}
-                        </p>
-
-                    </div>
-
-                    <div class="item-actions">
-
-                        <button
-                            class="icon-button"
-                            onclick="deleteNote('${note.id}')"
-                        >
-                            ×
-                        </button>
-
-                    </div>
-
-                </div>
-            `;
-
-        }).join("");
-}
-
-
-window.deleteNote = function(id) {
-
-    data.notes =
-        data.notes.filter(
-            item => item.id !== id
-        );
-
-    saveData();
-
-    renderNotes();
-
-    updateDashboard();
-};
-
-
-/* =========================================================
-   NOTIFICATIONS
-   ========================================================= */
-
-function initialiseNotifications() {
-
-    document
-        .getElementById("notificationButton")
-        .addEventListener(
-            "click",
-            () => openSection("notifications")
-        );
-
-
-    document
-        .getElementById("pageEnableNotifications")
-        .addEventListener(
-            "click",
-            requestNotificationPermission
-        );
-}
-
 
 function addNotification(title, message) {
 
     data.notifications.unshift({
 
-        id: createId(),
+        id:
+            Date.now().toString(),
 
         title,
 
         message,
 
-        createdAt:
+        date:
             new Date().toISOString(),
 
         read: false
-
     });
 
-
-    /*
-       Keep the notification list from becoming enormous.
-    */
-
-    if (data.notifications.length > 100) {
-
+    if (
+        data.notifications.length > 100
+    ) {
         data.notifications =
             data.notifications.slice(0, 100);
     }
 
-
     saveData();
-
-    renderNotifications();
-
-    updateNotificationIndicators();
 }
 
 
 function renderNotifications() {
 
     const container =
-        document.getElementById(
-            "notificationList"
-        );
+        get("notificationList");
 
+    if (!container) return;
 
-    if (data.notifications.length === 0) {
+    if (!data.notifications.length) {
 
         container.innerHTML =
             `<div class="empty-state">
@@ -1765,43 +1267,117 @@ function renderNotifications() {
         return;
     }
 
-
     container.innerHTML =
         data.notifications.map(notification => {
 
+            const date =
+                new Date(notification.date);
+
             return `
-                <div class="item ${notification.read ? "completed" : ""}">
+                <div class="notification-item ${
+                    notification.read
+                        ? "read"
+                        : "unread"
+                }">
 
-                    <div class="item-main">
+                    <div>
 
-                        <div class="item-title">
+                        <strong>
                             ${escapeHTML(notification.title)}
-                        </div>
+                        </strong>
 
-                        <div class="item-meta">
-                            ${formatDateTime(notification.createdAt)}
-                        </div>
-
-                        <p style="margin:8px 0 0; color:var(--font-muted);">
+                        <div>
                             ${escapeHTML(notification.message)}
-                        </p>
+                        </div>
+
+                        <div class="muted">
+                            ${date.toLocaleString()}
+                        </div>
 
                     </div>
 
-                    <div class="item-actions">
+                </div>
+            `;
+
+        }).join("");
+}
+
+
+/* =========================================================
+   TO-DO LIST
+   ========================================================= */
+
+let currentTodoCategory = "All";
+
+
+function renderTodos() {
+
+    const container =
+        get("todoList");
+
+    if (!container) return;
+
+    let todos =
+        [...data.todos];
+
+    if (
+        currentTodoCategory !== "All"
+    ) {
+        todos =
+            todos.filter(
+                todo =>
+                    todo.category ===
+                    currentTodoCategory
+            );
+    }
+
+    if (!todos.length) {
+
+        container.innerHTML =
+            `<div class="empty-state">
+                No tasks yet.
+             </div>`;
+
+        return;
+    }
+
+    container.innerHTML =
+        todos.map(todo => {
+
+            return `
+                <div class="todo-item">
+
+                    <label class="todo-left">
+
+                        <input
+                            type="checkbox"
+                            ${
+                                todo.completed
+                                    ? "checked"
+                                    : ""
+                            }
+                            onchange="toggleTodo('${todo.id}')"
+                        >
+
+                        <span class="${
+                            todo.completed
+                                ? "completed"
+                                : ""
+                        }">
+                            ${escapeHTML(todo.title)}
+                        </span>
+
+                    </label>
+
+                    <div class="todo-meta">
+
+                        <span>
+                            ${escapeHTML(todo.category)}
+                        </span>
 
                         <button
-                            class="icon-button"
-                            onclick="readNotification('${notification.id}')"
-                        >
-                            ✓
-                        </button>
-
-                        <button
-                            class="icon-button"
-                            onclick="deleteNotification('${notification.id}')"
-                        >
-                            ×
+                            onclick="deleteTodo('${todo.id}')">
+                            Delete
                         </button>
 
                     </div>
@@ -1813,75 +1389,497 @@ function renderNotifications() {
 }
 
 
-window.readNotification = function(id) {
+function saveTodo() {
 
-    const notification =
-        data.notifications.find(
-            item => item.id === id
+    const input =
+        get("todoInput");
+
+    if (!input) return;
+
+    const title =
+        input.value.trim();
+
+    if (!title) {
+
+        showToast(
+            "Please enter a task."
         );
 
-    if (!notification) {
         return;
     }
 
-    notification.read = true;
+    const category =
+        get("todoCategory")?.value ||
+        "Personal";
+
+    data.todos.push({
+
+        id:
+            Date.now().toString(),
+
+        title,
+
+        category,
+
+        completed: false,
+
+        createdAt:
+            new Date().toISOString()
+    });
 
     saveData();
 
-    renderNotifications();
+    input.value = "";
 
-    updateNotificationIndicators();
-};
+    renderTodos();
+
+    showToast("Task added.");
+}
 
 
-window.deleteNotification = function(id) {
+function toggleTodo(id) {
 
-    data.notifications =
-        data.notifications.filter(
-            item => item.id !== id
+    const todo =
+        data.todos.find(
+            item => item.id === id
+        );
+
+    if (!todo) return;
+
+    todo.completed =
+        !todo.completed;
+
+    saveData();
+
+    renderTodos();
+}
+
+
+function deleteTodo(id) {
+
+    data.todos =
+        data.todos.filter(
+            todo =>
+                todo.id !== id
         );
 
     saveData();
 
-    renderNotifications();
+    renderTodos();
 
-    updateNotificationIndicators();
-};
-
-
-function updateNotificationIndicators() {
-
-    const unread =
-        data.notifications.filter(
-            item => !item.read
-        ).length;
+    showToast("Task deleted.");
+}
 
 
-    const count =
-        document.getElementById(
-            "notificationCount"
+function filterTodos(category) {
+
+    currentTodoCategory =
+        category || "All";
+
+    renderTodos();
+}
+
+
+/* =========================================================
+   GOALS
+   ========================================================= */
+
+function renderGoals() {
+
+    const container =
+        get("goalList");
+
+    if (!container) return;
+
+    if (!data.goals.length) {
+
+        container.innerHTML =
+            `<div class="empty-state">
+                No goals yet.
+             </div>`;
+
+        return;
+    }
+
+    container.innerHTML =
+        data.goals.map(goal => {
+
+            const progress =
+                Number(goal.progress) || 0;
+
+            return `
+                <div class="goal-item">
+
+                    <div class="goal-header">
+
+                        <strong>
+                            ${escapeHTML(goal.title)}
+                        </strong>
+
+                        <span>
+                            ${progress}%
+                        </span>
+
+                    </div>
+
+                    <div class="goal-progress">
+                        <div
+                            class="goal-progress-fill"
+                            style="width:${Math.min(
+                                100,
+                                Math.max(0, progress)
+                            )}%">
+                        </div>
+                    </div>
+
+                    ${
+                        goal.description
+                            ? `<p>
+                                ${escapeHTML(goal.description)}
+                               </p>`
+                            : ""
+                    }
+
+                    <div class="item-actions">
+
+                        <button
+                            onclick="editGoal('${goal.id}')">
+                            Edit
+                        </button>
+
+                        <button
+                            onclick="deleteGoal('${goal.id}')">
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+
+function saveGoal() {
+
+    const title =
+        get("goalTitle")?.value.trim();
+
+    const progress =
+        Number(
+            get("goalProgress")?.value || 0
         );
 
-    const dot =
-        document.getElementById(
-            "topNotificationDot"
+    const description =
+        get("goalDescription")?.value.trim() || "";
+
+    if (!title) {
+
+        showToast(
+            "Please enter a goal."
         );
 
+        return;
+    }
 
-    count.textContent =
-        unread;
+    const editingId =
+        get("editingGoalId")?.value;
+
+    if (editingId) {
+
+        const goal =
+            data.goals.find(
+                item => item.id === editingId
+            );
+
+        if (goal) {
+
+            goal.title = title;
+            goal.progress = progress;
+            goal.description = description;
+        }
+
+    } else {
+
+        data.goals.push({
+
+            id:
+                Date.now().toString(),
+
+            title,
+
+            progress,
+
+            description,
+
+            createdAt:
+                new Date().toISOString()
+        });
+    }
+
+    saveData();
+
+    renderGoals();
+
+    clearGoalForm();
+
+    showToast("Goal saved.");
+}
 
 
-    count.classList.toggle(
-        "show",
-        unread > 0
-    );
+function editGoal(id) {
+
+    const goal =
+        data.goals.find(
+            item => item.id === id
+        );
+
+    if (!goal) return;
+
+    if (get("goalTitle")) {
+        get("goalTitle").value =
+            goal.title;
+    }
+
+    if (get("goalProgress")) {
+        get("goalProgress").value =
+            goal.progress;
+    }
+
+    if (get("goalDescription")) {
+        get("goalDescription").value =
+            goal.description || "";
+    }
+
+    if (get("editingGoalId")) {
+        get("editingGoalId").value =
+            goal.id;
+    }
+}
 
 
-    dot.classList.toggle(
-        "show",
-        unread > 0
-    );
+function deleteGoal(id) {
+
+    data.goals =
+        data.goals.filter(
+            goal =>
+                goal.id !== id
+        );
+
+    saveData();
+
+    renderGoals();
+
+    showToast("Goal deleted.");
+}
+
+
+function clearGoalForm() {
+
+    if (get("goalTitle")) {
+        get("goalTitle").value = "";
+    }
+
+    if (get("goalProgress")) {
+        get("goalProgress").value = 0;
+    }
+
+    if (get("goalDescription")) {
+        get("goalDescription").value = "";
+    }
+
+    if (get("editingGoalId")) {
+        get("editingGoalId").value = "";
+    }
+}
+
+
+/* =========================================================
+   NOTES
+   ========================================================= */
+
+function renderNotes() {
+
+    const container =
+        get("noteList");
+
+    if (!container) return;
+
+    if (!data.notes.length) {
+
+        container.innerHTML =
+            `<div class="empty-state">
+                No notes yet.
+             </div>`;
+
+        return;
+    }
+
+    container.innerHTML =
+        data.notes.map(note => {
+
+            const date =
+                new Date(note.date);
+
+            return `
+                <div class="note-item">
+
+                    <div>
+
+                        <strong>
+                            ${escapeHTML(note.title)}
+                        </strong>
+
+                        <div class="muted">
+                            ${date.toLocaleDateString()}
+                        </div>
+
+                        <p>
+                            ${escapeHTML(note.content)}
+                        </p>
+
+                    </div>
+
+                    <div class="item-actions">
+
+                        <button
+                            onclick="editNote('${note.id}')">
+                            Edit
+                        </button>
+
+                        <button
+                            onclick="deleteNote('${note.id}')">
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+
+function saveNote() {
+
+    const title =
+        get("noteTitle")?.value.trim();
+
+    const content =
+        get("noteContent")?.value.trim();
+
+    if (!title || !content) {
+
+        showToast(
+            "Please enter a title and note."
+        );
+
+        return;
+    }
+
+    const editingId =
+        get("editingNoteId")?.value;
+
+    if (editingId) {
+
+        const note =
+            data.notes.find(
+                item => item.id === editingId
+            );
+
+        if (note) {
+
+            note.title = title;
+            note.content = content;
+            note.date =
+                new Date().toISOString();
+        }
+
+    } else {
+
+        data.notes.unshift({
+
+            id:
+                Date.now().toString(),
+
+            title,
+
+            content,
+
+            date:
+                new Date().toISOString()
+        });
+    }
+
+    saveData();
+
+    renderNotes();
+
+    clearNoteForm();
+
+    showToast("Note saved.");
+}
+
+
+function editNote(id) {
+
+    const note =
+        data.notes.find(
+            item => item.id === id
+        );
+
+    if (!note) return;
+
+    if (get("noteTitle")) {
+        get("noteTitle").value =
+            note.title;
+    }
+
+    if (get("noteContent")) {
+        get("noteContent").value =
+            note.content;
+    }
+
+    if (get("editingNoteId")) {
+        get("editingNoteId").value =
+            note.id;
+    }
+
+    showSection("notes");
+}
+
+
+function deleteNote(id) {
+
+    data.notes =
+        data.notes.filter(
+            note =>
+                note.id !== id
+        );
+
+    saveData();
+
+    renderNotes();
+
+    showToast("Note deleted.");
+}
+
+
+function clearNoteForm() {
+
+    if (get("noteTitle")) {
+        get("noteTitle").value = "";
+    }
+
+    if (get("noteContent")) {
+        get("noteContent").value = "";
+    }
+
+    if (get("editingNoteId")) {
+        get("editingNoteId").value = "";
+    }
 }
 
 
@@ -1889,60 +1887,143 @@ function updateNotificationIndicators() {
    SEARCH
    ========================================================= */
 
-function initialiseSearch() {
-
-    const button =
-        document.getElementById(
-            "searchButton"
-        );
-
-    const panel =
-        document.getElementById(
-            "searchPanel"
-        );
+function performSearch() {
 
     const input =
-        document.getElementById(
-            "globalSearch"
-        );
+        get("searchInput");
 
-    const close =
-        document.getElementById(
-            "closeSearch"
-        );
+    const results =
+        get("searchResults");
 
+    if (!input || !results) return;
 
-    button.addEventListener(
-        "click",
-        () => {
+    const query =
+        input.value
+            .trim()
+            .toLowerCase();
 
-            panel.classList.toggle(
-                "open"
-            );
+    if (!query) {
 
-            if (panel.classList.contains("open")) {
+        results.innerHTML = "";
 
-                setTimeout(
-                    () => input.focus(),
-                    50
-                );
-            }
+        return;
+    }
 
+    const matches = [];
+
+    data.reminders.forEach(item => {
+
+        const text =
+            `${item.title} ${item.description || ""}`
+                .toLowerCase();
+
+        if (text.includes(query)) {
+
+            matches.push({
+                type: "Reminder",
+                title: item.title,
+                text: item.description || ""
+            });
         }
-    );
 
+    });
 
-    close.addEventListener(
-        "click",
-        () => {
+    data.todos.forEach(item => {
 
-            panel.classList.remove(
-                "open"
-            );
+        const text =
+            `${item.title} ${item.category}`
+                .toLowerCase();
 
+        if (text.includes(query)) {
+
+            matches.push({
+                type: "To-do",
+                title: item.title,
+                text: item.category
+            });
         }
-    );
 
+    });
+
+    data.goals.forEach(item => {
+
+        const text =
+            `${item.title} ${item.description || ""}`
+                .toLowerCase();
+
+        if (text.includes(query)) {
+
+            matches.push({
+                type: "Goal",
+                title: item.title,
+                text: item.description || ""
+            });
+        }
+
+    });
+
+    data.notes.forEach(item => {
+
+        const text =
+            `${item.title} ${item.content}`
+                .toLowerCase();
+
+        if (text.includes(query)) {
+
+            matches.push({
+                type: "Note",
+                title: item.title,
+                text: item.content
+            });
+        }
+
+    });
+
+    if (!matches.length) {
+
+        results.innerHTML =
+            `<div class="search-empty">
+                No results found.
+             </div>`;
+
+        return;
+    }
+
+    results.innerHTML =
+        matches.map(match => {
+
+            return `
+                <div class="search-result">
+
+                    <div class="search-result-type">
+                        ${escapeHTML(match.type)}
+                    </div>
+
+                    <strong>
+                        ${escapeHTML(match.title)}
+                    </strong>
+
+                    <div>
+                        ${escapeHTML(match.text)}
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+
+/* =========================================================
+   SEARCH SETUP
+   ========================================================= */
+
+function setupSearch() {
+
+    const input =
+        get("searchInput");
+
+    if (!input) return;
 
     input.addEventListener(
         "input",
@@ -1951,712 +2032,328 @@ function initialiseSearch() {
 }
 
 
-function performSearch() {
-
-    const query =
-        document
-            .getElementById("globalSearch")
-            .value
-            .trim()
-            .toLowerCase();
-
-
-    const container =
-        document.getElementById(
-            "searchResults"
-        );
-
-
-    if (!query) {
-
-        container.innerHTML = "";
-
-        return;
-    }
-
-
-    const results = [];
-
-
-    data.reminders.forEach(item => {
-
-        if (
-            item.text.toLowerCase().includes(query)
-        ) {
-
-            results.push({
-                type: "Reminder",
-                title: item.text,
-                meta: `${formatDate(item.date)} · ${item.time}`
-            });
-        }
-    });
-
-
-    data.todos.forEach(item => {
-
-        if (
-            item.text.toLowerCase().includes(query)
-        ) {
-
-            results.push({
-                type: "Task",
-                title: item.text,
-                meta: item.category
-            });
-        }
-    });
-
-
-    data.goals.forEach(item => {
-
-        if (
-            item.text.toLowerCase().includes(query)
-        ) {
-
-            results.push({
-                type: "Goal",
-                title: item.text,
-                meta: item.category
-            });
-        }
-    });
-
-
-    data.notes.forEach(item => {
-
-        if (
-            item.title.toLowerCase().includes(query) ||
-            item.content.toLowerCase().includes(query)
-        ) {
-
-            results.push({
-                type: "Note",
-                title: item.title,
-                meta: item.content.substring(0, 80)
-            });
-        }
-    });
-
-
-    if (results.length === 0) {
-
-        container.innerHTML =
-            `<div class="no-results">
-                Nothing found.
-             </div>`;
-
-        return;
-    }
-
-
-    container.innerHTML =
-        results.map(result => {
-
-            return `
-                <div class="search-result">
-
-                    <strong>
-                        ${escapeHTML(result.title)}
-                    </strong>
-
-                    <small>
-                        ${escapeHTML(result.type)}
-                        ·
-                        ${escapeHTML(result.meta)}
-                    </small>
-
-                </div>
-            `;
-
-        }).join("");
-}
-
-
 /* =========================================================
-   CATEGORIES
+   APPEARANCE UI
    ========================================================= */
 
-function initialiseCategories() {
-
-    document
-        .querySelectorAll(".category-button")
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    const category =
-                        button.dataset.category;
-
-                    openCategory(category);
-                }
-            );
-        });
-}
-
-
-function openCategory(category) {
-
-    /*
-       Clicking a category opens the To-do section
-       and displays tasks belonging to that category.
-    */
-
-    openSection("todos");
-
-    renderTodos(category);
-
-
-    /*
-       A small heading replacement tells the user
-       which category is being viewed.
-    */
-
-    const heading =
-        document.querySelector(
-            "#section-todos .page-heading h1"
-        );
-
-    heading.textContent =
-        `${category} Tasks`;
-}
-
-
-/* =========================================================
-   APPEARANCE
-   ========================================================= */
-
-const palettes = {
-
-    forest: {
-        name: "Deep Forest Green",
-        background: "#1d251c",
-        main: "#101411",
-        font: "#c7c9c4"
-    },
-
-    butter: {
-        name: "Butter Yellow",
-        background: "#f4e7a1",
-        main: "#8fc7df",
-        font: "#5a351e"
-    },
-
-    almond: {
-        name: "Almond",
-        background: "#e8d8c3",
-        main: "#91cbb5",
-        font: "#9e2633"
-    },
-
-    sage: {
-        name: "Misty Sage",
-        background: "#b8c4b1",
-        main: "#6f2025",
-        font: "#fff1c7"
-    },
-
-    navy: {
-        name: "Navy",
-        background: "#101c36",
-        main: "#c8a85c",
-        font: "#d9c7a4"
-    },
-
-    champagne: {
-        name: "Champagne",
-        background: "#f1dfc1",
-        main: "#777c32",
-        font: "#e9dfca"
-    },
-
-    gunmetal: {
-        name: "Gunmetal",
-        background: "#343a40",
-        main: "#ece3d3",
-        font: "#eee5d5"
-    },
-
-    cadet: {
-        name: "Cadet Grey",
-        background: "#91a1a8",
-        main: "#eeeae3",
-        font: "#33251d"
-    },
-
-    pink: {
-        name: "Muted Pink",
-        background: "#c99aa0",
-        main: "#9d233b",
-        font: "#f2c5cc"
-    },
-
-    lavender: {
-        name: "Lavender Mist",
-        background: "#d9d0e5",
-        main: "#4a2f2a",
-        font: "#fff2d6"
-    }
-
-};
-
-
-function initialiseAppearance() {
-
-    renderPalettes();
-}
-
-
-function renderPalettes() {
+function renderAppearance() {
 
     const container =
-        document.getElementById(
-            "paletteGrid"
-        );
+        get("appearanceOptions");
 
+    if (!container) return;
 
     container.innerHTML =
         Object.entries(palettes)
             .map(([key, palette]) => {
 
+                const selected =
+                    data.appearance === key;
+
                 return `
-                    <div
-                        class="palette-card ${data.appearance === key ? "selected" : ""}"
+                    <button
+                        class="appearance-option ${
+                            selected ? "selected" : ""
+                        }"
                         data-palette="${key}"
-                    >
+                        onclick="selectAppearance('${key}')">
 
-                        <div class="palette-name">
+                        <span
+                            class="appearance-preview"
+                            style="
+                                background:${palette.background};
+                                border-color:${palette.main};
+                                color:${palette.font};
+                            ">
+
+                            <span
+                                style="
+                                    background:${palette.main};
+                                ">
+                            </span>
+
+                            <span
+                                style="
+                                    color:${palette.font};
+                                ">
+                                Aa
+                            </span>
+
+                        </span>
+
+                        <span>
                             ${escapeHTML(palette.name)}
-                        </div>
+                        </span>
 
-                        <div class="palette-preview">
-
-                            <div
-                                class="palette-colour"
-                                style="background:${palette.background}; color:${palette.font};"
-                            >
-                                Background
-                            </div>
-
-                            <div
-                                class="palette-colour"
-                                style="background:${palette.main}; color:${palette.font};"
-                            >
-                                Main
-                            </div>
-
-                            <div
-                                class="palette-colour"
-                                style="background:${palette.font}; color:${palette.main};"
-                            >
-                                Font
-                            </div>
-
-                        </div>
-
-                        <div class="palette-description">
-                            <span>${palette.background}</span>
-                            <span>${palette.main}</span>
-                            <span>${palette.font}</span>
-                        </div>
-
-                    </div>
+                    </button>
                 `;
 
             }).join("");
-
-
-    container
-        .querySelectorAll(".palette-card")
-        .forEach(card => {
-
-            card.addEventListener(
-                "click",
-                () => {
-
-                    data.appearance =
-                        card.dataset.palette;
-
-                    saveData();
-
-                    applyAppearance();
-
-                    renderPalettes();
-
-                }
-            );
-        });
 }
 
 
-function applyAppearance() {
+function selectAppearance(key) {
 
-    const palette =
-        palettes[
-            data.appearance
-        ] || palettes.forest;
+    if (!palettes[key]) return;
 
-
-    document.documentElement
-        .style
-        .setProperty(
-            "--background",
-            palette.background
-        );
-
-
-    document.documentElement
-        .style
-        .setProperty(
-            "--main",
-            palette.main
-        );
-
-
-    document.documentElement
-        .style
-        .setProperty(
-            "--font",
-            palette.font
-        );
-
-
-    /*
-       A muted version of the chosen font colour.
-    */
-
-    document.documentElement
-        .style
-        .setProperty(
-            "--font-muted",
-            palette.font
-        );
-}
-
-
-/* =========================================================
-   CHARACTER
-   ========================================================= */
-
-function initialiseCharacter() {
-
-    const nameInput =
-        document.getElementById(
-            "characterName"
-        );
-
-    const personalityInput =
-        document.getElementById(
-            "characterPersonality"
-        );
-
-
-    nameInput.value =
-        data.character.name;
-
-
-    personalityInput.value =
-        data.character.personality;
-
-
-    document
-        .getElementById("saveCharacter")
-        .addEventListener(
-            "click",
-            saveCharacter
-        );
-
-
-    document
-        .getElementById("testCharacter")
-        .addEventListener(
-            "click",
-            () => {
-
-                showCharacterReminder(
-                    "This is a character test. I'm here."
-                );
-
-            }
-        );
-
-
-    document
-        .getElementById("dashboardTestCharacter")
-        .addEventListener(
-            "click",
-            () => {
-
-                showCharacterReminder(
-                    "This is my dashboard test. Everything is working."
-                );
-
-            }
-        );
-
-
-    document
-        .getElementById("characterPictureInput")
-        .addEventListener(
-            "change",
-            handleCharacterPicture
-        );
-
-
-    document
-        .getElementById("removeCharacterPicture")
-        .addEventListener(
-            "click",
-            () => {
-
-                data.character.picture = "";
-
-                saveData();
-
-                updateCharacterImages();
-
-            }
-        );
-
-
-    updateCharacterImages();
-}
-
-
-function saveCharacter() {
-
-    const name =
-        document
-            .getElementById("characterName")
-            .value
-            .trim();
-
-
-    const personality =
-        document
-            .getElementById("characterPersonality")
-            .value
-            .trim();
-
-
-    data.character.name =
-        name || "Character";
-
-
-    data.character.personality =
-        personality ||
-        "Calm, intelligent, firm and caring.";
-
+    data.appearance = key;
 
     saveData();
 
+    applyAppearance();
+    renderAppearance();
 
-    updateCharacterImages();
-
-    updateDashboard();
-
-
-    const status =
-        document.getElementById(
-            "characterSaveStatus"
-        );
-
-    status.textContent =
-        "Saved ✓";
-
-
-    setTimeout(() => {
-
-        status.textContent = "";
-
-    }, 2500);
+    showToast(
+        `${palettes[key].name} applied.`
+    );
 }
 
 
-function handleCharacterPicture(event) {
+/* =========================================================
+   TOAST
+   ========================================================= */
 
-    const file =
-        event.target.files[0];
+function showToast(message) {
 
-    if (!file) {
-        return;
+    let toast =
+        get("layraazToast");
+
+    if (!toast) {
+
+        toast =
+            document.createElement("div");
+
+        toast.id =
+            "layraazToast";
+
+        toast.className =
+            "layraaz-toast";
+
+        document.body.appendChild(toast);
     }
 
+    toast.textContent =
+        message;
 
-    if (!file.type.startsWith("image/")) {
+    toast.classList.add("show");
 
-        alert(
-            "Please choose an image file."
-        );
+    clearTimeout(
+        window.__layraazToastTimer
+    );
 
-        return;
-    }
+    window.__layraazToastTimer =
+        setTimeout(() => {
 
+            toast.classList.remove("show");
 
-    const reader =
-        new FileReader();
-
-
-    reader.onload = function(e) {
-
-        data.character.picture =
-            e.target.result;
-
-        saveData();
-
-        updateCharacterImages();
-
-    };
-
-
-    reader.onerror = function() {
-
-        alert(
-            "The character image could not be loaded."
-        );
-    };
-
-
-    reader.readAsDataURL(file);
+        }, 2500);
 }
 
 
-function updateCharacterImages() {
+/* =========================================================
+   ENTER KEY SUPPORT
+   ========================================================= */
 
-    const image =
-        data.character.picture;
+function setupEnterKeySupport() {
 
+    const todoInput =
+        get("todoInput");
 
-    const dashboardImg =
-        document.getElementById(
-            "dashboardCharacterImage"
+    if (todoInput) {
+
+        todoInput.addEventListener(
+            "keydown",
+            event => {
+
+                if (event.key === "Enter") {
+
+                    event.preventDefault();
+
+                    saveTodo();
+                }
+
+            }
         );
-
-    const dashboardPlaceholder =
-        document.getElementById(
-            "dashboardCharacterPlaceholder"
-        );
-
-
-    const preview =
-        document.getElementById(
-            "characterPreview"
-        );
-
-    const previewPlaceholder =
-        document.getElementById(
-            "characterPreviewPlaceholder"
-        );
-
-
-    const reminderImg =
-        document.getElementById(
-            "reminderCharacterImage"
-        );
-
-    const reminderPlaceholder =
-        document.getElementById(
-            "reminderCharacterPlaceholder"
-        );
-
-
-    if (image) {
-
-        dashboardImg.src = image;
-        dashboardImg.style.display = "block";
-        dashboardPlaceholder.style.display = "none";
-
-
-        preview.src = image;
-        preview.style.display = "block";
-        previewPlaceholder.style.display = "none";
-
-
-        reminderImg.src = image;
-        reminderImg.style.display = "block";
-        reminderPlaceholder.style.display = "none";
-
-    } else {
-
-        dashboardImg.style.display = "none";
-        dashboardPlaceholder.style.display = "flex";
-
-
-        preview.style.display = "none";
-        previewPlaceholder.style.display = "flex";
-
-
-        reminderImg.style.display = "none";
-        reminderPlaceholder.style.display = "flex";
     }
 
+    const searchInput =
+        get("searchInput");
 
-    document.getElementById(
-        "dashboardCharacterName"
-    ).textContent =
-        data.character.name;
+    if (searchInput) {
 
+        searchInput.addEventListener(
+            "keydown",
+            event => {
 
-    document.getElementById(
-        "characterPreviewName"
-    ).textContent =
-        data.character.name;
+                if (event.key === "Escape") {
 
+                    searchInput.value = "";
 
-    document.getElementById(
-        "characterPreviewPersonality"
-    ).textContent =
-        data.character.personality;
-}
+                    performSearch();
+                }
 
-
-function updateReminderCharacterImage() {
-
-    const image =
-        data.character.picture;
-
-
-    const img =
-        document.getElementById(
-            "reminderCharacterImage"
+            }
         );
-
-    const placeholder =
-        document.getElementById(
-            "reminderCharacterPlaceholder"
-        );
-
-
-    if (image) {
-
-        img.src = image;
-
-        img.style.display =
-            "block";
-
-        placeholder.style.display =
-            "none";
-
-    } else {
-
-        img.style.display =
-            "none";
-
-        placeholder.style.display =
-            "flex";
     }
 }
 
 
 /* =========================================================
-   RENDER ALL
+   BUTTON EVENT SETUP
    ========================================================= */
 
-function renderAll() {
+function setupButtons() {
 
-    renderProfilePicture();
+    const profileSave =
+        get("saveProfile");
+
+    if (profileSave) {
+        profileSave.addEventListener(
+            "click",
+            saveProfile
+        );
+    }
+
+    const characterSave =
+        get("saveCharacter");
+
+    if (characterSave) {
+        characterSave.addEventListener(
+            "click",
+            saveCharacterSettings
+        );
+    }
+
+    const characterTest =
+        get("testCharacter");
+
+    if (characterTest) {
+        characterTest.addEventListener(
+            "click",
+            testCharacter
+        );
+    }
+
+    const reminderSave =
+        get("saveReminder");
+
+    if (reminderSave) {
+        reminderSave.addEventListener(
+            "click",
+            saveReminder
+        );
+    }
+
+    const reminderClear =
+        get("clearReminder");
+
+    if (reminderClear) {
+        reminderClear.addEventListener(
+            "click",
+            clearReminderForm
+        );
+    }
+
+    const todoSave =
+        get("saveTodo");
+
+    if (todoSave) {
+        todoSave.addEventListener(
+            "click",
+            saveTodo
+        );
+    }
+
+    const goalSave =
+        get("saveGoal");
+
+    if (goalSave) {
+        goalSave.addEventListener(
+            "click",
+            saveGoal
+        );
+    }
+
+    const noteSave =
+        get("saveNote");
+
+    if (noteSave) {
+        noteSave.addEventListener(
+            "click",
+            saveNote
+        );
+    }
+
+    const notificationPermission =
+        get("enableNotifications");
+
+    if (notificationPermission) {
+
+        notificationPermission.addEventListener(
+            "click",
+            requestNotificationPermission
+        );
+    }
+}
+
+
+/* =========================================================
+   PROFILE DATE CHANGE
+   ========================================================= */
+
+function setupProfileAge() {
+
+    const dob =
+        get("profileDob");
+
+    if (!dob) return;
+
+    dob.addEventListener(
+        "change",
+        () => {
+
+            const age =
+                get("profileAge");
+
+            if (age) {
+
+                age.textContent =
+                    calculateAge(
+                        dob.value
+                    );
+            }
+        }
+    );
+}
+
+
+/* =========================================================
+   INITIAL RENDER
+   ========================================================= */
+
+function initializeLAYRAAZ() {
+
+    applyAppearance();
+
+    setupSidebar();
+
+    setupSearch();
+
+    setupProfileImageUpload();
+
+    setupCharacterImageUpload();
+
+    setupProfileAge();
+
+    setupButtons();
+
+    setupEnterKeySupport();
+
+    renderProfile();
+
+    renderDashboard();
+
+    renderCharacterSettings();
 
     renderReminders();
 
@@ -2668,9 +2365,17 @@ function renderAll() {
 
     renderNotifications();
 
-    renderPalettes();
+    renderAppearance();
 
-    updateCharacterImages();
-
-    updateDashboard();
+    startReminderWatcher();
 }
+
+
+/* =========================================================
+   START
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    initializeLAYRAAZ
+);
