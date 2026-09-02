@@ -5,9 +5,10 @@
    LAYRAAZ
    ========================================================= */
 
-const STORAGE_KEY = "LAYRAAZ_DATA_V4";
+const STORAGE_KEY = "LAYRAAZ_DATA_V5";
 
 const OLD_KEYS = [
+    "LAYRAAZ_DATA_V4",
     "LAYRAAZ_DATA_V3",
     "LAYRAAZ_DATA_V2",
     "LAYRAAZ_DATA"
@@ -20,237 +21,229 @@ const OLD_KEYS = [
 
 const palettes = {
 
-    forest:{
-        name:"Palette 1",
-        background:"#1D251C",
-        main:"#101411",
-        font:"#D0D4CE"
+    forest: {
+        name: "Palette 1",
+        background: "#1D251C",
+        main: "#101411",
+        font: "#D0D4CE"
     },
 
-    butter:{
-        name:"Palette 2",
-        background:"#F3E7A3",
-        main:"#8CB8D0",
-        font:"#4A2C20"
+    butter: {
+        name: "Palette 2",
+        background: "#F3E7A3",
+        main: "#8CB8D0",
+        font: "#4A2C20"
     },
 
-    almond:{
-        name:"Palette 3",
-        background:"#E8D8C3",
-        main:"#8DBFA9",
-        font:"#8E2636"
+    almond: {
+        name: "Palette 3",
+        background: "#E8D8C3",
+        main: "#8DBFA9",
+        font: "#8E2636"
     },
 
-    sage:{
-        name:"Palette 4",
-        background:"#B8C5B1",
-        main:"#6D2026",
-        font:"#3B2922"
+    sage: {
+        name: "Palette 4",
+        background: "#B8C5B1",
+        main: "#6D2026",
+        font: "#3B2922"
     },
 
-    navy:{
-        name:"Palette 5",
-        background:"#111D38",
-        main:"#C8A85C",
-        font:"#F5F1E8"
+    navy: {
+        name: "Palette 5",
+        background: "#111D38",
+        main: "#C8A85C",
+        font: "#F5F1E8"
     },
 
-    champagne:{
-        name:"Palette 6",
-        background:"#722F37",
-        main:"#70752F",
-        font:"#F3E6D0"
+    champagne: {
+        name: "Palette 6",
+        background: "#722F37",
+        main: "#70752F",
+        font: "#F3E6D0"
     },
 
-    gunmetal:{
-        name:"Palette 7",
-        background:"#DC9F2A",
-        main:"#8399B9",
-        font:"#475418"
+    gunmetal: {
+        name: "Palette 7",
+        background: "#DC9F2A",
+        main: "#8399B9",
+        font: "#475418"
     },
 
-    cadet:{
-        name:"Palette 8",
-        background:"#919FA5",
-        main:"#EEEAE2",
-        font:"#30251F"
+    cadet: {
+        name: "Palette 8",
+        background: "#919FA5",
+        main: "#EEEAE2",
+        font: "#30251F"
     },
 
-    pink:{
-        name:"Palette 9",
-        background:"#D3A6A3",
-        main:"#70702E",
-        font:"#C7BEB3"
+    pink: {
+        name: "Palette 9",
+        background: "#D3A6A3",
+        main: "#70702E",
+        font: "#C7BEB3"
     },
 
-    lavender:{
-        name:"Palette 10",
-        background:"#BCC2F4",
-        main:"#B0BC68",
-        font:"#FFFecd"
+    lavender: {
+        name: "Palette 10",
+        background: "#BCC2F4",
+        main: "#B0BC68",
+        font: "#FFFECD"
     }
 
 };
 
 
 /* =========================================================
-   CUSTOM SVG ICONS
+   ICONS
    ========================================================= */
 
 const ICONS = {
 
-    menu:`
-    <svg viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="1.8"
-         stroke-linecap="round">
-        <path d="M5 7h14M5 12h14M5 17h14"/>
-    </svg>`,
+    menu: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor"
+             stroke-width="1.8"
+             stroke-linecap="round">
+            <path d="M5 7h14M5 12h14M5 17h14"/>
+        </svg>
+    `,
 
-    home:`
-    <svg viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="1.7"
-         stroke-linejoin="round">
-        <path d="m3.5 10.5 8.5-7 8.5 7v9a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 19.5v-9Z"/>
-        <path d="M9 21v-6h6v6"/>
-    </svg>`,
+    home: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor"
+             stroke-width="1.7"
+             stroke-linejoin="round">
+            <path d="m3.5 10.5 8.5-7 8.5 7v9a1.5 1.5 0 0 1-1.5 1.5H5a1.5 1.5 0 0 1-1.5-1.5v-9Z"/>
+            <path d="M9 21v-6h6v6"/>
+        </svg>
+    `,
 
-    profile:`
-    <svg viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="1.7"
-         stroke-linecap="round">
-        <circle cx="12" cy="8" r="3.5"/>
-        <path d="M4.5 20c.8-3.3 3.3-5 7.5-5s6.7 1.7 7.5 5"/>
-    </svg>`,
+    profile: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor"
+             stroke-width="1.7"
+             stroke-linecap="round">
+            <circle cx="12" cy="8" r="3.5"/>
+            <path d="M4.5 20c.8-3.3 3.3-5 7.5-5s6.7 1.7 7.5 5"/>
+        </svg>
+    `,
 
-    character:`
-    <svg viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="1.7"
-         stroke-linecap="round">
-        <circle cx="12" cy="12" r="8.5"/>
-        <circle cx="9" cy="11" r=".7" fill="currentColor"/>
-        <circle cx="15" cy="11" r=".7" fill="currentColor"/>
-        <path d="M9 15c1.8 1.4 4.2 1.4 6 0"/>
-    </svg>`,
+    character: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor"
+             stroke-width="1.7"
+             stroke-linecap="round">
+            <circle cx="12" cy="12" r="8.5"/>
+            <circle cx="9" cy="11" r=".7" fill="currentColor"/>
+            <circle cx="15" cy="11" r=".7" fill="currentColor"/>
+            <path d="M9 15c1.8 1.4 4.2 1.4 6 0"/>
+        </svg>
+    `,
 
-    bell:`
-    <svg viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="1.7"
-         stroke-linecap="round">
-        <path d="M6 9a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9Z"/>
-        <path d="M10 21h4"/>
-    </svg>`,
+    bell: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor"
+             stroke-width="1.7"
+             stroke-linecap="round">
+            <path d="M6 9a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9Z"/>
+            <path d="M10 21h4"/>
+        </svg>
+    `,
 
-    check:`
-    <svg viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="1.7"
-         stroke-linejoin="round">
-        <rect x="4" y="3.5" width="16" height="17" rx="2"/>
-        <path d="m8 12 2.5 2.5L16 9"/>
-    </svg>`,
+    check: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor"
+             stroke-width="1.7"
+             stroke-linejoin="round">
+            <rect x="4" y="3.5" width="16" height="17" rx="2"/>
+            <path d="m8 12 2.5 2.5L16 9"/>
+        </svg>
+    `,
 
-    target:`
-    <svg viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="1.7">
-        <circle cx="12" cy="12" r="8.5"/>
-        <circle cx="12" cy="12" r="4.5"/>
-        <circle cx="12" cy="12" r="1.2" fill="currentColor"/>
-        <path d="m15.5 8.5 4-4M16.5 4.5h3v3"/>
-    </svg>`,
+    target: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor"
+             stroke-width="1.7">
+            <circle cx="12" cy="12" r="8.5"/>
+            <circle cx="12" cy="12" r="4.5"/>
+            <circle cx="12" cy="12" r="1.2" fill="currentColor"/>
+            <path d="m15.5 8.5 4-4M16.5 4.5h3v3"/>
+        </svg>
+    `,
 
-    note:`
-    <svg viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="1.7"
-         stroke-linejoin="round">
-        <path d="M6 3.5h9l3 3V20a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z"/>
-        <path d="M14 3.5V7h4M8 11h8M8 15h8M8 18h5"/>
-    </svg>`,
+    note: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor"
+             stroke-width="1.7"
+             stroke-linejoin="round">
+            <path d="M6 3.5h9l3 3V20a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z"/>
+            <path d="M14 3.5V7h4M8 11h8M8 15h8M8 18h5"/>
+        </svg>
+    `,
 
-    notification:`
-    <svg viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="1.7"
-         stroke-linecap="round">
-        <path d="M6 9a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9Z"/>
-        <path d="M10 21h4"/>
-    </svg>`,
+    notification: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor"
+             stroke-width="1.7"
+             stroke-linecap="round">
+            <path d="M6 9a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9Z"/>
+            <path d="M10 21h4"/>
+        </svg>
+    `,
 
-    palette:`
-    <svg viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="1.7"
-         stroke-linejoin="round">
-        <path d="M12 4a8 8 0 0 0 0 16h1.2a1.8 1.8 0 0 0 1.2-3.1c-.8-.8-.2-2.2 1-2.2h1.1A3.5 3.5 0 0 0 21 11.2C20.6 7.1 17 4 12 4Z"/>
-        <circle cx="7.5" cy="10" r=".8"/>
-        <circle cx="10" cy="7.5" r=".8"/>
-        <circle cx="14" cy="7.5" r=".8"/>
-        <circle cx="17" cy="10" r=".8"/>
-    </svg>`,
+    palette: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor"
+             stroke-width="1.7"
+             stroke-linejoin="round">
+            <path d="M12 4a8 8 0 0 0 0 16h1.2a1.8 1.8 0 0 0 1.2-3.1c-.8-.8-.2-2.2 1-2.2h1.1A3.5 3.5 0 0 0 21 11.2C20.6 7.1 17 4 12 4Z"/>
+            <circle cx="7.5" cy="10" r=".8"/>
+            <circle cx="10" cy="7.5" r=".8"/>
+            <circle cx="14" cy="7.5" r=".8"/>
+            <circle cx="17" cy="10" r=".8"/>
+        </svg>
+    `,
 
-    search:`
-    <svg viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="1.8"
-         stroke-linecap="round">
-        <circle cx="10.8" cy="10.8" r="6.8"/>
-        <path d="m16 16 5 5"/>
-    </svg>`,
+    search: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor"
+             stroke-width="1.8"
+             stroke-linecap="round">
+            <circle cx="10.8" cy="10.8" r="6.8"/>
+            <path d="m16 16 5 5"/>
+        </svg>
+    `,
 
-    edit:`
-    <svg viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="1.7"
-         stroke-linecap="round"
-         stroke-linejoin="round">
-        <path d="m4 16.5-.8 4.3 4.3-.8L19 8.5 15.5 5 4 16.5Z"/>
-        <path d="m13.8 6.7 3.5 3.5"/>
-    </svg>`,
+    edit: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor"
+             stroke-width="1.7"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+            <path d="m4 16.5-.8 4.3 4.3-.8L19 8.5 15.5 5 4 16.5Z"/>
+            <path d="m13.8 6.7 3.5 3.5"/>
+        </svg>
+    `,
 
-    trash:`
-    <svg viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="1.7"
-         stroke-linecap="round">
-        <path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5M14 11v5"/>
-    </svg>`,
+    trash: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor"
+             stroke-width="1.7"
+             stroke-linecap="round">
+            <path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5M14 11v5"/>
+        </svg>
+    `,
 
-    plus:`
-    <svg viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="1.8"
-         stroke-linecap="round">
-        <path d="M12 5v14M5 12h14"/>
-    </svg>`,
+    plus: `
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor"
+             stroke-width="1.8"
+             stroke-linecap="round">
+            <path d="M12 5v14M5 12h14"/>
+        </svg>
+    `
 
-    spark:`
-    <svg viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="1.7"
-         stroke-linejoin="round">
-        <path d="m12 3 1.2 5.8L19 10l-5.8 1.2L12 17l-1.2-5.8L5 10l5.8-1.2L12 3Z"/>
-    </svg>`
 };
 
 
@@ -260,10 +253,10 @@ const ICONS = {
 
 const defaultData = {
 
-    profile:{
-        name:"Laya",
-        dob:"2002-08-28",
-        mbti:"INTJ",
+    profile: {
+        name: "Laya",
+        dob: "2002-08-28",
+        mbti: "INTJ",
 
         hobbies:
             "Singing, Crocheting, Travelling, Poetry, Kuchipudi Dancing",
@@ -292,29 +285,35 @@ const defaultData = {
         bodyType:
             "Rectangular Body",
 
-        familyMembers:"4",
+        familyMembers:
+            "4",
 
-        image:""
+        image:
+            ""
     },
 
-    character:{
-        name:"Character",
+    character: {
+        name: "Character",
 
         personality:
             "Calm, intelligent, firm and caring.",
 
-        sticker:"",
+        sticker:
+            "",
 
-        online:true
+        online:
+            true
     },
 
-    appearance:"forest",
+    appearance:
+        "forest",
 
-    reminders:[],
-    todos:[],
-    goals:[],
-    notes:[],
-    notifications:[]
+    reminders: [],
+    todos: [],
+    goals: [],
+    notes: [],
+    notifications: []
+
 };
 
 
@@ -322,7 +321,7 @@ let data = loadData();
 
 let activeSection = "dashboard";
 
-let timer = null;
+let reminderTimer = null;
 
 let toastTimer = null;
 
@@ -331,242 +330,382 @@ let toastTimer = null;
    HELPERS
    ========================================================= */
 
-const $ = id => document.getElementById(id);
-
-const clone = value =>
-    JSON.parse(JSON.stringify(value));
+const $ = id =>
+    document.getElementById(id);
 
 
-const esc = value =>
-    String(value ?? "").replace(
+function clone(value) {
+    return JSON.parse(
+        JSON.stringify(value)
+    );
+}
+
+
+function esc(value) {
+
+    return String(
+        value ?? ""
+    ).replace(
         /[&<>"']/g,
         char => ({
-            "&":"&amp;",
-            "<":"&lt;",
-            ">":"&gt;",
-            '"':"&quot;",
-            "'":"&#39;"
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
         }[char])
     );
 
-
-const uid = prefix =>
-    `${prefix}_${Date.now()}_${Math.random()
-        .toString(36)
-        .slice(2,8)}`;
+}
 
 
-function merge(base,incoming){
+function uid(prefix) {
 
-    const result = clone(base);
+    return (
+        prefix +
+        "_" +
+        Date.now() +
+        "_" +
+        Math.random()
+            .toString(36)
+            .slice(2,8)
+    );
 
-    if(!incoming || typeof incoming !== "object"){
-        return result;
+}
+
+
+function save() {
+
+    try {
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(data)
+        );
+
+    } catch (error) {
+
+        console.error(
+            "LAYRAAZ storage error:",
+            error
+        );
+
     }
 
-    result.profile = {
-        ...result.profile,
-        ...(incoming.profile || {})
-    };
-
-    result.character = {
-        ...result.character,
-        ...(incoming.character || {})
-    };
-
-    if(incoming.appearance){
-        result.appearance = incoming.appearance;
-    }
-
-    [
-        "reminders",
-        "todos",
-        "goals",
-        "notes",
-        "notifications"
-    ].forEach(key => {
-
-        if(Array.isArray(incoming[key])){
-            result[key] = incoming[key];
-        }
-
-    });
-
-    return result;
 }
 
 
 /* =========================================================
-   LOAD / SAVE
+   LOAD DATA
    ========================================================= */
 
-function loadData(){
+function loadData() {
 
-    let raw = localStorage.getItem(STORAGE_KEY);
+    let raw = null;
 
-    if(!raw){
+    try {
 
-        for(const key of OLD_KEYS){
+        raw =
+            localStorage.getItem(
+                STORAGE_KEY
+            );
 
-            raw = localStorage.getItem(key);
+        if (!raw) {
 
-            if(raw){
-                break;
+            for (
+                const key of OLD_KEYS
+            ) {
+
+                raw =
+                    localStorage.getItem(
+                        key
+                    );
+
+                if (raw) break;
+
             }
 
         }
 
+    } catch (error) {
+
+        raw = null;
+
     }
 
 
-    try{
+    if (!raw) {
 
-        const result = merge(
-            defaultData,
-            raw ? JSON.parse(raw) : null
+        return clone(
+            defaultData
         );
 
+    }
 
-        /* Compatibility with older palette IDs */
 
-        const paletteMap = {
-            palette1:"forest",
-            palette2:"butter",
-            palette3:"almond",
-            palette4:"sage",
-            palette5:"navy",
-            palette6:"champagne",
-            palette7:"gunmetal",
-            palette8:"cadet",
-            palette9:"pink",
-            palette10:"lavender"
+    try {
+
+        const incoming =
+            JSON.parse(raw);
+
+        const result =
+            clone(defaultData);
+
+
+        result.profile = {
+            ...result.profile,
+            ...(incoming.profile || {})
         };
 
 
-        if(paletteMap[result.appearance]){
+        result.character = {
+            ...result.character,
+            ...(incoming.character || {})
+        };
+
+
+        if (
+            incoming.appearance
+        ) {
+
             result.appearance =
-                paletteMap[result.appearance];
+                incoming.appearance;
+
+        }
+
+
+        [
+            "reminders",
+            "todos",
+            "goals",
+            "notes",
+            "notifications"
+        ].forEach(key => {
+
+            if (
+                Array.isArray(
+                    incoming[key]
+                )
+            ) {
+
+                result[key] =
+                    incoming[key];
+
+            }
+
+        });
+
+
+        const oldPaletteMap = {
+
+            palette1: "forest",
+            palette2: "butter",
+            palette3: "almond",
+            palette4: "sage",
+            palette5: "navy",
+            palette6: "champagne",
+            palette7: "gunmetal",
+            palette8: "cadet",
+            palette9: "pink",
+            palette10: "lavender"
+
+        };
+
+
+        if (
+            oldPaletteMap[
+                result.appearance
+            ]
+        ) {
+
+            result.appearance =
+                oldPaletteMap[
+                    result.appearance
+                ];
+
+        }
+
+
+        if (
+            !palettes[
+                result.appearance
+            ]
+        ) {
+
+            result.appearance =
+                "forest";
+
         }
 
 
         return result;
 
-    }catch{
+    } catch (error) {
 
-        return clone(defaultData);
+        console.error(
+            "LAYRAAZ data error:",
+            error
+        );
+
+        return clone(
+            defaultData
+        );
 
     }
-
-}
-
-
-function save(){
-
-    localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(data)
-    );
 
 }
 
 
 /* =========================================================
-   DATE / AGE
+   DATE
    ========================================================= */
 
-function age(dob){
+function calculateAge(dob) {
 
-    if(!dob){
-        return "";
-    }
+    if (!dob) return "";
 
     const birth =
-        new Date(dob + "T00:00:00");
+        new Date(
+            dob + "T00:00:00"
+        );
 
-    const now = new Date();
+    const now =
+        new Date();
 
-    if(isNaN(birth)){
+    if (
+        Number.isNaN(
+            birth.getTime()
+        )
+    ) {
+
         return "";
+
     }
 
-    let value =
+
+    let years =
         now.getFullYear() -
         birth.getFullYear();
 
-    if(
-        now.getMonth() < birth.getMonth() ||
+
+    const birthdayPassed =
+        now.getMonth() >
+        birth.getMonth() ||
         (
-            now.getMonth() === birth.getMonth() &&
-            now.getDate() < birth.getDate()
-        )
-    ){
-        value--;
+            now.getMonth() ===
+            birth.getMonth() &&
+            now.getDate() >=
+            birth.getDate()
+        );
+
+
+    if (!birthdayPassed) {
+        years--;
     }
 
-    return value;
+
+    return years;
+
 }
 
 
-function fmt(value){
+function formatDate(value) {
 
-    const date = new Date(value);
+    const date =
+        new Date(value);
 
-    if(isNaN(date)){
-        return String(value || "");
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return String(
+            value || ""
+        );
+
     }
+
 
     return date.toLocaleString(
         [],
         {
-            month:"short",
-            day:"numeric",
-            hour:"2-digit",
-            minute:"2-digit"
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
         }
     );
 
 }
 
 
-function sameDay(value){
+function sameDay(value) {
 
-    const date = new Date(value);
-    const now = new Date();
+    const date =
+        new Date(value);
+
+    const now =
+        new Date();
+
 
     return (
-        date.getFullYear() === now.getFullYear() &&
-        date.getMonth() === now.getMonth() &&
-        date.getDate() === now.getDate()
+        date.getFullYear() ===
+            now.getFullYear() &&
+
+        date.getMonth() ===
+            now.getMonth() &&
+
+        date.getDate() ===
+            now.getDate()
     );
 
 }
 
 
-function localDate(value=""){
+function localDateTime(value) {
 
-    if(!value){
+    if (!value) return "";
+
+    const date =
+        new Date(value);
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
         return "";
+
     }
 
-    const date = new Date(value);
-
-    if(isNaN(date)){
-        return "";
-    }
 
     const pad =
-        number => String(number).padStart(2,"0");
+        number =>
+            String(number)
+                .padStart(2,"0");
+
 
     return (
         date.getFullYear() +
         "-" +
-        pad(date.getMonth()+1) +
+        pad(
+            date.getMonth() + 1
+        ) +
         "-" +
-        pad(date.getDate()) +
+        pad(
+            date.getDate()
+        ) +
         "T" +
-        pad(date.getHours()) +
+        pad(
+            date.getHours()
+        ) +
         ":" +
-        pad(date.getMinutes())
+        pad(
+            date.getMinutes()
+        )
     );
 
 }
@@ -576,26 +715,33 @@ function localDate(value=""){
    APPEARANCE
    ========================================================= */
 
-function applyPalette(){
+function applyPalette() {
 
     const palette =
-        palettes[data.appearance] ||
+        palettes[
+            data.appearance
+        ] ||
         palettes.forest;
 
 
-    document.documentElement.style
+    document.documentElement
+        .style
         .setProperty(
             "--bg",
             palette.background
         );
 
-    document.documentElement.style
+
+    document.documentElement
+        .style
         .setProperty(
             "--main",
             palette.main
         );
 
-    document.documentElement.style
+
+    document.documentElement
+        .style
         .setProperty(
             "--font",
             palette.font
@@ -603,28 +749,39 @@ function applyPalette(){
 
 
     const hex =
-        palette.background.replace("#","");
+        palette.background
+            .replace("#","");
 
 
     const r =
-        parseInt(hex.slice(0,2),16);
+        parseInt(
+            hex.slice(0,2),
+            16
+        );
 
     const g =
-        parseInt(hex.slice(2,4),16);
+        parseInt(
+            hex.slice(2,4),
+            16
+        );
 
     const b =
-        parseInt(hex.slice(4,6),16);
+        parseInt(
+            hex.slice(4,6),
+            16
+        );
 
 
     const brightness =
         (
-            .2126*r +
-            .7152*g +
-            .0722*b
+            .2126 * r +
+            .7152 * g +
+            .0722 * b
         ) / 255;
 
 
-    document.documentElement.style
+    document.documentElement
+        .style
         .setProperty(
             "--muted",
             brightness < .62
@@ -633,23 +790,18 @@ function applyPalette(){
         );
 
 
-    const notificationCount =
-        $("notificationCount");
+    const meta =
+        document.querySelector(
+            'meta[name="theme-color"]'
+        );
 
-    if(notificationCount){
 
-        notificationCount.style.color =
-            brightness < .62
-                ? palette.background
-                : palette.font;
+    if (meta) {
+
+        meta.content =
+            palette.background;
 
     }
-
-
-    document
-        .querySelector('meta[name="theme-color"]')
-        .content =
-        palette.background;
 
 }
 
@@ -658,7 +810,7 @@ function applyPalette(){
    ICONS
    ========================================================= */
 
-function icons(){
+function renderIcons() {
 
     document
         .querySelectorAll(".nav-icon")
@@ -667,24 +819,25 @@ function icons(){
             const className =
                 [...element.classList]
                     .find(
-                        value =>
-                            value.startsWith("icon-") &&
-                            value !== "icon-button"
+                        name =>
+                            name.startsWith(
+                                "icon-"
+                            )
                     );
 
 
-            if(!className){
-                return;
-            }
+            if (!className) return;
 
 
             const key =
                 className.slice(5);
 
 
-            if(ICONS[key]){
+            if (ICONS[key]) {
+
                 element.innerHTML =
                     ICONS[key];
+
             }
 
         });
@@ -699,16 +852,6 @@ function icons(){
 
         });
 
-
-    document
-        .querySelectorAll(".icon-menu")
-        .forEach(element => {
-
-            element.innerHTML =
-                ICONS.menu;
-
-        });
-
 }
 
 
@@ -716,11 +859,13 @@ function icons(){
    AVATAR
    ========================================================= */
 
-function avatar(element,src){
+function setAvatar(
+    element,
+    src
+) {
 
-    if(!element){
-        return;
-    }
+    if (!element) return;
+
 
     element.style.backgroundImage =
         src
@@ -731,132 +876,23 @@ function avatar(element,src){
 
 
 /* =========================================================
-   NAVIGATION
-   ========================================================= */
-
-function navigate(section){
-
-    activeSection = section;
-
-
-    document
-        .querySelectorAll(".page-section")
-        .forEach(element => {
-
-            element.classList.toggle(
-                "active",
-                element.id === section
-            );
-
-        });
-
-
-    document
-        .querySelectorAll(".nav-item")
-        .forEach(element => {
-
-            element.classList.toggle(
-                "active",
-                element.dataset.section === section
-            );
-
-        });
-
-
-    render(section);
-
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
-
-}
-
-
-function render(section){
-
-    const pages = {
-
-        dashboard:renderDashboard,
-        profile:renderProfile,
-        character:renderCharacter,
-        reminders:renderReminders,
-        todos:renderTodos,
-        goals:renderGoals,
-        notes:renderNotes,
-        notifications:renderNotifications,
-        appearance:renderAppearance
-
-    };
-
-
-    (
-        pages[section] ||
-        renderDashboard
-    )();
-
-
-    updateTop();
-
-}
-
-
-/* =========================================================
-   TOP BAR
-   ========================================================= */
-
-function updateTop(){
-
-    const name =
-        data.profile.name || "Laya";
-
-
-    $("topName").textContent =
-        name;
-
-
-    $("pageTitle").innerHTML =
-        `Welcome back, ${esc(name)}
-        <span style="color:var(--main)">✦</span>`;
-
-
-    $("pageSubtitle").textContent =
-        "Take a deep breath. You've got this. ♡";
-
-
-    const unread =
-        data.notifications
-            .filter(notification => !notification.read)
-            .length;
-
-
-    $("notificationCount").textContent =
-        unread || "";
-
-
-    avatar(
-        $("topAvatar"),
-        data.profile.image
-    );
-
-}
-
-
-/* =========================================================
    UI HELPERS
    ========================================================= */
 
-function head(title,subtitle,button=""){
+function sectionHead(
+    title,
+    subtitle,
+    button = ""
+) {
 
     return `
         <div class="section-head">
 
             <div>
 
-                <h2>${title}</h2>
+                <h2>${esc(title)}</h2>
 
-                <p>${subtitle}</p>
+                <p>${esc(subtitle)}</p>
 
             </div>
 
@@ -868,21 +904,32 @@ function head(title,subtitle,button=""){
 }
 
 
-function btn(text,action,classes="btn"){
+function actionButton(
+    text,
+    action,
+    classes = "btn"
+) {
 
     return `
         <button
             class="${classes}"
-            data-action="${action}"
+            data-action="${esc(action)}"
             type="button">
+
             ${text}
+
         </button>
     `;
 
 }
 
 
-function stat(icon,number,label,sub){
+function statCard(
+    icon,
+    number,
+    label,
+    sub
+) {
 
     return `
         <article class="card stat">
@@ -898,8 +945,8 @@ function stat(icon,number,label,sub){
                 </div>
 
                 <div class="stat-label">
-                    ${label}<br>
-                    ${sub}
+                    ${esc(label)}<br>
+                    ${esc(sub)}
                 </div>
 
             </div>
@@ -911,20 +958,59 @@ function stat(icon,number,label,sub){
 
 
 /* =========================================================
+   TOP BAR
+   ========================================================= */
+
+function updateTop() {
+
+    const name =
+        data.profile.name ||
+        "Laya";
+
+
+    $("topName").textContent =
+        name;
+
+
+    $("pageTitle").innerHTML =
+        `Welcome back, ${esc(name)}
+         <span class="title-sparkle">✦</span>`;
+
+
+    const unread =
+        data.notifications
+            .filter(
+                notification =>
+                    !notification.read
+            )
+            .length;
+
+
+    $("notificationCount")
+        .textContent =
+        unread || "";
+
+
+    setAvatar(
+        $("topAvatar"),
+        data.profile.image
+    );
+
+}
+
+
+/* =========================================================
    DASHBOARD
    ========================================================= */
 
-function renderDashboard(){
-
-    const element =
-        $("dashboard");
-
+function renderDashboard() {
 
     const name =
-        data.profile.name || "Laya";
+        data.profile.name ||
+        "Laya";
 
 
-    const todayReminders =
+    const remindersToday =
         data.reminders.filter(
             reminder =>
                 sameDay(reminder.when) &&
@@ -934,15 +1020,22 @@ function renderDashboard(){
 
     const pendingTodos =
         data.todos.filter(
-            todo => !todo.done
+            todo =>
+                !todo.done
         ).length;
 
 
     const activeGoals =
         data.goals.filter(
             goal =>
-                Number(goal.progress || 0) < 100
+                Number(
+                    goal.progress || 0
+                ) < 100
         ).length;
+
+
+    const notesCount =
+        data.notes.length;
 
 
     const upcoming =
@@ -950,8 +1043,10 @@ function renderDashboard(){
             .filter(
                 reminder =>
                     !reminder.completed &&
-                    new Date(reminder.when).getTime()
-                        >= Date.now() - 86400000
+                    new Date(
+                        reminder.when
+                    ).getTime() >=
+                    Date.now() - 86400000
             )
             .sort(
                 (a,b) =>
@@ -961,9 +1056,12 @@ function renderDashboard(){
             .slice(0,3);
 
 
-    const todayTodos =
+    const todos =
         data.todos
-            .filter(todo => !todo.done)
+            .filter(
+                todo =>
+                    !todo.done
+            )
             .slice(0,5);
 
 
@@ -976,11 +1074,13 @@ function renderDashboard(){
             )[0];
 
 
-    element.innerHTML = `
+    const sticker =
+        data.character.sticker;
+
+
+    $("dashboard").innerHTML = `
 
         <div class="grid dashboard-top">
-
-            <!-- HERO -->
 
             <article class="card hero soft">
 
@@ -991,8 +1091,8 @@ function renderDashboard(){
                     </div>
 
                     <h2>
-                        Small steps every day<br>
-                        lead to big changes.
+                        Small plans.<br>
+                        Big becoming.
                     </h2>
 
                     <p>
@@ -1003,182 +1103,96 @@ function renderDashboard(){
 
                 </div>
 
-                <div class="decor">
-                    ✿ ✦
+                <div class="hero-art">
+
+                    <span class="doodle-star star-one">✦</span>
+                    <span class="doodle-star star-two">✧</span>
+                    <span class="doodle-star star-three">·</span>
+
                 </div>
 
             </article>
 
 
-            <!-- PROFILE -->
-
             <article class="card">
 
                 <div class="card-title">
-                    <h3>Your little profile</h3>
-                </div>
-
-                <div class="profile-head">
-
-                    <span
-                        class="avatar"
-                        id="dashAvatar">
-                    </span>
-
-                    <div>
-
-                        <div class="profile-name">
-                            ${esc(name)} ♡
-                        </div>
-
-                        <div class="meta">
-
-                            ${esc(
-                                data.profile.mbti ||
-                                "MBTI not set"
-                            )}
-
-                            ·
-
-                            ${
-                                age(data.profile.dob)
-                                || "Age not set"
-                            }
-
-                            ${
-                                age(data.profile.dob)
-                                ? " years old"
-                                : ""
-                            }
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="role">
-                    ${esc(
-                        data.profile.occupation ||
-                        "Occupation not set"
-                    )}
-                </div>
-
-
-                ${btn(
-                    "View full profile →",
-                    "profile"
-                )}
-
-            </article>
-
-
-            <!-- TODAY -->
-
-            <article class="card">
-
-                <div class="card-title">
-
                     <h3>Today</h3>
-
-                    <small>
-                        ${
-                            new Date().toLocaleDateString(
-                                [],
-                                {
-                                    month:"short",
-                                    day:"numeric",
-                                    year:"numeric"
-                                }
-                            )
-                        }
-                    </small>
-
                 </div>
-
 
                 <div class="quote">
-
-                    “Discipline today,<br>
-                    freedom tomorrow.” ♡
-
+                    One step at a time.
                 </div>
-
-
-                <p class="meta">
-
-                    You've got
-                    ${todayReminders}
-                    reminder
-                    ${todayReminders === 1 ? "" : "s"}
-                    today.
-
-                </p>
-
-
-                ${btn(
-                    "View reminders →",
-                    "reminders"
-                )}
 
             </article>
 
 
-            <!-- CHARACTER -->
-
-            <article class="card character">
+            <article class="card character-card">
 
                 <div class="card-title">
-
-                    <h3>
-                        ${esc(
-                            data.character.name ||
-                            "Character"
-                        )}
-                    </h3>
-
-                    <small>✦</small>
-
+                    <h3>${esc(
+                        data.character.name ||
+                        "Character"
+                    )}</h3>
                 </div>
-
 
                 <div class="sticker-stage">
 
                     ${
-                        data.character.sticker
-
+                        sticker
                         ? `
                             <img
                                 class="sticker"
-                                src="${data.character.sticker}"
-                                alt="Character sticker">
-                          `
-
+                                src="${sticker}"
+                                alt="${esc(
+                                    data.character.name ||
+                                    "Character"
+                                )}">
+                        `
                         : `
                             <div class="placeholder">
-                                Upload a character image<br>
-                                to make your sticker.
+                                Your little companion
+                                will live here.
                             </div>
-                          `
+                        `
                     }
 
                 </div>
 
-
-                <span class="pill">
+                <div class="pill">
                     ${
                         data.character.online
                             ? "Online"
-                            : "Quiet mode"
+                            : "Offline"
                     }
-                </span>
-
+                </div>
 
                 <div class="mood">
                     ${esc(
-                        data.character.personality
+                        data.character.personality ||
+                        "Calm, intelligent, firm and caring."
                     )}
+                </div>
+
+            </article>
+
+
+            <article class="card">
+
+                <div class="card-title">
+                    <h3>Little note</h3>
+                </div>
+
+                <div class="note-paper">
+
+                    ${
+                        latestNote
+                            ? esc(
+                                latestNote.content
+                            )
+                            : "Write something worth remembering."
+                    }
+
                 </div>
 
             </article>
@@ -1186,104 +1200,92 @@ function renderDashboard(){
         </div>
 
 
-        <!-- STATS -->
-
         <div class="grid stats">
 
-            ${stat(
+            ${statCard(
                 "bell",
-                todayReminders,
+                remindersToday,
                 "Reminders",
-                "Due Today"
+                "today"
             )}
 
-            ${stat(
+            ${statCard(
                 "check",
                 pendingTodos,
-                "To-do's",
-                "Pending"
+                "To-dos",
+                "pending"
             )}
 
-            ${stat(
+            ${statCard(
                 "target",
                 activeGoals,
                 "Goals",
-                "In Progress"
+                "active"
             )}
 
-            ${stat(
+            ${statCard(
                 "note",
-                data.notes.length,
+                notesCount,
                 "Notes",
-                "Saved"
+                "saved"
             )}
 
-            ${stat(
-                "spark",
-                data.notifications.length,
-                "Notifications",
-                "Logged"
+            ${statCard(
+                "character",
+                calculateAge(
+                    data.profile.dob
+                ),
+                "Age",
+                "years"
             )}
 
         </div>
 
 
-        <!-- LOWER AREA -->
-
         <div class="grid lower">
-
-
-            <!-- REMINDERS -->
 
             <article class="card">
 
                 <div class="card-title">
 
                     <h3>
-                        Upcoming Reminders
+                        Upcoming reminders
                     </h3>
 
-                    ${btn(
+                    ${actionButton(
                         "View all",
                         "reminders"
                     )}
 
                 </div>
 
-
                 ${
                     upcoming.length
+                    ? upcoming
+                        .map(
+                            reminder => `
+                                <div class="mini">
 
-                    ? upcoming.map(
-                        reminder => `
+                                    <div>
 
-                            <div class="mini">
+                                        <strong>
+                                            ${esc(
+                                                reminder.title
+                                            )}
+                                        </strong>
 
-                                <div>
+                                        <small>
+                                            ${formatDate(
+                                                reminder.when
+                                            )}
+                                        </small>
 
-                                    <strong>
-                                        ${esc(
-                                            reminder.title
-                                        )}
-                                    </strong>
-
-                                    <small>
-                                        ${fmt(
-                                            reminder.when
-                                        )}
-                                        ·
-                                        ${esc(
-                                            reminder.category
-                                        )}
-                                    </small>
+                                    </div>
 
                                 </div>
-
-                            </div>
-
-                        `
-                    ).join("")
-
+                            `
+                        )
+                        .join("")
                     : `
                         <div class="empty">
                             Nothing pressing.
@@ -1292,122 +1294,116 @@ function renderDashboard(){
                     `
                 }
 
+                <div style="margin-top:12px">
 
-                ${btn(
-                    `${ICONS.plus} Add Reminder`,
-                    "add-reminder"
-                )}
+                    ${actionButton(
+                        `${ICONS.plus} Add Reminder`,
+                        "add-reminder"
+                    )}
+
+                </div>
 
             </article>
 
-
-            <!-- TODOS -->
 
             <article class="card">
 
                 <div class="card-title">
 
                     <h3>
-                        Today's To-dos
+                        Today's to-dos
                     </h3>
 
-                    ${btn(
+                    ${actionButton(
                         "View all",
                         "todos"
                     )}
 
                 </div>
 
-
                 ${
-                    todayTodos.length
+                    todos.length
+                    ? todos
+                        .map(
+                            todo => `
+                                <label class="check-row">
 
-                    ? todayTodos.map(
-                        todo => `
+                                    <input
+                                        type="checkbox"
+                                        data-toggle-todo="${esc(
+                                            todo.id
+                                        )}">
 
-                            <label class="check-row">
+                                    <span>
+                                        ${esc(
+                                            todo.title
+                                        )}
+                                    </span>
 
-                                <input
-                                    type="checkbox"
-                                    data-toggle-todo="${todo.id}">
-
-                                <span>
-                                    ${esc(todo.title)}
-                                </span>
-
-                            </label>
-
-                        `
-                    ).join("")
-
+                                </label>
+                            `
+                        )
+                        .join("")
                     : `
                         <div class="empty">
-                            A clean list. Nice.
+                            A clean list.
+                            Nice.
                         </div>
                     `
                 }
 
+                <div style="margin-top:12px">
 
-                ${btn(
-                    `${ICONS.plus} Add To-do`,
-                    "add-todo"
-                )}
+                    ${actionButton(
+                        `${ICONS.plus} Add To-do`,
+                        "add-todo"
+                    )}
+
+                </div>
 
             </article>
 
-
-            <!-- NOTE -->
 
             <article class="card">
 
                 <div class="card-title">
 
                     <h3>
-                        Today's Note
+                        Your space
                     </h3>
 
-                    ${btn(
-                        "View all",
-                        "notes"
+                </div>
+
+                <div class="affirmation">
+                    You don't need to do everything today.
+                </div>
+
+                <div
+                    class="actions"
+                    style="margin-top:14px">
+
+                    ${actionButton(
+                        "Profile",
+                        "profile"
                     )}
 
-                </div>
+                    ${actionButton(
+                        "Character",
+                        "character"
+                    )}
 
-
-                <div class="note-paper">
-
-                    ${
-                        latestNote
-
-                        ? esc(latestNote.content)
-
-                        : "Write something worth remembering."
-                    }
-
-                </div>
-
-
-                <div style="margin-top:12px">
-
-                    ${btn(
-                        `${ICONS.plus} New Note`,
-                        "add-note"
+                    ${actionButton(
+                        "Appearance",
+                        "appearance"
                     )}
 
                 </div>
 
             </article>
 
-
         </div>
 
     `;
-
-
-    avatar(
-        $("dashAvatar"),
-        data.profile.image
-    );
 
 }
 
@@ -1418,42 +1414,50 @@ function renderDashboard(){
 
 const profileFields = [
 
-    ["name","Name","text"],
-    ["dob","Date of Birth","date"],
-    ["mbti","MBTI","text"],
-    ["hobbies","Hobbies","text"],
-    ["occupation","Occupation","text"],
-    ["goal","Main Goal","text"],
-    ["favoriteColors","Favourite Colours","text"],
-    ["favoriteFood","Favourite Food","text"],
-    ["favoritePlaces","Favourite Places","text"],
-    ["favoriteMusic","Favourite Music Genres","text"],
-    ["skinType","Skin Type","text"],
-    ["bodyType","Body Type","text"],
-    ["familyMembers","Family Members","number"]
+    ["name", "Name", "text"],
+
+    ["dob", "Date of Birth", "date"],
+
+    ["mbti", "MBTI", "text"],
+
+    ["hobbies", "Hobbies", "text"],
+
+    ["occupation", "Occupation", "text"],
+
+    ["goal", "Main Goal", "text"],
+
+    ["favoriteColors", "Favourite Colours", "text"],
+
+    ["favoriteFood", "Favourite Food", "text"],
+
+    ["favoritePlaces", "Favourite Places", "text"],
+
+    ["favoriteMusic", "Favourite Music Genres", "text"],
+
+    ["skinType", "Skin Type", "text"],
+
+    ["bodyType", "Body Type", "text"],
+
+    ["familyMembers", "Family Members", "number"]
 
 ];
 
 
-function renderProfile(){
+function renderProfile() {
 
     const profile =
         data.profile;
 
 
-    $("profile").innerHTML =
+    $("profile").innerHTML = `
 
-        head(
+        ${sectionHead(
             "Profile",
-            "Your details are saved on this device."
-        )
+            "Your little corner. Everything here is editable."
+        )}
 
-        +
-
-        `
 
         <div class="profile-grid">
-
 
             <article class="card">
 
@@ -1466,7 +1470,6 @@ function renderProfile(){
                     id="profileForm"
                     class="form-grid">
 
-
                     ${
                         profileFields
                             .map(
@@ -1475,14 +1478,15 @@ function renderProfile(){
                                     <div class="field">
 
                                         <label>
-                                            ${label}
+                                            ${esc(label)}
                                         </label>
 
                                         <input
-                                            name="${key}"
-                                            type="${type}"
+                                            name="${esc(key)}"
+                                            type="${esc(type)}"
                                             value="${esc(
-                                                profile[key] || ""
+                                                profile[key] ||
+                                                ""
                                             )}">
 
                                     </div>
@@ -1501,7 +1505,11 @@ function renderProfile(){
                             from your date of birth:
 
                             <b>
-                                ${age(profile.dob) || "not set"}
+                                ${
+                                    calculateAge(
+                                        profile.dob
+                                    ) || "not set"
+                                }
                             </b>
 
                         </span>
@@ -1524,7 +1532,6 @@ function renderProfile(){
                         </div>
 
                     </div>
-
 
                 </form>
 
@@ -1550,12 +1557,9 @@ function renderProfile(){
                         ">
                     </div>
 
-
                     <p class="field-note">
-                        This picture is used only
-                        as your profile avatar.
+                        Used only as your profile avatar.
                     </p>
-
 
                     <input
                         id="profileImage"
@@ -1564,15 +1568,22 @@ function renderProfile(){
 
                 </div>
 
-            </article>
 
+                <div class="affirmation">
+                    ${esc(
+                        profile.name ||
+                        "You"
+                    )}, this space is yours.
+                </div>
+
+            </article>
 
         </div>
 
-        `;
+    `;
 
 
-    avatar(
+    setAvatar(
         $("profilePreview"),
         profile.image
     );
@@ -1584,34 +1595,32 @@ function renderProfile(){
    CHARACTER
    ========================================================= */
 
-function renderCharacter(){
+function renderCharacter() {
 
     const character =
         data.character;
 
 
     const notificationsSupported =
-        typeof Notification !== "undefined";
+        typeof Notification !==
+        "undefined";
 
 
-    const notificationsGranted =
-        notificationsSupported &&
-        Notification.permission === "granted";
+    const permission =
+        notificationsSupported
+            ? Notification.permission
+            : "unsupported";
 
 
-    $("character").innerHTML =
+    $("character").innerHTML = `
 
-        head(
+        ${sectionHead(
             "Character",
-            "Your companion is stored locally. The original rectangle is never displayed."
-        )
+            "Give your companion a name, personality and sticker."
+        )}
 
-        +
-
-        `
 
         <div class="character-settings">
-
 
             <article class="card">
 
@@ -1623,7 +1632,6 @@ function renderCharacter(){
                 <form
                     id="characterForm"
                     class="form-grid">
-
 
                     <div class="field">
 
@@ -1654,7 +1662,7 @@ function renderCharacter(){
                                 character.personality ||
                                 ""
                             )}"
-                            maxlength="120">
+                            maxlength="160">
 
                     </div>
 
@@ -1677,10 +1685,12 @@ function renderCharacter(){
 
                         <span class="field-note">
 
-                            Upload the character image.
-                            LAYRAAZ will remove the connected
-                            background, crop it and create
-                            a transparent sticker.
+                            LAYRAAZ will turn the uploaded
+                            picture into a transparent
+                            sticker automatically.
+
+                            The original rectangular image
+                            will not be displayed.
 
                         </span>
 
@@ -1699,16 +1709,14 @@ function renderCharacter(){
 
                             </button>
 
-
-                            ${btn(
-                                "Test notification",
+                            ${actionButton(
+                                "Test Notification",
                                 "test-notification"
                             )}
 
                         </div>
 
                     </div>
-
 
                 </form>
 
@@ -1726,62 +1734,69 @@ function renderCharacter(){
 
                     ${
                         character.sticker
-
                         ? `
                             <img
                                 src="${character.sticker}"
-                                alt="Character sticker">
-                          `
-
+                                alt="${esc(
+                                    character.name ||
+                                    "Character"
+                                )}">
+                        `
                         : `
                             <div class="placeholder">
-                                Your sticker will appear here.
+                                Upload a picture
+                                and your sticker
+                                will appear here.
                             </div>
-                          `
+                        `
                     }
 
                 </div>
 
             </article>
 
-
         </div>
 
 
-        <div
+        <article
             class="card"
             style="margin-top:15px">
 
-
-            <strong>
-                Browser notifications
-            </strong>
-
+            <div class="card-title">
+                <h3>Browser notifications</h3>
+            </div>
 
             <p class="field-note">
 
-                Allow LAYRAAZ to send reminders
-                through your browser. You can switch
-                to another website while LAYRAAZ
-                stays open in a background tab.
+                Browser notifications are different
+                from the LAYRAAZ notification page.
+
+                Once permission is granted, a reminder
+                can appear as a system/browser notification
+                even when you are viewing another website.
 
             </p>
 
+            <p class="field-note">
 
-            ${
-                btn(
-                    notificationsGranted
-                        ? "Notifications enabled"
-                        : "Allow browser notifications",
+                Current permission:
+                <b>${esc(permission)}</b>
+
+            </p>
+
+            <div class="actions">
+
+                ${actionButton(
+                    "Allow Browser Notifications",
                     "request-notifications",
                     "btn primary"
-                )
-            }
+                )}
 
+            </div>
 
-        </div>
+        </article>
 
-        `;
+    `;
 
 }
 
@@ -1790,7 +1805,7 @@ function renderCharacter(){
    REMINDERS
    ========================================================= */
 
-function renderReminders(){
+function renderReminders() {
 
     const sorted =
         [...data.reminders]
@@ -1801,89 +1816,86 @@ function renderReminders(){
             );
 
 
-    $("reminders").innerHTML =
+    $("reminders").innerHTML = `
 
-        head(
+        ${sectionHead(
             "Reminders",
-            "Due reminders can appear as browser/system notifications.",
-            btn(
+            "Little nudges for things you don't want to forget.",
+            actionButton(
                 `${ICONS.plus} Add Reminder`,
                 "add-reminder"
             )
-        )
+        )}
 
-        +
-
-        `
 
         <div class="list-page">
-
 
             ${
                 sorted.length
 
-                ? sorted.map(
-                    reminder => `
+                ? sorted
+                    .map(
+                        reminder => `
 
-                        <article class="card item-card">
+                            <article class="card item-card">
 
-                            <div class="main">
+                                <div class="main">
 
-                                <h3>
-                                    ${esc(
-                                        reminder.title
-                                    )}
-                                </h3>
+                                    <h3>
+                                        ${esc(
+                                            reminder.title
+                                        )}
+                                    </h3>
 
-                                <p>
+                                    <p>
+                                        ${formatDate(
+                                            reminder.when
+                                        )}
 
-                                    ${fmt(
-                                        reminder.when
-                                    )}
+                                        ·
 
-                                    ·
+                                        ${esc(
+                                            reminder.category ||
+                                            "Personal"
+                                        )}
 
-                                    ${esc(
-                                        reminder.category
-                                    )}
+                                        ${
+                                            reminder.completed
+                                                ? " · completed"
+                                                : ""
+                                        }
+                                    </p>
 
-                                    ${
+                                </div>
+
+
+                                <div class="item-actions">
+
+                                    ${actionButton(
                                         reminder.completed
-                                            ? " · completed"
-                                            : ""
-                                    }
+                                            ? "Undo"
+                                            : "Done",
+                                        `complete-reminder:${reminder.id}`
+                                    )}
 
-                                </p>
+                                    ${actionButton(
+                                        ICONS.edit,
+                                        `edit-reminder:${reminder.id}`
+                                    )}
 
-                            </div>
+                                    ${actionButton(
+                                        ICONS.trash,
+                                        `delete-reminder:${reminder.id}`,
+                                        "btn danger"
+                                    )}
 
+                                </div>
 
-                            <div class="item-actions">
+                            </article>
 
-                                ${btn(
-                                    reminder.completed
-                                        ? "Undo"
-                                        : "Done",
-                                    `complete-reminder:${reminder.id}`
-                                )}
-
-                                ${btn(
-                                    ICONS.edit,
-                                    `edit-reminder:${reminder.id}`
-                                )}
-
-                                ${btn(
-                                    ICONS.trash,
-                                    `delete-reminder:${reminder.id}`,
-                                    "btn danger"
-                                )}
-
-                            </div>
-
-                        </article>
-
-                    `
-                ).join("")
+                        `
+                    )
+                    .join("")
 
                 : `
 
@@ -1891,116 +1903,115 @@ function renderReminders(){
                         No reminders yet.
                     </article>
 
-                  `
+                `
             }
-
 
         </div>
 
-        `;
+    `;
 
 }
 
 
 /* =========================================================
-   TO-DOS
+   TODOS
    ========================================================= */
 
-function renderTodos(){
+function renderTodos() {
 
-    $("todos").innerHTML =
+    $("todos").innerHTML = `
 
-        head(
+        ${sectionHead(
             "To-do List",
-            "Four simple categories: Work, Personal, Finance and Learning.",
-            btn(
+            "Work, Personal, Finance and Learning.",
+            actionButton(
                 `${ICONS.plus} Add To-do`,
                 "add-todo"
             )
-        )
+        )}
 
-        +
-
-        `
 
         <div class="list-page">
-
 
             ${
                 data.todos.length
 
-                ? data.todos.map(
-                    todo => `
+                ? data.todos
+                    .map(
+                        todo => `
 
-                        <article class="card item-card">
+                            <article class="card item-card">
 
-                            <div class="main">
+                                <div class="main">
 
-                                <label
-                                    class="check-row"
-                                    style="border:0;padding:0">
+                                    <label
+                                        class="check-row"
+                                        style="
+                                            border:0;
+                                            padding:0;
+                                        ">
 
-                                    <input
-                                        type="checkbox"
-                                        data-toggle-todo="${todo.id}"
-                                        ${
-                                            todo.done
-                                                ? "checked"
-                                                : ""
-                                        }>
+                                        <input
+                                            type="checkbox"
+                                            data-toggle-todo="${esc(
+                                                todo.id
+                                            )}"
+                                            ${
+                                                todo.done
+                                                    ? "checked"
+                                                    : ""
+                                            }>
 
-                                    <span
-                                        class="${
+                                        <span class="${
                                             todo.done
                                                 ? "done"
                                                 : ""
                                         }">
 
+                                            ${esc(
+                                                todo.title
+                                            )}
+
+                                        </span>
+
+                                    </label>
+
+                                    <p>
                                         ${esc(
-                                            todo.title
+                                            todo.category ||
+                                            "Personal"
                                         )}
 
-                                    </span>
+                                        ${
+                                            todo.due
+                                                ? ` · Due ${esc(todo.due)}`
+                                                : ""
+                                        }
+                                    </p>
 
-                                </label>
+                                </div>
 
 
-                                <p>
+                                <div class="item-actions">
 
-                                    ${esc(
-                                        todo.category
+                                    ${actionButton(
+                                        ICONS.edit,
+                                        `edit-todo:${todo.id}`
                                     )}
 
-                                    ${
-                                        todo.due
-                                            ? ` · Due ${esc(todo.due)}`
-                                            : ""
-                                    }
+                                    ${actionButton(
+                                        ICONS.trash,
+                                        `delete-todo:${todo.id}`,
+                                        "btn danger"
+                                    )}
 
-                                </p>
+                                </div>
 
-                            </div>
+                            </article>
 
-
-                            <div class="item-actions">
-
-                                ${btn(
-                                    ICONS.edit,
-                                    `edit-todo:${todo.id}`
-                                )}
-
-                                ${btn(
-                                    ICONS.trash,
-                                    `delete-todo:${todo.id}`,
-                                    "btn danger"
-                                )}
-
-                            </div>
-
-                        </article>
-
-                    `
-                ).join("")
+                        `
+                    )
+                    .join("")
 
                 : `
 
@@ -2008,13 +2019,12 @@ function renderTodos(){
                         Your list is empty.
                     </article>
 
-                  `
+                `
             }
-
 
         </div>
 
-        `;
+    `;
 
 }
 
@@ -2023,106 +2033,103 @@ function renderTodos(){
    GOALS
    ========================================================= */
 
-function renderGoals(){
+function renderGoals() {
 
-    $("goals").innerHTML =
+    $("goals").innerHTML = `
 
-        head(
+        ${sectionHead(
             "Goals",
             "Track progress without turning your life into a spreadsheet.",
-            btn(
+            actionButton(
                 `${ICONS.plus} Add Goal`,
                 "add-goal"
             )
-        )
+        )}
 
-        +
-
-        `
 
         <div class="list-page">
-
 
             ${
                 data.goals.length
 
-                ? data.goals.map(
-                    goal => {
+                ? data.goals
+                    .map(
+                        goal => {
 
-                        const progress =
-                            Math.max(
-                                0,
-                                Math.min(
-                                    100,
-                                    Number(
-                                        goal.progress || 0
+                            const progress =
+                                Math.max(
+                                    0,
+                                    Math.min(
+                                        100,
+                                        Number(
+                                            goal.progress ||
+                                            0
+                                        )
                                     )
-                                )
-                            );
+                                );
 
 
-                        return `
+                            return `
 
-                            <article
-                                class="card item-card">
+                                <article
+                                    class="card item-card">
 
-                                <div
-                                    class="main"
-                                    style="width:100%">
+                                    <div
+                                        class="main"
+                                        style="width:100%">
 
-                                    <h3>
-                                        ${esc(
-                                            goal.title
-                                        )}
-                                    </h3>
+                                        <h3>
+                                            ${esc(
+                                                goal.title
+                                            )}
+                                        </h3>
 
-                                    <p>
+                                        <p>
+                                            ${esc(
+                                                goal.category ||
+                                                "Personal"
+                                            )}
 
-                                        ${esc(
-                                            goal.category
-                                        )}
+                                            ·
 
-                                        ·
+                                            ${progress}%
+                                        </p>
 
-                                        ${progress}%
+                                        <div class="progress">
 
-                                    </p>
+                                            <span
+                                                style="
+                                                    width:${progress}%;
+                                                ">
+                                            </span>
 
-
-                                    <div class="progress">
-
-                                        <span
-                                            style="
-                                                width:${progress}%;
-                                            ">
-                                        </span>
+                                        </div>
 
                                     </div>
 
-                                </div>
 
+                                    <div class="item-actions">
 
-                                <div class="item-actions">
+                                        ${actionButton(
+                                            ICONS.edit,
+                                            `edit-goal:${goal.id}`
+                                        )}
 
-                                    ${btn(
-                                        ICONS.edit,
-                                        `edit-goal:${goal.id}`
-                                    )}
+                                        ${actionButton(
+                                            ICONS.trash,
+                                            ICONS.trash,
+                                            "btn danger"
+                                        )}
 
-                                    ${btn(
-                                        ICONS.trash,
-                                        `delete-goal:${goal.id}`,
-                                        "btn danger"
-                                    )}
+                                    </div>
 
-                                </div>
+                                </article>
 
-                            </article>
+                            `;
 
-                        `;
-
-                    }
-                ).join("")
+                        }
+                    )
+                    .join("")
 
                 : `
 
@@ -2130,13 +2137,12 @@ function renderGoals(){
                         No goals yet.
                     </article>
 
-                  `
+                `
             }
-
 
         </div>
 
-        `;
+    `;
 
 }
 
@@ -2145,7 +2151,7 @@ function renderGoals(){
    NOTES
    ========================================================= */
 
-function renderNotes(){
+function renderNotes() {
 
     const notes =
         [...data.notes]
@@ -2156,83 +2162,79 @@ function renderNotes(){
             );
 
 
-    $("notes").innerHTML =
+    $("notes").innerHTML = `
 
-        head(
+        ${sectionHead(
             "Notes",
             "Little thoughts, ideas and things worth keeping.",
-            btn(
+            actionButton(
                 `${ICONS.plus} New Note`,
                 "add-note"
             )
-        )
+        )}
 
-        +
-
-        `
 
         <div class="list-page">
-
 
             ${
                 notes.length
 
-                ? notes.map(
-                    note => `
+                ? notes
+                    .map(
+                        note => `
 
-                        <article
-                            class="card item-card">
+                            <article class="card item-card">
 
-                            <div class="main">
+                                <div class="main">
 
-                                <h3>
-                                    ${esc(
-                                        note.title
+                                    <h3>
+                                        ${esc(
+                                            note.title
+                                        )}
+                                    </h3>
+
+                                    <p>
+                                        ${formatDate(
+                                            note.createdAt
+                                        )}
+                                    </p>
+
+                                    <div
+                                        class="note-paper"
+                                        style="
+                                            margin-top:10px;
+                                            min-height:90px;
+                                        ">
+
+                                        ${esc(
+                                            note.content
+                                        )}
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="item-actions">
+
+                                    ${actionButton(
+                                        ICONS.edit,
+                                        `edit-note:${note.id}`
                                     )}
-                                </h3>
 
-                                <p>
-                                    ${fmt(
-                                        note.createdAt
-                                    )}
-                                </p>
-
-
-                                <div
-                                    class="note-paper"
-                                    style="
-                                        margin-top:10px;
-                                        min-height:90px;
-                                    ">
-
-                                    ${esc(
-                                        note.content
+                                    ${actionButton(
+                                        ICONS.trash,
+                                        `delete-note:${note.id}`,
+                                        "btn danger"
                                     )}
 
                                 </div>
 
-                            </div>
+                            </article>
 
-
-                            <div class="item-actions">
-
-                                ${btn(
-                                    ICONS.edit,
-                                    `edit-note:${note.id}`
-                                )}
-
-                                ${btn(
-                                    ICONS.trash,
-                                    `delete-note:${note.id}`,
-                                    "btn danger"
-                                )}
-
-                            </div>
-
-                        </article>
-
-                    `
-                ).join("")
+                        `
+                    )
+                    .join("")
 
                 : `
 
@@ -2240,49 +2242,44 @@ function renderNotes(){
                         No notes yet.
                     </article>
 
-                  `
+                `
             }
-
 
         </div>
 
-        `;
+    `;
 
 }
 
 
 /* =========================================================
-   NOTIFICATIONS PAGE
+   NOTIFICATIONS
    ========================================================= */
 
-function renderNotifications(){
+function renderNotifications() {
 
-    $("notifications").innerHTML =
+    $("notifications").innerHTML = `
 
-        head(
+        ${sectionHead(
             "Notifications",
-            "Browser notifications are external; this page keeps their history."
-        )
+            "Your notification history stays here."
+        )}
 
-        +
-
-        `
 
         <div class="card">
-
 
             <div
                 class="actions"
                 style="margin-bottom:12px">
 
-                ${btn(
-                    "Allow browser notifications",
+                ${actionButton(
+                    "Allow Browser Notifications",
                     "request-notifications",
                     "btn primary"
                 )}
 
-                ${btn(
-                    "Mark all read",
+                ${actionButton(
+                    "Mark All Read",
                     "read-all"
                 )}
 
@@ -2320,7 +2317,7 @@ function renderNotifications(){
 
                                         ·
 
-                                        ${fmt(
+                                        ${formatDate(
                                             notification.createdAt
                                         )}
 
@@ -2331,11 +2328,11 @@ function renderNotifications(){
 
                                 ${
                                     notification.read
-                                        ? ""
-                                        : btn(
-                                            "Read",
-                                            `read:${notification.id}`
-                                        )
+                                    ? ""
+                                    : actionButton(
+                                        "Read",
+                                        `read:${notification.id}`
+                                    )
                                 }
 
                             </div>
@@ -2350,187 +2347,1362 @@ function renderNotifications(){
                         No notifications yet.
                     </div>
 
-                  `
+                `
             }
-
 
         </div>
 
-        `;
+    `;
 
 }
 
 
 /* =========================================================
-   APPEARANCE PAGE
+   APPEARANCE
    ========================================================= */
 
-function renderAppearance(){
+function renderAppearance() {
 
-    $("appearance").innerHTML =
+    $("appearance").innerHTML = `
 
-        head(
+        ${sectionHead(
             "Appearance",
-            "Choose one of the ten fixed LAYRAAZ palettes."
-        )
+            "Ten fixed palettes. Pick the one that feels right."
+        )}
 
-        +
-
-        `
 
         <div class="palette-grid">
 
             ${
-                Object.entries(palettes)
-                    .map(
-                        ([key,palette]) => `
+                Object.entries(
+                    palettes
+                )
+                .map(
+                    ([key,palette]) => `
 
-                            <button
-                                class="palette ${
-                                    data.appearance === key
-                                        ? "selected"
-                                        : ""
-                                }"
-                                data-palette="${key}"
-                                type="button">
+                        <button
+                            class="palette ${
+                                data.appearance === key
+                                    ? "selected"
+                                    : ""
+                            }"
+                            data-palette="${esc(key)}"
+                            type="button">
 
+                            <div class="swatches">
 
-                                <div class="swatches">
+                                <i style="
+                                    background:${palette.background};
+                                "></i>
 
-                                    <i
-                                        style="
-                                            background:${palette.background};
-                                        ">
-                                    </i>
+                                <i style="
+                                    background:${palette.main};
+                                "></i>
 
-                                    <i
-                                        style="
-                                            background:${palette.main};
-                                        ">
-                                    </i>
+                                <i style="
+                                    background:${palette.font};
+                                "></i>
 
-                                    <i
-                                        style="
-                                            background:${palette.font};
-                                        ">
-                                    </i>
+                            </div>
 
-                                </div>
+                            <strong>
+                                ${esc(
+                                    palette.name
+                                )}
+                            </strong>
 
+                            <div class="meta">
+                                Background · Main · Font
+                            </div>
 
-                                <strong>
-                                    ${palette.name}
-                                </strong>
+                        </button>
 
-
-                                <div class="meta">
-                                    Background · Main · Font
-                                </div>
-
-
-                            </button>
-
-                        `
-                    )
-                    .join("")
+                    `
+                )
+                .join("")
             }
 
         </div>
 
-        `;
-
-}
-
-
-/* =========================================================
-   FORM HELPERS
-   ========================================================= */
-
-function field(
-    name,
-    label,
-    value,
-    type="text",
-    required=false
-){
-
-    return `
-
-        <div class="field">
-
-            <label>
-                ${label}
-            </label>
-
-            <input
-                name="${name}"
-                type="${type}"
-                value="${esc(value)}"
-                ${required ? "required" : ""}>
-
-        </div>
-
     `;
 
 }
 
 
-function category(value="Personal"){
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
 
-    return `
+function navigate(section) {
 
-        <div class="field">
+    if (
+        !document.getElementById(
+            section
+        )
+    ) {
 
-            <label>
-                Category
-            </label>
+        return;
 
-            <select name="category">
+    }
 
-                ${
-                    [
-                        "Work",
-                        "Personal",
-                        "Finance",
-                        "Learning"
-                    ]
-                    .map(
-                        item => `
 
-                            <option
-                                ${
-                                    item === value
-                                        ? "selected"
-                                        : ""
-                                }>
+    activeSection =
+        section;
 
-                                ${item}
 
-                            </option>
+    document
+        .querySelectorAll(
+            ".page-section"
+        )
+        .forEach(
+            element => {
 
-                        `
-                    )
-                    .join("")
+                element.classList.toggle(
+                    "active",
+                    element.id ===
+                    section
+                );
+
+            }
+        );
+
+
+    document
+        .querySelectorAll(
+            ".nav-item"
+        )
+        .forEach(
+            element => {
+
+                element.classList.toggle(
+                    "active",
+                    element.dataset.section ===
+                    section
+                );
+
+            }
+        );
+
+
+    renderPage(
+        section
+    );
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+function renderPage(section) {
+
+    switch (section) {
+
+        case "profile":
+            renderProfile();
+            break;
+
+        case "dashboard":
+            renderDashboard();
+            break;
+
+        case "character":
+            renderCharacter();
+            break;
+
+        case "reminders":
+            renderReminders();
+            break;
+
+        case "todos":
+            renderTodos();
+            break;
+
+        case "goals":
+            renderGoals();
+            break;
+
+        case "notes":
+            renderNotes();
+            break;
+
+        case "notifications":
+            renderNotifications();
+            break;
+
+        case "appearance":
+            renderAppearance();
+            break;
+
+        default:
+            renderDashboard();
+
+    }
+
+
+    updateTop();
+
+}
+
+
+/* =========================================================
+   FILE READER
+   ========================================================= */
+
+function readFile(file) {
+
+    return new Promise(
+        (resolve,reject) => {
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                () =>
+                    resolve(
+                        reader.result
+                    );
+
+
+            reader.onerror =
+                reject;
+
+
+            reader.readAsDataURL(
+                file
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   STICKER PROCESSOR
+   ========================================================= */
+
+function makeSticker(
+    dataURL
+) {
+
+    return new Promise(
+        (resolve,reject) => {
+
+            const image =
+                new Image();
+
+
+            image.onload =
+                () => {
+
+                    try {
+
+                        const scale =
+                            Math.min(
+                                800 / image.width,
+                                800 / image.height,
+                                1
+                            );
+
+
+                        const width =
+                            Math.max(
+                                1,
+                                Math.round(
+                                    image.width *
+                                    scale
+                                )
+                            );
+
+
+                        const height =
+                            Math.max(
+                                1,
+                                Math.round(
+                                    image.height *
+                                    scale
+                                )
+                            );
+
+
+                        const canvas =
+                            document.createElement(
+                                "canvas"
+                            );
+
+
+                        canvas.width =
+                            width;
+
+                        canvas.height =
+                            height;
+
+
+                        const ctx =
+                            canvas.getContext(
+                                "2d",
+                                {
+                                    willReadFrequently:
+                                        true
+                                }
+                            );
+
+
+                        if (!ctx) {
+
+                            reject(
+                                new Error(
+                                    "Canvas unavailable"
+                                )
+                            );
+
+                            return;
+
+                        }
+
+
+                        ctx.drawImage(
+                            image,
+                            0,
+                            0,
+                            width,
+                            height
+                        );
+
+
+                        const imageData =
+                            ctx.getImageData(
+                                0,
+                                0,
+                                width,
+                                height
+                            );
+
+
+                        const pixels =
+                            imageData.data;
+
+
+                        const visited =
+                            new Uint8Array(
+                                width * height
+                            );
+
+
+                        const queue = [];
+
+
+                        const pos =
+                            (x,y) =>
+                                y * width + x;
+
+
+                        function rgb(
+                            x,
+                            y
+                        ) {
+
+                            const i =
+                                pos(x,y) * 4;
+
+                            return [
+                                pixels[i],
+                                pixels[i + 1],
+                                pixels[i + 2]
+                            ];
+
+                        }
+
+
+                        const corners = [
+
+                            [0,0],
+
+                            [width - 1,0],
+
+                            [0,height - 1],
+
+                            [width - 1,height - 1]
+
+                        ];
+
+
+                        const backgrounds =
+                            corners.map(
+                                ([x,y]) =>
+                                    rgb(x,y)
+                            );
+
+
+                        function similar(
+                            r,
+                            g,
+                            b
+                        ) {
+
+                            return backgrounds.some(
+                                color => {
+
+                                    const difference =
+                                        Math.abs(
+                                            r - color[0]
+                                        ) +
+                                        Math.abs(
+                                            g - color[1]
+                                        ) +
+                                        Math.abs(
+                                            b - color[2]
+                                        );
+
+
+                                    return (
+                                        difference <
+                                        115
+                                    );
+
+                                }
+                            );
+
+                        }
+
+
+                        corners.forEach(
+                            ([x,y]) => {
+
+                                const p =
+                                    pos(x,y);
+
+                                visited[p] =
+                                    1;
+
+                                queue.push(
+                                    p
+                                );
+
+                            }
+                        );
+
+
+                        let pointer = 0;
+
+
+                        while (
+                            pointer <
+                            queue.length
+                        ) {
+
+                            const current =
+                                queue[
+                                    pointer++
+                                ];
+
+
+                            const x =
+                                current %
+                                width;
+
+
+                            const y =
+                                Math.floor(
+                                    current /
+                                    width
+                                );
+
+
+                            const i =
+                                current * 4;
+
+
+                            const isBackground =
+                                similar(
+                                    pixels[i],
+                                    pixels[i + 1],
+                                    pixels[i + 2]
+                                );
+
+
+                            if (
+                                !isBackground
+                            ) {
+
+                                continue;
+
+                            }
+
+
+                            pixels[i + 3] =
+                                0;
+
+
+                            const neighbours = [
+
+                                [x + 1,y],
+
+                                [x - 1,y],
+
+                                [x,y + 1],
+
+                                [x,y - 1]
+
+                            ];
+
+
+                            neighbours.forEach(
+                                ([nx,ny]) => {
+
+                                    if (
+                                        nx < 0 ||
+                                        ny < 0 ||
+                                        nx >= width ||
+                                        ny >= height
+                                    ) {
+
+                                        return;
+
+                                    }
+
+
+                                    const next =
+                                        pos(
+                                            nx,
+                                            ny
+                                        );
+
+
+                                    if (
+                                        visited[next]
+                                    ) {
+
+                                        return;
+
+                                    }
+
+
+                                    visited[next] =
+                                        1;
+
+
+                                    const ni =
+                                        next * 4;
+
+
+                                    if (
+                                        similar(
+                                            pixels[ni],
+                                            pixels[ni + 1],
+                                            pixels[ni + 2]
+                                        )
+                                    ) {
+
+                                        queue.push(
+                                            next
+                                        );
+
+                                    }
+
+                                }
+                            );
+
+                        }
+
+
+                        ctx.putImageData(
+                            imageData,
+                            0,
+                            0
+                        );
+
+
+                        /*
+                            Find remaining character bounds.
+                        */
+
+                        let minX = width;
+                        let minY = height;
+                        let maxX = -1;
+                        let maxY = -1;
+
+
+                        for (
+                            let y = 0;
+                            y < height;
+                            y++
+                        ) {
+
+                            for (
+                                let x = 0;
+                                x < width;
+                                x++
+                            ) {
+
+                                const i =
+                                    pos(x,y) * 4;
+
+
+                                if (
+                                    pixels[i + 3] >
+                                    30
+                                ) {
+
+                                    minX =
+                                        Math.min(
+                                            minX,
+                                            x
+                                        );
+
+                                    minY =
+                                        Math.min(
+                                            minY,
+                                            y
+                                        );
+
+                                    maxX =
+                                        Math.max(
+                                            maxX,
+                                            x
+                                        );
+
+                                    maxY =
+                                        Math.max(
+                                            maxY,
+                                            y
+                                        );
+
+                                }
+
+                            }
+
+                        }
+
+
+                        if (
+                            maxX < 0 ||
+                            maxY < 0
+                        ) {
+
+                            reject(
+                                new Error(
+                                    "No character detected"
+                                )
+                            );
+
+                            return;
+
+                        }
+
+
+                        const padding = 14;
+
+
+                        minX =
+                            Math.max(
+                                0,
+                                minX - padding
+                            );
+
+                        minY =
+                            Math.max(
+                                0,
+                                minY - padding
+                            );
+
+                        maxX =
+                            Math.min(
+                                width - 1,
+                                maxX + padding
+                            );
+
+                        maxY =
+                            Math.min(
+                                height - 1,
+                                maxY + padding
+                            );
+
+
+                        const cropWidth =
+                            maxX - minX + 1;
+
+                        const cropHeight =
+                            maxY - minY + 1;
+
+
+                        const output =
+                            document.createElement(
+                                "canvas"
+                            );
+
+
+                        output.width =
+                            cropWidth;
+
+                        output.height =
+                            cropHeight;
+
+
+                        const outputCtx =
+                            output.getContext(
+                                "2d"
+                            );
+
+
+                        outputCtx.drawImage(
+                            canvas,
+                            minX,
+                            minY,
+                            cropWidth,
+                            cropHeight,
+                            0,
+                            0,
+                            cropWidth,
+                            cropHeight
+                        );
+
+
+                        /*
+                            Add a subtle white sticker edge.
+                        */
+
+                        const finalCanvas =
+                            document.createElement(
+                                "canvas"
+                            );
+
+
+                        const edge = 7;
+
+
+                        finalCanvas.width =
+                            cropWidth +
+                            edge * 2;
+
+                        finalCanvas.height =
+                            cropHeight +
+                            edge * 2;
+
+
+                        const finalCtx =
+                            finalCanvas.getContext(
+                                "2d"
+                            );
+
+
+                        finalCtx.drawImage(
+                            output,
+                            edge,
+                            edge
+                        );
+
+
+                        const finalImage =
+                            finalCtx.getImageData(
+                                0,
+                                0,
+                                finalCanvas.width,
+                                finalCanvas.height
+                            );
+
+
+                        const source =
+                            finalImage.data;
+
+
+                        /*
+                            Soft white halo around
+                            visible pixels.
+                        */
+
+                        const copy =
+                            new Uint8ClampedArray(
+                                source
+                            );
+
+
+                        for (
+                            let y = edge;
+                            y <
+                            finalCanvas.height - edge;
+                            y++
+                        ) {
+
+                            for (
+                                let x = edge;
+                                x <
+                                finalCanvas.width - edge;
+                                x++
+                            ) {
+
+                                const i =
+                                    (
+                                        y *
+                                        finalCanvas.width +
+                                        x
+                                    ) * 4;
+
+
+                                if (
+                                    copy[i + 3] <
+                                    30
+                                ) {
+
+                                    continue;
+
+                                }
+
+
+                                const neighbours = [
+
+                                    [x + 3,y],
+
+                                    [x - 3,y],
+
+                                    [x,y + 3],
+
+                                    [x,y - 3]
+
+                                ];
+
+
+                                neighbours.forEach(
+                                    ([nx,ny]) => {
+
+                                        if (
+                                            nx < 0 ||
+                                            ny < 0 ||
+                                            nx >= finalCanvas.width ||
+                                            ny >= finalCanvas.height
+                                        ) {
+
+                                            return;
+
+                                        }
+
+
+                                        const ni =
+                                            (
+                                                ny *
+                                                finalCanvas.width +
+                                                nx
+                                            ) * 4;
+
+
+                                        if (
+                                            source[ni + 3] <
+                                            30
+                                        ) {
+
+                                            source[ni] =
+                                                255;
+
+                                            source[ni + 1] =
+                                                255;
+
+                                            source[ni + 2] =
+                                                255;
+
+                                            source[ni + 3] =
+                                                210;
+
+                                        }
+
+                                    }
+                                );
+
+                            }
+
+                        }
+
+
+                        finalCtx.putImageData(
+                            finalImage,
+                            0,
+                            0
+                        );
+
+
+                        resolve(
+                            finalCanvas.toDataURL(
+                                "image/png"
+                            )
+                        );
+
+
+                    } catch (error) {
+
+                        reject(error);
+
+                    }
+
+                };
+
+
+            image.onerror =
+                () =>
+                    reject(
+                        new Error(
+                            "Image could not be loaded"
+                        )
+                    );
+
+
+            image.src =
+                dataURL;
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   BROWSER NOTIFICATIONS
+   ========================================================= */
+
+async function requestNotifications() {
+
+    if (
+        typeof Notification ===
+        "undefined"
+    ) {
+
+        toast(
+            "This browser does not support notifications."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const permission =
+            await Notification
+                .requestPermission();
+
+
+        if (
+            permission ===
+            "granted"
+        ) {
+
+            toast(
+                "Browser notifications enabled."
+            );
+
+        } else {
+
+            toast(
+                "Notification permission was not granted."
+            );
+
+        }
+
+
+        renderCharacter();
+
+    } catch (error) {
+
+        toast(
+            "Could not request notification permission."
+        );
+
+    }
+
+}
+
+
+function sendBrowserNotification(
+    reminder
+) {
+
+    if (
+        typeof Notification ===
+        "undefined"
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        Notification.permission !==
+        "granted"
+    ) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const notification =
+            new Notification(
+                reminder.title,
+                {
+                    body:
+                        "Your LAYRAAZ reminder is due.",
+
+                    /*
+                        The transparent sticker is used
+                        as the notification icon.
+                    */
+                    icon:
+                        data.character.sticker ||
+                        undefined,
+
+                    tag:
+                        "layraaz-" +
+                        reminder.id,
+
+                    renotify:
+                        true
                 }
+            );
 
-            </select>
 
-        </div>
+        notification.onclick =
+            () => {
 
-    `;
+                window.focus();
+
+            };
+
+    } catch (error) {
+
+        console.error(
+            "Notification error:",
+            error
+        );
+
+    }
 
 }
 
 
 /* =========================================================
-   MODAL
+   IN-APP COMPANION
    ========================================================= */
 
-function modal(
+function showCompanion(
+    reminder
+) {
+
+    const box =
+        $("companionReminder");
+
+    const image =
+        $("companionSticker");
+
+
+    if (
+        !box ||
+        !data.character.sticker
+    ) {
+
+        return;
+
+    }
+
+
+    image.src =
+        data.character.sticker;
+
+
+    image.alt =
+        data.character.name ||
+        "Character";
+
+
+    $("companionTitle")
+        .textContent =
+        data.character.name ||
+        "Character";
+
+
+    $("companionMessage")
+        .textContent =
+        reminder.title +
+        " is due now.";
+
+
+    box.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+function hideCompanion() {
+
+    const box =
+        $("companionReminder");
+
+
+    if (box) {
+
+        box.classList.add(
+            "hidden"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   NOTIFICATION HISTORY
+   ========================================================= */
+
+function addNotification(
+    title,
+    body
+) {
+
+    data.notifications.push({
+
+        id:
+            uid("notification"),
+
+        title,
+
+        body,
+
+        createdAt:
+            new Date()
+                .toISOString(),
+
+        read:
+            false
+
+    });
+
+
+    if (
+        data.notifications.length >
+        100
+    ) {
+
+        data.notifications =
+            data.notifications
+                .slice(-100);
+
+    }
+
+
+    save();
+
+}
+
+
+/* =========================================================
+   REMINDER ENGINE
+   ========================================================= */
+
+function fireReminder(
+    reminder
+) {
+
+    sendBrowserNotification(
+        reminder
+    );
+
+
+    addNotification(
+        "Reminder due",
+        `${reminder.title} is due now.`
+    );
+
+
+    showCompanion(
+        reminder
+    );
+
+
+    reminder.lastNotifiedAt =
+        new Date()
+            .toISOString();
+
+}
+
+
+function checkReminders() {
+
+    const now =
+        Date.now();
+
+
+    let changed =
+        false;
+
+
+    for (
+        const reminder of
+        data.reminders
+    ) {
+
+        const due =
+            new Date(
+                reminder.when
+            ).getTime();
+
+
+        if (
+            reminder.completed ||
+            !Number.isFinite(due) ||
+            due > now
+        ) {
+
+            continue;
+
+        }
+
+
+        const last =
+            reminder.lastNotifiedAt
+                ? new Date(
+                    reminder.lastNotifiedAt
+                ).getTime()
+                : 0;
+
+
+        /*
+            Do not repeat the same reminder
+            for 12 hours.
+        */
+
+        if (
+            now - last <
+            12 * 60 * 60 * 1000
+        ) {
+
+            continue;
+
+        }
+
+
+        fireReminder(
+            reminder
+        );
+
+
+        changed =
+            true;
+
+    }
+
+
+    if (changed) {
+
+        save();
+
+        renderDashboard();
+
+        if (
+            activeSection ===
+            "reminders"
+        ) {
+
+            renderReminders();
+
+        }
+
+        updateTop();
+
+    }
+
+}
+
+
+function startReminderEngine() {
+
+    if (
+        reminderTimer
+    ) {
+
+        clearInterval(
+            reminderTimer
+        );
+
+    }
+
+
+    /*
+        10 second check while
+        the page is active.
+    */
+
+    reminderTimer =
+        setInterval(
+            checkReminders,
+            10000
+        );
+
+
+    checkReminders();
+
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+function toast(
+    message
+) {
+
+    const element =
+        $("toast");
+
+
+    if (!element) return;
+
+
+    element.textContent =
+        message;
+
+
+    element.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            () => {
+
+                element.classList.remove(
+                    "show"
+                );
+
+            },
+            2300
+        );
+
+}
+
+
+/* =========================================================
+   MODALS
+   ========================================================= */
+
+function openModal(
     title,
     html,
     submit
-){
+) {
 
     $("modalRoot").innerHTML = `
 
@@ -2543,7 +3715,7 @@ function modal(
                 <div class="modal-head">
 
                     <h2>
-                        ${title}
+                        ${esc(title)}
                     </h2>
 
                     <button
@@ -2557,7 +3729,6 @@ function modal(
 
                 </div>
 
-
                 ${html}
 
             </div>
@@ -2568,10 +3739,13 @@ function modal(
 
 
     const form =
-        $("modalRoot").querySelector("form");
+        $("modalRoot")
+            .querySelector(
+                "form"
+            );
 
 
-    if(form){
+    if (form) {
 
         form.addEventListener(
             "submit",
@@ -2591,9 +3765,97 @@ function modal(
 }
 
 
-function closeModal(){
+function closeModal() {
 
-    $("modalRoot").innerHTML = "";
+    $("modalRoot").innerHTML =
+        "";
+
+}
+
+
+/* =========================================================
+   FORM HELPERS
+   ========================================================= */
+
+function field(
+    name,
+    label,
+    value,
+    type = "text",
+    required = false
+) {
+
+    return `
+
+        <div class="field">
+
+            <label>
+                ${esc(label)}
+            </label>
+
+            <input
+                name="${esc(name)}"
+                type="${esc(type)}"
+                value="${esc(value)}"
+                ${required ? "required" : ""}>
+
+        </div>
+
+    `;
+
+}
+
+
+function categoryField(
+    value = "Personal"
+) {
+
+    const options = [
+        "Work",
+        "Personal",
+        "Finance",
+        "Learning"
+    ];
+
+
+    return `
+
+        <div class="field">
+
+            <label>
+                Category
+            </label>
+
+            <select name="category">
+
+                ${
+                    options
+                        .map(
+                            item => `
+
+                                <option
+                                    value="${item}"
+                                    ${
+                                        item ===
+                                        value
+                                            ? "selected"
+                                            : ""
+                                    }>
+
+                                    ${item}
+
+                                </option>
+
+                            `
+                        )
+                        .join("")
+                }
+
+            </select>
+
+        </div>
+
+    `;
 
 }
 
@@ -2602,33 +3864,43 @@ function closeModal(){
    ADD / EDIT
    ========================================================= */
 
-function openAdd(type,id=null){
+function openAdd(
+    type,
+    id = null
+) {
 
     const collectionName =
-        `${type}s`;
+        type + "s";
 
 
     const collection =
-        data[collectionName] || [];
+        data[
+            collectionName
+        ] || [];
 
 
     const existing =
         id
             ? collection.find(
-                item => item.id === id
+                item =>
+                    item.id === id
             )
             : null;
 
 
-    /* REMINDER */
+    /* -------------------------
+       REMINDER
+       ------------------------- */
 
-    if(type === "reminder"){
+    if (
+        type === "reminder"
+    ) {
 
         const reminder =
             existing || {};
 
 
-        modal(
+        openModal(
 
             existing
                 ? "Edit Reminder"
@@ -2641,11 +3913,11 @@ function openAdd(type,id=null){
                     ${field(
                         "title",
                         "Reminder",
-                        reminder.title || "",
+                        reminder.title ||
+                        "",
                         "text",
                         true
                     )}
-
 
                     <div class="field">
 
@@ -2656,18 +3928,17 @@ function openAdd(type,id=null){
                         <input
                             name="when"
                             type="datetime-local"
-                            value="${localDate(
+                            value="${localDateTime(
                                 reminder.when
                             )}"
                             required>
 
                     </div>
 
-
-                    ${category(
-                        reminder.category
+                    ${categoryField(
+                        reminder.category ||
+                        "Personal"
                     )}
-
 
                     <div class="field full">
 
@@ -2693,17 +3964,24 @@ function openAdd(type,id=null){
 
                 const title =
                     String(
-                        formData.get("title") || ""
+                        formData.get(
+                            "title"
+                        ) || ""
                     ).trim();
 
 
                 const when =
                     String(
-                        formData.get("when") || ""
+                        formData.get(
+                            "when"
+                        ) || ""
                     );
 
 
-                if(!title || !when){
+                if (
+                    !title ||
+                    !when
+                ) {
 
                     toast(
                         "Please enter a reminder and time."
@@ -2719,16 +3997,22 @@ function openAdd(type,id=null){
                     title,
 
                     when:
-                        new Date(when)
-                            .toISOString(),
+                        new Date(
+                            when
+                        ).toISOString(),
 
                     category:
                         String(
-                            formData.get("category") ||
+                            formData.get(
+                                "category"
+                            ) ||
                             "Personal"
                         ),
 
-                    completed:false,
+                    completed:
+                        existing
+                            ? existing.completed
+                            : false,
 
                     lastNotifiedAt:
                         existing
@@ -2738,18 +4022,21 @@ function openAdd(type,id=null){
                 };
 
 
-                if(existing){
+                if (existing) {
 
                     Object.assign(
                         existing,
                         object
                     );
 
-                }else{
+                } else {
 
                     data.reminders.push({
 
-                        id:uid("reminder"),
+                        id:
+                            uid(
+                                "reminder"
+                            ),
 
                         ...object
 
@@ -2766,8 +4053,6 @@ function openAdd(type,id=null){
 
                 renderDashboard();
 
-                scheduleNext();
-
                 toast(
                     "Reminder saved."
                 );
@@ -2776,18 +4061,24 @@ function openAdd(type,id=null){
 
         );
 
+        return;
+
     }
 
 
-    /* TODO */
+    /* -------------------------
+       TODO
+       ------------------------- */
 
-    if(type === "todo"){
+    if (
+        type === "todo"
+    ) {
 
         const todo =
             existing || {};
 
 
-        modal(
+        openModal(
 
             existing
                 ? "Edit To-do"
@@ -2800,22 +4091,24 @@ function openAdd(type,id=null){
                     ${field(
                         "title",
                         "Task",
-                        todo.title || "",
+                        todo.title ||
+                        "",
                         "text",
                         true
                     )}
 
-                    ${category(
-                        todo.category
+                    ${categoryField(
+                        todo.category ||
+                        "Personal"
                     )}
 
                     ${field(
                         "due",
                         "Due date",
-                        todo.due || "",
+                        todo.due ||
+                        "",
                         "date"
                     )}
-
 
                     <div class="field full">
 
@@ -2841,11 +4134,13 @@ function openAdd(type,id=null){
 
                 const title =
                     String(
-                        formData.get("title") || ""
+                        formData.get(
+                            "title"
+                        ) || ""
                     ).trim();
 
 
-                if(!title){
+                if (!title) {
 
                     toast(
                         "Please enter a task."
@@ -2862,14 +4157,17 @@ function openAdd(type,id=null){
 
                     category:
                         String(
-                            formData.get("category") ||
+                            formData.get(
+                                "category"
+                            ) ||
                             "Personal"
                         ),
 
                     due:
                         String(
-                            formData.get("due") ||
-                            ""
+                            formData.get(
+                                "due"
+                            ) || ""
                         ),
 
                     done:
@@ -2880,18 +4178,19 @@ function openAdd(type,id=null){
                 };
 
 
-                if(existing){
+                if (existing) {
 
                     Object.assign(
                         existing,
                         object
                     );
 
-                }else{
+                } else {
 
                     data.todos.push({
 
-                        id:uid("todo"),
+                        id:
+                            uid("todo"),
 
                         ...object
 
@@ -2916,18 +4215,24 @@ function openAdd(type,id=null){
 
         );
 
+        return;
+
     }
 
 
-    /* GOAL */
+    /* -------------------------
+       GOAL
+       ------------------------- */
 
-    if(type === "goal"){
+    if (
+        type === "goal"
+    ) {
 
         const goal =
             existing || {};
 
 
-        modal(
+        openModal(
 
             existing
                 ? "Edit Goal"
@@ -2940,35 +4245,24 @@ function openAdd(type,id=null){
                     ${field(
                         "title",
                         "Goal",
-                        goal.title || "",
+                        goal.title ||
+                        "",
                         "text",
                         true
                     )}
 
-                    ${category(
-                        goal.category
+                    ${categoryField(
+                        goal.category ||
+                        "Personal"
                     )}
 
-
-                    <div class="field">
-
-                        <label>
-                            Progress %
-                        </label>
-
-                        <input
-                            name="progress"
-                            type="number"
-                            min="0"
-                            max="100"
-                            value="${
-                                Number(
-                                    goal.progress || 0
-                                )
-                            }">
-
-                    </div>
-
+                    ${field(
+                        "progress",
+                        "Progress %",
+                        goal.progress ||
+                        "0",
+                        "number"
+                    )}
 
                     <div class="field full">
 
@@ -2994,11 +4288,13 @@ function openAdd(type,id=null){
 
                 const title =
                     String(
-                        formData.get("title") || ""
+                        formData.get(
+                            "title"
+                        ) || ""
                     ).trim();
 
 
-                if(!title){
+                if (!title) {
 
                     toast(
                         "Please enter a goal."
@@ -3015,7 +4311,9 @@ function openAdd(type,id=null){
 
                     category:
                         String(
-                            formData.get("category") ||
+                            formData.get(
+                                "category"
+                            ) ||
                             "Personal"
                         ),
 
@@ -3035,18 +4333,19 @@ function openAdd(type,id=null){
                 };
 
 
-                if(existing){
+                if (existing) {
 
                     Object.assign(
                         existing,
                         object
                     );
 
-                }else{
+                } else {
 
                     data.goals.push({
 
-                        id:uid("goal"),
+                        id:
+                            uid("goal"),
 
                         ...object
 
@@ -3071,18 +4370,24 @@ function openAdd(type,id=null){
 
         );
 
+        return;
+
     }
 
 
-    /* NOTE */
+    /* -------------------------
+       NOTE
+       ------------------------- */
 
-    if(type === "note"){
+    if (
+        type === "note"
+    ) {
 
         const note =
             existing || {};
 
 
-        modal(
+        openModal(
 
             existing
                 ? "Edit Note"
@@ -3095,11 +4400,11 @@ function openAdd(type,id=null){
                     ${field(
                         "title",
                         "Title",
-                        note.title || "Note",
+                        note.title ||
+                        "Note",
                         "text",
                         true
                     )}
-
 
                     <div class="field full">
 
@@ -3110,11 +4415,11 @@ function openAdd(type,id=null){
                         <textarea
                             name="content"
                             required>${esc(
-                                note.content || ""
+                                note.content ||
+                                ""
                             )}</textarea>
 
                     </div>
-
 
                     <div class="field full">
 
@@ -3140,11 +4445,13 @@ function openAdd(type,id=null){
 
                 const content =
                     String(
-                        formData.get("content") || ""
+                        formData.get(
+                            "content"
+                        ) || ""
                     ).trim();
 
 
-                if(!content){
+                if (!content) {
 
                     toast(
                         "Please write something first."
@@ -3159,32 +4466,37 @@ function openAdd(type,id=null){
 
                     title:
                         String(
-                            formData.get("title") ||
+                            formData.get(
+                                "title"
+                            ) ||
                             "Note"
-                        ).trim() || "Note",
+                        ).trim() ||
+                        "Note",
 
                     content,
 
                     createdAt:
                         existing
                             ? existing.createdAt
-                            : new Date().toISOString()
+                            : new Date()
+                                .toISOString()
 
                 };
 
 
-                if(existing){
+                if (existing) {
 
                     Object.assign(
                         existing,
                         object
                     );
 
-                }else{
+                } else {
 
                     data.notes.push({
 
-                        id:uid("note"),
+                        id:
+                            uid("note"),
 
                         ...object
 
@@ -3215,971 +4527,32 @@ function openAdd(type,id=null){
 
 
 /* =========================================================
-   CHARACTER STICKER PROCESSOR
-   ========================================================= */
-
-/*
-    This works completely inside the browser.
-
-    It:
-    1. Reads the uploaded image.
-    2. Samples the four corners.
-    3. Removes connected pixels similar to those
-       background colours.
-    4. Finds the remaining character.
-    5. Crops the transparent space.
-    6. Adds a small white sticker edge.
-    7. Saves the result as a PNG data URL.
-
-    The original rectangular image is therefore
-    never displayed as the character.
-*/
-
-function makeSticker(dataURL){
-
-    return new Promise(
-        (resolve,reject) => {
-
-            const image =
-                new Image();
-
-
-            image.onload = () => {
-
-                const scale =
-                    Math.min(
-                        700 / image.width,
-                        700 / image.height,
-                        1
-                    );
-
-
-                const width =
-                    Math.max(
-                        1,
-                        Math.round(
-                            image.width * scale
-                        )
-                    );
-
-
-                const height =
-                    Math.max(
-                        1,
-                        Math.round(
-                            image.height * scale
-                        )
-                    );
-
-
-                const canvas =
-                    document.createElement(
-                        "canvas"
-                    );
-
-
-                const context =
-                    canvas.getContext(
-                        "2d",
-                        {
-                            willReadFrequently:true
-                        }
-                    );
-
-
-                canvas.width = width;
-                canvas.height = height;
-
-
-                context.drawImage(
-                    image,
-                    0,
-                    0,
-                    width,
-                    height
-                );
-
-
-                const imageData =
-                    context.getImageData(
-                        0,
-                        0,
-                        width,
-                        height
-                    );
-
-
-                const pixels =
-                    imageData.data;
-
-
-                const visited =
-                    new Uint8Array(
-                        width * height
-                    );
-
-
-                const queue = [];
-
-
-                const index =
-                    (x,y) =>
-                        (y * width + x) * 4;
-
-
-                const getRGB =
-                    (x,y) => {
-
-                        const i =
-                            index(x,y);
-
-                        return [
-                            pixels[i],
-                            pixels[i+1],
-                            pixels[i+2]
-                        ];
-
-                    };
-
-
-                const corners = [
-
-                    [0,0],
-
-                    [width - 1,0],
-
-                    [0,height - 1],
-
-                    [width - 1,height - 1]
-
-                ];
-
-
-                const backgroundColours =
-                    corners.map(
-                        ([x,y]) =>
-                            getRGB(x,y)
-                    );
-
-
-                corners.forEach(
-                    ([x,y]) => {
-
-                        const position =
-                            y * width + x;
-
-                        visited[position] = 1;
-
-                        queue.push(position);
-
-                    }
-                );
-
-
-                const tolerance = 55;
-
-
-                function similarToBackground(
-                    r,
-                    g,
-                    b
-                ){
-
-                    return backgroundColours.some(
-                        colour => {
-
-                            const difference =
-                                Math.abs(
-                                    r - colour[0]
-                                )
-                                +
-                                Math.abs(
-                                    g - colour[1]
-                                )
-                                +
-                                Math.abs(
-                                    b - colour[2]
-                                );
-
-                            return (
-                                difference <
-                                tolerance * 3
-                            );
-
-                        }
-                    );
-
-                }
-
-
-                let pointer = 0;
-
-
-                while(
-                    pointer < queue.length
-                ){
-
-                    const position =
-                        queue[pointer++];
-
-
-                    const x =
-                        position % width;
-
-
-                    const y =
-                        Math.floor(
-                            position / width
-                        );
-
-
-                    const pixelIndex =
-                        position * 4;
-
-
-                    const r =
-                        pixels[pixelIndex];
-
-                    const g =
-                        pixels[pixelIndex + 1];
-
-                    const b =
-                        pixels[pixelIndex + 2];
-
-
-                    if(
-                        !similarToBackground(
-                            r,
-                            g,
-                            b
-                        )
-                    ){
-
-                        continue;
-
-                    }
-
-
-                    pixels[pixelIndex] = 0;
-                    pixels[pixelIndex + 1] = 0;
-                    pixels[pixelIndex + 2] = 0;
-                    pixels[pixelIndex + 3] = 0;
-
-
-                    const neighbours = [
-
-                        [x + 1,y],
-                        [x - 1,y],
-                        [x,y + 1],
-                        [x,y - 1]
-
-                    ];
-
-
-                    neighbours.forEach(
-                        ([nx,ny]) => {
-
-                            if(
-                                nx < 0 ||
-                                nx >= width ||
-                                ny < 0 ||
-                                ny >= height
-                            ){
-
-                                return;
-
-                            }
-
-
-                            const next =
-                                ny * width + nx;
-
-
-                            if(!visited[next]){
-
-                                visited[next] = 1;
-
-                                queue.push(next);
-
-                            }
-
-                        }
-                    );
-
-                }
-
-
-                context.putImageData(
-                    imageData,
-                    0,
-                    0
-                );
-
-
-                const finalData =
-                    context.getImageData(
-                        0,
-                        0,
-                        width,
-                        height
-                    ).data;
-
-
-                let minX = width;
-                let minY = height;
-                let maxX = -1;
-                let maxY = -1;
-
-
-                for(
-                    let y = 0;
-                    y < height;
-                    y++
-                ){
-
-                    for(
-                        let x = 0;
-                        x < width;
-                        x++
-                    ){
-
-                        const alpha =
-                            finalData[
-                                (y * width + x) * 4 + 3
-                            ];
-
-
-                        if(alpha > 12){
-
-                            minX =
-                                Math.min(
-                                    minX,
-                                    x
-                                );
-
-                            minY =
-                                Math.min(
-                                    minY,
-                                    y
-                                );
-
-                            maxX =
-                                Math.max(
-                                    maxX,
-                                    x
-                                );
-
-                            maxY =
-                                Math.max(
-                                    maxY,
-                                    y
-                                );
-
-                        }
-
-                    }
-
-                }
-
-
-                if(maxX < 0){
-
-                    reject(
-                        new Error(
-                            "Character could not be detected."
-                        )
-                    );
-
-                    return;
-
-                }
-
-
-                const padding = 18;
-
-
-                minX =
-                    Math.max(
-                        0,
-                        minX - padding
-                    );
-
-                minY =
-                    Math.max(
-                        0,
-                        minY - padding
-                    );
-
-                maxX =
-                    Math.min(
-                        width - 1,
-                        maxX + padding
-                    );
-
-                maxY =
-                    Math.min(
-                        height - 1,
-                        maxY + padding
-                    );
-
-
-                const stickerWidth =
-                    maxX - minX + 1;
-
-
-                const stickerHeight =
-                    maxY - minY + 1;
-
-
-                const output =
-                    document.createElement(
-                        "canvas"
-                    );
-
-
-                const outputContext =
-                    output.getContext("2d");
-
-
-                output.width =
-                    stickerWidth;
-
-                output.height =
-                    stickerHeight;
-
-
-                outputContext.drawImage(
-                    canvas,
-                    minX,
-                    minY,
-                    stickerWidth,
-                    stickerHeight,
-                    0,
-                    0,
-                    stickerWidth,
-                    stickerHeight
-                );
-
-
-                /*
-                    Add a soft white sticker edge.
-                */
-
-                const stickerPixels =
-                    outputContext.getImageData(
-                        0,
-                        0,
-                        stickerWidth,
-                        stickerHeight
-                    );
-
-
-                const dataPixels =
-                    stickerPixels.data;
-
-
-                for(
-                    let y = 1;
-                    y < stickerHeight - 1;
-                    y++
-                ){
-
-                    for(
-                        let x = 1;
-                        x < stickerWidth - 1;
-                        x++
-                    ){
-
-                        const pixel =
-                            (y * stickerWidth + x) * 4;
-
-
-                        if(
-                            dataPixels[pixel + 3] > 20
-                        ){
-
-                            const neighbours = [
-
-                                [x + 1,y],
-                                [x - 1,y],
-                                [x,y + 1],
-                                [x,y - 1]
-
-                            ];
-
-
-                            const nearTransparent =
-                                neighbours.some(
-                                    ([nx,ny]) => {
-
-                                        const n =
-                                            (
-                                                ny *
-                                                stickerWidth +
-                                                nx
-                                            ) * 4;
-
-                                        return (
-                                            dataPixels[
-                                                n + 3
-                                            ] === 0
-                                        );
-
-                                    }
-                                );
-
-
-                            if(nearTransparent){
-
-                                outputContext.fillStyle =
-                                    "rgba(255,255,255,.9)";
-
-                                outputContext.beginPath();
-
-                                outputContext.arc(
-                                    x,
-                                    y,
-                                    1.8,
-                                    0,
-                                    Math.PI * 2
-                                );
-
-                                outputContext.fill();
-
-                            }
-
-                        }
-
-                    }
-
-                }
-
-
-                resolve(
-                    output.toDataURL(
-                        "image/png"
-                    )
-                );
-
-            };
-
-
-            image.onerror =
-                reject;
-
-
-            image.src =
-                dataURL;
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   FILE READER
-   ========================================================= */
-
-function fileData(file){
-
-    return new Promise(
-        (resolve,reject) => {
-
-            const reader =
-                new FileReader();
-
-
-            reader.onload =
-                () => resolve(
-                    reader.result
-                );
-
-
-            reader.onerror =
-                reject;
-
-
-            reader.readAsDataURL(file);
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   BROWSER NOTIFICATIONS
-   ========================================================= */
-
-async function requestNotifications(){
-
-    if(
-        typeof Notification ===
-        "undefined"
-    ){
-
-        toast(
-            "This browser does not support browser notifications."
-        );
-
-        return;
-
-    }
-
-
-    try{
-
-        const permission =
-            await Notification.requestPermission();
-
-
-        if(permission === "granted"){
-
-            toast(
-                "Browser notifications enabled."
-            );
-
-        }else{
-
-            toast(
-                "Notification permission was not granted."
-            );
-
-        }
-
-
-        renderCharacter();
-
-        renderNotifications();
-
-    }catch{
-
-        toast(
-            "Could not request notification permission."
-        );
-
-    }
-
-}
-
-
-function notify(
-    title,
-    body
-){
-
-    if(
-        typeof Notification ===
-        "undefined"
-    ){
-
-        return;
-
-    }
-
-
-    if(
-        Notification.permission !==
-        "granted"
-    ){
-
-        return;
-
-    }
-
-
-    try{
-
-        const notification =
-            new Notification(
-                title,
-                {
-
-                    body,
-
-                    /*
-                        This is the generated
-                        transparent sticker.
-                    */
-
-                    icon:
-                        data.character.sticker ||
-                        undefined,
-
-                    tag:
-                        "layraaz-reminder"
-
-                }
-            );
-
-
-        notification.onclick =
-            () => {
-
-                window.focus();
-
-            };
-
-    }catch{
-
-        /* Browser refused notification. */
-
-    }
-
-}
-
-
-/* =========================================================
-   NOTIFICATION HISTORY
-   ========================================================= */
-
-function addNotification(
-    title,
-    body
-){
-
-    data.notifications.push({
-
-        id:
-            uid("notification"),
-
-        title,
-
-        body,
-
-        createdAt:
-            new Date().toISOString(),
-
-        read:false
-
-    });
-
-
-    /*
-        Keep the history manageable.
-    */
-
-    if(
-        data.notifications.length > 100
-    ){
-
-        data.notifications =
-            data.notifications.slice(-100);
-
-    }
-
-
-    save();
-
-}
-
-
-/* =========================================================
-   REMINDER ENGINE
-   ========================================================= */
-
-function fireReminder(reminder){
-
-    const body =
-        `${reminder.title} is due now. · ${
-            reminder.category || "Personal"
-        }`;
-
-
-    /*
-        External browser/system notification.
-    */
-
-    notify(
-        "LAYRAAZ Reminder",
-        body
-    );
-
-
-    /*
-        Internal notification history.
-    */
-
-    addNotification(
-        "Reminder due",
-        body
-    );
-
-
-    reminder.lastNotifiedAt =
-        new Date().toISOString();
-
-}
-
-
-function checkDue(){
-
-    let changed = false;
-
-    const now =
-        Date.now();
-
-
-    for(
-        const reminder of data.reminders
-    ){
-
-        const due =
-            new Date(
-                reminder.when
-            ).getTime();
-
-
-        if(
-            reminder.completed ||
-            !Number.isFinite(due) ||
-            due > now
-        ){
-
-            continue;
-
-        }
-
-
-        const last =
-            reminder.lastNotifiedAt
-                ? new Date(
-                    reminder.lastNotifiedAt
-                  ).getTime()
-                : 0;
-
-
-        /*
-            Prevent the same reminder from firing
-            repeatedly every few seconds.
-        */
-
-        if(
-            now - last <
-            12 * 60 * 60 * 1000
-        ){
-
-            continue;
-
-        }
-
-
-        fireReminder(
-            reminder
-        );
-
-
-        changed = true;
-
-    }
-
-
-    if(changed){
-
-        save();
-
-        renderDashboard();
-
-        if(
-            activeSection ===
-            "reminders"
-        ){
-
-            renderReminders();
-
-        }
-
-        updateTop();
-
-    }
-
-}
-
-
-function scheduleNext(){
-
-    clearInterval(timer);
-
-
-    /*
-        Check frequently enough to catch
-        reminders while the tab is open.
-
-        The browser may throttle background
-        JavaScript, but Notification itself
-        is system-level.
-    */
-
-    timer =
-        setInterval(
-            checkDue,
-            10000
-        );
-
-
-    checkDue();
-
-}
-
-
-/* =========================================================
-   TOAST
-   ========================================================= */
-
-function toast(message){
-
-    const element =
-        $("toast");
-
-
-    element.textContent =
-        message;
-
-
-    element.classList.add(
-        "show"
-    );
-
-
-    clearTimeout(
-        toastTimer
-    );
-
-
-    toastTimer =
-        setTimeout(
-            () =>
-                element.classList.remove(
-                    "show"
-                ),
-            2300
-        );
-
-}
-
-
-/* =========================================================
    DELETE
    ========================================================= */
 
-function remove(
+function removeItem(
     collection,
     id,
     message
-){
+) {
 
     const array =
         data[collection];
 
 
+    if (!Array.isArray(array)) {
+        return;
+    }
+
+
     const index =
         array.findIndex(
-            item => item.id === id
+            item =>
+                item.id === id
         );
 
 
-    if(index < 0){
+    if (index < 0) {
         return;
     }
 
@@ -4192,7 +4565,7 @@ function remove(
 
     save();
 
-    render(
+    renderPage(
         activeSection
     );
 
@@ -4209,21 +4582,30 @@ function remove(
    SEARCH
    ========================================================= */
 
-function search(query){
+function search(
+    query
+) {
 
     const box =
         $("searchResults");
 
 
     const value =
-        query.trim().toLowerCase();
+        String(
+            query || ""
+        )
+        .trim()
+        .toLowerCase();
 
 
-    if(!value){
+    if (!value) {
 
         box.classList.add(
             "hidden"
         );
+
+        box.innerHTML =
+            "";
 
         return;
 
@@ -4236,11 +4618,11 @@ function search(query){
     data.reminders.forEach(
         reminder => {
 
-            if(
+            if (
                 `${reminder.title} ${reminder.category}`
                     .toLowerCase()
                     .includes(value)
-            ){
+            ) {
 
                 results.push([
                     "Reminder",
@@ -4257,11 +4639,11 @@ function search(query){
     data.todos.forEach(
         todo => {
 
-            if(
+            if (
                 `${todo.title} ${todo.category}`
                     .toLowerCase()
                     .includes(value)
-            ){
+            ) {
 
                 results.push([
                     "To-do",
@@ -4278,11 +4660,11 @@ function search(query){
     data.goals.forEach(
         goal => {
 
-            if(
+            if (
                 `${goal.title} ${goal.category}`
                     .toLowerCase()
                     .includes(value)
-            ){
+            ) {
 
                 results.push([
                     "Goal",
@@ -4299,11 +4681,11 @@ function search(query){
     data.notes.forEach(
         note => {
 
-            if(
+            if (
                 `${note.title} ${note.content}`
                     .toLowerCase()
                     .includes(value)
-            ){
+            ) {
 
                 results.push([
                     "Note",
@@ -4328,14 +4710,20 @@ function search(query){
 
                     <div
                         class="search-result"
-                        data-search="${result[2]}">
+                        data-search="${esc(
+                            result[2]
+                        )}">
 
                         <strong>
-                            ${esc(result[1])}
+                            ${esc(
+                                result[1]
+                            )}
                         </strong>
 
                         <span>
-                            ${result[0]}
+                            ${esc(
+                                result[0]
+                            )}
                         </span>
 
                     </div>
@@ -4350,7 +4738,7 @@ function search(query){
                 Nothing found.
             </div>
 
-          `;
+        `;
 
 
     box.classList.remove(
@@ -4364,60 +4752,103 @@ function search(query){
    EVENTS
    ========================================================= */
 
-function events(){
+function setupEvents() {
 
     /* Sidebar */
 
-    $("sidebarToggle").onclick =
-        () => {
+    $("sidebarToggle")
+        .addEventListener(
+            "click",
+            () => {
 
-            $("sidebar")
-                .classList
-                .toggle("collapsed");
+                const sidebar =
+                    $("sidebar");
 
-        };
+
+                sidebar.classList.toggle(
+                    "collapsed"
+                );
+
+            }
+        );
 
 
     /* Navigation */
 
     document
-        .querySelectorAll(".nav-item")
-        .forEach(button => {
+        .querySelectorAll(
+            ".nav-item"
+        )
+        .forEach(
+            button => {
 
-            button.onclick =
-                () =>
-                    navigate(
-                        button.dataset.section
-                    );
+                button.addEventListener(
+                    "click",
+                    () => {
 
-        });
+                        navigate(
+                            button.dataset.section
+                        );
+
+                    }
+                );
+
+            }
+        );
 
 
-    /* Top notification button */
+    /* Notification button */
 
-    $("notificationBtn").onclick =
-        () =>
-            navigate(
-                "notifications"
-            );
+    $("notificationBtn")
+        .addEventListener(
+            "click",
+            () => {
+
+                navigate(
+                    "notifications"
+                );
+
+            }
+        );
 
 
     /* Profile button */
 
-    $("profileBtn").onclick =
-        () =>
-            navigate(
-                "profile"
-            );
+    $("profileBtn")
+        .addEventListener(
+            "click",
+            () => {
+
+                navigate(
+                    "profile"
+                );
+
+            }
+        );
 
 
     /* Search */
 
-    $("globalSearch").oninput =
-        event =>
-            search(
-                event.target.value
-            );
+    $("globalSearch")
+        .addEventListener(
+            "input",
+            event => {
+
+                search(
+                    event.target.value
+                );
+
+            }
+        );
+
+
+    /* Close companion */
+
+    $("closeCompanion")
+        .addEventListener(
+            "click",
+            hideCompanion
+        );
 
 
     /* Click delegation */
@@ -4432,19 +4863,25 @@ function events(){
                 );
 
 
-            if(actionElement){
+            if (actionElement) {
 
                 const action =
                     actionElement.dataset.action;
 
 
-                if(
-                    action === "profile" ||
-                    action === "reminders" ||
-                    action === "todos" ||
-                    action === "goals" ||
-                    action === "notes"
-                ){
+                if (
+                    [
+                        "profile",
+                        "dashboard",
+                        "character",
+                        "reminders",
+                        "todos",
+                        "goals",
+                        "notes",
+                        "notifications",
+                        "appearance"
+                    ].includes(action)
+                ) {
 
                     navigate(action);
 
@@ -4453,9 +4890,10 @@ function events(){
                 }
 
 
-                if(
-                    action === "add-reminder"
-                ){
+                if (
+                    action ===
+                    "add-reminder"
+                ) {
 
                     openAdd(
                         "reminder"
@@ -4466,9 +4904,10 @@ function events(){
                 }
 
 
-                if(
-                    action === "add-todo"
-                ){
+                if (
+                    action ===
+                    "add-todo"
+                ) {
 
                     openAdd(
                         "todo"
@@ -4479,9 +4918,10 @@ function events(){
                 }
 
 
-                if(
-                    action === "add-goal"
-                ){
+                if (
+                    action ===
+                    "add-goal"
+                ) {
 
                     openAdd(
                         "goal"
@@ -4492,9 +4932,10 @@ function events(){
                 }
 
 
-                if(
-                    action === "add-note"
-                ){
+                if (
+                    action ===
+                    "add-note"
+                ) {
 
                     openAdd(
                         "note"
@@ -4505,27 +4946,27 @@ function events(){
                 }
 
 
-                if(
+                if (
                     action ===
                     "request-notifications"
-                ){
+                ) {
 
-                    requestNotifications();
+                    await requestNotifications();
 
                     return;
 
                 }
 
 
-                if(
+                if (
                     action ===
                     "test-notification"
-                ){
+                ) {
 
-                    if(
+                    if (
                         typeof Notification ===
                         "undefined"
-                    ){
+                    ) {
 
                         toast(
                             "This browser does not support notifications."
@@ -4536,25 +4977,30 @@ function events(){
                     }
 
 
-                    if(
+                    if (
                         Notification.permission !==
                         "granted"
-                    ){
+                    ) {
 
                         await requestNotifications();
 
                     }
 
 
-                    if(
+                    if (
                         Notification.permission ===
                         "granted"
-                    ){
+                    ) {
 
-                        notify(
-                            "LAYRAAZ Test",
-                            "Your character sticker can appear in browser notifications."
-                        );
+                        sendBrowserNotification({
+
+                            id:
+                                "test",
+
+                            title:
+                                "LAYRAAZ Test"
+
+                        });
 
                     }
 
@@ -4564,14 +5010,16 @@ function events(){
                 }
 
 
-                if(
-                    action === "read-all"
-                ){
+                if (
+                    action ===
+                    "read-all"
+                ) {
 
                     data.notifications
                         .forEach(
                             notification =>
-                                notification.read = true
+                                notification.read =
+                                    true
                         );
 
 
@@ -4586,35 +5034,47 @@ function events(){
                 }
 
 
-                if(
+                if (
                     action.startsWith(
                         "complete-reminder:"
                     )
-                ){
+                ) {
 
                     const id =
-                        action.split(":")[1];
+                        action.split(
+                            ":"
+                        )[1];
 
 
                     const reminder =
                         data.reminders.find(
                             item =>
-                                item.id === id
+                                item.id ===
+                                id
                         );
 
 
-                    if(reminder){
+                    if (reminder) {
 
                         reminder.completed =
                             !reminder.completed;
+
+
+                        if (
+                            reminder.completed
+                        ) {
+
+                            reminder.lastNotifiedAt =
+                                null;
+
+                        }
+
 
                         save();
 
                         renderReminders();
 
                         renderDashboard();
-
-                        scheduleNext();
 
                     }
 
@@ -4624,15 +5084,17 @@ function events(){
                 }
 
 
-                if(
+                if (
                     action.startsWith(
                         "edit-reminder:"
                     )
-                ){
+                ) {
 
                     openAdd(
                         "reminder",
-                        action.split(":")[1]
+                        action.split(
+                            ":"
+                        )[1]
                     );
 
                     return;
@@ -4640,15 +5102,17 @@ function events(){
                 }
 
 
-                if(
+                if (
                     action.startsWith(
                         "delete-reminder:"
                     )
-                ){
+                ) {
 
-                    remove(
+                    removeItem(
                         "reminders",
-                        action.split(":")[1],
+                        action.split(
+                            ":"
+                        )[1],
                         "Reminder deleted."
                     );
 
@@ -4657,15 +5121,17 @@ function events(){
                 }
 
 
-                if(
+                if (
                     action.startsWith(
                         "edit-todo:"
                     )
-                ){
+                ) {
 
                     openAdd(
                         "todo",
-                        action.split(":")[1]
+                        action.split(
+                            ":"
+                        )[1]
                     );
 
                     return;
@@ -4673,15 +5139,17 @@ function events(){
                 }
 
 
-                if(
+                if (
                     action.startsWith(
                         "delete-todo:"
                     )
-                ){
+                ) {
 
-                    remove(
+                    removeItem(
                         "todos",
-                        action.split(":")[1],
+                        action.split(
+                            ":"
+                        )[1],
                         "To-do deleted."
                     );
 
@@ -4690,15 +5158,17 @@ function events(){
                 }
 
 
-                if(
+                if (
                     action.startsWith(
                         "edit-goal:"
                     )
-                ){
+                ) {
 
                     openAdd(
                         "goal",
-                        action.split(":")[1]
+                        action.split(
+                            ":"
+                        )[1]
                     );
 
                     return;
@@ -4706,15 +5176,17 @@ function events(){
                 }
 
 
-                if(
+                if (
                     action.startsWith(
                         "delete-goal:"
                     )
-                ){
+                ) {
 
-                    remove(
+                    removeItem(
                         "goals",
-                        action.split(":")[1],
+                        action.split(
+                            ":"
+                        )[1],
                         "Goal deleted."
                     );
 
@@ -4723,15 +5195,17 @@ function events(){
                 }
 
 
-                if(
+                if (
                     action.startsWith(
                         "edit-note:"
                     )
-                ){
+                ) {
 
                     openAdd(
                         "note",
-                        action.split(":")[1]
+                        action.split(
+                            ":"
+                        )[1]
                     );
 
                     return;
@@ -4739,15 +5213,17 @@ function events(){
                 }
 
 
-                if(
+                if (
                     action.startsWith(
                         "delete-note:"
                     )
-                ){
+                ) {
 
-                    remove(
+                    removeItem(
                         "notes",
-                        action.split(":")[1],
+                        action.split(
+                            ":"
+                        )[1],
                         "Note deleted."
                     );
 
@@ -4756,24 +5232,29 @@ function events(){
                 }
 
 
-                if(
+                if (
                     action.startsWith(
                         "read:"
                     )
-                ){
+                ) {
 
                     const id =
-                        action.split(":")[1];
+                        action.split(
+                            ":"
+                        )[1];
 
 
                     const notification =
                         data.notifications.find(
                             item =>
-                                item.id === id
+                                item.id ===
+                                id
                         );
 
 
-                    if(notification){
+                    if (
+                        notification
+                    ) {
 
                         notification.read =
                             true;
@@ -4796,57 +5277,71 @@ function events(){
 
             /* Palette */
 
-            const palette =
+            const paletteButton =
                 event.target.closest(
                     "[data-palette]"
                 );
 
 
-            if(palette){
+            if (
+                paletteButton
+            ) {
 
-                data.appearance =
-                    palette.dataset.palette;
+                const key =
+                    paletteButton.dataset
+                        .palette;
 
 
-                save();
+                if (
+                    palettes[key]
+                ) {
 
-                applyPalette();
+                    data.appearance =
+                        key;
 
-                renderAppearance();
+                    save();
 
-                toast(
-                    `${palettes[
-                        data.appearance
-                    ].name} selected.`
-                );
+                    applyPalette();
+
+                    renderAppearance();
+
+                    toast(
+                        palettes[key].name +
+                        " selected."
+                    );
+
+                }
+
 
                 return;
 
             }
 
 
-            /* To-do checkbox */
+            /* To-do */
 
-            const todoCheckbox =
+            const checkbox =
                 event.target.closest(
                     "[data-toggle-todo]"
                 );
 
 
-            if(todoCheckbox){
+            if (checkbox) {
 
                 const todo =
                     data.todos.find(
                         item =>
                             item.id ===
-                            todoCheckbox.dataset.toggleTodo
+                            checkbox.dataset
+                                .toggleTodo
                     );
 
 
-                if(todo){
+                if (todo) {
 
                     todo.done =
-                        todoCheckbox.checked;
+                        checkbox.checked;
+
 
                     save();
 
@@ -4855,6 +5350,7 @@ function events(){
                     renderDashboard();
 
                 }
+
 
                 return;
 
@@ -4869,10 +5365,13 @@ function events(){
                 );
 
 
-            if(searchResult){
+            if (
+                searchResult
+            ) {
 
-                $("globalSearch").value =
-                    "";
+                $("globalSearch")
+                    .value = "";
+
 
                 $("searchResults")
                     .classList
@@ -4880,7 +5379,8 @@ function events(){
 
 
                 navigate(
-                    searchResult.dataset.search
+                    searchResult.dataset
+                        .search
                 );
 
 
@@ -4889,13 +5389,13 @@ function events(){
             }
 
 
-            /* Modal backdrop / close button */
+            /* Modal */
 
-            if(
+            if (
                 event.target.matches(
                     "[data-close-modal]"
                 )
-            ){
+            ) {
 
                 closeModal();
 
@@ -4905,18 +5405,16 @@ function events(){
     );
 
 
-    /* PROFILE + CHARACTER FORMS */
+    /* Profile form */
 
     document.addEventListener(
         "submit",
         async event => {
 
-            /* PROFILE */
-
-            if(
+            if (
                 event.target.id ===
                 "profileForm"
-            ){
+            ) {
 
                 event.preventDefault();
 
@@ -4932,7 +5430,9 @@ function events(){
 
                         data.profile[key] =
                             String(
-                                form.get(key) || ""
+                                form.get(
+                                    key
+                                ) || ""
                             );
 
                     }
@@ -4951,15 +5451,17 @@ function events(){
                     "Profile saved."
                 );
 
+                return;
+
             }
 
 
-            /* CHARACTER */
+            /* Character form */
 
-            if(
+            if (
                 event.target.id ===
                 "characterForm"
-            ){
+            ) {
 
                 event.preventDefault();
 
@@ -4972,7 +5474,9 @@ function events(){
 
                 data.character.name =
                     String(
-                        form.get("name") ||
+                        form.get(
+                            "name"
+                        ) ||
                         "Character"
                     ).trim() ||
                     "Character";
@@ -4980,24 +5484,26 @@ function events(){
 
                 data.character.personality =
                     String(
-                        form.get("personality") ||
+                        form.get(
+                            "personality"
+                        ) ||
                         ""
                     ).trim() ||
                     "Calm, intelligent, firm and caring.";
 
 
-                const imageInput =
+                const input =
                     $("characterImage");
 
 
                 const file =
-                    imageInput &&
-                    imageInput.files[0];
+                    input &&
+                    input.files[0];
 
 
-                if(file){
+                if (file) {
 
-                    try{
+                    try {
 
                         toast(
                             "Making your sticker..."
@@ -5005,7 +5511,7 @@ function events(){
 
 
                         const image =
-                            await fileData(
+                            await readFile(
                                 file
                             );
 
@@ -5015,10 +5521,16 @@ function events(){
                                 image
                             );
 
-                    }catch{
+
+                    } catch (error) {
+
+                        console.error(
+                            error
+                        );
+
 
                         toast(
-                            "I could not detect the character in that image."
+                            "The sticker could not be created."
                         );
 
                         return;
@@ -5038,41 +5550,59 @@ function events(){
                     "Character saved."
                 );
 
+                return;
+
             }
 
         }
     );
 
 
-    /* PROFILE IMAGE */
+    /* Profile image */
 
-    $("profile").addEventListener(
+    document.addEventListener(
         "change",
         async event => {
 
-            if(
+            if (
                 event.target.id ===
-                "profileImage" &&
-                event.target.files[0]
-            ){
+                "profileImage"
+            ) {
 
-                data.profile.image =
-                    await fileData(
-                        event.target.files[0]
+                const file =
+                    event.target.files[0];
+
+
+                if (!file) return;
+
+
+                try {
+
+                    data.profile.image =
+                        await readFile(
+                            file
+                        );
+
+
+                    save();
+
+                    renderProfile();
+
+                    renderDashboard();
+
+                    updateTop();
+
+                    toast(
+                        "Profile picture saved."
                     );
 
+                } catch (error) {
 
-                save();
+                    toast(
+                        "Could not save profile picture."
+                    );
 
-                renderProfile();
-
-                renderDashboard();
-
-                updateTop();
-
-                toast(
-                    "Profile picture saved."
-                );
+                }
 
             }
 
@@ -5086,24 +5616,40 @@ function events(){
    INITIALISE
    ========================================================= */
 
-function init(){
+function init() {
 
     applyPalette();
 
-    icons();
+    renderIcons();
 
-    events();
+    setupEvents();
 
-    render(
-        "dashboard"
-    );
+    renderDashboard();
 
-    scheduleNext();
+    updateTop();
+
+    startReminderEngine();
 
 }
 
 
-document.addEventListener(
-    "DOMContentLoaded",
-    init
-);
+/*
+    DOMContentLoaded is safe even if this file is
+    loaded at the end of the body.
+*/
+
+if (
+    document.readyState ===
+    "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        init
+    );
+
+} else {
+
+    init();
+
+}
